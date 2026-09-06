@@ -1,0 +1,314 @@
+{
+ "dataset": "container-economics",
+ "title": "Containers: how many, how big, what they pay",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "how_many_move": [
+  {
+   "metric": "World container port throughput",
+   "value": 920,
+   "unit": "million TEU",
+   "year": 2024,
+   "publisher": "UNCTAD Data Hub",
+   "source_ids": [
+    "unctadstat-containers"
+   ],
+   "caution": "Port moves, not unique containers. A box transhipped twice is counted three times. The transhipment share is not yet known."
+  }
+ ],
+ "the_fleet": [
+  {
+   "metric": "Fully cellular container ships",
+   "value": 6822,
+   "as_of": "2026-09-03",
+   "publisher": "Alphaliner",
+   "source_ids": [
+    "alphaliner-top100"
+   ]
+  },
+  {
+   "metric": "Fully cellular fleet capacity",
+   "value": 34220569,
+   "unit": "TEU",
+   "as_of": "2026-09-03",
+   "publisher": "Alphaliner",
+   "source_ids": [
+    "alphaliner-top100"
+   ]
+  },
+  {
+   "metric": "Container ships",
+   "value": 6159,
+   "unit": "ships",
+   "year": 2024,
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-rmt-2024"
+   ]
+  },
+  {
+   "metric": "Fleet capacity",
+   "value": "about 32.5 million TEU",
+   "year": 2025,
+   "publisher": "AXSMarine",
+   "source_ids": [
+    "axs-aug2025"
+   ]
+  }
+ ],
+ "average_ship_size": {
+  "value": 5016,
+  "unit": "TEU",
+  "derived": true,
+  "how": "34,220,569 TEU divided by 6,822 fully cellular ships, Alphaliner 3 September 2026.",
+  "caution": "Our arithmetic on two published figures, not a published average.",
+  "source_ids": [
+   "alphaliner-top100"
+  ]
+ },
+ "what_each_container_pays": {
+  "spot_rates_per_feu": [
+   {
+    "lane": "Drewry WCI composite",
+    "usd": 4465,
+    "date": "2026-09-03",
+    "source_ids": [
+     "drewry-wci"
+    ]
+   },
+   {
+    "lane": "Shanghai to New York",
+    "usd": 9587,
+    "date": "2026-09-03",
+    "source_ids": [
+     "drewry-wci"
+    ]
+   },
+   {
+    "lane": "Shanghai to Los Angeles",
+    "usd": 7185,
+    "date": "2026-09-03",
+    "source_ids": [
+     "drewry-wci"
+    ]
+   },
+   {
+    "lane": "Shanghai to Genoa",
+    "usd": 4368,
+    "date": "2026-09-03",
+    "source_ids": [
+     "drewry-wci"
+    ]
+   },
+   {
+    "lane": "Shanghai to Rotterdam",
+    "usd": 4092,
+    "date": "2026-09-03",
+    "source_ids": [
+     "drewry-wci"
+    ]
+   },
+   {
+    "lane": "Freightos FBX composite",
+    "usd": 3532,
+    "date": "2026-09-04",
+    "source_ids": [
+     "freightos-fbx"
+    ]
+   }
+  ],
+  "index_disagreement": "Drewry WCI composite is $4,465 and Freightos FBX is $3,532 within a day of each other. Different baskets and methods. Quote the index by name, never 'the spot rate'.",
+  "realised_revenue_per_teu": [
+   {
+    "carrier": "CMA CGM shipping segment",
+    "usd": 1549,
+    "period": "FY2024",
+    "source_ids": [
+     "ing-container-2025"
+    ]
+   },
+   {
+    "carrier": "Hapag-Lloyd",
+    "usd": 1492,
+    "period": "FY2024",
+    "source_ids": [
+     "ing-container-2025"
+    ]
+   }
+  ],
+  "note": "Realised revenue per TEU is roughly a third of the headline spot rate per FEU. Spot is one lane at one moment; realised revenue blends contract, backhaul and empties across a whole year. Use realised for anything resembling a business case.",
+  "december_2024_comparison": [
+   {
+    "lane": "FBX global",
+    "usd": 3805
+   },
+   {
+    "lane": "Asia to Mediterranean",
+    "usd": 5471
+   },
+   {
+    "lane": "Asia to North Europe",
+    "usd": 5155
+   },
+   {
+    "lane": "Asia to NA East Coast",
+    "usd": 6116
+   },
+   {
+    "lane": "Asia to NA West Coast",
+    "usd": 4825
+   },
+   {
+    "lane": "Transatlantic",
+    "usd": 2279
+   }
+  ],
+  "december_2024_source_ids": [
+   "baltic-fbx-dec24"
+  ]
+ },
+ "what_a_ship_earns": [
+  {
+   "metric": "Container ship earnings",
+   "value": "about $43,000 per day",
+   "period": "2025",
+   "source_ids": [
+    "ing-container-2025"
+   ]
+  },
+  {
+   "metric": "Charter rate range",
+   "value": "$41,000 to $74,000 per day",
+   "period": "February 2025",
+   "source_ids": [
+    "ing-container-2025"
+   ]
+  },
+  {
+   "metric": "Maersk Ocean utilisation",
+   "value": "96%",
+   "period": "FY2024",
+   "source_ids": [
+    "ing-container-2025"
+   ]
+  }
+ ],
+ "what_is_on_board": {
+  "value_per_teu_usd": 54500,
+  "value_per_feu_usd": 109000,
+  "year": 2020,
+  "publisher": "Port Economics, Management and Policy",
+  "source_ids": [
+   "pem-container-value"
+  ],
+  "derived_cargo_value_average_ship": {
+   "value_usd": 273372000,
+   "how": "5,016 TEU average capacity times $54,500 average value per TEU.",
+   "caution": "Our arithmetic. Mixes a 2026 fleet average with a 2020 value figure, and assumes a full ship.",
+   "reading": "An average container ship carries roughly $273 million of cargo. A 20,000 TEU ship at the same value per box carries about $1,090 million."
+  }
+ },
+ "carriers": [
+  {
+   "carrier": "MSC",
+   "share_pct": 21.5,
+   "ships_existing": 761,
+   "teu_existing": 4750096,
+   "teu_orderbook": 2646810
+  },
+  {
+   "carrier": "Maersk",
+   "share_pct": 13.8,
+   "ships_existing": 359,
+   "teu_existing": 2943996,
+   "teu_orderbook": 1806847
+  },
+  {
+   "carrier": "CMA CGM",
+   "share_pct": 12.8,
+   "ships_existing": 377,
+   "teu_existing": 2903691,
+   "teu_orderbook": 1492409
+  },
+  {
+   "carrier": "COSCO",
+   "share_pct": 10.6,
+   "ships_existing": 210,
+   "teu_existing": 2202330,
+   "teu_orderbook": 1453574
+  },
+  {
+   "carrier": "Hapag-Lloyd",
+   "share_pct": 7.0,
+   "ships_existing": 134,
+   "teu_existing": 1455918,
+   "teu_orderbook": 943600
+  },
+  {
+   "carrier": "ONE",
+   "share_pct": 6.3,
+   "ships_existing": 110,
+   "teu_existing": 1029008,
+   "teu_orderbook": 1142914
+  },
+  {
+   "carrier": "Evergreen",
+   "share_pct": 5.9,
+   "ships_existing": 169,
+   "teu_existing": 1479527,
+   "teu_orderbook": 543372
+  },
+  {
+   "carrier": "HMM",
+   "share_pct": 3.0,
+   "ships_existing": 72,
+   "teu_existing": 847404,
+   "teu_orderbook": 188725
+  },
+  {
+   "carrier": "Yang Ming",
+   "share_pct": 2.2,
+   "ships_existing": 63,
+   "teu_existing": 382296,
+   "teu_orderbook": 373384
+  },
+  {
+   "carrier": "ZIM",
+   "share_pct": 2.0,
+   "ships_existing": 15,
+   "teu_existing": 92934,
+   "teu_orderbook": 609102
+  },
+  {
+   "carrier": "Wan Hai",
+   "share_pct": 1.8,
+   "ships_existing": 124,
+   "teu_existing": 624354,
+   "teu_orderbook": 0
+  },
+  {
+   "carrier": "PIL",
+   "share_pct": 1.4,
+   "ships_existing": 82,
+   "teu_existing": 332071,
+   "teu_orderbook": 140129
+  }
+ ],
+ "carriers_meta": {
+  "as_of": "2026-09-03",
+  "publisher": "Alphaliner",
+  "source_ids": [
+   "alphaliner-top100"
+  ],
+  "concentration": "The top five carriers hold 65.7% of capacity. The top ten hold about 85%.",
+  "note": "ZIM has 15 existing ships against 101 on order, the most extreme renewal ratio in the top twelve."
+ },
+ "gaps": [
+  "Transhipment share unknown, so unique containers moved is unknown.",
+  "No TEU throughput series before 2024.",
+  "No annual average rate series.",
+  "Cargo value per TEU is 2020 and may be badly out of date.",
+  "No size-band breakdown of the fleet.",
+  "No utilisation figure other than one carrier."
+ ]
+}

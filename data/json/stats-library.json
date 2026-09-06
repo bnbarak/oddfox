@@ -1,0 +1,542 @@
+{
+ "dataset": "stats-library",
+ "title": "Every number we hold, with its source",
+ "updated": "2026-09-04",
+ "description": "A flat index of the headline statistics across the whole library. Every entry carries the figure, the period it refers to, who published it, and whether it is a published figure or our own arithmetic. Derived figures are marked and their method is stated.",
+ "legend": {
+  "published": "Stated in the cited source.",
+  "derived": "Our arithmetic on published inputs. Method given.",
+  "flagged": "Held but contradicted or unverified. Do not use externally."
+ },
+ "stats": [
+  {
+   "stat": "Merchant ships in the world fleet",
+   "value": "112,501",
+   "unit": "vessels, 100 GT and above",
+   "period": "1 Jan 2025",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "unctad-rmt-2025",
+     "publisher": "UNCTAD",
+     "url": "https://unctad.org/system/files/official-document/rmt2025_en.pdf"
+    }
+   ]
+  },
+  {
+   "stat": "World fleet capacity",
+   "value": "2.44 billion",
+   "unit": "DWT",
+   "period": "1 Jan 2025",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "unctad-rmt-2025",
+     "publisher": "UNCTAD",
+     "url": "https://unctad.org/system/files/official-document/rmt2025_en.pdf"
+    }
+   ]
+  },
+  {
+   "stat": "Global seaborne trade",
+   "value": "12,292",
+   "unit": "million tonnes",
+   "period": "2023",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "unctad-rmt-2024",
+     "publisher": "UNCTAD",
+     "url": "https://unctad.org/system/files/official-document/rmt2024_en.pdf"
+    }
+   ]
+  },
+  {
+   "stat": "Container port throughput",
+   "value": "920",
+   "unit": "million TEU",
+   "period": "2024",
+   "kind": "published",
+   "note": "Port moves, double-counts transhipment.",
+   "sources": [
+    {
+     "id": "unctadstat-containers",
+     "publisher": "UNCTAD Data Hub",
+     "url": "https://unctadstat.unctad.org/insights/theme/109"
+    }
+   ]
+  },
+  {
+   "stat": "Fully cellular container ships",
+   "value": "6,822",
+   "unit": "ships",
+   "period": "3 Sep 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "alphaliner-top100",
+     "publisher": "Alphaliner / AXSMarine",
+     "url": "https://alphaliner.axsmarine.com/PublicTop100/"
+    }
+   ]
+  },
+  {
+   "stat": "Container fleet capacity",
+   "value": "34,220,569",
+   "unit": "TEU",
+   "period": "3 Sep 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "alphaliner-top100",
+     "publisher": "Alphaliner / AXSMarine",
+     "url": "https://alphaliner.axsmarine.com/PublicTop100/"
+    }
+   ]
+  },
+  {
+   "stat": "Average container ship size",
+   "value": "5,016",
+   "unit": "TEU",
+   "period": "3 Sep 2026",
+   "kind": "derived",
+   "method": "34,220,569 TEU / 6,822 ships",
+   "sources": [
+    {
+     "id": "alphaliner-top100",
+     "publisher": "Alphaliner / AXSMarine",
+     "url": "https://alphaliner.axsmarine.com/PublicTop100/"
+    }
+   ]
+  },
+  {
+   "stat": "Average fleet age",
+   "value": "12.5 by DWT, 22.4 by ship count",
+   "unit": "years",
+   "period": "2024",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "unctad-rmt-2024-ch2",
+     "publisher": "UNCTAD",
+     "url": "https://unctad.org/system/files/official-document/rmt2024ch2_en.pdf"
+    }
+   ]
+  },
+  {
+   "stat": "Top 5 carrier share of container capacity",
+   "value": "65.7%",
+   "period": "3 Sep 2026",
+   "kind": "derived",
+   "method": "Sum of MSC, Maersk, CMA CGM, COSCO, Hapag-Lloyd shares",
+   "sources": [
+    {
+     "id": "alphaliner-top100",
+     "publisher": "Alphaliner / AXSMarine",
+     "url": "https://alphaliner.axsmarine.com/PublicTop100/"
+    }
+   ]
+  },
+  {
+   "stat": "Daily vessel operating cost",
+   "value": "$5,071 to $8,162",
+   "unit": "per day",
+   "period": "FY2024 to Q1 2026",
+   "kind": "published",
+   "note": "Bulk cheapest, tankers dearest.",
+   "sources": [
+    {
+     "id": "starbulk-q1-2026",
+     "publisher": "Star Bulk Carriers",
+     "url": "https://www.starbulk.com/media/uploads_file/2026/05/20/p1jp3g2m39dca9s41dsf1t6u1h8e4.pdf"
+    },
+    {
+     "id": "scorpio-q3-2025",
+     "publisher": "Scorpio Tankers",
+     "url": "https://www.scorpiotankers.com/scorpio-tankers-inc-announces-financial-results-for-the-third-quarter-of-2025-and-an-increase-to-its-quarterly-dividend/"
+    }
+   ]
+  },
+  {
+   "stat": "Daily TCE, VLCC",
+   "value": "$74,200",
+   "unit": "per day",
+   "period": "Q4 2025",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "frontline-q4-2025",
+     "publisher": "Frontline",
+     "url": "https://www.frontlineplc.cy/fro-fourth-quarter-and-full-year-2025-results/"
+    }
+   ]
+  },
+  {
+   "stat": "Daily TCE, Capesize",
+   "value": "$26,627",
+   "unit": "per day",
+   "period": "Q1 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "starbulk-q1-2026",
+     "publisher": "Star Bulk Carriers",
+     "url": "https://www.starbulk.com/media/uploads_file/2026/05/20/p1jp3g2m39dca9s41dsf1t6u1h8e4.pdf"
+    }
+   ]
+  },
+  {
+   "stat": "Daily TCE, Panamax",
+   "value": "$15,849",
+   "unit": "per day",
+   "period": "Q1 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "starbulk-q1-2026",
+     "publisher": "Star Bulk Carriers",
+     "url": "https://www.starbulk.com/media/uploads_file/2026/05/20/p1jp3g2m39dca9s41dsf1t6u1h8e4.pdf"
+    }
+   ]
+  },
+  {
+   "stat": "Container spot rate, Drewry WCI composite",
+   "value": "$4,465",
+   "unit": "per FEU",
+   "period": "3 Sep 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "drewry-wci",
+     "publisher": "Drewry",
+     "url": "https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry"
+    }
+   ]
+  },
+  {
+   "stat": "Container spot rate, Freightos FBX composite",
+   "value": "$3,532",
+   "unit": "per FEU",
+   "period": "4 Sep 2026",
+   "kind": "published",
+   "note": "Differs from Drewry by 26%. Different baskets.",
+   "sources": [
+    {
+     "id": "freightos-fbx",
+     "publisher": "Freightos / Baltic Exchange",
+     "url": "https://www.freightos.com/enterprise/terminal/freightos-baltic-index-global-container-pricing-index/"
+    }
+   ]
+  },
+  {
+   "stat": "Realised revenue per TEU",
+   "value": "$1,492 to $1,549",
+   "unit": "per TEU",
+   "period": "FY2024",
+   "kind": "published",
+   "note": "About a third of headline spot per FEU.",
+   "sources": [
+    {
+     "id": "ing-container-2025",
+     "publisher": "ING Research",
+     "url": "https://think.ing.com/articles/container-shipping-sailing-through-uncertainty-and-looming-overcapacity/"
+    }
+   ]
+  },
+  {
+   "stat": "Cargo value per TEU",
+   "value": "$54,500",
+   "period": "2020",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "pem-container-value",
+     "publisher": "Port Economics, Management and Policy",
+     "url": "https://porteconomicsmanagement.org/pemp/contents/part1/maritime-shipping-and-international-trade/value-containerized-trade/"
+    }
+   ]
+  },
+  {
+   "stat": "Cargo value on an average container ship",
+   "value": "$273 million",
+   "period": "2026 fleet, 2020 values",
+   "kind": "derived",
+   "method": "5,016 TEU x $54,500",
+   "sources": [
+    {
+     "id": "alphaliner-top100",
+     "publisher": "Alphaliner / AXSMarine",
+     "url": "https://alphaliner.axsmarine.com/PublicTop100/"
+    },
+    {
+     "id": "pem-container-value",
+     "publisher": "Port Economics, Management and Policy",
+     "url": "https://porteconomicsmanagement.org/pemp/contents/part1/maritime-shipping-and-international-trade/value-containerized-trade/"
+    }
+   ]
+  },
+  {
+   "stat": "Bunker VLSFO",
+   "value": "$684.50 Rotterdam to $860.50 Singapore",
+   "unit": "per tonne",
+   "period": "4 Sep 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "shipandbunker-sin",
+     "publisher": "Ship & Bunker",
+     "url": "https://shipandbunker.com/prices/apac/sea/sg-sin-singapore"
+    },
+    {
+     "id": "shipandbunker-rtm",
+     "publisher": "Ship & Bunker",
+     "url": "https://shipandbunker.com/prices/emea/nwe/nl-rtm-rotterdam"
+    }
+   ]
+  },
+  {
+   "stat": "Baltic Dry Index",
+   "value": "3,488",
+   "period": "3 Sep 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "hellenic-bdi",
+     "publisher": "Hellenic Shipping News",
+     "url": "https://www.hellenicshippingnews.com/baltic-dry-index-climbs-to-3488-up-157-points/"
+    }
+   ]
+  },
+  {
+   "stat": "Seafarer minimum wage, able seafarer",
+   "value": "$690",
+   "unit": "per month",
+   "period": "from 1 Jan 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "itf-wages",
+     "publisher": "ITF",
+     "url": "https://www.itfseafarers.org/en/resources/wages"
+    }
+   ]
+  },
+  {
+   "stat": "War risk premium, southern Red Sea",
+   "value": "0.3% to over 1% of hull value",
+   "unit": "per seven-day cover",
+   "period": "July 2026",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "reuters-warrisk-2026-07",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/war-risk-insurance-costs-surge-southern-red-sea-voyages-after-houthi-attacks-2026-07-23/"
+    }
+   ]
+  },
+  {
+   "stat": "War risk premium, pre-campaign baseline",
+   "value": "0.03%",
+   "period": "before Dec 2023",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "reuters-warrisk-2023-12",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/war-risk-insurance-rates-edge-up-after-surge-red-sea-ship-attacks-2023-12-04/"
+    }
+   ]
+  },
+  {
+   "stat": "War risk premium, Strait of Hormuz",
+   "value": "7.5-10% of hull value",
+   "period": "July 2026",
+   "kind": "flagged",
+   "note": "Contradicted by Reuters, which has Hormuz at 0.5%. Probably a units error. Do not use.",
+   "sources": [
+    {
+     "id": "reuters-warrisk-2025-06",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/escalating-hormuz-tensions-drive-up-middle-east-war-risk-insurance-costs-sources-2025-06-23/"
+    }
+   ]
+  },
+  {
+   "stat": "IMB piracy incidents",
+   "value": "445 (2010) falling to 116 (2024)",
+   "kind": "published",
+   "note": "Down 74%.",
+   "sources": [
+    {
+     "id": "imb-annual-reports",
+     "publisher": "ICC Commercial Crime Services",
+     "url": "https://www.icc-ccs.org/piracy-reporting-centre/imb-piracy-annual-reports"
+    }
+   ]
+  },
+  {
+   "stat": "Total ship losses",
+   "value": "127 (2010) falling to 27 (2024)",
+   "kind": "published",
+   "note": "Down 79%.",
+   "sources": [
+    {
+     "id": "allianz-safety",
+     "publisher": "Allianz Commercial",
+     "url": "https://commercial.allianz.com/news-and-insights/reports/shipping-and-safety-review.html"
+    }
+   ]
+  },
+  {
+   "stat": "Attack rate per transit, Red Sea 2024",
+   "value": "0.545%",
+   "kind": "derived",
+   "method": "72 attacks / 13,213 Suez transits. Suez is a proxy denominator.",
+   "sources": [
+    {
+     "id": "reuters-suez-2024",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/suez-canal-revenues-plunge-61-2024-2025-01-01/"
+    }
+   ]
+  },
+  {
+   "stat": "Expected loss per transit",
+   "value": "0.128% of hull, about $102,600 on an $80m ship",
+   "kind": "derived",
+   "method": "attack rate x 23.5% total-loss share from named incidents. Severity input is weak.",
+   "sources": [
+    {
+     "id": "reuters-suez-2024",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/suez-canal-revenues-plunge-61-2024-2025-01-01/"
+    },
+    {
+     "id": "reuters-warrisk-2024-09",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/red-sea-insurance-costs-soar-houthi-shipping-threats-loom-sources-say-2024-09-19/"
+    }
+   ]
+  },
+  {
+   "stat": "Premium to expected loss ratio",
+   "value": "about 5x",
+   "kind": "derived",
+   "method": "0.65% midpoint premium / 0.128% expected loss",
+   "sources": [
+    {
+     "id": "reuters-warrisk-2026-07",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/war-risk-insurance-costs-surge-southern-red-sea-voyages-after-houthi-attacks-2026-07-23/"
+    }
+   ]
+  },
+  {
+   "stat": "Exposure window, Gulf of Aden IRTC",
+   "value": "490 nm, 33 hours at 15 kn to 49 hours at 10 kn",
+   "kind": "derived",
+   "method": "Published 490 nm corridor length divided by speed.",
+   "sources": [
+    {
+     "id": "imo-piracy",
+     "publisher": "IMO",
+     "url": "https://www.imo.org/en/OurWork/Security/Pages/PiracyArmedRobberydefault.aspx"
+    }
+   ]
+  },
+  {
+   "stat": "Suez transits",
+   "value": "26,434 (2023) falling to 13,213 (2024)",
+   "kind": "published",
+   "note": "Halved.",
+   "sources": [
+    {
+     "id": "reuters-suez-2024",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/suez-canal-revenues-plunge-61-2024-2025-01-01/"
+    }
+   ]
+  },
+  {
+   "stat": "Suez revenue",
+   "value": "$10.25bn (2023) falling to $3.99bn (2024)",
+   "kind": "published",
+   "note": "Down 61%.",
+   "sources": [
+    {
+     "id": "reuters-suez-2024",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/suez-canal-revenues-plunge-61-2024-2025-01-01/"
+    }
+   ]
+  },
+  {
+   "stat": "Cape diversion penalty",
+   "value": "+3,500 nm, +10 days, +40% fuel",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "unctad-redsea-routes",
+     "publisher": "UNCTAD",
+     "url": "https://unctad.org/news/ships-face-longer-routes-higher-costs-and-emissions-red-sea-crisis"
+    }
+   ]
+  },
+  {
+   "stat": "Extra daily cost when diverting, largest boxships",
+   "value": "about $1 million per day",
+   "period": "Jan 2024",
+   "kind": "published",
+   "sources": [
+    {
+     "id": "reuters-divert-cost",
+     "publisher": "Reuters",
+     "url": "https://www.reuters.com/world/middle-east/shipping-firms-avoid-red-sea-suez-canal-after-us-strikes-yemen-2024-01-12/"
+    }
+   ]
+  },
+  {
+   "stat": "Marine security and USV companies catalogued",
+   "value": "123",
+   "kind": "published",
+   "note": "Our own dataset."
+  },
+  {
+   "stat": "Companies scoring 4 of 4 on proximity",
+   "value": "1 (Seasats)",
+   "kind": "derived",
+   "method": "Computed from proximity axes."
+  },
+  {
+   "stat": "Vessels under management, top five ship managers",
+   "value": "about 3,095",
+   "kind": "derived",
+   "method": "Sum of V.Group, Anglo-Eastern, BSM, Wilhelmsen, Columbia published fleets.",
+   "sources": [
+    {
+     "id": "lloyds-top-shipmanagers-2025",
+     "publisher": "Lloyd's List",
+     "url": "https://www.lloydslist.com/LL1155778/Top-10-shipmanagers-2025"
+    },
+    {
+     "id": "marineinsight-shipmanagers",
+     "publisher": "Marine Insight",
+     "url": "https://www.marineinsight.com/top-10-ship-management-companies/"
+    }
+   ]
+  },
+  {
+   "stat": "Commercial purchases of autonomous escort on record",
+   "value": "0",
+   "kind": "published",
+   "note": "A deliberate search found none."
+  }
+ ],
+ "counts": {
+  "total": 38,
+  "published": 28,
+  "derived": 9,
+  "flagged": 1
+ }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/registries.schema.json",
+  "title": "Registries and reporting bodies",
+  "type": "object",
+  "required": ["dataset", "records"],
+  "properties": {
+    "dataset": { "const": "registries" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "name": { "type": "string" },
+          "kind": {
+            "enum": ["identity", "reporting", "risk"],
+            "description": "identity — who and what is this ship. reporting — what is happening to ships now. risk — what a geography costs to enter."
+          },
+          "operator": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "area": { "type": "string" },
+          "answers": { "type": "string", "description": "The question this registry exists to answer, in one line." },
+          "holds": { "type": "array", "items": { "type": "string" } },
+          "role": { "type": "string" },
+          "access": { "type": "string" },
+          "machine_readable": { "type": "boolean" },
+          "founded": { "type": "integer" },
+          "current_circular": { "type": "string" },
+          "listed_regions": { "type": "array", "items": { "type": "string" } },
+          "caveat": { "type": "string", "description": "What this registry does NOT do. MDAT-GoG not coordinating rescue is the worked example." },
+          "why_it_matters": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+    "how_they_fit": { "type": "array", "items": { "type": "string" } }
+  }
+}

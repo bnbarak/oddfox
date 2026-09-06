@@ -1,0 +1,1249 @@
+{
+ "$schema": "../schema/houthi-timeline.schema.json",
+ "dataset": "houthi-timeline",
+ "title": "Houthi attacks on commercial vessels, 2023-2026",
+ "description": "Every attack in the Wikipedia timeline of Houthi attacks on commercial vessels, transcribed. Date, vessel, flag, method and result exactly as the source records them. The source table cites Reuters, AP and other outlets per row; it has not been cross-checked against Lloyd's List.",
+ "updated": "2026-09-04",
+ "source_ids": [
+  "wikipedia-houthi-attacks"
+ ],
+ "confidence": "medium",
+ "count": 103,
+ "date_range": [
+  "2023-11-19",
+  "2026-08-11"
+ ],
+ "monthly": [
+  {
+   "month": "2023-11",
+   "count": 3
+  },
+  {
+   "month": "2023-12",
+   "count": 14
+  },
+  {
+   "month": "2024-01",
+   "count": 10
+  },
+  {
+   "month": "2024-02",
+   "count": 8
+  },
+  {
+   "month": "2024-03",
+   "count": 3
+  },
+  {
+   "month": "2024-04",
+   "count": 11
+  },
+  {
+   "month": "2024-05",
+   "count": 4
+  },
+  {
+   "month": "2024-06",
+   "count": 16
+  },
+  {
+   "month": "2024-07",
+   "count": 7
+  },
+  {
+   "month": "2024-08",
+   "count": 7
+  },
+  {
+   "month": "2024-09",
+   "count": 1
+  },
+  {
+   "month": "2024-10",
+   "count": 4
+  },
+  {
+   "month": "2024-11",
+   "count": 1
+  },
+  {
+   "month": "2024-12",
+   "count": 0
+  },
+  {
+   "month": "2025-01",
+   "count": 0
+  },
+  {
+   "month": "2025-02",
+   "count": 0
+  },
+  {
+   "month": "2025-03",
+   "count": 0
+  },
+  {
+   "month": "2025-04",
+   "count": 0
+  },
+  {
+   "month": "2025-05",
+   "count": 0
+  },
+  {
+   "month": "2025-06",
+   "count": 0
+  },
+  {
+   "month": "2025-07",
+   "count": 2
+  },
+  {
+   "month": "2025-08",
+   "count": 1
+  },
+  {
+   "month": "2025-09",
+   "count": 4
+  },
+  {
+   "month": "2025-10",
+   "count": 0
+  },
+  {
+   "month": "2025-11",
+   "count": 0
+  },
+  {
+   "month": "2025-12",
+   "count": 0
+  },
+  {
+   "month": "2026-01",
+   "count": 0
+  },
+  {
+   "month": "2026-02",
+   "count": 0
+  },
+  {
+   "month": "2026-03",
+   "count": 0
+  },
+  {
+   "month": "2026-04",
+   "count": 0
+  },
+  {
+   "month": "2026-05",
+   "count": 0
+  },
+  {
+   "month": "2026-06",
+   "count": 0
+  },
+  {
+   "month": "2026-07",
+   "count": 3
+  },
+  {
+   "month": "2026-08",
+   "count": 4
+  }
+ ],
+ "outcomes": [
+  {
+   "label": "unknown",
+   "value": 33
+  },
+  {
+   "label": "unharmed",
+   "value": 27
+  },
+  {
+   "label": "damaged",
+   "value": 15
+  },
+  {
+   "label": "minor damage",
+   "value": 14
+  },
+  {
+   "label": "set afire",
+   "value": 8
+  },
+  {
+   "label": "sunk",
+   "value": 5
+  },
+  {
+   "label": "captured",
+   "value": 1
+  }
+ ],
+ "flags": [
+  {
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "value": 23
+  },
+  {
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "value": 11
+  },
+  {
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "value": 8
+  },
+  {
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "value": 5
+  },
+  {
+   "flag": "United States",
+   "flag_iso": "US",
+   "value": 5
+  },
+  {
+   "flag": "Singapore",
+   "flag_iso": "SG",
+   "value": 4
+  },
+  {
+   "flag": "Saudi Arabia",
+   "flag_iso": "SA",
+   "value": 4
+  },
+  {
+   "flag": "Barbados",
+   "flag_iso": "BB",
+   "value": 2
+  },
+  {
+   "flag": "Greece",
+   "flag_iso": "GR",
+   "value": 2
+  },
+  {
+   "flag": "Palau",
+   "flag_iso": "PW",
+   "value": 2
+  },
+  {
+   "flag": "Bahamas",
+   "flag_iso": "BS",
+   "value": 1
+  },
+  {
+   "flag": "Norway",
+   "flag_iso": "NO",
+   "value": 1
+  },
+  {
+   "flag": "Hong Kong",
+   "flag_iso": "HK",
+   "value": 1
+  },
+  {
+   "flag": "Belize",
+   "flag_iso": "BZ",
+   "value": 1
+  },
+  {
+   "flag": "Antigua and Barbuda",
+   "flag_iso": "AG",
+   "value": 1
+  },
+  {
+   "flag": "Netherlands",
+   "flag_iso": "NL",
+   "value": 1
+  },
+  {
+   "flag": "India",
+   "flag_iso": "IN",
+   "value": 1
+  },
+  {
+   "flag": "Dominica",
+   "flag_iso": "DM",
+   "value": 1
+  },
+  {
+   "flag": "Tanzania",
+   "flag_iso": "TZ",
+   "value": 1
+  }
+ ],
+ "entries": [
+  {
+   "n": 1,
+   "date": "2023-11-19",
+   "vessel": "Galaxy Leader",
+   "flag": "Bahamas",
+   "flag_iso": "BS",
+   "method": "Houthi Mil Mi-17 helicopter",
+   "outcome": "captured"
+  },
+  {
+   "n": 2,
+   "date": "2023-11-24",
+   "vessel": "CMA CGM Symi",
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "method": "Iran (Alleged)",
+   "outcome": "damaged"
+  },
+  {
+   "n": 3,
+   "date": "2023-11-26",
+   "vessel": "Central Park",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi crew",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 4,
+   "date": "2023-12-03",
+   "vessel": "Number 9",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi ballistic missile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 5,
+   "date": "2023-12-03",
+   "vessel": "Not named in source",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Minor damage",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 6,
+   "date": "2023-12-03",
+   "vessel": "Not named in source",
+   "flag": "Bahamas",
+   "flag_iso": "BS",
+   "method": "Minor damage",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 7,
+   "date": "2023-12-12",
+   "vessel": "Strinda",
+   "flag": "Norway",
+   "flag_iso": "NO",
+   "method": "Houthi missile",
+   "outcome": "set afire"
+  },
+  {
+   "n": 8,
+   "date": "2023-12-13",
+   "vessel": "Ardmore Encounter",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi drones",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 9,
+   "date": "2023-12-14",
+   "vessel": "Maersk Gibraltar",
+   "flag": "Hong Kong",
+   "flag_iso": "HK",
+   "method": "Houthi missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 10,
+   "date": "2023-12-15",
+   "vessel": "MSC Alanya",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi naval missile",
+   "outcome": "unknown"
+  },
+  {
+   "n": 11,
+   "date": "2023-12-15",
+   "vessel": "Not named in source",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Unknown",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 12,
+   "date": "2023-12-15",
+   "vessel": "Not named in source",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Set afire",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 13,
+   "date": "2023-12-18",
+   "vessel": "MSC Clara",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi drones",
+   "outcome": "unknown"
+  },
+  {
+   "n": 14,
+   "date": "2023-12-18",
+   "vessel": "Norway",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Minor damage",
+   "outcome": "unknown"
+  },
+  {
+   "n": 15,
+   "date": "2023-12-26",
+   "vessel": "MSC United VIII",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi naval missile",
+   "outcome": "unknown"
+  },
+  {
+   "n": 16,
+   "date": "2023-12-30",
+   "vessel": "Maersk Hangzhou",
+   "flag": "Singapore",
+   "flag_iso": "SG",
+   "method": "Houthi land-based missile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 17,
+   "date": "2023-12-31",
+   "vessel": "Maersk Hangzhou",
+   "flag": "Singapore",
+   "flag_iso": "SG",
+   "method": "Houthi crew",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 18,
+   "date": "2024-01-12",
+   "vessel": "Khalissa",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi projectile",
+   "outcome": "unknown"
+  },
+  {
+   "n": 19,
+   "date": "2024-01-15",
+   "vessel": "Gibraltar Eagle",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi anti-ship missile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 20,
+   "date": "2024-01-16",
+   "vessel": "Zografia",
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "method": "Ballistic missile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 21,
+   "date": "2024-01-17",
+   "vessel": "Genco Picardy",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi drone",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 22,
+   "date": "2024-01-18",
+   "vessel": "Chem Ranger",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi anti-ship ballistic missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 23,
+   "date": "2024-01-22",
+   "vessel": "Ocean Jazz",
+   "flag": "United States",
+   "flag_iso": "US",
+   "method": "Houthis",
+   "outcome": "unknown"
+  },
+  {
+   "n": 24,
+   "date": "2024-01-24",
+   "vessel": "Maersk Detroit",
+   "flag": "United States",
+   "flag_iso": "US",
+   "method": "Houthi missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 25,
+   "date": "2024-01-24",
+   "vessel": "Not named in source",
+   "flag": "United States",
+   "flag_iso": "US",
+   "method": "Unharmed",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field. Corrected 2026-09-04 (missed in the first pass)."
+  },
+  {
+   "n": 26,
+   "date": "2024-01-26",
+   "vessel": "Marlin Luanda",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi missile",
+   "outcome": "set afire"
+  },
+  {
+   "n": 27,
+   "date": "2024-01-30",
+   "vessel": "Koi",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi naval missiles",
+   "outcome": "unknown"
+  },
+  {
+   "n": 28,
+   "date": "2024-02-06",
+   "vessel": "Morning Tide",
+   "flag": "Barbados",
+   "flag_iso": "BB",
+   "method": "Houthis",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 29,
+   "date": "2024-02-06",
+   "vessel": "Not named in source",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Minor damage",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 30,
+   "date": "2024-02-12",
+   "vessel": "Star Iris",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi missiles",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 31,
+   "date": "2024-02-16",
+   "vessel": "Pollux",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi missile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 32,
+   "date": "2024-02-18",
+   "vessel": "Rubymar",
+   "flag": "Belize",
+   "flag_iso": "BZ",
+   "method": "Houthi anti-ship missile",
+   "outcome": "sunk"
+  },
+  {
+   "n": 33,
+   "date": "2024-02-19",
+   "vessel": "Sea Champion",
+   "flag": "Greece",
+   "flag_iso": "GR",
+   "method": "Houthi naval missiles",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 34,
+   "date": "2024-02-19",
+   "vessel": "Not named in source",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Minor damage",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 35,
+   "date": "2024-02-22",
+   "vessel": "Islander",
+   "flag": "Palau",
+   "flag_iso": "PW",
+   "method": "Houthi missile",
+   "outcome": "damaged"
+  },
+  {
+   "n": 36,
+   "date": "2024-03-06",
+   "vessel": "True Confidence",
+   "flag": "Barbados",
+   "flag_iso": "BB",
+   "method": "Houthi anti-ship missile",
+   "outcome": "set afire"
+  },
+  {
+   "n": 37,
+   "date": "2024-03-08",
+   "vessel": "Propel Fortune",
+   "flag": "Singapore",
+   "flag_iso": "SG",
+   "method": "Houthi anti-ship missiles",
+   "outcome": "unknown"
+  },
+  {
+   "n": 38,
+   "date": "2024-03-24",
+   "vessel": "Huang Pu",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi anti-ship ballistic missile",
+   "outcome": "unknown"
+  },
+  {
+   "n": 39,
+   "date": "2024-04-07",
+   "vessel": "Hope Island",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthis",
+   "outcome": "unknown"
+  },
+  {
+   "n": 40,
+   "date": "2024-04-07",
+   "vessel": "Not named in source",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Unknown",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 42,
+   "date": "2024-04-09",
+   "vessel": "Maersk Yorktown",
+   "flag": "United States",
+   "flag_iso": "US",
+   "method": "Houthi anti-ship missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 43,
+   "date": "2024-04-09",
+   "vessel": "Not named in source",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Unknown",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 44,
+   "date": "2024-04-09",
+   "vessel": "Not named in source",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Unknown",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 45,
+   "date": "2024-04-24",
+   "vessel": "Maersk Yorktown",
+   "flag": "United States",
+   "flag_iso": "US",
+   "method": "Houthi missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 46,
+   "date": "2024-04-24",
+   "vessel": "Portugal",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Unknown",
+   "outcome": "unknown"
+  },
+  {
+   "n": 47,
+   "date": "2024-04-26",
+   "vessel": "Andromeda Star",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi missiles",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 48,
+   "date": "2024-04-26",
+   "vessel": "Not named in source",
+   "flag": "Antigua and Barbuda",
+   "flag_iso": "AG",
+   "method": "Unharmed",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 49,
+   "date": "2024-04-29",
+   "vessel": "Cyclades",
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "method": "Houthi missiles and UAVs",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 50,
+   "date": "2024-04-29",
+   "vessel": "Portugal",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Minor damage",
+   "outcome": "unknown"
+  },
+  {
+   "n": 51,
+   "date": "2024-05-18",
+   "vessel": "Wind",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi missiles",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 52,
+   "date": "2024-05-23",
+   "vessel": "Yannis",
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "method": "Houthi missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 53,
+   "date": "2024-05-23",
+   "vessel": "Not named in source",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Unharmed",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 54,
+   "date": "2024-05-28",
+   "vessel": "Laax",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Houthi missiles",
+   "outcome": "damaged"
+  },
+  {
+   "n": 55,
+   "date": "2024-06-01",
+   "vessel": "Abliani",
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "method": "Houthi drones and rockets",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 56,
+   "date": "2024-06-01",
+   "vessel": "Not named in source",
+   "flag": "Malta",
+   "flag_iso": "MT",
+   "method": "Unharmed",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 57,
+   "date": "2024-06-01",
+   "vessel": "Not named in source",
+   "flag": "Marshall Islands",
+   "flag_iso": "MH",
+   "method": "Unharmed",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 58,
+   "date": "2024-06-08",
+   "vessel": "Norderney",
+   "flag": "Antigua and Barbuda",
+   "flag_iso": "AG",
+   "method": "Houthi missiles",
+   "outcome": "set afire"
+  },
+  {
+   "n": 59,
+   "date": "2024-06-08",
+   "vessel": "MSC Tavivshi",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi ballistic missile",
+   "outcome": "set afire"
+  },
+  {
+   "n": 60,
+   "date": "2024-06-09",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Houthi ballistic missile",
+   "outcome": "damaged"
+  },
+  {
+   "n": 61,
+   "date": "2024-06-12",
+   "vessel": "Tutor",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi Toufan-1 USV, ballistic missiles, drones",
+   "outcome": "sunk"
+  },
+  {
+   "n": 62,
+   "date": "2024-06-13",
+   "vessel": "Verbena",
+   "flag": "Palau",
+   "flag_iso": "PW",
+   "method": "Houthi cruise missiles",
+   "outcome": "set afire"
+  },
+  {
+   "n": 63,
+   "date": "2024-06-13",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Unharmed",
+   "outcome": "unknown"
+  },
+  {
+   "n": 64,
+   "date": "2024-06-16",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Unknown",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 65,
+   "date": "2024-06-21",
+   "vessel": "Transworld Navigator",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi ballistic missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 66,
+   "date": "2024-06-23",
+   "vessel": "Transworld Navigator",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi USV",
+   "outcome": "damaged"
+  },
+  {
+   "n": 67,
+   "date": "2024-06-24",
+   "vessel": "MSC Sarah V",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi Hatem 2 hypersonic missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 68,
+   "date": "2024-06-26",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Houthi missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 69,
+   "date": "2024-06-27",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Likely Houthi USV",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 70,
+   "date": "2024-06-28",
+   "vessel": "Delonix",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi ballistic missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 71,
+   "date": "2024-07-09",
+   "vessel": "Maersk Sentosa",
+   "flag": "United States",
+   "flag_iso": "US",
+   "method": "Houthi missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 72,
+   "date": "2024-07-10",
+   "vessel": "Mount Fuji",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Likely Houthi weapons",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 73,
+   "date": "2024-07-11",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Likely Houthi missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 74,
+   "date": "2024-07-15",
+   "vessel": "Bentley I",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi USV, patrol boats, ballistic missiles",
+   "outcome": "damaged"
+  },
+  {
+   "n": 75,
+   "date": "2024-07-15",
+   "vessel": "Not named in source",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Damaged",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 76,
+   "date": "2024-07-19",
+   "vessel": "Lobivia",
+   "flag": "Singapore",
+   "flag_iso": "SG",
+   "method": "Houthi ballistic missiles, UAVs",
+   "outcome": "set afire"
+  },
+  {
+   "n": 77,
+   "date": "2024-07-20",
+   "vessel": "Pumba",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi UAVs, USV",
+   "outcome": "damaged"
+  },
+  {
+   "n": 78,
+   "date": "2024-08-03",
+   "vessel": "Groton",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi ballistic missiles",
+   "outcome": "damaged"
+  },
+  {
+   "n": 79,
+   "date": "2024-08-08",
+   "vessel": "Delta Blue",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi RPG, USV, missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 80,
+   "date": "2024-08-13",
+   "vessel": "Delta Atlantica",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Likely Houthi USV, other weapons",
+   "outcome": "damaged"
+  },
+  {
+   "n": 81,
+   "date": "2024-08-13",
+   "vessel": "Not named in source",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Unharmed",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 82,
+   "date": "2024-08-21",
+   "vessel": "Sounion",
+   "flag": "Greece",
+   "flag_iso": "GR",
+   "method": "Houthi boats, USV, other weapons",
+   "outcome": "set afire"
+  },
+  {
+   "n": 83,
+   "date": "2024-08-21",
+   "vessel": "Not named in source",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Damaged",
+   "outcome": "unknown",
+   "data_note": "Flag was recorded in the vessel field and flag was Unknown. Corrected 2026-09-04."
+  },
+  {
+   "n": 84,
+   "date": "2024-08-30",
+   "vessel": "Groton",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 85,
+   "date": "2024-09-02",
+   "vessel": "Blue Lagoon I",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi ballistic missiles",
+   "outcome": "damaged"
+  },
+  {
+   "n": 86,
+   "date": "2024-10-01",
+   "vessel": "Cordelia Moon",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi missiles, USV",
+   "outcome": "damaged"
+  },
+  {
+   "n": 87,
+   "date": "2024-10-01",
+   "vessel": "Minoan Courage",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi missile",
+   "outcome": "damaged"
+  },
+  {
+   "n": 88,
+   "date": "2024-10-10",
+   "vessel": "Olympic Spirit",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi ballistic missiles, drones",
+   "outcome": "damaged"
+  },
+  {
+   "n": 89,
+   "date": "2024-10-29",
+   "vessel": "Motaro",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi weapons",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 90,
+   "date": "2024-11-19",
+   "vessel": "Anadolu S",
+   "flag": "Panama",
+   "flag_iso": "PA",
+   "method": "Houthi missiles",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 91,
+   "date": "2025-07-06",
+   "vessel": "Magic Seas",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi gunfire, RPGs, USVs",
+   "outcome": "sunk"
+  },
+  {
+   "n": 92,
+   "date": "2025-07-07",
+   "vessel": "Eternity C",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi UAVs, RPGs, USVs",
+   "outcome": "sunk"
+  },
+  {
+   "n": 93,
+   "date": "2025-08-31",
+   "vessel": "Scarlet Ray",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 94,
+   "date": "2025-09-02",
+   "vessel": "MSC Aby",
+   "flag": "Liberia",
+   "flag_iso": "LR",
+   "method": "Houthi drones, missile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 95,
+   "date": "2025-09-04",
+   "vessel": "Unknown",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Unknown projectile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 96,
+   "date": "2025-09-23",
+   "vessel": "Minervagracht",
+   "flag": "Netherlands",
+   "flag_iso": "NL",
+   "method": "Unknown projectile",
+   "outcome": "unharmed"
+  },
+  {
+   "n": 97,
+   "date": "2025-09-29",
+   "vessel": "Houthi cruise missile",
+   "flag": "Unknown",
+   "flag_iso": null,
+   "method": "Unknown",
+   "outcome": "unknown",
+   "data_note": "Vessel field held an event description: 'Houthi cruise missile'. Flagged 2026-09-04, not corrected because the source wording is unclear."
+  },
+  {
+   "n": 99,
+   "date": "2026-07-22",
+   "vessel": "Layla",
+   "flag": "Saudi Arabia",
+   "flag_iso": "SA",
+   "method": "Houthi missiles and drones",
+   "outcome": "unknown"
+  },
+  {
+   "n": 100,
+   "date": "2026-07-24",
+   "vessel": "NCC Masa",
+   "flag": "Saudi Arabia",
+   "flag_iso": "SA",
+   "method": "Unknown projectile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 101,
+   "date": "2026-07-28",
+   "vessel": "NCC Ghazal",
+   "flag": "Saudi Arabia",
+   "flag_iso": "SA",
+   "method": "Houthi anti-ship missiles",
+   "outcome": "damaged"
+  },
+  {
+   "n": 102,
+   "date": "2026-08-04",
+   "vessel": "Faize Noore Oliya",
+   "flag": "India",
+   "flag_iso": "IN",
+   "method": "USV",
+   "outcome": "sunk"
+  },
+  {
+   "n": 103,
+   "date": "2026-08-05",
+   "vessel": "NCC Wafa",
+   "flag": "Saudi Arabia",
+   "flag_iso": "SA",
+   "method": "Houthi ballistic missiles",
+   "outcome": "unknown"
+  },
+  {
+   "n": 104,
+   "date": "2026-08-05",
+   "vessel": "Daisy",
+   "flag": "Dominica",
+   "flag_iso": "DM",
+   "method": "Houthi ballistic missile",
+   "outcome": "minor damage"
+  },
+  {
+   "n": 105,
+   "date": "2026-08-11",
+   "vessel": "Tihamah",
+   "flag": "Tanzania",
+   "flag_iso": "TZ",
+   "method": "Houthi ballistic missiles",
+   "outcome": "damaged"
+  }
+ ],
+ "retrieved": "2026-09-02",
+ "corrections": [
+  {
+   "date": "2026-09-04",
+   "fixed": 16,
+   "issue": "16 entries carried the flag state in the vessel field with flag set to Unknown. The two columns were swapped on ingest.",
+   "action": "Country moved to flag, vessel set to 'Not named in source'. No vessel name was invented."
+  },
+  {
+   "date": "2026-09-04",
+   "flagged": 1,
+   "issue": "Some entries carry an event description rather than a vessel name in the vessel field.",
+   "action": "Flagged only. Not corrected, because it is unclear what the source intended."
+  },
+  {
+   "date": "2026-09-04",
+   "fixed": 1,
+   "issue": "One more entry (United States) missed in the first column-swap fix.",
+   "action": "Corrected the same way as the other 16."
+  }
+ ]
+}

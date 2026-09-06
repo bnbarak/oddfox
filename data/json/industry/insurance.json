@@ -1,0 +1,215 @@
+{
+ "dataset": "industry-insurance",
+ "title": "What risk costs",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "how_war_risk_works": "Quoted as a percentage of the insured hull value, usually for a seven-day cover period rather than per voyage or per year. Underwriters price individually, so a published rate is indicative. Discounts are common and vessels with US, UK or Israeli links have been quoted materially higher than the market rate.",
+ "war_risk_series": [
+  {
+   "area": "Southern Red Sea / Bab el-Mandeb",
+   "rate_pct": 0.03,
+   "label": "0.03%",
+   "period": "before December 2023",
+   "basis": "seven-day",
+   "note": "Pre-campaign baseline, described as an estimate.",
+   "source_ids": [
+    "reuters-warrisk-2023-12"
+   ]
+  },
+  {
+   "area": "Southern Red Sea / Bab el-Mandeb",
+   "rate_pct_low": 0.05,
+   "rate_pct_high": 0.1,
+   "label": "0.05-0.10%",
+   "period": "2023-12-04",
+   "basis": "seven-day",
+   "source_ids": [
+    "reuters-warrisk-2023-12"
+   ]
+  },
+  {
+   "area": "Red Sea",
+   "rate_pct": 1.0,
+   "label": "about 1%",
+   "period": "2024-01-16",
+   "basis": "seven-day",
+   "note": "Up from about 0.7% the prior week. Hundreds of thousands of dollars per seven-day voyage.",
+   "source_ids": [
+    "reuters-warrisk-2024-01"
+   ]
+  },
+  {
+   "area": "Red Sea",
+   "rate_pct": 2.0,
+   "label": "up to 2%",
+   "period": "2024-09-19",
+   "basis": "single transit",
+   "note": "Quoted by Marsh UK marine CEO Louise Nevill.",
+   "source_ids": [
+    "reuters-warrisk-2024-09"
+   ]
+  },
+  {
+   "area": "Red Sea",
+   "rate_pct": 0.5,
+   "label": "about 0.5%",
+   "period": "2025-03-17",
+   "basis": "voyage, typically seven days",
+   "note": "Eased from above 0.7% in December. US and UK linked ships quoted up to 2%.",
+   "source_ids": [
+    "reuters-warrisk-2025-03"
+   ]
+  },
+  {
+   "area": "Strait of Hormuz",
+   "rate_pct": 0.5,
+   "label": "0.5%",
+   "period": "2025-06-23",
+   "basis": "seven-day",
+   "note": "Up from 0.2-0.3% a week earlier.",
+   "source_ids": [
+    "reuters-warrisk-2025-06"
+   ]
+  },
+  {
+   "area": "Red Sea",
+   "rate_pct": 0.7,
+   "label": "about 0.7%",
+   "period": "2025-07-10",
+   "basis": "seven-day",
+   "note": "Quoted up to 1%.",
+   "source_ids": [
+    "reuters-warrisk-2025-07"
+   ]
+  },
+  {
+   "area": "Southern Red Sea",
+   "rate_pct": 0.3,
+   "label": "about 0.3%",
+   "period": "2026-07 before the blockade announcement",
+   "basis": "seven-day",
+   "source_ids": [
+    "reuters-warrisk-2026-07"
+   ]
+  },
+  {
+   "area": "Southern Red Sea",
+   "rate_pct": 0.75,
+   "label": "about 0.75%",
+   "period": "2026-07 after the blockade announcement",
+   "basis": "seven-day",
+   "source_ids": [
+    "reuters-warrisk-2026-07"
+   ]
+  },
+  {
+   "area": "Southern Red Sea",
+   "rate_pct": 1.0,
+   "label": "over 1%",
+   "period": "2026-07 after further attacks",
+   "basis": "seven-day",
+   "source_ids": [
+    "reuters-warrisk-2026-07"
+   ]
+  }
+ ],
+ "conflict": {
+  "field": "Strait of Hormuz war risk, July 2026",
+  "held_in_library": "risk-economics.json records 7.5-10% of hull value, at confidence high.",
+  "contradicted_by": "Reuters reports Hormuz at 0.5% on 2025-06-23, up from 0.2-0.3%, and the highest Red Sea figure found anywhere is 2%.",
+  "assessment": "7.5-10% of hull value would be $7.5-10 million on a $100 million vessel for one transit, which is far outside every other figure in this series. The most likely explanations are a units error or a percentage change misread as a percentage of hull value.",
+  "action": "Confidence downgraded to low and the figure flagged. Do not use externally until a primary broker source confirms it.",
+  "source_ids": [
+   "reuters-warrisk-2025-06",
+   "reuters-warrisk-2026-07"
+  ]
+ },
+ "pandi_general_increases": [
+  {
+   "club": "Gard",
+   "policy_year": "2025",
+   "increase": "average 4% on estimated total call",
+   "source_ids": [
+    "gard-2025"
+   ]
+  },
+  {
+   "club": "Gard",
+   "policy_year": "2026",
+   "increase": "no mandatory general increase; average 5% on ETC, with a 10% owners' general discount for renewing members",
+   "source_ids": [
+    "gard-2026"
+   ]
+  },
+  {
+   "club": "NorthStandard",
+   "policy_year": "2026/27",
+   "increase": "5% P&I and 5% FD&D",
+   "source_ids": [
+    "northstandard-2026"
+   ]
+  },
+  {
+   "club": "Skuld",
+   "policy_year": "2026/27",
+   "increase": "no general increase; 7.5% overall adjustment target based on individual performance",
+   "source_ids": [
+    "skuld-2026"
+   ]
+  },
+  {
+   "club": "Steamship Mutual",
+   "policy_year": "2025/26",
+   "increase": "5% general increase, all classes",
+   "source_ids": [
+    "steamship-2025"
+   ]
+  },
+  {
+   "club": "Steamship Mutual",
+   "policy_year": "2026/27",
+   "increase": "8% general increase, all classes",
+   "source_ids": [
+    "steamship-2026"
+   ]
+  }
+ ],
+ "rerouting_cost": [
+  {
+   "item": "Extra fuel per Asia to North Europe round trip via the Cape instead of Suez",
+   "value": "up to $1 million",
+   "date": "2024-01-05",
+   "source_ids": [
+    "reuters-maersk-divert"
+   ]
+  },
+  {
+   "item": "Hapag-Lloyd cost of diverting 25 ships, 18-31 December 2023",
+   "value": "two-digit million euros",
+   "date": "2024-01-05",
+   "source_ids": [
+    "reuters-maersk-divert"
+   ]
+  }
+ ],
+ "security_pricing": {
+  "finding": "No current price for armed guards, PCASP or any commercial escort service could be found for 2023 onward. The only published pricing remains 2012.",
+  "historic_only": {
+   "value": "$5,000 per day for a four-man team, up to $60,000 for a Gulf of Aden voyage",
+   "date": "2012",
+   "source_ids": [
+    "cato-pmsc-2012"
+   ]
+  },
+  "implication": "Our price anchor is fourteen years old. This is the single biggest hole in the commercial case."
+ },
+ "gaps": [
+  "No current armed guard or PCASP pricing anywhere in public sources, 2023 onward.",
+  "No commercial escort service price is published by anyone.",
+  "No hull and machinery premium figures retrieved.",
+  "No kidnap and ransom pricing.",
+  "No loss of hire daily rates.",
+  "P&I general increases are published, but cost per gross tonne is not.",
+  "The Hormuz 7.5-10% figure in risk-economics.json is unverified and probably wrong."
+ ]
+}

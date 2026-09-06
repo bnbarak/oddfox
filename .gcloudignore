@@ -1,0 +1,9 @@
+.git/
+.claude/
+media-src/
+data/
+OddFoxOffice/
+firebase.json
+deploy-gcs.sh
+README.md
+.gitignore

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/market-players.schema.json",
+  "title": "Marine security companies",
+  "type": "object",
+  "required": [
+    "dataset",
+    "categories",
+    "records",
+    "gaps"
+  ],
+  "properties": {
+    "dataset": {
+      "const": "market-players"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "country",
+          "categories",
+          "relation",
+          "what",
+          "source_ids",
+          "confidence"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "country_iso": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Z]{2}$"
+          },
+          "categories": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "relation": {
+            "enum": [
+              "direct competitor",
+              "adjacent",
+              "adjacent platform builder",
+              "supplier",
+              "reference"
+            ],
+            "description": "Working classification of where the company sits relative to an autonomous escort service. Not an assessment of quality, capability or fit."
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "founded": {
+            "type": "integer"
+          },
+          "what": {
+            "type": "string",
+            "description": "What the company states it does. Descriptive only."
+          },
+          "note": {
+            "type": "string"
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "description": "May be empty only where confidence is low and the note says the entry is unverified."
+          },
+          "confidence": {
+            "$ref": "common.schema.json#/$defs/confidence"
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /brief
+Disallow: /assets/d/
+
+Sitemap: https://oddfox.ai/sitemap.xml

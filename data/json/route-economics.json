@@ -1,0 +1,333 @@
+{
+  "$schema": "../schema/route-economics.schema.json",
+  "dataset": "route-economics",
+  "title": "What protection is worth",
+  "description": "Three numbers bound the price of any maritime escort product: what it costs to avoid the risk entirely (the Cape), what it costs to buy the existing substitute (armed guards), and what the risk itself is priced at (war-risk premium, in risk-economics.json). Anything charged above the cheapest of those is a hard sell.",
+  "updated": "2026-09-02",
+  "the_alternative": {
+    "name": "Route around the Cape of Good Hope",
+    "note": "This is the competitor. Not another security company — the option of simply not going.",
+    "penalties": [
+      {
+        "metric": "Extra transit time, Asia to Europe",
+        "value": "10-14 days",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "metric": "Transit time via Suez, China to Europe",
+        "value": "25-34 days",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "metric": "Transit time via the Cape, China to Europe",
+        "value": "38-50 days",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "metric": "Additional fuel consumption",
+        "value": "roughly 30% more per trip",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "metric": "Extra distance",
+        "value": "about 10,000 km",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "metric": "Global container capacity absorbed by the diversion",
+        "value": "about 6%",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium",
+        "note": "Not more cargo — the same cargo taking more days at sea. That capacity drain lifted freight rates on lanes with no connection to the Red Sea at all."
+      },
+      {
+        "metric": "Extra fuel oil burned by tankers, 2024",
+        "value": "about 200,000 barrels per day",
+        "source_ids": [
+          "spglobal-cape-reroutes"
+        ],
+        "confidence": "medium",
+        "note": "Trafigura estimate."
+      }
+    ],
+    "what_it_avoids": [
+      {
+        "metric": "Suez toll, large container ship",
+        "value": "several hundred thousand to over one million dollars",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "metric": "Suez toll, ultra-large container ship",
+        "value": "1 to 1.5 million dollars",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "source_ids": [
+      "conqueror-suez-vs-cape-2026"
+    ]
+  },
+  "the_substitute": {
+    "name": "Privately Contracted Armed Security Personnel (PCASP)",
+    "vintage_warning": "The pricing below is from 2012, at the peak of Somali piracy. It is the clearest published price data available and it establishes the shape of the market, but every figure needs re-basing against a current broker quote before it is used commercially. Treat as historical, not current.",
+    "prices": [
+      {
+        "item": "Four-man armed team, per day",
+        "value": "about $5,000",
+        "period": "2012",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low"
+      },
+      {
+        "item": "Typical deployment length",
+        "value": "4 to 20 days on duty",
+        "period": "2012",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low"
+      },
+      {
+        "item": "Full transit of the Gulf of Aden",
+        "value": "up to $60,000",
+        "period": "2012",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low"
+      },
+      {
+        "item": "Four-man team on a 40-day rotation",
+        "value": "$56,000-64,000 plus the security company's margin",
+        "period": "2012",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low",
+        "note": "Stratfor estimate."
+      },
+      {
+        "item": "Typical armed team per transit",
+        "value": "about $50,000",
+        "period": "2012",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low",
+        "note": "Independent Maritime Security Association figure."
+      }
+    ],
+    "market_size_2012": [
+      {
+        "metric": "PMSC revenue",
+        "value": "$52.2 million per month across an estimated 1,500 escorted journeys",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low"
+      },
+      {
+        "metric": "Gulf of Aden market at 25% vessel adoption",
+        "value": "about $530.6 million per year across 10,612 transits",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low"
+      },
+      {
+        "metric": "Gulf of Aden market at 50% adoption",
+        "value": "about $1 billion per year, in that one waterway alone",
+        "source_ids": [
+          "cato-pmsc-2012"
+        ],
+        "confidence": "low"
+      }
+    ],
+    "friction": [
+      "Weapons are legal at sea for self-defence but the law changes the moment the team heads to port. Providers have been arrested and jailed in Somalia, Egypt and Kenya, and some contractors have reportedly dropped weapons overboard before entering weapons-restrictive ports.",
+      "Carriage of armed personnel is a flag-state authorisation, with separate legal implications for every coastal and port state on the route. Over 8,000 ports fall under the ISPS Code with no unified rule on armed security.",
+      "Some major maritime operators specifically prefer armed escorts precisely because it keeps armed men, and the liability, off their own vessels.",
+      "Underwriters give discounts to ships that hire armed guards — which is the mechanism any escort product needs to replicate."
+    ],
+    "source_ids": [
+      "cato-pmsc-2012",
+      "imo-pcasp"
+    ]
+  },
+  "escort_precedent": {
+    "name": "Convoy Escort Programme Ltd",
+    "period": "2012",
+    "hq": "Newcastle upon Tyne, UK",
+    "model": "Seven armoured former naval patrol boats, each carrying an eight-man security team, escorting merchant convoys",
+    "price": "About $30,000 for one boat escorting a convoy of roughly four commercial vessels for three to four days",
+    "derived": {
+      "cost_per_vessel_per_transit_usd": 7500,
+      "how": "$30,000 divided across four escorted vessels",
+      "versus_armed_team_usd": "50,000-60,000 per transit",
+      "ratio": "roughly 7-8x cheaper per protected vessel than an embarked armed team",
+      "caveat": "This is our arithmetic on 2012 figures, not a published finding. It ignores mobilisation, transit positioning, insurance and the fact that convoying forces ships onto a shared schedule."
+    },
+    "source_ids": [
+      "cato-pmsc-2012"
+    ],
+    "confidence": "low"
+  },
+  "historic_cost_of_piracy_2012": {
+    "vintage_warning": "2012 figures at the Somali peak. Useful for orders of magnitude and for showing that the total cost of piracy is borne by many parties at once, not by the shipowner alone.",
+    "items": [
+      {
+        "item": "Bypassing the Gulf of Aden entirely",
+        "value": "3,000 extra miles, 2-3 weeks; $3.5 million per year in extra fuel for tankers and $74.4 million per year for the liner trades"
+      },
+      {
+        "item": "War-risk insurance per ship per voyage",
+        "value": "rose from about $500 in 2007 to about $20,000, excluding injury, liability and ransom cover"
+      },
+      {
+        "item": "Ransoms paid",
+        "value": "$30-150 million in 2008; per vessel from about $500,000 in 2004 to upwards of $5.5 million by 2009"
+      },
+      {
+        "item": "Multinational naval presence",
+        "value": "$250-400 million per year"
+      }
+    ],
+    "structural_forecast": "The Security Association for the Maritime Industry projected in 2012 that over the following twenty years maritime traffic would rise 50% while navies shrank 30%. Fourteen years into that twenty, the Somali resurgence of 2026 is what a widening gap between traffic and naval coverage looks like.",
+    "source_ids": [
+      "cato-pmsc-2012"
+    ],
+    "confidence": "low"
+  },
+  "suez_traffic": {
+    "note": "Canal revenue is the cleanest public proxy for whether ships are using the Red Sea. It is Egypt's number, published monthly, and it moves before anything else does.",
+    "points": [
+      {
+        "period": "2023",
+        "metric": "Suez toll revenue",
+        "value_usd_bn": 10.25,
+        "note": "Record year.",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "period": "2024",
+        "metric": "Suez toll revenue",
+        "value_usd_bn": 4.2,
+        "note": "Conflicting figure: WorldCargo News reports 2024 at $3.9bn and 2025 at $4.2bn. Both are recorded here rather than one being silently chosen. Verify against the Suez Canal Authority directly before quoting.",
+        "source_ids": [
+          "conqueror-suez-vs-cape-2026",
+          "worldcargonews-suez-recovery"
+        ],
+        "confidence": "low"
+      },
+      {
+        "period": "2025",
+        "metric": "Suez toll revenue",
+        "value_usd_bn": 4.2,
+        "source_ids": [
+          "worldcargonews-suez-recovery"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "period": "FY2025/26",
+        "metric": "Suez toll revenue",
+        "value_usd_bn": 4.67,
+        "source_ids": [
+          "aa-suez-2026"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "period": "2023-2025",
+        "metric": "Total Egyptian revenue lost",
+        "value_usd_bn": 9,
+        "note": "Stated by President Sisi in January 2026 as the two-year loss attributed to the Gaza war and the shipping crisis.",
+        "source_ids": [
+          "aa-suez-2026"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "recovery_2026": {
+      "as_of": "2026-02",
+      "vessels_ytd": 1315,
+      "vessels_ytd_prior": 1243,
+      "net_tonnage_ytd_m": 56,
+      "net_tonnage_ytd_prior_m": 47,
+      "revenue_ytd_usd_m": 449,
+      "revenue_ytd_prior_usd_m": 368,
+      "fiscal_h1_vessel_growth_pct": 5.8,
+      "fiscal_h1_tonnage_growth_pct": 16,
+      "trigger": "The Suez Canal Authority attributes recovery to the final quarter of 2025, following the Sharm el-Sheikh summit and the resulting Gaza ceasefire.",
+      "source_ids": [
+        "aa-suez-2026"
+      ],
+      "confidence": "high"
+    },
+    "imf_projection": {
+      "note": "IMF projection of Suez revenue, showing the expected shape of normalisation.",
+      "points": [
+        {
+          "period": "FY2025/26",
+          "value_usd_bn": 6.3,
+          "basis": "estimate"
+        },
+        {
+          "period": "FY2026/27",
+          "value_usd_bn": 8.2
+        },
+        {
+          "period": "FY2027/28",
+          "value_usd_bn": 9.9
+        },
+        {
+          "period": "FY2028/29",
+          "value_usd_bn": 11.5
+        },
+        {
+          "period": "FY2029/30",
+          "value_usd_bn": 11.9
+        }
+      ],
+      "source_ids": [
+        "egypt-sis-suez"
+      ],
+      "confidence": "low"
+    }
+  },
+  "open_questions": [
+    "What happened to Convoy Escort Programme Ltd, and why did crewed convoy escort not become standard? This is the single highest-value unanswered question in the library.",
+    "What does a PCASP transit cost in 2026, not 2012? Every price in the substitute section needs re-basing from a live broker quote.",
+    "Will an underwriter discount a war-risk premium for an autonomous escort, and who certifies it? Armed guards already earn a discount. Without an equivalent, the value has to come entirely from the routing saving.",
+    "What is the per-lane, per-ship-class Cape diversion delta after netting off tolls? The headline diversion cost overstates the addressable price, possibly by a lot.",
+    "How much would convoying cost a carrier in schedule reliability? Predictability is what carriers say they are buying on the Cape route, and a convoy schedule takes some of it back."
+  ],
+  "retrieved": "2026-09-02"
+}

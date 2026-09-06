@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/ownership-model.schema.json",
+  "title": "Ship ownership model",
+  "type": "object",
+  "required": ["dataset", "records", "charter_types", "resolution_path"],
+  "properties": {
+    "dataset": { "const": "ownership-model" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "role", "layer", "definition"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "role": { "type": "string" },
+          "layer": { "enum": ["legal", "economic", "operational", "commercial", "risk"] },
+          "definition": { "type": "string" },
+          "who_it_usually_is": { "type": "string" },
+          "buys_security": { "type": "boolean", "description": "Can sign a contract for protection." },
+          "influences_purchase": { "type": "boolean", "description": "Does not buy, but prices or gates the decision." },
+          "found_in": { "type": "array", "items": { "type": "string" } },
+          "notes": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+        }
+      }
+    },
+    "charter_types": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "what_is_rented", "who_picks_the_route"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "name": { "type": "string" },
+          "what_is_rented": { "type": "string" },
+          "who_crews": { "enum": ["Owner", "Charterer"] },
+          "who_pays_bunkers": { "enum": ["Owner", "Charterer"] },
+          "who_picks_the_route": { "type": "string" },
+          "war_risk_premium_usually_borne_by": { "type": "string" },
+          "relevance": { "type": "string" }
+        }
+      }
+    },
+    "resolution_path": {
+      "type": "object",
+      "required": ["steps"],
+      "properties": {
+        "description": { "type": "string" },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["step", "input", "action", "tool", "cost"],
+            "properties": {
+              "step": { "type": "integer", "minimum": 1 },
+              "input": { "type": "string" },
+              "action": { "type": "string" },
+              "tool": { "type": "string" },
+              "cost": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/chokepoints.schema.json",
+  "title": "High-risk passages",
+  "type": "object",
+  "required": ["dataset", "records"],
+  "properties": {
+    "dataset": { "const": "chokepoints" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "region", "on_oddfox_site", "why_it_matters"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "name": { "type": "string" },
+          "region": { "type": "string" },
+          "coords": { "$ref": "common.schema.json#/$defs/coords" },
+          "on_oddfox_site": { "type": "boolean", "description": "Whether the passage is named on oddfox.ai. Tracked so marketing claims can be checked against the incident record." },
+          "threat_types": { "type": "array", "items": { "type": "string" } },
+          "primary_actor": { "type": "string" },
+          "status": { "type": "string" },
+          "status_note": { "type": "string" },
+          "reporting_body": { "type": "string" },
+          "incident_ids": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/id" } },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "why_it_matters": { "type": "string" }
+        }
+      }
+    }
+  }
+}

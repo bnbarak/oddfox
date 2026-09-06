@@ -1,0 +1,5255 @@
+{
+ "$schema": "../schema/market-players.schema.json",
+ "dataset": "market-players",
+ "title": "Marine security technology and services companies",
+ "description": "Companies operating in maritime security. Grouped by what they sell. Entries record what the company states it does and where; nothing here is an assessment of quality or fit. Confidence marks whether the entry was read from a source in this session or carried from general knowledge and still needs checking.",
+ "updated": "2026-09-02",
+ "categories": [
+  {
+   "id": "sev",
+   "name": "Security escort vessels",
+   "note": "Crewed armed vessels escorting merchant ships. The closest existing analogue to an autonomous escort."
+  },
+  {
+   "id": "pmsc",
+   "name": "Private maritime security (PCASP)",
+   "note": "Armed and unarmed teams embarked on the client vessel."
+  },
+  {
+   "id": "usv",
+   "name": "Autonomous surface vessels",
+   "note": "Uncrewed surface platform builders."
+  },
+  {
+   "id": "cuas",
+   "name": "Counter-UAS and counter-USV",
+   "note": "Detection and defeat of aerial and surface drones."
+  },
+  {
+   "id": "mda",
+   "name": "Maritime domain awareness and risk intelligence",
+   "note": "Tracking, analytics, advisories and sanctions screening."
+  },
+  {
+   "id": "nonlethal",
+   "name": "Non-lethal ship defence",
+   "note": "Hardening and deterrence equipment fitted to the merchant vessel itself."
+  },
+  {
+   "id": "effector",
+   "name": "Weapon and effector systems",
+   "note": "Remote weapon stations and payloads integrated onto vessels."
+  },
+  {
+   "id": "underwater",
+   "name": "Underwater threat detection",
+   "note": "Diver, swimmer-delivery-vehicle and UUV detection around vessels, ports and infrastructure."
+  },
+  {
+   "id": "cyber",
+   "name": "Maritime cyber security",
+   "note": "IT and OT security for shipboard and port systems."
+  }
+ ],
+ "records": [
+  {
+   "id": "ambrey",
+   "name": "Ambrey",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "sev",
+    "pmsc",
+    "mda"
+   ],
+   "relation": "direct competitor",
+   "url": "https://ambrey.com/vessel-support-services/",
+   "what": "Maritime security provider stating it safeguards more vessels than any other company in the industry. Operates armed Security Escort Vessels in all major piracy hotspots, with West Africa and particularly Nigeria as its most active region. Places an Ambrey-trained Maritime Security Liaison Officer aboard each escort vessel. Also publishes threat circulars used elsewhere in this library.",
+   "note": "Authorised by the Liberian Registry as a PMSC, licence 15 Aug 2025 to 13 Aug 2027.",
+   "source_ids": [
+    "ambrey-somali-hijackings",
+    "ambrey-vessel-support",
+    "firecrawl-company-enrichment",
+    "firecrawl-positioning",
+    "liscr-pmsc"
+   ],
+   "confidence": "high",
+   "founded": 2010,
+   "hq_city": "Hereford",
+   "employees": "approximately 1,000+ operatives",
+   "products": [
+    "Security Escort Vessels",
+    "Vessel Based Armoury fleet",
+    "Risk Dashboard",
+    "Global Operations Centre",
+    "Sentinel",
+    "ECDIS Global Alerts",
+    "Guardian Vessel Watchkeeper",
+    "Maritime Security Officers",
+    "Ambrey Global Specialty (AGS)"
+   ],
+   "disclosed_awards": [
+    "Offshore safety support contract for an oil and gas project in Senegal and Mauritania waters",
+    "International Salvage Union full membership"
+   ],
+   "builds": [
+    "crewed-vessel",
+    "people",
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "Protect merchant ships and their crews on high-risk transits, with armed teams aboard or armed escort vessels alongside where guards cannot embark.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "proof_points": [
+    "7,754 global maritime events in the past 365 days",
+    "23,344 vessels supported",
+    "34 dynamic elevated-threat areas",
+    "24/7 Global Operations Centre"
+   ],
+   "primary_cta": "Contact",
+   "tech_share": 33,
+   "tech_status": "service-led",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "britannia-risks",
+   "name": "Britannia Risks Group",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "sev",
+    "pmsc"
+   ],
+   "relation": "direct competitor",
+   "url": "https://britanniarisks.com/west-africa/",
+   "what": "Provides escort vessels for ships in West African waters, each SEV manned by a team of eight Local Naval Armed Guards.",
+   "source_ids": [
+    "britannia-risks",
+    "firecrawl-company-enrichment"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "founded": 2010,
+   "products": [
+    "Escort vessels",
+    "Armed guards",
+    "Marine security",
+    "Maritime risk management",
+    "Oil and gas security",
+    "Security audits and risk assessments",
+    "International marine HR services"
+   ],
+   "disclosed_awards": [
+    "States armed security supplied to a fleet including tankers and bulk carriers, with a contract maintained for four years"
+   ],
+   "mission": "Escort merchant ships through West African waters using Navy-approved vessels crewed by local armed guards.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "castor-vali",
+   "name": "Castor Vali",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "sev",
+    "pmsc"
+   ],
+   "relation": "direct competitor",
+   "url": "https://www.castorvali.com/",
+   "what": "Provides SEV support across the Gulf of Guinea.",
+   "source_ids": [
+    "castor-vali-sev",
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "leadership": [
+    {
+     "person": "Steve Grant",
+     "title": "Chief Executive Officer"
+    }
+   ],
+   "founded": 2011,
+   "products": [
+    "Security escort vessels",
+    "Offshore and maritime security",
+    "Vessel and rig hardening",
+    "Ship monitoring",
+    "Risk intelligence",
+    "Journey management and close protection"
+   ],
+   "mission": "Escort and harden vessels and rigs across the Gulf of Guinea, backed by regional risk intelligence.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "proof_points": [
+    "Security escort vessels",
+    "Vessel and rig hardening",
+    "Ship monitoring"
+   ],
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "praesidium-intl",
+   "name": "Praesidium International",
+   "country": "Italy",
+   "country_iso": "IT",
+   "categories": [
+    "sev",
+    "pmsc"
+   ],
+   "relation": "direct competitor",
+   "url": "https://praesidiumintl.com/maritime-solutions/security-escort-vessels/",
+   "what": "States it has been vetted and approved as a security escort vessel provider by all major shipping agents operating in the Gulf of Guinea.",
+   "note": "Authorised by the Liberian Registry as a PMSC, licence 28 Apr 2025 to 3 Apr 2026.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "liscr-pmsc",
+    "praesidium-sev"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "founded": 2017,
+   "products": [
+    "Security escort vessels",
+    "Maritime security",
+    "Risk consultancy",
+    "Intelligence analysis",
+    "Cybersecurity",
+    "Offshore vessel and operational management"
+   ],
+   "mission": "Provide vetted security escort vessels for Gulf of Guinea transits where guards cannot board the client ship.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "esc-global",
+   "name": "ESC Global Security",
+   "country": "Estonia",
+   "country_iso": "EE",
+   "categories": [
+    "sev",
+    "pmsc"
+   ],
+   "relation": "direct competitor",
+   "url": "https://www.escgs.com/services/maritime-security/security-in-west-africa",
+   "what": "Border-to-border escort services in the Gulf of Guinea. Patrol boat escorts the vessel into port, or protects it until berthing.",
+   "note": "Listed on the Liberian Registry PMSC roster as ESC LTD, Estonia, licence 12 Aug 2025 to 12 Aug 2026.",
+   "source_ids": [
+    "esc-global-sev",
+    "firecrawl-company-enrichment",
+    "liscr-pmsc"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "hq_city": "Tallinn",
+   "products": [
+    "Escort services",
+    "Intelligence and investigations",
+    "Underwater works",
+    "UXO risk management",
+    "Executive protection",
+    "Land security",
+    "Travel risk management"
+   ],
+   "mission": "Escort vessels border to border in West Africa, protecting the ship until it is safely berthed.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "doric-ng",
+   "name": "Doric NG",
+   "country": "Nigeria",
+   "country_iso": "NG",
+   "categories": [
+    "sev"
+   ],
+   "relation": "direct competitor",
+   "url": "https://doricng.com/armed-security-escort-vessels/",
+   "what": "Private maritime armed security escort vessel services in Nigeria.",
+   "source_ids": [
+    "doric-ng"
+   ],
+   "confidence": "low",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Supply armed security escort vessels inside Nigerian waters, where embarked guards are not permitted.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "aquaterra-ng",
+   "name": "Aquaterra Solutions Nigeria",
+   "country": "Nigeria",
+   "country_iso": "NG",
+   "categories": [
+    "sev"
+   ],
+   "relation": "direct competitor",
+   "url": "https://aquaterra-ng.com/top-maritime-security-escort-vessels-in-nigeria/",
+   "what": "Operates border-to-border maritime security escort vessels in Nigeria.",
+   "source_ids": [
+    "aquaterra-ng"
+   ],
+   "confidence": "low",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Run border-to-border escort vessels for ships transiting Nigerian waters.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "seakey-marine",
+   "name": "Seakey Marine",
+   "country": "Nigeria",
+   "country_iso": "NG",
+   "categories": [
+    "sev"
+   ],
+   "relation": "direct competitor",
+   "url": null,
+   "what": "Offers security escort services with armed navy personnel, escorting tankers from a secure zone in international waters.",
+   "source_ids": [
+    "castor-vali-sev"
+   ],
+   "confidence": "low",
+   "builds": [
+    "crewed-vessel",
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Escort tankers from a secure zone in international waters into Nigerian ports with armed navy personnel.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": "traditional"
+  },
+  {
+   "id": "solace-global",
+   "name": "Solace Global",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc",
+    "mda"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.solaceglobal.com/",
+   "what": "ISO-accredited vessel protection and risk management. Reported to have performed anti-piracy operations for more than 5,000 vessels worldwide.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "marineinsight-security-firms",
+    "solace-global"
+   ],
+   "confidence": "medium",
+   "founded": 2010,
+   "hq_city": "Poole",
+   "products": [
+    "Global Security Operations Centre",
+    "Travel risk technology",
+    "Journey management",
+    "Crisis management",
+    "Protective security",
+    "Offshore risk management"
+   ],
+   "disclosed_awards": [
+    "States clients include Fortune 500, FTSE 100, governments and NGOs"
+   ],
+   "builds": [
+    "people",
+    "data-platform"
+   ],
+   "market": "commercial",
+   "leadership": [
+    {
+     "person": "Martin Veale",
+     "title": "CEO"
+    }
+   ],
+   "mission": "Keep people, vessels and journeys safe worldwide through a single risk operations centre.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "proof_points": [
+    "99% customer retention",
+    "Coverage in 190 countries",
+    "ISO 27001, 14001, 45001 and 9001"
+   ],
+   "note": " Now a Global Guardian company.",
+   "tech_share": 50,
+   "tech_status": "tech-led",
+   "competitor_class": null
+  },
+  {
+   "id": "mast",
+   "name": "MAST",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": "https://mast-security.com/",
+   "what": "Maritime security services. States it was among the first companies to legally place private armed guards on merchant vessels and yachts.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "marineinsight-security-firms",
+    "supplychain-top10"
+   ],
+   "confidence": "medium",
+   "founded": 2005,
+   "hq_city": "London",
+   "products": [
+    "Counter Piracy Services",
+    "Superyacht transits",
+    "Online Risk Intelligence and Continuous Monitoring",
+    "Physical security testing",
+    "Counter-surveillance"
+   ],
+   "disclosed_awards": [
+    "Crown Commercial Service supplier",
+    "NSI Gold accreditation",
+    "Security Industry Authority approved contractor"
+   ],
+   "builds": [
+    "people",
+    "data-platform"
+   ],
+   "market": "commercial",
+   "leadership": [
+    {
+     "person": "Phillip Cable LLM",
+     "title": "CEO and co-founder"
+    }
+   ],
+   "mission": "Put legally compliant armed protection on merchant ships and yachts, and advise on maritime risk.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "proof_points": [
+    "8,000+ vessel transits protected",
+    "180+ security and risk professionals",
+    "24/7 Global Operations Centre"
+   ],
+   "primary_cta": "Contact us",
+   "tech_share": 50,
+   "tech_status": "tech-led",
+   "competitor_class": null
+  },
+  {
+   "id": "securewest",
+   "name": "Securewest International",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc",
+    "mda"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.securewest.com/",
+   "what": "Marine security services to civilian and naval vessels including vessel tracking and ship accompaniment. Certified to ISO 28007. Serves the Gulf of Aden, Indian Ocean, Persian Gulf and Gulf of Guinea.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "marineinsight-security-firms"
+   ],
+   "confidence": "medium",
+   "founded": 1987,
+   "hq_city": "Plymouth",
+   "public_listing": "Privately owned",
+   "products": [
+    "SPHERE travel risk management platform",
+    "Global Response Centre",
+    "Ship Security Alert System (SSAS)",
+    "ISPS compliance and ship hardening"
+   ],
+   "builds": [
+    "people",
+    "data-platform"
+   ],
+   "market": "commercial",
+   "leadership": [
+    {
+     "person": "John Casson MBE",
+     "title": "Chairman and CEO"
+    }
+   ],
+   "mission": "Monitor, harden and respond for vessels and travellers from a 24-hour global response centre.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "proof_points": [
+    "24/7/365 Global Response Centre",
+    "MCA-approved maritime and travel-risk training"
+   ],
+   "primary_cta": "Request a demo",
+   "tech_share": 50,
+   "tech_status": "tech-led",
+   "competitor_class": null
+  },
+  {
+   "id": "neptune-p2p",
+   "name": "Neptune P2P Group",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc",
+    "mda"
+   ],
+   "relation": "adjacent",
+   "url": "https://neptunep2pgroup.com/",
+   "what": "Merchant vessel and superyacht security, armed and unarmed guards. Opened a maritime operations centre in Libreville, Gabon in June 2026.",
+   "note": "Authorised by the Liberian Registry, licence 30 Sep 2025 to 29 Sep 2026.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "liscr-pmsc",
+    "neptune-p2p"
+   ],
+   "confidence": "medium",
+   "founded": 2009,
+   "hq_city": "Dubai",
+   "hq_note": "Company sources give Dubai, UAE as headquarters; the Liberian Registry lists the authorised entity as United Kingdom. Both are recorded.",
+   "products": [
+    "Maritime security",
+    "Security Intelligence Portal",
+    "Global Risk Map",
+    "HEAT training"
+   ],
+   "builds": [
+    "people",
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "Protect merchant vessels and superyachts with guards, intelligence and regional operations centres.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 50,
+   "tech_status": "tech-led",
+   "competitor_class": null
+  },
+  {
+   "id": "diaplous",
+   "name": "Diaplous Maritime Services",
+   "country": "Cyprus",
+   "country_iso": "CY",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.diaplousgroup.com/",
+   "note": "Authorised by the Liberian Registry, licence 11 Jul 2025 to 4 Aug 2027.",
+   "what": "Private maritime security company providing contracted security personnel in high-risk areas.",
+   "source_ids": [
+    "firecrawl-leadership-enrichment",
+    "liscr-pmsc"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "leadership": [
+    {
+     "person": "Manolis Lazaridis",
+     "title": "CEO"
+    }
+   ],
+   "mission": "Place contracted security personnel aboard ships transiting high-risk areas.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "hart-maritime",
+   "name": "Hart Maritime",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": "https://hartinternational.com/maritime-security/",
+   "what": "Part of Hart Integrated Solutions, established 1999. Works with local navy and coastguard to resolve crises.",
+   "source_ids": [
+    "marineinsight-security-firms"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Resolve maritime security crises by working alongside local navies and coastguards.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "musc",
+   "name": "MUSC",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": null,
+   "what": "UK-licensed armed maritime security. Onboard security teams, counter-piracy auditing, vessel hardening, route planning and vessel monitoring.",
+   "source_ids": [
+    "marineinsight-security-firms"
+   ],
+   "confidence": "low",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Deliver UK-licensed armed teams, vessel hardening and counter-piracy auditing.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "hudson-analytix",
+   "name": "Hudson Analytix",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "pmsc",
+    "mda"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.hudsonanalytix.com/",
+   "what": "Marine security programme covering shipping companies, commercial vessels, ports and onboard security; planning, assessment, training and consulting.",
+   "source_ids": [
+    "marineinsight-security-firms"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Assess and plan security across ships, ports and the companies that run them.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "pvi-risk",
+   "name": "PVI Risk Management",
+   "country": "Singapore",
+   "country_iso": "SG",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": null,
+   "note": "Authorised by the Liberian Registry, licence 12 Aug 2025 to 13 Aug 2027.",
+   "what": "Private maritime security company on the Liberian Registry authorised roster.",
+   "source_ids": [
+    "liscr-pmsc"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Supply contracted maritime security personnel to ships in high-risk areas.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "sinoguards",
+   "name": "Sinoguards Marine Security",
+   "country": "Hong Kong",
+   "country_iso": "HK",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": null,
+   "note": "Authorised by the Liberian Registry, licence 10 Oct 2024 to 28 Sep 2026.",
+   "what": "Private maritime security company on the Liberian Registry authorised roster.",
+   "source_ids": [
+    "liscr-pmsc"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Supply contracted maritime security personnel to ships in high-risk areas.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "seagull-maritime",
+   "name": "Seagull Maritime",
+   "country": "Malta",
+   "country_iso": "MT",
+   "categories": [
+    "pmsc"
+   ],
+   "relation": "adjacent",
+   "url": null,
+   "note": "Authorised by the Liberian Registry, licence 31 Jul 2025 to 7 Aug 2026. Not related to Elbit's Seagull USV.",
+   "what": "Private maritime security company on the Liberian Registry authorised roster.",
+   "source_ids": [
+    "liscr-pmsc"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Supply contracted maritime security personnel to ships in high-risk areas.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "saronic",
+   "name": "Saronic Technologies",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.saronic.com/",
+   "founded": 2022,
+   "what": "Designs and manufactures autonomous surface vessels at scale, vertically integrated across hardware, software and manufacturing. Family includes Spyglass (6 ft), Cutlass (14 ft), Corsair (24 ft) and Marauder (180 ft), the last with 25+ knots top speed, up to 5,400 nautical miles range and 150 metric tons modular payload. Marauder selected for the MUSV Marketplace. Demonstrated ASVs for SIX MARITIME. A Saronic Corsair located and recovered downed US pilots off Oman.",
+   "note": "Defence-first. Founding team includes people from Anduril. Awarded $392 million by the US Navy to build and deliver autonomous drone boats, described as one of the Navy's biggest such awards; one of seven companies shortlisted from roughly two dozen.",
+   "source_ids": [
+    "ensemble-saronic",
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "marsec-east-exhibitors",
+    "navy-usv-shortlist",
+    "saronic"
+   ],
+   "confidence": "high",
+   "hq_city": "Austin",
+   "products": [
+    "Echelon"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "leadership": [
+    {
+     "person": "Dino Mavrookas",
+     "title": "Co-founder and CEO"
+    },
+    {
+     "person": "Doug Lambert",
+     "title": "Co-founder and COO"
+    }
+   ],
+   "mission": "Put autonomous surface vessels into the fleet at scale so US and allied forces can go further at lower risk to life.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "proof_points": [
+    "Marauder selected for the MUSV Marketplace"
+   ],
+   "publishes_specs": true,
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "blacksea-tech",
+   "name": "BlackSea Technologies",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "direct competitor",
+   "url": "https://www.blacksea.tech/",
+   "what": "One of the largest providers of unmanned surface and subsea vessels in the US defence market. Platforms include GARC (Global Autonomous Reconnaissance Craft), Chaser and Comet. Expected to generate $150 million in FY2026 revenue.",
+   "note": "Not a startup. Roots in Maritime Applied Physics Corporation, Baltimore, 1986; combined by acquisition in 2022. Being acquired by AEVEX Corp, announced 12 August 2026.",
+   "source_ids": [
+    "aevex-blacksea",
+    "blacksea-press",
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "blacksea-comet",
+    "navalnews-blacksea-comet",
+    "blacksea-spds-contract",
+    "baltimore-banner-blacksea",
+    "aevex-acquires-blacksea"
+   ],
+   "confidence": "high",
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "military",
+   "leadership": [
+    {
+     "person": "Bob Pudney",
+     "title": "Chief Executive Officer"
+    }
+   ],
+   "funding": "Razor's Edge Ventures platform company. AEVEX agreement to acquire announced 12 August 2026, expected to close September 2026.",
+   "products": [
+    "GARC",
+    "Chaser",
+    "Comet",
+    "NightTrain",
+    "ORCA",
+    "Mainstay",
+    "SPDS"
+   ],
+   "disclosed_awards": [
+    "US Navy conducted a GARC kamikaze sea-drone strike during the RIMPAC 2026 SINKEX exercise",
+    "US Naval Academy integrated robotics and autonomous systems into summer training aboard Yard Patrol craft"
+   ],
+   "mission": "Give naval forces asymmetric options from the ocean surface to the seabed.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "headline": "Build systems that protect American lives and preserve freedom of action at sea.",
+   "publishes_specs": true,
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": "autonomous",
+   "employees": "about 235",
+   "revenue": "$150 million expected FY2026",
+   "founded": 1986,
+   "hq_city": "Baltimore",
+   "axis_evidence": {
+    "escort": "It's larger size allows Comet to carry a variety of payloads to fit a multitude of missions, including C-UAS, ISR, high value escort, and mine countermeasures.",
+    "escort_source": "navalnews-blacksea-comet",
+    "escort_date": "2026-05-10",
+    "escort_company_wording": "Comet mission list on blacksea.tech names high-value-unit escort.",
+    "commercial": "No source found describes commercial or civil customers. Every named customer is the US Navy.",
+    "retrieved": "2026-09-03"
+   },
+   "dossier": "companies/blacksea.json"
+  },
+  {
+   "id": "havocai",
+   "name": "HavocAI",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.fight-tonight.com/",
+   "what": "Collaborative autonomy across teams of vessels taskable from anywhere in the world, for port and critical infrastructure security, maritime domain awareness and modular missions.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "marsec-east-exhibitors"
+   ],
+   "confidence": "medium",
+   "founded": 2024,
+   "hq_city": "Providence",
+   "funding": "Approximately $200 million since founding, including a $100 million Series A and a prior $85 million raise",
+   "products": [
+    "Rampage 14-foot autonomous surface vessel",
+    "All-domain collaborative autonomy"
+   ],
+   "disclosed_awards": [
+    "Partnership with Lockheed Martin on a medium unmanned vessel",
+    "Agreement with SAIC to integrate multi-domain communications with the USV fleet",
+    "Teamed with Hanwha's US subsidiary on a 200-foot autonomous surface vessel"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "leadership": [
+    {
+     "person": "Paul Lwin",
+     "title": "Co-founder and CEO"
+    }
+   ],
+   "mission": "Command teams of autonomous vessels from anywhere, at a price that allows numbers.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "proof_points": [
+    "One-to-many control through Havoc C2",
+    "Havoc Connect peer-to-peer data exchange across DDIL networks",
+    "Havoc OS edge autonomy"
+   ],
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sea-machines",
+   "name": "Sea Machines Robotics",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://sea-machines.com/",
+   "what": "STORMRUNNER USV, an 8 m HDPE vessel with 40-knot speed and 500 nm range at 27 knots, integrated with SM300-SP. SELKIE 7 USV supports ISR and logistics with low signature, extended range and modular payload.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "marsec-east-exhibitors"
+   ],
+   "confidence": "medium",
+   "founded": 2015,
+   "hq_city": "Boston",
+   "funding": "$1.4M seed in 2017, more than $30M subsequently, and a $12M round announced in 2024",
+   "disclosed_awards": [
+    "$3 million US Department of Defense contract for autonomous supply stations"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors"
+   ],
+   "market": "both",
+   "leadership": [
+    {
+     "person": "David “Chip” Wasson",
+     "title": "Chief Executive Officer"
+    },
+    {
+     "person": "Michael Gordon Johnson",
+     "title": "President and CTO"
+    }
+   ],
+   "mission": "Bring autonomous command and perception to working boats, crewed or not.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "proof_points": [
+    "A.P. Moller-Maersk",
+    "US Department of Transportation",
+    "US Navy"
+   ],
+   "publishes_specs": true,
+   "note": " Names A.P. Moller-Maersk as a customer — a commercial shipping line buying vessel autonomy.",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "blue-ops",
+   "name": "Blue Ops (Red Cat)",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://blueops.com/",
+   "what": "Division of Red Cat developing uncrewed surface vessels for port and maritime security. Built for autonomy, modularity and integration with existing command-and-control, delivering ISR, force protection and response.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "marsec-east-exhibitors"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv",
+    "c2"
+   ],
+   "market": "military",
+   "public_listing": "Maritime division of Red Cat Holdings, listed on Nasdaq as RCAT",
+   "products": [
+    "Variant 7 (V7) uncrewed surface vessel",
+    "Variant 5 (V5) uncrewed surface vessel",
+    "Blue Ops integrated technology stack"
+   ],
+   "disclosed_awards": [
+    "Ramping Variant 7 into full-rate production for US and allied defence missions",
+    "Hodgdon Shipbuilding to build USV prototypes; leased a Georgia factory to scale US production"
+   ],
+   "mission": "Build modular USVs for port and maritime security that plug into existing command and control.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "janus-marine",
+   "name": "Janus Marine & Defense",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://janusdefense.com/",
+   "what": "Global unmanned maritime operations and lifecycle management. States its leadership delivered the first fleet of high-speed interceptor USVs in the GCC in 2019, and contributed to the earliest sustained forward-deployed USV operations in the US.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "marsec-east-exhibitors"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv",
+    "people"
+   ],
+   "market": "military",
+   "products": [
+    "Maritime uncrewed systems solutions",
+    "Navigator USV platform comparison database"
+   ],
+   "mission": "Operate and sustain unmanned maritime systems through their whole life, not just deliver them.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 50,
+   "tech_status": "tech-led",
+   "competitor_class": null
+  },
+  {
+   "id": "aevex",
+   "name": "AEVEX Corp",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv",
+    "cuas"
+   ],
+   "relation": "adjacent",
+   "url": "https://aevex.com/",
+   "what": "Listed US defence technology company (NYSE: AVEX) in autonomous systems, AI-enabled mission software, ISR and electronic warfare. Acquiring BlackSea Technologies to add USV and UUV scale. Portfolio spans Groups I-V UAS, USVs, UUVs, contested logistics vessels and the CompassX autonomy ecosystem.",
+   "source_ids": [
+    "aevex-blacksea"
+   ],
+   "confidence": "high",
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2",
+    "cuas"
+   ],
+   "market": "military",
+   "mission": "Deliver multi-domain autonomous effects across air, surface and subsea from one portfolio.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "elbit",
+   "name": "Elbit Systems",
+   "country": "Israel",
+   "country_iso": "IL",
+   "categories": [
+    "usv",
+    "effector"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.elbitsystems.com/autonomous/maritime",
+   "what": "Seagull USV, an autonomous multi-mission platform with switchable modular payload suites for anti-submarine warfare, mine countermeasures and electronic warfare. Integrated with a mini-UAS and with towed reelable sonar. Deployed to the Digital Horizon event in Bahrain.",
+   "source_ids": [
+    "elbit-seagull"
+   ],
+   "confidence": "high",
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors",
+    "weapons"
+   ],
+   "market": "military",
+   "mission": "Multi-mission autonomous surface capability with switchable payloads for mine warfare, anti-submarine and electronic warfare.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "mythos-ai",
+   "name": "Mythos AI",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "supplier",
+   "url": null,
+   "what": "Autonomy software. Named BlackSea Technologies' first Mainstay autonomy partner in July 2026, providing autonomous navigation, perception and multi-vessel command and control.",
+   "source_ids": [
+    "blacksea-press"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "mission": "Supply the autonomy stack — navigation, perception and multi-vessel control — to vessel builders.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": false,
+    "security": false
+   },
+   "proximity": 0,
+   "proximity_band": "supplier or reference",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "anello",
+   "name": "ANELLO Photonics",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "supplier",
+   "url": "https://www.anellophotonics.com/",
+   "what": "Silicon photonics optical gyroscope and solid-state inertial navigation. Its Maritime INS was selected for BlackSea's Chaser USV after demonstration on GARC. Relevant to navigation in GPS-denied conditions.",
+   "source_ids": [
+    "blacksea-press"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "sensors"
+   ],
+   "market": "both",
+   "mission": "Navigate accurately when GPS is jammed or denied.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "anduril",
+   "name": "Anduril Industries",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "cuas",
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.anduril.com/counter-uas",
+   "what": "Family of autonomous counter-UAS systems powered by the Lattice software platform: Anvil and Anvil-M interceptors, Pulsar electronic warfare, Sentry towers, Wisp and Spyglass X/Ku-band radar sensors. Won a $642 million ten-year contract to supply counter-drone equipment to the US Marine Corps; Pulsar-L specified to detect and jam Group 1 and 2 UAS at two miles.",
+   "source_ids": [
+    "anduril-cuas",
+    "firecrawl-company-enrichment",
+    "navyleaders-anduril",
+    "usni-anduril-acv"
+   ],
+   "confidence": "high",
+   "builds": [
+    "cuas",
+    "usv",
+    "autonomy-sw",
+    "c2",
+    "sensors",
+    "weapons"
+   ],
+   "market": "military",
+   "products": [
+    "Lattice",
+    "Arsenal",
+    "Anvil",
+    "Pulsar",
+    "Sentry",
+    "Wisp",
+    "Spyglass"
+   ],
+   "mission": "Autonomous defence systems tied together by one software platform, fielded fast.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "droneshield",
+   "name": "DroneShield",
+   "country": "Australia",
+   "country_iso": "AU",
+   "categories": [
+    "cuas"
+   ],
+   "relation": "supplier",
+   "url": "https://www.droneshield.com/",
+   "what": "Counter-UAS detection and defeat. Publishes on naval C-UAS, including a ruggedised IP67-rated capability able to operate topside aboard patrol craft, cutters and auxiliaries.",
+   "source_ids": [
+    "droneshield-maritime",
+    "firecrawl-company-enrichment"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "cuas",
+    "sensors"
+   ],
+   "market": "both",
+   "founded": 2012,
+   "hq_city": "Sydney",
+   "employees": "200+",
+   "public_listing": "Listed on the Australian Securities Exchange, ASX: DRO",
+   "products": [
+    "DroneGun",
+    "DroneSentry",
+    "DroneLocator",
+    "DroneShield Complete"
+   ],
+   "disclosed_awards": [
+    "US Department of Defense contracts",
+    "Australian Defence Force contracts"
+   ],
+   "mission": "Detect and defeat drones, including from the deck of a ship.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "leonardo-drs",
+   "name": "Leonardo DRS",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "cuas",
+    "effector"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.leonardodrs.com/",
+   "what": "Maritime-Mission Equipment Package (M-MEP) shown integrated on an autonomous uncrewed surface vessel for US Navy counter-drone work.",
+   "source_ids": [
+    "leonardo-drs-mmep"
+   ],
+   "confidence": "low",
+   "builds": [
+    "cuas",
+    "weapons",
+    "sensors"
+   ],
+   "market": "military",
+   "mission": "Counter-drone and mission equipment packages for naval platforms.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "eos",
+   "name": "Electro Optic Systems (EOS)",
+   "country": "Australia",
+   "country_iso": "AU",
+   "categories": [
+    "effector"
+   ],
+   "relation": "supplier",
+   "url": "https://eos-aus.com/",
+   "what": "R400 remote weapon system. Demonstrated on BlackSea Technologies' Chaser USV, the first R400 deployment on a USV in the United States.",
+   "source_ids": [
+    "blacksea-press"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "weapons"
+   ],
+   "market": "military",
+   "mission": "Remote weapon stations that let a platform shoot accurately without exposing a crew.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "marss",
+   "name": "MARSS",
+   "country": "Monaco",
+   "country_iso": "MC",
+   "categories": [
+    "cuas",
+    "mda"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.marss.com/",
+   "what": "Maritime and critical infrastructure security: sensor fusion, threat detection and counter-drone. Carried from general knowledge; not verified against a source in this session.",
+   "source_ids": [
+    "firecrawl-company-enrichment"
+   ],
+   "confidence": "low",
+   "builds": [
+    "cuas",
+    "sensors",
+    "data-platform"
+   ],
+   "market": "both",
+   "founded": 2005,
+   "hq_city": "Monaco",
+   "products": [
+    "NiDAR",
+    "NiDAR C2",
+    "NiDAR Connect"
+   ],
+   "disclosed_awards": [
+    "Royal Saudi Naval Forces contract for NiDAR"
+   ],
+   "mission": "Fuse sensors into one picture and act on it, for ports, ships and critical infrastructure.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "windward",
+   "name": "Windward",
+   "country": "Israel",
+   "country_iso": "IL",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://windward.ai/",
+   "what": "Maritime AI platform delivering an all-source operational picture. Fuses behavioural analytics with multi-sensor data rather than relying on AIS alone. Cited as an intelligence source by a UN panel investigating maritime sanctions and North Korea. Publishes quarterly maritime risk reports and tracked the 2026 Somali resurgence and Hormuz dark-fleet activity.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "geopera-hormuz",
+    "windward-ai",
+    "windward-somali-piracy"
+   ],
+   "confidence": "high",
+   "public_listing": "Formerly listed on the London Stock Exchange; privately held since FTV Capital completed its acquisition in March 2025",
+   "disclosed_awards": [
+    "States clients include energy supermajors, shipowners, mining companies, freight forwarders, port authorities, banks, insurers and governmental organisations"
+   ],
+   "builds": [
+    "data-platform"
+   ],
+   "market": "both",
+   "leadership": [
+    {
+     "person": "Ami Daniel",
+     "title": "Co-founder and Chief Executive Officer"
+    },
+    {
+     "person": "Matan Peled",
+     "title": "Co-founder"
+    }
+   ],
+   "mission": "An all-source picture of the maritime domain that does not depend on ships telling the truth.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "proof_points": [
+    "15+ years building Maritime AI",
+    "DSTA partnership for maritime AI research"
+   ],
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "dryad-verihelm",
+   "name": "Dryad Global / Verihelm",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.dryadglobal.com/",
+   "what": "Maritime risk intelligence delivered through the Verihelm platform: regional and threat intelligence, voyage and port risk, vessel profiling and sanctions screening. States published assessments are analyst-reviewed and incidents retain source metadata and provenance. Publishes a weekly maritime security threat advisory and a BMP explainer used in this library.",
+   "source_ids": [
+    "dryad-bmp",
+    "dryad-global",
+    "firecrawl-company-enrichment",
+    "firecrawl-positioning"
+   ],
+   "confidence": "high",
+   "founded": 2018,
+   "hq_city": "London",
+   "products": [
+    "Verihelm"
+   ],
+   "builds": [
+    "data-platform",
+    "people"
+   ],
+   "market": "commercial",
+   "mission": "Maritime risk intelligence that an underwriter or operator can defend, with every assessment source-traced.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "proof_points": [
+    "Founded in London in 2018",
+    "Combined with IMSA in 2022",
+    "Analyst-reviewed assessments"
+   ],
+   "tech_share": 50,
+   "tech_status": "tech-led",
+   "competitor_class": null
+  },
+  {
+   "id": "kpler",
+   "name": "Kpler",
+   "country": "Belgium",
+   "country_iso": "BE",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.kpler.com/product/maritime/kplerais",
+   "what": "Owns the largest AIS network: 13,000+ terrestrial receivers across 190 countries, a proprietary LEO constellation, and roaming AIS via partner fleets. Tracks more than 350,000 vessels daily, ~5 second average data latency, ~25 second message frequency per vessel. Acquired MarineTraffic and FleetMon (Feb 2023) and Spire Maritime ($241M, Nov 2024). Enterprise contracts only.",
+   "source_ids": [
+    "kpler-ais",
+    "worldwideais-providers"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform",
+    "satellite",
+    "sensors"
+   ],
+   "market": "commercial",
+   "mission": "See every vessel, everywhere, and what it is carrying.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "spire-maritime",
+   "name": "Spire Maritime",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://spire.com/maritime/",
+   "what": "Satellite AIS from a constellation of 100+ nanosatellites with 15-minute refresh, sub-30-minute position updates globally. Many other platforms buy its data upstream. Reported pricing $2,000-8,000 per month.",
+   "note": "Acquired by Kpler in November 2024 for $241 million; no longer independent.",
+   "source_ids": [
+    "worldwideais-providers",
+    "usesentinel-ais"
+   ],
+   "confidence": "high",
+   "builds": [
+    "satellite",
+    "data-platform"
+   ],
+   "market": "both",
+   "mission": "Global satellite AIS coverage with an enterprise service level.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "marinetraffic",
+   "name": "MarineTraffic",
+   "country": "Greece",
+   "country_iso": "GR",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.marinetraffic.com/",
+   "what": "Terrestrial and satellite AIS with a community of contributed receivers extending coastal coverage. REST API on per-call pricing, roughly $200-500 per month for moderate use. Publishes the vessel ownership definitions used in this library.",
+   "note": "Owned by Kpler since February 2023.",
+   "source_ids": [
+    "usesentinel-ais",
+    "marinetraffic-ownership"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform",
+    "sensors"
+   ],
+   "market": "commercial",
+   "mission": "Make vessel tracking accessible to anyone, extended by a community of contributed receivers.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "aisstream",
+   "name": "AISstream.io",
+   "country": "Unknown",
+   "country_iso": null,
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://aisstream.io/",
+   "what": "Free global AIS stream over WebSocket with bounding-box and message-type filters, no credit card. Terrestrial reception only, so vessels more than roughly 40 nautical miles offshore drop out of the feed.",
+   "source_ids": [
+    "aisstream",
+    "usesentinel-ais",
+    "hormuz-ship-apis"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "Free real-time AIS over a WebSocket, with no barrier to entry.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "aishub",
+   "name": "AISHub",
+   "country": "Unknown",
+   "country_iso": null,
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.aishub.net/",
+   "what": "AIS data sharing network, free in exchange for contributing a receiver. Reported 95,508 vessels in the last 24 hours from 1,668 stations across 83 countries. JSON and XML output.",
+   "source_ids": [
+    "aishub"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform",
+    "sensors"
+   ],
+   "market": "commercial",
+   "mission": "Free AIS in exchange for contributing a receiver to the network.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "orbcomm",
+   "name": "ORBCOMM",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.orbcomm.com/",
+   "what": "Enterprise satellite AIS and IoT. Named alongside Spire as a source for raw AIS at scale.",
+   "note": "Its AIS business was acquired by S&P Global.",
+   "source_ids": [
+    "seavantage-ais-platforms",
+    "worldwideais-providers"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "satellite",
+    "data-platform"
+   ],
+   "market": "both",
+   "mission": "Satellite AIS and IoT connectivity for enterprise fleets.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "aac-clyde",
+   "name": "AAC Clyde Space",
+   "country": "Sweden",
+   "country_iso": "SE",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.aac-clyde.space/",
+   "what": "Operates its own satellite constellation for AIS. Described as the most prominent remaining independent satellite AIS provider after Kpler's acquisition of Spire Maritime, with reported increased inbound interest from companies seeking alternatives.",
+   "source_ids": [
+    "worldwideais-providers"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "satellite"
+   ],
+   "market": "both",
+   "mission": "Independent satellite AIS from an owned constellation.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "vesselfinder",
+   "name": "VesselFinder",
+   "country": "Bulgaria",
+   "country_iso": "BG",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.vesselfinder.com/",
+   "what": "Cost-effective global AIS coverage. Reported to have invested heavily in satellite AIS, closing the deep-ocean gap that previously separated it from premium providers.",
+   "source_ids": [
+    "seavantage-ais-platforms"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "Cost-effective global vessel tracking.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "pole-star",
+   "name": "Pole Star Global",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.polestarglobal.com/",
+   "what": "Vessel tracking and maritime compliance platform, listed among the main AIS platforms compared for 2026.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "seavantage-ais-platforms"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "both",
+   "founded": 1998,
+   "hq_city": "London",
+   "products": [
+    "PurpleTRAC",
+    "FleetMon",
+    "PurpleTRAC API"
+   ],
+   "mission": "Vessel tracking tied to sanctions and compliance screening.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "seavantage",
+   "name": "SeaVantage",
+   "country": "South Korea",
+   "country_iso": "KR",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.seavantage.com/",
+   "what": "AIS-based vessel tracking and analytics platform.",
+   "source_ids": [
+    "seavantage-ais-platforms"
+   ],
+   "confidence": "low",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "Vessel tracking and analytics for shipping operations.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "iceye",
+   "name": "ICEYE",
+   "country": "Finland",
+   "country_iso": "FI",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.iceye.com/sar-data/use-cases/maritime-domain-awareness",
+   "what": "SAR satellite constellation for maritime domain awareness and dark vessel detection, matching radar detections against external AIS signals. Tasking across acquisition modes at 5 to 100 km swath. Sees through cloud and darkness.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "iceye-dark-vessels",
+    "starboard-dark-vessel"
+   ],
+   "confidence": "high",
+   "builds": [
+    "satellite",
+    "sensors",
+    "data-platform"
+   ],
+   "market": "both",
+   "founded": 2014,
+   "hq_city": "Espoo",
+   "funding": "$1.4 billion total, per press summaries",
+   "products": [
+    "SAR satellite imagery",
+    "ICEYE Detections",
+    "ICEYE Persistent Monitoring",
+    "ICEYE Flood Insights",
+    "ICEYE Wildfire Insights"
+   ],
+   "disclosed_awards": [
+    "US government and defence customers",
+    "European Space Agency"
+   ],
+   "mission": "See through cloud and darkness, anywhere, on demand.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "hawkeye360",
+   "name": "HawkEye 360",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.he360.com/",
+   "what": "Constellation of small satellites collecting and geolocating radio-frequency signals: UHF and VHF communications, X- and S-band marine radars, and L-band mobile satellite devices. Covers larger areas at lower cost per acquisition than SAR; positional accuracy typically within one kilometre. Detects vessels that have switched off AIS but are still running radar.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "starboard-dark-vessel"
+   ],
+   "confidence": "high",
+   "builds": [
+    "satellite",
+    "sensors",
+    "data-platform"
+   ],
+   "market": "both",
+   "founded": 2015,
+   "hq_city": "Herndon",
+   "employees": "200+",
+   "funding": "Over $400 million disclosed",
+   "products": [
+    "RF data and analytics",
+    "HawkEye 360 satellite constellation",
+    "Cluster satellite formation",
+    "Virtual Constellation"
+   ],
+   "disclosed_awards": [
+    "National Reconnaissance Office contract awards",
+    "US government and defence customers"
+   ],
+   "mission": "Find what is emitting radio frequency at sea, whether or not it is broadcasting AIS.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "starboard",
+   "name": "Starboard Maritime Intelligence",
+   "country": "New Zealand",
+   "country_iso": "NZ",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.starboardintelligence.com/",
+   "what": "Dark vessel detection combining SAR and RF satellite technologies. Published comparative findings: SAR very unlikely to miss ships over 30 m but prone to false positives from noise; RF may miss ships not operating radar or with emitters pointed away; SAR detections accurate within 500 m, RF within one kilometre.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "starboard-dark-vessel"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "both",
+   "products": [
+    "Starboard Maritime Intelligence platform"
+   ],
+   "mission": "Detect the vessels that are not reporting themselves.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "capella",
+   "name": "Capella Space",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.capellaspace.com/",
+   "what": "High-resolution SAR imagery at 5 km swath width, used for ship detection.",
+   "source_ids": [
+    "starboard-dark-vessel"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "satellite",
+    "sensors"
+   ],
+   "market": "both",
+   "mission": "High-resolution radar imagery on demand.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "global-fishing-watch",
+   "name": "Global Fishing Watch",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "reference",
+   "url": "https://globalfishingwatch.org/research-project-dark-vessels/",
+   "what": "Non-profit applying deep learning to petabytes of satellite radar and optical imagery to map all vessel traffic including the dark fleet, using Sentinel-1 SAR. Data is public.",
+   "source_ids": [
+    "gfw-dark-vessels"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "both",
+   "mission": "Make all human activity at sea visible and public.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "privateer",
+   "name": "Privateer",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.privateer.com/products/maritime-domain-awareness",
+   "what": "Space-based maritime intelligence fusing optical, SAR and RF sensing so a vessel that has disabled AIS remains detectable: RF locates emissions, SAR confirms a vessel at those coordinates, optical characterises it on a later pass.",
+   "source_ids": [
+    "privateer-mda"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "satellite",
+    "data-platform"
+   ],
+   "market": "both",
+   "mission": "Fuse optical, radar and RF so a vessel that switches off AIS is still seen.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sentinel-os",
+   "name": "Sentinel OS",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.usesentinel.io/",
+   "what": "Maritime data platform. Reported enterprise pricing from $75,000 per year.",
+   "source_ids": [
+    "usesentinel-ais"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "A maritime data platform for enterprise operations.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "lloyds-list-intel",
+   "name": "Lloyd's List Intelligence",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.lloydslist.com/",
+   "what": "Commercial maritime intelligence: beneficial ownership, fixtures, and a Red Sea attack map and list. Defines a confirmed dark vessel as one with both an official offline and online AIS duration, and only counts a dark transit once the ship comes back online.",
+   "source_ids": [
+    "lloyds-list-redsea",
+    "gcaptain-shadow-fleet"
+   ],
+   "confidence": "high",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "mission": "Resolve who really owns, operates and charters a ship.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "risk-intelligence",
+   "name": "Risk Intelligence",
+   "country": "Denmark",
+   "country_iso": "DK",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://www.riskintelligence.eu/",
+   "what": "Maritime security risk assessment and the MaRisk system.",
+   "source_ids": [
+    "firecrawl-company-enrichment"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "founded": 2001,
+   "hq_city": "Copenhagen",
+   "products": [
+    "Risk Intelligence System (MaRisk)",
+    "Maritime risk intelligence",
+    "Supply-chain risk intelligence",
+    "Travel risk intelligence"
+   ],
+   "disclosed_awards": [
+    "A.P. Moller-Maersk"
+   ],
+   "mission": "Assess maritime, supply chain and travel risk for operators who have to make the call.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "geollect",
+   "name": "Geollect",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "mda"
+   ],
+   "relation": "supplier",
+   "url": "https://geollect.com/",
+   "what": "Geospatial intelligence for maritime risk.",
+   "source_ids": [
+    "firecrawl-company-enrichment"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "data-platform"
+   ],
+   "market": "commercial",
+   "founded": 2017,
+   "hq_city": "Plymouth",
+   "products": [
+    "Geollect maritime intelligence platform",
+    "Geospatial intelligence",
+    "Maritime domain awareness"
+   ],
+   "disclosed_awards": [
+    "UK government and defence customers",
+    "Royal Navy"
+   ],
+   "mission": "Turn geospatial data into maritime decisions for government and defence.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "genasys",
+   "name": "Genasys (LRAD)",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "nonlethal"
+   ],
+   "relation": "supplier",
+   "url": "https://www.genasys.com/lrad-products",
+   "what": "Long Range Acoustic Device, a non-lethal acoustic hailing and deterrence system used on cargo and cruise ships, filling the gap between initial engagement and lethal force.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "genasys-lrad",
+    "marineinsight-antipiracy"
+   ],
+   "confidence": "high",
+   "builds": [
+    "nonlethal"
+   ],
+   "market": "both",
+   "founded": 1986,
+   "hq_city": "San Diego",
+   "public_listing": "Listed on Nasdaq as GNSS",
+   "products": [
+    "LRAD acoustic hailing systems",
+    "Genasys Protect",
+    "Genasys Emergency Management",
+    "OneVoice",
+    "Hyper-Reach"
+   ],
+   "disclosed_awards": [
+    "US government and public safety agencies"
+   ],
+   "mission": "Communicate and deter at long range without lethal force.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "unifire",
+   "name": "Unifire",
+   "country": "Sweden",
+   "country_iso": "SE",
+   "categories": [
+    "nonlethal"
+   ],
+   "relation": "supplier",
+   "url": "https://unifire.com/",
+   "what": "SEASERPENT water cannon system, a non-lethal protective measure using high-volume remote-controlled water cannons. Partnered with GAC on counter-piracy.",
+   "source_ids": [
+    "marinelink-gac-counterpiracy"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "nonlethal"
+   ],
+   "market": "commercial",
+   "mission": "Keep boarders off the hull with remotely controlled high-volume water.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "p-trap",
+   "name": "P-Trap (Westmark)",
+   "country": "Netherlands",
+   "country_iso": "NL",
+   "categories": [
+    "nonlethal"
+   ],
+   "relation": "supplier",
+   "url": null,
+   "what": "Non-lethal anti-boarding system deploying lines intended to foul the propellers of approaching skiffs.",
+   "source_ids": [
+    "marineinsight-antipiracy",
+    "sailworld-antipiracy"
+   ],
+   "confidence": "low",
+   "builds": [
+    "nonlethal"
+   ],
+   "market": "commercial",
+   "mission": "Foul the propellers of an approaching skiff before it reaches the ship.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "nyk-yokoi-curtain",
+   "name": "NYK / Yokoi anti-piracy curtain",
+   "country": "Japan",
+   "country_iso": "JP",
+   "categories": [
+    "nonlethal"
+   ],
+   "relation": "supplier",
+   "url": null,
+   "what": "Anti-piracy curtain developed by a division of Japan's NYK group with hose manufacturer Yokoi, to keep boarders from climbing the ship's side.",
+   "source_ids": [
+    "marineinsight-antipiracy"
+   ],
+   "confidence": "low",
+   "builds": [
+    "nonlethal"
+   ],
+   "market": "commercial",
+   "mission": "Make the ship's side unclimbable.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "open-ocean-robotics",
+   "name": "Open Ocean Robotics",
+   "country": "Canada",
+   "country_iso": "CA",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.openoceanrobotics.com/",
+   "what": "Patented solar-powered uncrewed surface vessels for ISR and patrol, equipped with sensors, cameras and real-time communications. States it extends maritime surveillance reach without exposing crews and detects illicit activity in real time. Completed a year-long government project with its DataXplorer USV. Strategic partnership with Nauticus Robotics.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "nauticus-oor",
+    "open-ocean-robotics"
+   ],
+   "confidence": "medium",
+   "products": [
+    "Uncrewed surface vehicles",
+    "XplorerView command portal"
+   ],
+   "disclosed_awards": [
+    "Defence Innovation Unit, US Coast Guard and DoD demonstration",
+    "Defence Research and Development Canada",
+    "US Navy",
+    "WildAid",
+    "Maritime and Port Authority of Singapore",
+    "Combined Task Force 59"
+   ],
+   "builds": [
+    "usv",
+    "c2"
+   ],
+   "market": "both",
+   "mission": "Extend maritime surveillance without exposing crews, using solar-powered vessels that stay out indefinitely.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "maritime-robotics",
+   "name": "Maritime Robotics",
+   "country": "Norway",
+   "country_iso": "NO",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.maritimerobotics.com/",
+   "what": "Maritime drones and autonomy. Its Autonomous Navigation System (ANS) underpins the platform range, which includes the Mariner X USV for open ocean waters.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "maritime-robotics"
+   ],
+   "confidence": "medium",
+   "hq_city": "Trondheim",
+   "funding": "EUR 28 million growth investment announced 12 June 2026",
+   "products": [
+    "SeaControl Autonomous Navigation System",
+    "Mariner X USV"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "both",
+   "mission": "Make autonomous navigation safe and routine for uncrewed vessels at sea.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "seasats",
+   "name": "Seasats",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "direct competitor",
+   "url": "https://www.seasats.com/",
+   "what": "Rugged self-righting USV operating in sea states up to 6, with collision avoidance, GPS-denied navigation and redundant communications for global reach.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "firecrawl-positioning",
+    "seasats",
+    "seasats-tectonic-seriesa",
+    "seasats-apfit-prnewswire",
+    "seasats-navaltoday-trial"
+   ],
+   "confidence": "high",
+   "funding": "$20M Series A led by Konvoy Ventures with Shield Capital and Techstars, announced 17 February 2026; over $40M total disclosed",
+   "products": [
+    "Lightfish",
+    "Quickfish",
+    "Heavyfish"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "both",
+   "leadership": [
+    {
+     "person": "Mike Flanigan",
+     "title": "Chief Executive Officer"
+    },
+    {
+     "person": "Dylan Rodriguez",
+     "title": "Chief Technology Officer"
+    }
+   ],
+   "mission": "Rugged, self-righting autonomous vessels that keep working in heavy weather and without GPS.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": true,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 4,
+   "proximity_band": "same business",
+   "headline": "Ocean autonomy that works.",
+   "proof_points": [
+    "Missions up to 6 months",
+    "Operational in sea state 6",
+    "Operational during GPS denial",
+    "50+ payload options",
+    "Iridium and Starlink communications with onboard AI"
+   ],
+   "publishes_specs": true,
+   "axis_evidence": {
+    "escort": "Quickfish can protect the perimeter of vessels and infrastructure, intercepting and escorting anything that enters their space.",
+    "escort_mission_list": "MDA, ASW, sonar surveys, harbor security and HVU escort.",
+    "security": "Survey, research, security patrol.",
+    "commercial": "Missions completed for defense, science, and commercial customers around the world.",
+    "source_id": "seasats",
+    "retrieved": "2026-09-03",
+    "note": "Quoted from seasats.com. escort and security were previously recorded false; the site names HVU escort and harbour security directly."
+   },
+   "dossier": "companies/seasats.json",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": "autonomous"
+  },
+  {
+   "id": "leidos",
+   "name": "Leidos",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.leidos.com/",
+   "what": "Among seven companies shortlisted by the US Navy from roughly two dozen to advance in its unmanned surface vessel programme.",
+   "source_ids": [
+    "navy-usv-shortlist"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Deliver large uncrewed surface vessels for US Navy programmes.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "hii",
+   "name": "HII",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://hii.com/",
+   "what": "Shipbuilder, among seven companies shortlisted by the US Navy in its unmanned surface vessel programme.",
+   "source_ids": [
+    "navy-usv-shortlist"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Bring shipbuilding scale to uncrewed surface vessel programmes.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "birdon",
+   "name": "Birdon",
+   "country": "Australia",
+   "country_iso": "AU",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://birdon.com/",
+   "what": "Among seven companies shortlisted by the US Navy in its unmanned surface vessel programme.",
+   "source_ids": [
+    "navy-usv-shortlist"
+   ],
+   "confidence": "low",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Build and support vessels for government and defence customers.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "l3harris",
+   "name": "L3Harris Technologies",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv",
+    "effector"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.l3harris.com/all-capabilities/autonomous-systems",
+   "what": "States it has delivered over 500 autonomous unmanned undersea and surface vehicles, that its autonomous surface vehicles have performed over 2,100 hours at sea without human intervention, and that it has delivered three times more than competitors. Vessels integrate sensors, weapons and sonars and run remote, semi-autonomous or fully autonomous. Vehicle and autonomy provider for the UK-France mine countermeasures programme.",
+   "source_ids": [
+    "l3harris-autonomous",
+    "marketsandmarkets-usv"
+   ],
+   "confidence": "high",
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors",
+    "weapons"
+   ],
+   "market": "military",
+   "mission": "Field proven autonomous surface and undersea vehicles that integrate sensors, sonars and weapons.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "thales",
+   "name": "Thales",
+   "country": "France",
+   "country_iso": "FR",
+   "categories": [
+    "usv",
+    "cuas",
+    "underwater"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.thalesgroup.com/en/defence/naval",
+   "what": "Naval systems prime. Its Boat Zero USV, carrying a specialised sonar payload, crossed the English Channel from Brest to Plymouth, escorted in by a second Thales USV.",
+   "source_ids": [
+    "marketsandmarkets-usv",
+    "thales-naval"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv",
+    "sensors",
+    "cuas"
+   ],
+   "market": "military",
+   "mission": "Give navies operational superiority through integrated sensors, autonomy and combat systems.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "kongsberg",
+   "name": "Kongsberg Gruppen",
+   "country": "Norway",
+   "country_iso": "NO",
+   "categories": [
+    "usv",
+    "effector"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.kongsberg.com/",
+   "what": "Maritime technology and defence group named among the key players in the unmanned surface vessel market. Reported in July to have secured a contract with a European navy for USVs with advanced surveillance capabilities.",
+   "source_ids": [
+    "marketsandmarkets-usv",
+    "mrfr-usv"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv",
+    "weapons",
+    "sensors"
+   ],
+   "market": "military",
+   "mission": "Apply maritime technology depth to autonomous surveillance and naval weapons.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "saab",
+   "name": "Saab",
+   "country": "Sweden",
+   "country_iso": "SE",
+   "categories": [
+    "usv",
+    "underwater"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.saab.com/",
+   "what": "Named among the major players in the unmanned surface vessel market.",
+   "source_ids": [
+    "mrfr-usv"
+   ],
+   "confidence": "low",
+   "builds": [
+    "usv",
+    "sensors"
+   ],
+   "market": "military",
+   "mission": "Deliver naval sensors and autonomous systems to navies.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "textron",
+   "name": "Textron Systems",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.textronsystems.com/",
+   "what": "Named among the major players in the unmanned surface vessel market. Reported in August to have partnered with an AI firm on next-generation autonomous navigation for its USVs.",
+   "source_ids": [
+    "mrfr-usv"
+   ],
+   "confidence": "low",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Field autonomous surface systems for the US Navy.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "northrop",
+   "name": "Northrop Grumman",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.northropgrumman.com/",
+   "what": "Named among the major players in the unmanned surface vessel market, with emphasis on integrating artificial intelligence into USV operations.",
+   "source_ids": [
+    "mrfr-usv"
+   ],
+   "confidence": "low",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Integrate artificial intelligence into uncrewed maritime operations.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "general-dynamics",
+   "name": "General Dynamics",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.gd.com/",
+   "what": "Named among the major players in the unmanned surface vessel market.",
+   "source_ids": [
+    "mrfr-usv"
+   ],
+   "confidence": "low",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Build uncrewed maritime systems for defence customers.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "boeing",
+   "name": "Boeing",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.boeing.com/defense",
+   "what": "Named among the major players in the unmanned surface vessel market.",
+   "source_ids": [
+    "mrfr-usv"
+   ],
+   "confidence": "low",
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "mission": "Build uncrewed maritime systems for defence customers.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "exail",
+   "name": "Exail Technologies",
+   "country": "France",
+   "country_iso": "FR",
+   "categories": [
+    "usv",
+    "underwater"
+   ],
+   "relation": "adjacent platform builder",
+   "url": "https://www.exail.com/",
+   "what": "Named alongside L3Harris as a key player in the unmanned surface vehicles industry.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "firecrawl-leadership-enrichment",
+    "marketsandmarkets-usv"
+   ],
+   "confidence": "medium",
+   "public_listing": "Listed on Euronext Paris, ticker EXA",
+   "products": [
+    "DriX",
+    "K-STER",
+    "UMIS",
+    "Ulyx"
+   ],
+   "disclosed_awards": [
+    "Contract to supply a European navy with a light, rapidly deployable mine-countermeasures system",
+    "Partnership with KNDS on an autonomous MCM ecosystem"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors"
+   ],
+   "market": "military",
+   "leadership": [
+    {
+     "person": "Olivier Legrain",
+     "title": "Chief Executive Officer"
+    }
+   ],
+   "mission": "Autonomous mine countermeasures and navigation systems that take crews out of the minefield.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "nauticus-robotics",
+   "name": "Nauticus Robotics",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.nauticusrobotics.com/",
+   "what": "Ocean robotics and autonomy software. Formed a strategic partnership with Open Ocean Robotics.",
+   "source_ids": [
+    "nauticus-oor"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "both",
+   "mission": "Autonomy software and robotics that cut the cost of offshore work.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sonardyne",
+   "name": "Sonardyne",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "underwater"
+   ],
+   "relation": "supplier",
+   "url": "https://www.sonardyne.com/product/sentinel/",
+   "what": "Sentinel intruder detection sonar. States it identifies divers up to 900 metres away and uncrewed underwater vehicles at 1,200 metres, detecting, tracking and classifying divers, swimmer delivery vehicles and AUVs approaching a protected asset from any direction.",
+   "source_ids": [
+    "firecrawl-company-enrichment",
+    "sonardyne-sentinel"
+   ],
+   "confidence": "high",
+   "founded": 1971,
+   "products": [
+    "Sentinel intruder detection sonar",
+    "Compatt transponders",
+    "Seismic Integrated Positioning System"
+   ],
+   "disclosed_awards": [
+    "Acoustic positioning for the polar research vessel RRS Sir David Attenborough",
+    "Four Queen's Awards for Enterprise"
+   ],
+   "builds": [
+    "sensors"
+   ],
+   "market": "both",
+   "mission": "Know what is underwater near a protected asset.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "wavefront-forcys",
+   "name": "Wavefront Systems / Forcys",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "underwater"
+   ],
+   "relation": "supplier",
+   "url": "https://www.forcys.com/instruments/sentinel-ids/",
+   "what": "Sentinel IDS, described as the world's most deployed underwater intruder detection sonar, providing autonomous 360-degree protection for ports, vessels and critical infrastructure. Sentinel 2 adds SInAPS simultaneous in-band active and passive sonar, giving up to 1,500 m for mini-subs and 1,000 m for diver detection. Sonar heads network together for large sites such as naval bases and container ports.",
+   "source_ids": [
+    "forcys-sentinel",
+    "defenseadvancement-sentinel"
+   ],
+   "confidence": "high",
+   "builds": [
+    "sensors"
+   ],
+   "market": "both",
+   "mission": "Detect divers and underwater vehicles approaching ports, ships and infrastructure.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "cyberowl",
+   "name": "CyberOwl",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "cyber"
+   ],
+   "relation": "adjacent",
+   "url": "https://cyberowl.io/",
+   "what": "Cyber security analytics for operational assets, helping maritime fleet operators gain visibility, security and compliance across shipboard IT, IoT and OT systems.",
+   "source_ids": [
+    "cyberowl",
+    "firecrawl-company-enrichment"
+   ],
+   "confidence": "medium",
+   "hq_city": "Singapore",
+   "funding": "US$5.1 million disclosed, 2022 round",
+   "hq_note": "Company funding announcement gives Singapore; other listings give the United Kingdom. Both are recorded.",
+   "products": [
+    "Medulla cyber risk monitoring"
+   ],
+   "disclosed_awards": [
+    "States it supports cyber risk management across approximately 2,000 vessels",
+    "Eastern Pacific Shipping",
+    "UK Ministry of Defence contract for predictive cyber capability"
+   ],
+   "builds": [
+    "cyber"
+   ],
+   "market": "commercial",
+   "mission": "Give fleet operators visibility of cyber risk across shipboard IT and OT.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "marlink",
+   "name": "Marlink",
+   "country": "Norway",
+   "country_iso": "NO",
+   "categories": [
+    "cyber"
+   ],
+   "relation": "adjacent",
+   "url": "https://marlink.com/resources/knowledge-hub/cybersecurity-at-marlink/",
+   "what": "Managed cyber security for maritime: detection and response, vulnerability assessment, penetration testing, phishing and awareness. Publishes on OT cyber risk to propulsion, steering, navigation and bridge electronics.",
+   "source_ids": [
+    "marlink-cyber"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "cyber"
+   ],
+   "market": "commercial",
+   "mission": "Managed cyber security for connected vessels.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "nozomi",
+   "name": "Nozomi Networks",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "cyber"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.nozominetworks.com/industries/maritime-cybersecurity",
+   "what": "Maritime OT cyber security: asset inventory management, AI-powered continuous monitoring and guided remediation.",
+   "source_ids": [
+    "nozomi-maritime"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "cyber"
+   ],
+   "market": "commercial",
+   "mission": "Monitor operational technology on ships and in ports for intrusion.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "dnv-cyber",
+   "name": "DNV Cyber",
+   "country": "Norway",
+   "country_iso": "NO",
+   "categories": [
+    "cyber"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.dnv.com/cyber/industries/maritime/",
+   "what": "Classification society cyber arm covering vessel design, construction and operation, stating 70 dedicated specialists.",
+   "source_ids": [
+    "dnv-cyber"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "cyber"
+   ],
+   "market": "commercial",
+   "mission": "Build cyber security into a vessel from design through operation.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "honeywell-maritime",
+   "name": "Honeywell",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "cyber"
+   ],
+   "relation": "adjacent",
+   "url": "https://www.honeywell.com/",
+   "what": "Maritime OT cyber security for vessels, ports and offshore systems. States cyberattacks on maritime operations doubled in 2025.",
+   "source_ids": [
+    "honeywell-maritime-cyber"
+   ],
+   "confidence": "medium",
+   "builds": [
+    "cyber"
+   ],
+   "market": "commercial",
+   "mission": "Protect the operational technology that actually moves and steers the ship.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "saildrone",
+   "name": "Saildrone",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv",
+    "mda"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors"
+   ],
+   "market": "both",
+   "relation": "adjacent platform builder",
+   "url": "https://www.saildrone.com/",
+   "hq_city": "Alameda",
+   "mission": "Persistent long-duration autonomous surface presence for defence ISR and ocean data, with no crew and no support ship.",
+   "what": "Describes itself as a maritime defence company building autonomous systems for persistent surface ISR, deep-ocean mapping and long-duration commercial work. Wind and solar powered; vessels can operate autonomously for up to a year. Around 100 vehicles manufactured as of 2024 against a stated plan for 1,000. Fleet passed one million cumulative nautical miles in 2024.",
+   "products": [
+    "Saildrone Explorer",
+    "Saildrone Voyager",
+    "Saildrone Surveyor"
+   ],
+   "disclosed_awards": [
+    "US Navy deployed ten Voyagers for Operation Windward Stack, September 2023",
+    "Commercial operators deploy Voyager USVs for US 4th Fleet"
+   ],
+   "source_ids": [
+    "alphageo-usv-top10",
+    "contrary-saildrone",
+    "firecrawl-positioning",
+    "navy-susv",
+    "saildrone"
+   ],
+   "confidence": "high",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "headline": "Persistent maritime operations delivering data, intelligence, and kinetic effects for strategic superiority.",
+   "proof_points": [
+    "First USV to cross the Atlantic in both directions",
+    "Completed an autonomous Antarctic circumnavigation"
+   ],
+   "publishes_specs": true,
+   "note": " Its own headline now names kinetic effects, not only data — a move from sensing into weapons.",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "ocean-infinity",
+   "name": "Ocean Infinity",
+   "country": "United States",
+   "country_iso": "US",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://oceaninfinity.com/",
+   "hq_city": "Austin",
+   "mission": "Replace crewed offshore survey ships with remotely operated fleets run from shore control centres.",
+   "what": "Operates one of the largest fleets of autonomous underwater and surface vehicles. The Armada fleet comprises 23 low-emission, optionally crewed vessels capable of deep-sea operation to 6 km; the Infinity fleet holds 14 AUVs.",
+   "products": [
+    "Armada fleet",
+    "Infinity fleet"
+   ],
+   "disclosed_awards": [
+    "Five-year global framework agreement with Shell for geophysical and geotechnical services using the Armada fleet, 2024",
+    "Deployed six HUGIN 6000 AUVs simultaneously for Woodside Energy's Scarborough project, surveying nearly 6,800 line kilometres in 19.8 operational days"
+   ],
+   "source_ids": [
+    "alphageo-usv-top10",
+    "firecrawl-positioning",
+    "marinelink-autonomy-offshore"
+   ],
+   "confidence": "high",
+   "note": "The clearest evidence that a fleet-scale commercial uncrewed vessel operation is bankable, though in survey rather than security. Acquired MMT.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "publishes_specs": true,
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "fugro",
+   "name": "Fugro",
+   "country": "Netherlands",
+   "country_iso": "NL",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.fugro.com/expertise/remote-and-autonomous-solutions",
+   "hq_city": "Leidschendam",
+   "mission": "Deliver offshore survey and inspection remotely, moving people off the water into onshore control centres.",
+   "what": "Operates a fleet of uncrewed surface vessels and electric ROVs for remote survey, inspection, piloting and positioning. The 12-metre Fugro Maali was its first operational Blue Essence USV. Completed a remote inspection at the first subsidy-free offshore wind farms.",
+   "products": [
+    "Blue Essence USV",
+    "Fugro Maali",
+    "Blue Volta eROV"
+   ],
+   "source_ids": [
+    "fugro-autonomous",
+    "alphageo-usv-top10"
+   ],
+   "confidence": "high",
+   "note": "Publicly notes that as global USV fleets grow, dependable local vessel support for escort is needed.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "oceanalpha",
+   "name": "OceanAlpha Group",
+   "country": "China",
+   "country_iso": "CN",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "both",
+   "relation": "adjacent platform builder",
+   "url": "https://www.oceanalpha.com/",
+   "mission": "Volume manufacture of small uncrewed surface vessels for survey, environmental monitoring and patrol.",
+   "what": "Chinese USV manufacturer named among the commercial operating models for uncrewed surface and underwater vessels.",
+   "source_ids": [
+    "marinelink-autonomy-offshore"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "mng-maritime",
+   "name": "MNG Maritime",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "pmsc"
+   ],
+   "builds": [
+    "crewed-vessel"
+   ],
+   "market": "commercial",
+   "relation": "adjacent",
+   "url": null,
+   "mission": "Hold weapons and guards legally offshore so security teams can join and leave ships without landing arms in port.",
+   "what": "Operates the MNG Resolution, a floating armoury in the Gulf of Oman that shuttles guards and weapons for private maritime security companies protecting ships.",
+   "source_ids": [
+    "wsj-floating-armories",
+    "dryad-floating-armouries"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "floating-armouries",
+   "name": "Floating armouries (segment)",
+   "country": "Multiple",
+   "country_iso": null,
+   "categories": [
+    "pmsc"
+   ],
+   "builds": [
+    "crewed-vessel"
+   ],
+   "market": "commercial",
+   "relation": "reference",
+   "url": "https://channel16.dryadglobal.com/floating-armouries-background",
+   "mission": "Segment entry, not a company. Offshore storage of weapons, ammunition and security equipment in international waters.",
+   "what": "Vessels offering offshore storage of weapons and security equipment. They arose to resolve the legal difficulty of landing vessels carrying weapons, after the 2006-2009 piracy surge led shipowners to contract armed guards. Concentrated in the Gulf of Oman, Red Sea and off Sri Lanka.",
+   "note": "The Omega Research Foundation concluded there is a worrying lack of regulation around their operation and use. A Chinese-operated floating armoury carrying weapons for private security teams was reported seized by Iran near the UAE. This is the legal plumbing that makes embarked armed guards workable, and an autonomous escort would not need it.",
+   "source_ids": [
+    "dryad-floating-armouries",
+    "omega-floating-armouries",
+    "wikipedia-floating-armoury",
+    "wsj-floating-armories",
+    "gi-floating-armouries"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": true,
+    "uncrewed": false,
+    "commercial": true,
+    "security": true
+   },
+   "proximity": 3,
+   "proximity_band": "one step away",
+   "tech_share": 0,
+   "tech_status": "service only",
+   "competitor_class": null
+  },
+  {
+   "id": "aselsan",
+   "name": "ASELSAN",
+   "country": "Turkey",
+   "country_iso": "TR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "sensors",
+    "weapons",
+    "cuas"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.aselsan.com/",
+   "mission": "Turkish sovereign naval electronics and armed autonomous surface capability.",
+   "what": "Turkish defence electronics prime. MARLIN armed USV developed with Sefine Shipyard, demonstrated with ASELSAN sensors, communications, electronic warfare and weapon systems. SIDA/ULAQ armed USV family developed with ARES Shipyard, demonstrated with guided missiles and remote weapon stations.",
+   "products": [
+    "MARLIN armed USV",
+    "SIDA armed USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "disclosed_awards": [
+    "MARLIN took part in NATO Dynamic Messenger 2022"
+   ],
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "ares-shipyard",
+   "name": "ARES Shipyard",
+   "country": "Turkey",
+   "country_iso": "TR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "weapons"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.ares.com.tr/",
+   "mission": "Modular armed unmanned naval craft for Turkish and export customers.",
+   "what": "Developed the ULAQ family jointly with Meteksan Defence. The prototype was publicly test-fired with an active weapon system in 2021. Variants shown for anti-surface, reconnaissance, anti-submarine and logistics roles.",
+   "products": [
+    "ULAQ/SIDA armed USV",
+    "ULAQ 11 ASW USV",
+    "ULAQ 21 logistics USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "dearsan",
+   "name": "Dearsan Shipyard",
+   "country": "Turkey",
+   "country_iso": "TR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "weapons"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.dearsan.com/",
+   "mission": "Autonomous armed patrol and precision strike from an unmanned hull.",
+   "what": "SANCAR armed USV developed with HAVELSAN, publicly launched and tested as an autonomous armed USV, demonstrated with remote command and control and a stabilised weapon station.",
+   "products": [
+    "SANCAR armed USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sefine",
+   "name": "Sefine Shipyard",
+   "country": "Turkey",
+   "country_iso": "TR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.sefine.com.tr/",
+   "mission": "Build the hulls for Turkey's autonomous naval and maritime security craft.",
+   "what": "Built the MARLIN hull in cooperation with ASELSAN. MARLIN was tested at sea and participated in NATO Dynamic Messenger 2022, with demonstrations covering autonomous navigation, remote command and control, electronic warfare and weapon integration.",
+   "products": [
+    "MARLIN USV",
+    "NB57 USV family"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "meteksan",
+   "name": "Meteksan Defence",
+   "country": "Turkey",
+   "country_iso": "TR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.meteksan.com/",
+   "mission": "Mission systems and autonomy for armed unmanned naval platforms.",
+   "what": "Co-developer of ULAQ with ARES Shipyard, supplying mission system and communications expertise. ULAQ completed sea trials and live-fire demonstrations.",
+   "products": [
+    "ULAQ armed USV",
+    "ULAQ ASW and logistics variants"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "stm",
+   "name": "STM",
+   "country": "Turkey",
+   "country_iso": "TR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.stm.com.tr/",
+   "mission": "Modular autonomous reconnaissance and strike platform for the Turkish Navy.",
+   "what": "Developed and demonstrated MIR as an autonomous USV, displayed as a modular platform for reconnaissance and strike payloads.",
+   "products": [
+    "MIR USV",
+    "MIR IDA demonstrator"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "rafael",
+   "name": "Rafael Advanced Defense Systems",
+   "country": "Israel",
+   "country_iso": "IL",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "weapons",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.rafael.co.il/",
+   "mission": "Operationally deployed unmanned patrol craft for harbour and coastal force protection.",
+   "what": "Protector is an operationally deployed unmanned surface craft family based on a rigid-hull inflatable boat with Rafael remote-control and mission systems. Supplied to foreign naval and security customers for patrol and force protection, demonstrated with remote weapon stations and electro-optical payloads.",
+   "products": [
+    "Protector USV",
+    "Protector Mk II/Mk III"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "high",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "iai",
+   "name": "Israel Aerospace Industries",
+   "country": "Israel",
+   "country_iso": "IL",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.iai.co.il/",
+   "mission": "Persistent autonomous patrol and critical infrastructure protection at sea.",
+   "what": "Presents KATANA as an autonomous USV for persistent maritime surveillance and security with remote command and modular payloads, demonstrated in maritime security scenarios and promoted to naval and coast guard customers.",
+   "products": [
+    "KATANA USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sea-baby",
+   "name": "Sea Baby programme (SBU)",
+   "country": "Ukraine",
+   "country_iso": "UA",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "military",
+   "relation": "reference",
+   "url": "https://ssu.gov.ua/",
+   "mission": "State combat maritime drone programme, not a commercial product.",
+   "what": "The Ukrainian Security Service publicly identifies Sea Baby as its maritime drone programme. Credible reporting attributes attacks on the Kerch Bridge, Black Sea Fleet ships and port infrastructure to Sea Baby or related SBU USVs. Funded in part through public donations and assembled through a defence-industrial network rather than marketed commercially.",
+   "products": [
+    "Sea Baby",
+    "Sea Baby 2024/2025 variants"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "note": "Included because it is the most combat-proven USV programme in existence and sets the public perception of what a drone boat is. Not a vendor.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "magura",
+   "name": "Magura programme (HUR)",
+   "country": "Ukraine",
+   "country_iso": "UA",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "military",
+   "relation": "reference",
+   "url": "https://gur.gov.ua/",
+   "mission": "State combat maritime drone programme, not a commercial product.",
+   "what": "Ukrainian Defence Intelligence publicly claims operation of MAGURA V5 attack boats. Credible reporting links Magura attacks to the destruction or disabling of Black Sea Fleet vessels including the landing ship Caesar Kunikov and the patrol ship Sergei Kotov.",
+   "products": [
+    "MAGURA V5"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "note": "A military capability, not an open product line. Relevant as proof that small USVs can defeat warships.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sea-kit",
+   "name": "SEA-KIT International",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "both",
+   "relation": "adjacent platform builder",
+   "url": "https://www.sea-kit.com/",
+   "mission": "Long-endurance uncrewed vessels that do survey work without a mother ship.",
+   "what": "Long-endurance USVs for hydrographic survey, ocean science, offshore energy and defence. Maxlimer completed a transatlantic autonomous crossing and remote survey demonstrations. Has worked with UK and international survey and defence customers including Dstl and the UK Ministry of Defence.",
+   "products": [
+    "SEA-KIT Maxlimer",
+    "SEA-KIT X-class USV",
+    "XL-USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "high",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "hydrosurv",
+   "name": "HydroSurv",
+   "country": "United Kingdom",
+   "country_iso": "GB",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://hydrosurv.com/",
+   "mission": "Low-emission electric and hybrid uncrewed survey vessels.",
+   "what": "Develops and operates electric and hybrid uncrewed survey vessels. REAV-40 has been demonstrated for offshore wind and hydrographic survey with commercial deployments and a beyond-visual-line-of-sight autonomy focus.",
+   "products": [
+    "REAV-40",
+    "HydroCat",
+    "C-Worker 5"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "atlas-elektronik",
+   "name": "ATLAS ELEKTRONIK",
+   "country": "Germany",
+   "country_iso": "DE",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.atlas-elektronik.com/",
+   "mission": "Modular autonomous mine warfare from an unmanned surface hull.",
+   "what": "Markets ARCIMS as a modular remotely controlled and autonomous surface vessel for mine warfare and other naval missions. Supplied or demonstrated in European defence programmes and exercises.",
+   "products": [
+    "ARCIMS",
+    "ARCIMS mission modules"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "xocean",
+   "name": "XOCEAN",
+   "country": "Ireland",
+   "country_iso": "IE",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://xocean.com/",
+   "mission": "Ocean data as a service, delivered by a fleet of small electric uncrewed vessels.",
+   "what": "Operates a fleet of remotely supervised electric USVs. Has secured offshore wind and hydrographic survey contracts in European waters, marketing persistent low-carbon data collection.",
+   "products": [
+    "XO-450",
+    "XO-500"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "oceanscan",
+   "name": "OceanScan-MST",
+   "country": "Portugal",
+   "country_iso": "PT",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.oceanscan-mst.com/",
+   "mission": "Autonomous marine survey for science and offshore energy.",
+   "what": "Provides marine survey and technology services and has developed autonomous surface survey capability for oceanographic and offshore work, tied to European research, hydrography and offshore energy markets.",
+   "products": [
+    "OceanScan USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "ocius",
+   "name": "Ocius Technology",
+   "country": "Australia",
+   "country_iso": "AU",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors"
+   ],
+   "market": "both",
+   "relation": "adjacent platform builder",
+   "url": "https://ocius.com.au/",
+   "mission": "Wind, solar and wave powered boats that stay on station for months.",
+   "what": "Bluebottle autonomous boats are wind, solar and wave powered and have supported Australian Border Force and Royal Australian Navy maritime surveillance and hydrographic missions, operating for months at sea.",
+   "products": [
+    "Bluebottle USV"
+   ],
+   "source_ids": [
+    "firecrawl-positioning",
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "high",
+   "note": "The closest existing analogue to persistent unattended presence, and it is powered entirely by the environment.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "headline": "Securing the global maritime domain through persistent autonomous systems and operations.",
+   "proof_points": [
+    "Bluebottles continuously deployed 24/7 on Royal Australian Navy missions since 2024",
+    "Royal Australian Navy, Royal New Zealand Navy, Australian Border Force and a US prime"
+   ],
+   "publishes_specs": true,
+   "founded": 1999,
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "tidewise",
+   "name": "TideWise",
+   "country": "Brazil",
+   "country_iso": "BR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "both",
+   "relation": "adjacent platform builder",
+   "url": "https://tidewise.io/",
+   "mission": "Brazilian-built autonomy for offshore survey and inspection.",
+   "what": "Autonomous vessel developer and operator whose USVs have been used for offshore survey and inspection, reducing the need for crewed support vessels. Developed a Brazilian-made autonomous surface vessel stack.",
+   "products": [
+    "USV 16",
+    "USV 3"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "st-engineering",
+   "name": "ST Engineering",
+   "country": "Singapore",
+   "country_iso": "SG",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.stengg.com/",
+   "mission": "Autonomous patrol and force protection for ports and navies.",
+   "what": "Venus USV family provides autonomous patrol, surveillance and force protection. The Republic of Singapore Navy has tested Venus USVs in maritime security exercises and operational evaluations. Developed the MARINER USV with Singapore's Defence Science and Technology Agency.",
+   "products": [
+    "Venus 16 USV",
+    "MARINER USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "high",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "zycraft",
+   "name": "Zycraft",
+   "country": "Singapore",
+   "country_iso": "SG",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://zycraft.com/",
+   "mission": "Long-endurance autonomous patrol and ISR.",
+   "what": "Unmanned systems company that has demonstrated long-endurance autonomous surface vessels for maritime security and surveillance. JARVIS is described as an autonomous USV for persistent patrol and ISR.",
+   "products": [
+    "JARVIS",
+    "Guardian USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "wartsila-voyage",
+   "name": "Wärtsilä Voyage",
+   "country": "Finland",
+   "country_iso": "FI",
+   "categories": [
+    "usv",
+    "mda"
+   ],
+   "builds": [
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.wartsila.com/marine/products/voyage",
+   "mission": "Situational awareness and autonomy functions for commercial ships, not hulls.",
+   "what": "Technology supplier in Singapore's maritime autonomy ecosystem, including autonomous tug and maritime autonomous surface ship demonstrations and remote operation trials. The Nautonomous suite provides situational awareness, decision support and autonomy functions rather than hulls.",
+   "products": [
+    "Nautonomous"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "sagar-defence",
+   "name": "Sagar Defence Engineering",
+   "country": "India",
+   "country_iso": "IN",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.sagardefence.com/",
+   "mission": "Autonomous boats and boat swarms for Indian naval and port security.",
+   "what": "Indian developer of autonomous surface vessels for surveillance, logistics and defence. Has demonstrated autonomous boat operations and coordinated USV swarming, and signed an agreement with the Indian Navy for development of autonomous weaponised boat swarms.",
+   "products": [
+    "Autonomous USV",
+    "Autonomous weaponised boat swarms",
+    "Autonomous survey boat"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "newspace-research",
+   "name": "NewSpace Research and Technologies",
+   "country": "India",
+   "country_iso": "IN",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://newspace.co.in/",
+   "mission": "Networked and swarming autonomy across air, land and sea.",
+   "what": "Bengaluru defence technology company developing autonomous systems across air, land and maritime domains, with publicly demonstrated networked and swarming autonomy concepts. Maritime work is positioned for Indian defence and security users.",
+   "products": [
+    "Autonomous USV",
+    "Swarm-enabled unmanned maritime systems"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "clearbot",
+   "name": "Clearbot",
+   "country": "Hong Kong",
+   "country_iso": "HK",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.clearbot.org/",
+   "mission": "Autonomous electric boats that collect floating waste.",
+   "what": "Developer of autonomous electric surface vessels that collect floating waste, with deployments and pilots in Hong Kong and India alongside municipal, corporate and environmental partners.",
+   "products": [
+    "Clearbot",
+    "Clearbot Ultra"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "note": "Included to show the low-cost commercial end of the USV market. Not a security company.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "marakeb",
+   "name": "Marakeb Technologies",
+   "country": "United Arab Emirates",
+   "country_iso": "AE",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://marakebtech.com/",
+   "mission": "Modular unmanned boats for coastal security and survey.",
+   "what": "UAE autonomous systems and marine technology developer associated with modular unmanned boats and the JENIAH USV family. Has exhibited and demonstrated unmanned surface craft at UAE defence exhibitions for ISR, patrol and security roles.",
+   "products": [
+    "M1 USV",
+    "M2 USV",
+    "M5 USV",
+    "JENIAH USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "edge-adasi",
+   "name": "EDGE Group (ADASI)",
+   "country": "United Arab Emirates",
+   "country_iso": "AE",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://edgegroup.ae/",
+   "mission": "UAE sovereign unmanned systems integration across domains.",
+   "what": "ADASI is the UAE's unmanned systems integrator and has displayed autonomous and unmanned maritime platforms at IDEX and other defence shows, signing cooperation and development agreements with UAE shipyards and international defence companies.",
+   "products": [
+    "ADASI USVs",
+    "REACH-S"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "adsb",
+   "name": "Abu Dhabi Ship Building",
+   "country": "United Arab Emirates",
+   "country_iso": "AE",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://adshipbuilding.com/",
+   "mission": "Integrate autonomous craft into naval and coast guard fleets.",
+   "what": "UAE shipbuilder that has exhibited autonomous and unmanned surface vessel concepts and partnered with local technology companies to integrate them into naval solutions for UAE and regional customers.",
+   "products": [
+    "12-metre autonomous surface vessel demonstrator"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "bayanat-alseer",
+   "name": "Bayanat / Al Seer Marine",
+   "country": "United Arab Emirates",
+   "country_iso": "AE",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "data-platform"
+   ],
+   "market": "both",
+   "relation": "adjacent platform builder",
+   "url": "https://www.bayanat.ai/",
+   "mission": "Commercial autonomous shipping and maritime surveillance for the Gulf.",
+   "what": "Announced a UAE autonomous maritime venture and tested autonomous vessel technologies in Abu Dhabi waters, combining Bayanat's geospatial and AI capability with Al Seer Marine's vessel operations.",
+   "products": [
+    "Autonomous maritime vessel demonstrator"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "nyk-autonomous",
+   "name": "NYK Line",
+   "country": "Japan",
+   "country_iso": "JP",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.nyk.com/english/",
+   "mission": "Autonomous navigation for conventional commercial ships, not drone boats.",
+   "what": "Led the DFFAS consortium, which conducted a long-distance autonomous navigation demonstration with the container ship Mikage. Part of Japan's MEGURI 2040 programme, including shore-based remote support and autonomous navigation.",
+   "products": [
+    "DFFAS",
+    "MEGURI 2040 demonstrator"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "note": "Autonomy applied to crewed merchant ships rather than to uncrewed escorts. Relevant as the commercial shipping industry's own autonomy path.",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "mol-autonomous",
+   "name": "Mitsui O.S.K. Lines",
+   "country": "Japan",
+   "country_iso": "JP",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.mol.co.jp/en/",
+   "mission": "Practical autonomous coastal shipping.",
+   "what": "Participated in Japan's MEGURI 2040 consortium and conducted autonomous navigation trials on a commercial ferry and other vessels, testing automatic berthing and departure, route planning, collision avoidance and shore monitoring.",
+   "products": [
+    "MEGURI 2040 demonstrators"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "mitsui-es",
+   "name": "Mitsui E&S",
+   "country": "Japan",
+   "country_iso": "JP",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "autonomy-sw"
+   ],
+   "market": "commercial",
+   "relation": "adjacent platform builder",
+   "url": "https://www.mes.co.jp/english/",
+   "mission": "Autonomous navigation and remote operation systems for commercial vessels.",
+   "what": "Participated in Japan's national MEGURI 2040 autonomous vessel demonstrations, covering autonomous navigation and remote monitoring and operation technologies for commercial vessels and coastal routes.",
+   "products": [
+    "MEGURI 2040 autonomous vessel systems"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": false,
+    "commercial": true,
+    "security": false
+   },
+   "proximity": 1,
+   "proximity_band": "peripheral",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "cssc",
+   "name": "China State Shipbuilding Corporation",
+   "country": "China",
+   "country_iso": "CN",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "weapons",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.cssc.net.cn/",
+   "mission": "State naval shipbuilding including experimental combat USVs.",
+   "what": "The JARI-USV was publicly exhibited as a Chinese military unmanned surface vessel associated with the CSIC/CSSC shipbuilding and research ecosystem. Naval News reported detailed imagery of an experimental combat USV at Guangzhou assessed as likely operated by CSSC for unmanned operations research.",
+   "products": [
+    "JARI-USV",
+    "Experimental combat USV"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "low",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "lig-nex1",
+   "name": "LIG Nex1",
+   "country": "South Korea",
+   "country_iso": "KR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "sensors"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.ligdefenseaerospace.com/",
+   "mission": "Reconnaissance and combat USVs for the Republic of Korea Navy.",
+   "what": "Signed a DAPA contract worth KRW 39.86 billion to develop two 12-metre reconnaissance USVs for the ROK Navy by 2027, intended to improve surveillance and rapid response around forward naval bases and key ports, supporting the Navy's Sea GHOST manned-unmanned concept. States it has independently developed the Sea Sword family since 2015.",
+   "products": [
+    "Sea Sword-1",
+    "Sea Sword-2",
+    "Sea Sword-3"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "high",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "hd-hhi",
+   "name": "HD Hyundai Heavy Industries",
+   "country": "South Korea",
+   "country_iso": "KR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.hd-hhi.com/",
+   "mission": "Shipbuilding scale applied to combat unmanned surface vehicles.",
+   "what": "Won a Korean Navy contract to design a combat unmanned surface vehicle, described as a landmark contract, expanding its autonomous naval ship development alongside conventional warship building.",
+   "products": [
+    "Combat Unmanned Surface Vehicle (CUSV)",
+    "KUSV concept"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  },
+  {
+   "id": "hanwha-systems",
+   "name": "Hanwha Systems",
+   "country": "South Korea",
+   "country_iso": "KR",
+   "categories": [
+    "usv"
+   ],
+   "builds": [
+    "usv",
+    "autonomy-sw",
+    "c2"
+   ],
+   "market": "military",
+   "relation": "adjacent platform builder",
+   "url": "https://www.hanwhasystems.com/",
+   "mission": "AI-enabled mine warfare and networked manned-unmanned naval operations.",
+   "what": "Partnered with the Republic of Korea Navy on trials of an AI-based uncrewed mine warfare system, demonstrating autonomy for mine detection and countermeasure missions, positioned within Korea's Sea GHOST manned-unmanned concept.",
+   "products": [
+    "Sea GHOST",
+    "AI mine-warfare USV demonstrator"
+   ],
+   "source_ids": [
+    "firecrawl-usv-discovery"
+   ],
+   "confidence": "medium",
+   "retrieved": "2026-09-03",
+   "proximity_axes": {
+    "escort": false,
+    "uncrewed": true,
+    "commercial": false,
+    "security": true
+   },
+   "proximity": 2,
+   "proximity_band": "adjacent",
+   "tech_share": 100,
+   "tech_status": "pure tech",
+   "competitor_class": null
+  }
+ ],
+ "gaps": [
+  "Panama and Marshall Islands flag registries publish their own authorised PMSC lists; neither has been pulled. The Liberian list has 24 entries, 10 are recorded here.",
+  "Firm-level detail (founded year, HQ city, headcount, funding, named products, disclosed awards) is being collected by a structured enrichment pass and is not yet merged. Until then, only fields a source stated are present.",
+  "No funding, headcount, revenue or ownership data on any private company, except where a source stated it.",
+  "No pricing for any product or service listed.",
+  "Insurance and broking absent: Marsh, Aon, Howden, Gallagher and the P&I clubs shape what gets bought.",
+  "Asian and Middle Eastern USV builders thin: Zycraft, Aselsan, Ares Shipyard, Israel Aerospace Industries, Rafael and Chinese builders not covered.",
+  "Relation field is a working classification, not an assessment. Nothing here judges quality, capability or fit."
+ ],
+ "enrichment": {
+  "pass": "structured extraction over company websites and press, 3 September 2026",
+  "companies_enriched": 33,
+  "fields": [
+   "founded",
+   "hq_city",
+   "employees",
+   "funding",
+   "public_listing",
+   "products",
+   "disclosed_awards"
+  ],
+  "method": "firecrawl agent, schema-constrained, instructed to return null rather than guess",
+  "note": "Values are what the company or its press states. Two headquarters conflicts were found against existing entries and both readings are kept in hq_note rather than one overwriting the other.",
+  "leadership_pass": {
+   "date": "2026-09-03",
+   "companies_queried": 20,
+   "companies_with_named_leadership": 12,
+   "note": "Eight of the twenty returned no reliably named leadership and are left empty rather than filled with a guess: Ambrey, Neptune P2P, Praesidium, Maritime Robotics, Open Ocean Robotics, Dryad Global, Sonardyne, CyberOwl."
+  },
+  "passes": [
+   "16 companies, 3 September 2026",
+   "20 companies, 3 September 2026",
+   "leadership, 20 queried, 12 returned names"
+  ],
+  "positioning_pass": {
+   "date": "2026-09-03",
+   "companies": 16,
+   "fields": [
+    "headline",
+    "proof_points",
+    "primary_cta",
+    "publishes_specs"
+   ],
+   "note": "Read from company websites only. Where a homepage headline or CTA was not explicitly verifiable it is absent. Nobody in the sample publishes pricing."
+  }
+ },
+ "builds_taxonomy": [
+  {
+   "id": "crewed-vessel",
+   "name": "Crewed vessel",
+   "note": "Operates crewed patrol or escort boats as the delivered service.",
+   "short": "Crewed"
+  },
+  {
+   "id": "usv",
+   "name": "Uncrewed surface vessel",
+   "note": "Designs or manufactures the hull and platform.",
+   "short": "USV"
+  },
+  {
+   "id": "people",
+   "name": "Personnel",
+   "note": "Trained guards, liaison officers or analysts as the deliverable.",
+   "short": "People"
+  },
+  {
+   "id": "autonomy-sw",
+   "name": "Autonomy software",
+   "note": "Navigation, perception and self-driving stack.",
+   "short": "Autonomy"
+  },
+  {
+   "id": "c2",
+   "name": "Command and control",
+   "note": "Multi-asset tasking and mission software.",
+   "short": "C2"
+  },
+  {
+   "id": "cuas",
+   "name": "Counter-drone",
+   "note": "Detection, jamming or kinetic defeat of UAS and USV.",
+   "short": "C-UAS"
+  },
+  {
+   "id": "weapons",
+   "name": "Weapons and effectors",
+   "note": "Remote weapon stations and kinetic payloads.",
+   "short": "Weapons"
+  },
+  {
+   "id": "sensors",
+   "name": "Sensors",
+   "note": "Radar, EO/IR, sonar, acoustics or RF hardware.",
+   "short": "Sensors"
+  },
+  {
+   "id": "satellite",
+   "name": "Satellites",
+   "note": "Owns and operates an orbital constellation.",
+   "short": "Satellite"
+  },
+  {
+   "id": "data-platform",
+   "name": "Data platform",
+   "note": "Tracking, analytics or intelligence delivered as software.",
+   "short": "Data"
+  },
+  {
+   "id": "nonlethal",
+   "name": "Non-lethal hardware",
+   "note": "Deterrence and hardening fitted to the client vessel.",
+   "short": "Non-lethal"
+  },
+  {
+   "id": "cyber",
+   "name": "Cyber products",
+   "note": "Shipboard IT and OT security software.",
+   "short": "Cyber"
+  }
+ ],
+ "market_axis": {
+  "values": [
+   "military",
+   "commercial",
+   "both"
+  ],
+  "note": "Which customer the company presents itself as serving. Read from how the company describes its own market: defence programmes and navy customers, commercial shipping and ports, or stated both. This is a classification of positioning, not of what a platform could technically do.",
+  "why_recorded": "Odd Fox states it is not associated with any military and does not sell to military organisations, so this axis separates who is actually competing for the same customer."
+ },
+ "mission_field": {
+  "note": "One line on what the company exists to do, paraphrased from its own positioning. Not an assessment."
+ },
+ "retrieved": "2026-09-03",
+ "dating_note": "Each record carries a retrieved date. Company facts — funding, leadership, headcount, products — change without notice and a record older than a few months should be re-checked before use.",
+ "proximity_model": {
+  "question": "How close is this company to an uncrewed escort service sold to commercial shipping?",
+  "axes": [
+   {
+    "id": "escort",
+    "means": "Delivers protection alongside or aboard a client vessel, rather than selling a component or a data feed."
+   },
+   {
+    "id": "uncrewed",
+    "means": "Builds an uncrewed surface platform."
+   },
+   {
+    "id": "commercial",
+    "means": "Serves commercial customers, not defence programmes only."
+   },
+   {
+    "id": "security",
+    "means": "The mission is security or defence, not survey, ocean data or cyber."
+   }
+  ],
+  "scale": {
+   "4": "same business",
+   "3": "one step away",
+   "2": "adjacent",
+   "1": "peripheral",
+   "0": "supplier or reference"
+  },
+  "note": "Computed from the categories, builds and market fields, not assigned by hand. A company scoring 4 would be doing the same thing; the count at each score is the honest measure of how crowded this space is.",
+  "retrieved": "2026-09-03"
+ },
+ "tech_model": {
+  "question": "Does this company sell technology, or people and boats?",
+  "method": "tech_share is the share of a company's builds entries that are technology categories. Computed from builds, not assigned by hand.",
+  "technology_categories": [
+   "autonomy-sw",
+   "c2",
+   "cuas",
+   "cyber",
+   "data-platform",
+   "nonlethal",
+   "satellite",
+   "sensors",
+   "usv",
+   "weapons"
+  ],
+  "service_categories": [
+   "crewed-vessel",
+   "people"
+  ],
+  "bands": {
+   "100": "pure tech",
+   "50-99": "tech-led",
+   "1-49": "service-led",
+   "0": "service only"
+  },
+  "note": "A crewed patrol boat and an armed team are how traditional marine security is delivered, so crewed-vessel and people count as service, not technology."
+ },
+ "competitor_model": {
+  "question": "Which companies are competitors for an uncrewed escort service, as opposed to incumbents selling the traditional version?",
+  "autonomous": "Meets the uncrewed, escort and security axes. These are starred in the UI.",
+  "traditional": "Sells escort or protection, but crewed. Still competes for the same customer budget and holds the customer relationships, so it stays in the file and keeps relation 'direct competitor'.",
+  "note": "Computed from proximity_axes, not assigned by hand."
+ }
+}

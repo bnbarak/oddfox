@@ -1,0 +1,56 @@
+:root {
+  /* Odd Fox tokens — mirrors data/lib/oddfox.css and the root index.html */
+  --color-bg: #04070a;
+  --color-bg-elevated: #0b1116;
+  --color-fg: #ffffff;
+  --color-fg-muted: #cacaca;
+  --color-accent: #ff4d3d;
+  --color-accent-soft: #ff8577;
+  --color-border: rgba(255, 255, 255, 0.16);
+
+  --hot: #ff4d3d;
+  --warm: #ffa53d;
+  --cool: #4da3ff;
+  --calm: #3ddc97;
+
+  --font-display: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  --slide-max-width: 1280px;
+  --slide-padding: clamp(2rem, 6vw, 6rem);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}

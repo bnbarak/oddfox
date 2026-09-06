@@ -1,0 +1,293 @@
+{
+ "dataset": "industry-vessel-economics",
+ "title": "What a ship costs and earns per day",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "note": "Disclosed figures from listed owners' own results, not estimates. Opex is crew, stores, repairs, insurance and management. TCE is what the ship earns per day after voyage costs. The gap between them is the daily margin.",
+ "daily_opex": [
+  {
+   "company": "Star Bulk",
+   "segment": "dry bulk",
+   "usd_per_day": 5071,
+   "period": "Q1 2026",
+   "source_ids": [
+    "starbulk-q1-2026"
+   ]
+  },
+  {
+   "company": "Genco",
+   "segment": "dry bulk",
+   "usd_per_day": 6395,
+   "period": "FY2025",
+   "source_ids": [
+    "genco-q4-2025"
+   ]
+  },
+  {
+   "company": "Costamare",
+   "segment": "container",
+   "usd_per_day": 6345,
+   "period": "FY2024",
+   "source_ids": [
+    "costamare-20f-2024"
+   ]
+  },
+  {
+   "company": "Danaos",
+   "segment": "container",
+   "usd_per_day": 6606,
+   "period": "FY2024",
+   "source_ids": [
+    "danaos-20f-2024"
+   ]
+  },
+  {
+   "company": "Hafnia",
+   "segment": "product tanker",
+   "usd_per_day": 7277,
+   "period": "FY2024",
+   "source_ids": [
+    "hafnia-q4-2025"
+   ]
+  },
+  {
+   "company": "Scorpio Tankers",
+   "segment": "MR product tanker",
+   "usd_per_day": 7410,
+   "period": "Q2 2025",
+   "source_ids": [
+    "scorpio-q2-2025"
+   ]
+  },
+  {
+   "company": "Scorpio Tankers",
+   "segment": "LR2 product tanker",
+   "usd_per_day": 8129,
+   "period": "Q2 2025",
+   "source_ids": [
+    "scorpio-q2-2025"
+   ]
+  },
+  {
+   "company": "Scorpio Tankers",
+   "segment": "fleet average",
+   "usd_per_day": 8162,
+   "period": "Q3 2025",
+   "source_ids": [
+    "scorpio-q3-2025"
+   ]
+  }
+ ],
+ "opex_range": {
+  "low": 5071,
+  "high": 8162,
+  "reading": "Roughly $5,000 to $8,000 a day to run a merchant ship, bulk cheapest, tankers dearest."
+ },
+ "daily_tce": [
+  {
+   "company": "Frontline",
+   "class": "VLCC",
+   "usd_per_day": 74200,
+   "period": "Q4 2025",
+   "source_ids": [
+    "frontline-q4-2025"
+   ]
+  },
+  {
+   "company": "Frontline",
+   "class": "Suezmax",
+   "usd_per_day": 53800,
+   "period": "Q4 2025",
+   "source_ids": [
+    "frontline-q4-2025"
+   ]
+  },
+  {
+   "company": "Frontline",
+   "class": "Aframax/LR2",
+   "usd_per_day": 33500,
+   "period": "Q4 2025",
+   "source_ids": [
+    "frontline-q4-2025"
+   ]
+  },
+  {
+   "company": "Teekay",
+   "class": "Suezmax spot",
+   "usd_per_day": 33504,
+   "period": "Q3 2025",
+   "source_ids": [
+    "teekay-q4-2025"
+   ]
+  },
+  {
+   "company": "Teekay",
+   "class": "Aframax/LR2 spot",
+   "usd_per_day": 30861,
+   "period": "Q3 2025",
+   "source_ids": [
+    "teekay-q4-2025"
+   ]
+  },
+  {
+   "company": "Scorpio",
+   "class": "LR2",
+   "usd_per_day": 32674,
+   "period": "Q2 2025",
+   "source_ids": [
+    "scorpio-q2-2025"
+   ]
+  },
+  {
+   "company": "Scorpio",
+   "class": "MR",
+   "usd_per_day": 20681,
+   "period": "Q2 2025",
+   "source_ids": [
+    "scorpio-q2-2025"
+   ]
+  },
+  {
+   "company": "Hafnia",
+   "class": "fleet",
+   "usd_per_day": 27346,
+   "period": "Q4 2025",
+   "source_ids": [
+    "hafnia-q4-2025"
+   ]
+  },
+  {
+   "company": "Star Bulk",
+   "class": "Capesize/Newcastlemax",
+   "usd_per_day": 26627,
+   "period": "Q1 2026",
+   "source_ids": [
+    "starbulk-q1-2026"
+   ]
+  },
+  {
+   "company": "Star Bulk",
+   "class": "Ultramax/Supramax",
+   "usd_per_day": 16050,
+   "period": "Q1 2026",
+   "source_ids": [
+    "starbulk-q1-2026"
+   ]
+  },
+  {
+   "company": "Star Bulk",
+   "class": "Panamax/Kamsarmax",
+   "usd_per_day": 15849,
+   "period": "Q1 2026",
+   "source_ids": [
+    "starbulk-q1-2026"
+   ]
+  },
+  {
+   "company": "Genco",
+   "class": "fleet",
+   "usd_per_day": 20064,
+   "period": "Q4 2025",
+   "source_ids": [
+    "genco-q4-2025"
+   ]
+  },
+  {
+   "company": "Ardmore",
+   "class": "MR spot",
+   "usd_per_day": 24697,
+   "period": "Q3 2025",
+   "source_ids": [
+    "scorpio-q3-2025"
+   ]
+  }
+ ],
+ "indices": [
+  {
+   "index": "Baltic Dry Index",
+   "value": 3488,
+   "date": "2026-09-03",
+   "source_ids": [
+    "hellenic-bdi"
+   ]
+  },
+  {
+   "index": "Baltic Capesize",
+   "value": 5642,
+   "date": "2026-09-03",
+   "source_ids": [
+    "hellenic-bdi"
+   ]
+  },
+  {
+   "index": "Baltic Panamax",
+   "value": 2429,
+   "date": "2026-09-03",
+   "source_ids": [
+    "hellenic-bdi"
+   ]
+  },
+  {
+   "index": "Baltic Supramax",
+   "value": 1657,
+   "date": "2026-09-03",
+   "source_ids": [
+    "hellenic-bdi"
+   ]
+  }
+ ],
+ "crew": [
+  {
+   "rank": "Able seafarer",
+   "usd_per_month": 690,
+   "basis": "ITF/ILO recommended minimum from 1 Jan 2026",
+   "source_ids": [
+    "itf-wages"
+   ]
+  },
+  {
+   "rank": "Able seafarer",
+   "usd_per_month": 673,
+   "basis": "before 1 Jan 2026",
+   "source_ids": [
+    "itf-wages"
+   ]
+  },
+  {
+   "rank": "Able seafarer",
+   "usd_per_month": 704,
+   "basis": "from 1 Jan 2027",
+   "source_ids": [
+    "itf-wages"
+   ]
+  }
+ ],
+ "drydock": [
+  {
+   "item": "Genco drydock cost per vessel, three estimates",
+   "value": "$6.9m, $8.1m, $13.9m",
+   "source_ids": [
+    "genco-q4-2025"
+   ]
+  },
+  {
+   "item": "Genco scheduled off-hire",
+   "value": "238 days",
+   "source_ids": [
+    "genco-q4-2025"
+   ]
+  },
+  {
+   "item": "Matson drydocking, full year",
+   "value": "about $35 million",
+   "source_ids": [
+    "genco-q4-2025"
+   ]
+  }
+ ],
+ "gaps": [
+  "No opex component split by crew, stores, repairs, insurance, management.",
+  "No newbuild or secondhand vessel values.",
+  "Figures span Q2 2025 to Q1 2026 and are not a like-for-like snapshot."
+ ]
+}

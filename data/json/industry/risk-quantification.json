@@ -1,0 +1,130 @@
+{
+ "dataset": "risk-quantification",
+ "title": "How to put a number on the risk",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "purpose": "Whether escort is worth buying depends on the expected loss it prevents. This works that out from sourced inputs, shows every step, and marks what is arithmetic rather than published. It is a first pass and the assumptions are contestable, which is the point.",
+ "inputs": [
+  {
+   "input": "Suez transits, 2024",
+   "value": 13213,
+   "source_ids": [
+    "reuters-suez-2024"
+   ]
+  },
+  {
+   "input": "Houthi attacks recorded in 2024",
+   "value": 72,
+   "source_ids": [
+    "imb-annual-reports"
+   ],
+   "note": "Counted from houthi-timeline.json entries dated 2024."
+  },
+  {
+   "input": "IMB incidents worldwide",
+   "value": {
+    "2024": 116,
+    "2025": 137,
+    "2026 H1": 38
+   },
+   "source_ids": [
+    "imb-annual-reports"
+   ]
+  },
+  {
+   "input": "War risk premium, southern Red Sea, July 2026",
+   "value": "0.3% to over 1% of hull value per seven-day cover",
+   "source_ids": [
+    "reuters-warrisk-2026-07"
+   ]
+  },
+  {
+   "input": "Example hull value",
+   "value": "$80 million, the Sounion",
+   "source_ids": [
+    "reuters-warrisk-2024-09"
+   ]
+  },
+  {
+   "input": "Named incidents in this library",
+   "value": 17,
+   "of_which_sunk": 4
+  },
+  {
+   "input": "Exposure window, Gulf of Aden IRTC",
+   "value": "490 nm, 33 to 49 hours",
+   "source_ids": [
+    "imo-piracy"
+   ]
+  }
+ ],
+ "step_1_attack_rate": {
+  "question": "What is the chance a given transit is attacked?",
+  "calc": "72 attacks in 2024 divided by 13,213 Suez transits",
+  "result_pct": 0.545,
+  "derived": true,
+  "caveats": [
+   "Suez transits are a rough proxy for Red Sea transits and will overstate or understate the true denominator.",
+   "Attacks were concentrated in a period, not spread evenly across the year.",
+   "Many ships avoided the route entirely, so the ships that did transit were a self-selected, better-protected group."
+  ]
+ },
+ "step_2_severity": {
+  "question": "If attacked, how bad is it?",
+  "calc": "4 of 17 named incidents in this library ended with the vessel sunk",
+  "result_pct": 23.5,
+  "derived": true,
+  "caveats": [
+   "Named incidents are the severe ones and are not a random sample. This overstates severity badly.",
+   "It ignores partial loss, cargo loss, crew harm, ransom and delay, which are the more common outcomes."
+  ]
+ },
+ "step_3_expected_loss": {
+  "question": "What is the expected loss per transit, as a share of hull value?",
+  "calc": "attack rate times severity",
+  "result_pct": 0.1282,
+  "on_an_80m_hull_usd": 102573,
+  "derived": true
+ },
+ "step_4_versus_the_premium": {
+  "question": "What does the market charge for the same risk?",
+  "premium_pct_range": "0.3% to 1.0%",
+  "premium_midpoint_pct": 0.65,
+  "premium_on_80m_hull_usd": [
+   240000,
+   800000
+  ],
+  "expected_loss_pct": 0.1282,
+  "ratio_premium_to_expected_loss": 5.1,
+  "finding": "The war risk premium is roughly 5x our estimate of expected loss.",
+  "why_that_gap_might_be_real": [
+   "Underwriters price uncertainty, not just expected value, and this risk is politically driven and hard to model.",
+   "Premium covers more than total loss: crew, cargo, ransom, delay, detention, and legal exposure.",
+   "Capacity is scarce in a hot war zone, so the price includes scarcity rent.",
+   "Our severity figure is drawn from named incidents, which are the worst ones, so the true expected loss is probably lower still, widening the gap."
+  ],
+  "why_our_number_might_be_wrong": [
+   "The denominator is Suez transits, not Red Sea transits.",
+   "Named incidents are a biased sample of severity.",
+   "The premium is quoted per seven-day cover, and the actual danger window is one to two days.",
+   "We have one hull value, and only as a press estimate."
+  ]
+ },
+ "what_this_means_commercially": [
+  "The budget exists and is large: 0.3% to 1% of hull per transit is $240,000 to $800,000 on an $80 million ship.",
+  "It is priced well above expected loss, which is where the margin for any risk-reduction product sits.",
+  "But it also means the premium can fall fast if the political situation calms, and the budget goes with it.",
+  "The strongest commercial argument is not that attacks are likely. It is that the premium is already being paid."
+ ],
+ "the_honest_problem": "On these numbers an individual transit is very unlikely to be attacked. An owner who prices rationally per voyage may reasonably decline protection. The product sells to the party who feels the premium, not the party who fears the attack, and those are often different people.",
+ "next_steps": [
+  "Get Red Sea and Bab el-Mandeb transit counts to replace the Suez proxy.",
+  "Get a severity distribution across all incidents, not just named ones.",
+  "Get real hull values by vessel type rather than one press estimate.",
+  "Ask an underwriter what loss ratio they actually assume on war risk."
+ ],
+ "gaps": [
+  "Every figure here is a first pass and the severity input is the weakest link.",
+  "No published expected-loss or loss-ratio figure for war risk was found to check this against."
+ ]
+}

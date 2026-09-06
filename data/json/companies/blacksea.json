@@ -1,0 +1,332 @@
+{
+ "schema": "company-dossier/1.0",
+ "id": "blacksea",
+ "name": "BlackSea Technologies",
+ "as_of": "2026-09-03",
+ "compiled": "2026-09-03",
+ "note": "Per-company dossier. Every field carries its source and retrieval date. Absent facts are listed as gaps, not estimated.",
+ "identity": {
+  "legal_name": "BlackSea Technologies",
+  "country": "United States",
+  "country_iso": "US",
+  "hq_city": "Baltimore",
+  "hq_state": "Maryland",
+  "url": "https://www.blacksea.tech/",
+  "founded": "1986",
+  "founded_basis": "Roots in Maritime Applied Physics Corporation, Baltimore, 1986. The companies combined through acquisitions in 2022 to form BlackSea Technologies.",
+  "employees": "about 235, with staff also in Florida, North Carolina and California",
+  "description_by_company": "Building the state of the art in AI-enabled manned and unmanned teams.",
+  "source_ids": [
+   "blacksea-site",
+   "blacksea-culture",
+   "baltimore-banner-blacksea"
+  ],
+  "retrieved": "2026-09-03"
+ },
+ "classification": {
+  "relation": "direct competitor",
+  "market": "military",
+  "proximity": 3,
+  "proximity_band": "one step away",
+  "axes": {
+   "escort": true,
+   "uncrewed": true,
+   "commercial": false,
+   "security": true
+  },
+  "axis_evidence": {
+   "escort": "It's larger size allows Comet to carry a variety of payloads to fit a multitude of missions, including C-UAS, ISR, high value escort, and mine countermeasures.",
+   "escort_company_wording": "The Comet page names high-value-unit escort in its mission list.",
+   "uncrewed": "GARC, Chaser, Comet, NightTrain and SPDS are all uncrewed surface platforms.",
+   "security": "Named missions include ISR, MCM, strike, interdiction, AAW/C-UAS, ASW, SUW and EW.",
+   "commercial": "No source found describes commercial or civil customers. Every named customer is the US Navy."
+  },
+  "reclassified": {
+   "date": "2026-09-03",
+   "from": {
+    "relation": "adjacent platform builder",
+    "proximity": 2,
+    "band": "adjacent"
+   },
+   "to": {
+    "relation": "direct competitor",
+    "proximity": 3,
+    "band": "one step away"
+   },
+   "reason": "The escort axis was recorded false. Naval News of 10 May 2026 and BlackSea's own Comet page both name high-value escort as a Comet mission."
+  },
+  "source_ids": [
+   "blacksea-comet",
+   "navalnews-blacksea-comet"
+  ],
+  "retrieved": "2026-09-03"
+ },
+ "ownership": {
+  "backer": "Razor's Edge Ventures",
+  "structure": "Razor's Edge founded BlackSea as a flagship platform company; not venture rounds",
+  "pending_acquisition": {
+   "acquirer": "AEVEX Corp",
+   "announced": "2026-08-12",
+   "expected_close": "September 2026",
+   "value": "AEVEX record in this library carries 'agreement to acquire for up to $650 million'",
+   "status": "Announced, not confirmed closed as of 2026-09-03.",
+   "source_ids": [
+    "aevex-acquires-blacksea"
+   ]
+  },
+  "revenue": "$150 million expected FY2026",
+  "revenue_source_id": "aevex-acquires-blacksea",
+  "total_funding": null,
+  "funding_note": "No venture rounds found. Backed as a private-equity platform company rather than through priced rounds.",
+  "source_ids": [
+   "blacksea-site",
+   "aevex-acquires-blacksea"
+  ],
+  "retrieved": "2026-09-03"
+ },
+ "contracts": [
+  {
+   "value": "$256 million",
+   "instrument": "five-year contract, April 2026 to March 2031",
+   "customer": "US Navy, PMO 314 Logistics Over the Shore",
+   "scope": "Build and support the Seabased Petroleum Distribution System, including up to five SPDS units and support equipment.",
+   "announced": "2026-05-05",
+   "source_ids": [
+    "blacksea-spds-contract"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "value": "up to $213 million",
+   "instrument": "production contract",
+   "customer": "US Navy",
+   "programme": "GARC",
+   "scope": "Produce Global Autonomous Reconnaissance Craft.",
+   "announced": "reported October 2025",
+   "date_basis": "A government database listed the ceiling; the article does not date the award itself.",
+   "source_ids": [
+    "baltimore-banner-blacksea"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "value": "$2 million",
+   "instrument": "initial contract",
+   "customer": "US Navy",
+   "programme": "GARC",
+   "scope": "Begin building five GARCs. Held by predecessor MAPC.",
+   "announced": "2022",
+   "source_ids": [
+    "baltimore-banner-blacksea"
+   ],
+   "retrieved": "2026-09-03"
+  }
+ ],
+ "platforms": [
+  {
+   "name": "Comet",
+   "length": "13.1 m",
+   "top_speed": "45+ knots",
+   "payload": "10,000 lb including fuel",
+   "endurance": "1,000 nmi with 3,000 lb payload at 40 kn in Sea State 3; 500 nmi with 7,500 lb at 20 kn",
+   "role_by_company": "AAW/C-UAS, MCM, SUW, ASW, EW, MDA, ISR, high-value-unit escort, distributed maritime operations",
+   "status": "announced May 2026",
+   "source_ids": [
+    "blacksea-comet",
+    "navalnews-blacksea-comet"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "Chaser (GARC Block II)",
+   "length": "4.95 m x 1.90 m beam",
+   "top_speed": "40 knots sprint, 22 knots cruise",
+   "endurance": "1,900 nmi at 5 kn; 875 nmi at 22 kn",
+   "payload": "1,380 lb; 5,130 lb full-load displacement",
+   "role_by_company": "MDA, distributed ISR, comms relay, strike coordination, contested logistics",
+   "status": "announced May 2026",
+   "source_ids": [
+    "blacksea-chaser",
+    "navalnews-blacksea-comet"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "GARC",
+   "length": "16 feet",
+   "top_speed": "about 45 mph",
+   "endurance": "about 1,000 miles on a tank of diesel",
+   "payload": "up to 1,000 lb",
+   "role_by_company": "ISR, comms relay, MCM, strike, survey, interdiction",
+   "status": "in production",
+   "source_ids": [
+    "blacksea-garc",
+    "baltimore-banner-blacksea",
+    "defensescoop-garc"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "NightTrain",
+   "top_speed": "11 knots fully loaded",
+   "endurance": "2,700+ nmi",
+   "payload": "about 71 tons; up to 53 linear feet of ISO containers",
+   "role_by_company": "Contested maritime logistics, containerised resupply",
+   "status": "published",
+   "source_ids": [
+    "blacksea-nighttrain"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "SPDS",
+   "length": "200 ft",
+   "payload": "900 LT lightship, 125 ft operating depth, 45 ft width",
+   "role_by_company": "Autonomous expeditionary bulk fuel distribution from offshore to forces ashore",
+   "status": "under a five-year Navy contract",
+   "source_ids": [
+    "blacksea-spds-contract"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "Mainstay",
+   "role_by_company": "Open autonomy architecture connecting autonomy software, vessel controls, sensors, payloads, comms and C2. Not a vessel.",
+   "status": "published",
+   "source_ids": [
+    "blacksea-site"
+   ],
+   "retrieved": "2026-09-03"
+  }
+ ],
+ "leadership": [
+  {
+   "person": "Mark Rice",
+   "title": "Founder and president of predecessor Maritime Applied Physics Corporation",
+   "source_ids": [
+    "baltimore-banner-blacksea"
+   ],
+   "retrieved": "2026-09-03"
+  }
+ ],
+ "quotes": [
+  {
+   "text": "It's larger size allows Comet to carry a variety of payloads to fit a multitude of missions, including C-UAS, ISR, high value escort, and mine countermeasures.",
+   "person": null,
+   "role": "Naval News reporting",
+   "date": "2026-05-10",
+   "source_ids": [
+    "navalnews-blacksea-comet"
+   ]
+  }
+ ],
+ "articles": [
+  {
+   "title": "New Comet and Chaser USV by BlackSea Technologies",
+   "publisher": "Naval News",
+   "url": "https://www.navalnews.com/naval-news/2026/05/video-new-comet-and-chaser-usv-by-blacksea-technologies/",
+   "published": "2026-05-10",
+   "retrieved": "2026-09-03",
+   "type": "trade press",
+   "key_points": [
+    "Comet and Chaser unveiled.",
+    "Comet mission set explicitly includes high value escort.",
+    "Chaser range roughly 600-800 nmi at 20 knots per this report, which differs from the company figures."
+   ],
+   "source_id": "navalnews-blacksea-comet"
+  },
+  {
+   "title": "Baltimore naval drone boats: BlackSea Technologies",
+   "publisher": "The Baltimore Banner",
+   "url": "https://www.thebanner.com/economy/baltimore-naval-drone-boats-blacksea-technologies-F7CW4PKHVRBMRKBA3EGOKG243I/",
+   "published": "2025-10",
+   "retrieved": "2026-09-03",
+   "type": "press",
+   "key_points": [
+    "About 235 employees.",
+    "$2M Navy contract in 2022 for five GARCs.",
+    "Government database lists a GARC contract worth up to $213M."
+   ],
+   "source_id": "baltimore-banner-blacksea"
+  },
+  {
+   "title": "AEVEX to acquire BlackSea Technologies",
+   "publisher": "AEVEX",
+   "url": "https://aevex.com/aevex-to-acquire-blacksea-technologies-strengthening-its-multi-domain-autonomous-systems-capabilities/",
+   "published": "2026-08-12",
+   "retrieved": "2026-09-03",
+   "type": "press release",
+   "key_points": [
+    "Definitive agreement announced 12 August 2026.",
+    "Expected to close September 2026.",
+    "$150 million expected FY2026 revenue."
+   ],
+   "source_id": "aevex-acquires-blacksea"
+  },
+  {
+   "title": "BlackSea awarded $256M Navy SPDS contract",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/press/blacksea-256m-navy-spds-contract",
+   "published": "2026-05-05",
+   "retrieved": "2026-09-03",
+   "type": "company press release",
+   "key_points": [
+    "Five-year contract, April 2026 to March 2031.",
+    "Up to five SPDS units."
+   ],
+   "source_id": "blacksea-spds-contract"
+  },
+  {
+   "title": "Navy GARC production ramp-up",
+   "publisher": "DefenseScoop",
+   "url": "https://defensescoop.com/2025/01/17/navy-garc-global-autonomous-reconnaissance-craft-ramp-up-production/",
+   "published": "2025-01-17",
+   "retrieved": "2026-09-03",
+   "type": "trade press",
+   "key_points": [
+    "Navy ramping GARC production.",
+    "Describes GARC as 16 feet."
+   ],
+   "source_id": "defensescoop-garc"
+  }
+ ],
+ "conflicts": [
+  {
+   "field": "Chaser range",
+   "values": [
+    {
+     "value": "1,900 nmi at 5 kn; 875 nmi at 22 kn",
+     "source_id": "blacksea-chaser",
+     "date": null
+    },
+    {
+     "value": "roughly 600-800 nmi at 20 knots",
+     "source_id": "navalnews-blacksea-comet",
+     "date": "2026-05-10"
+    }
+   ],
+   "resolution": "Unresolved. The company figure and the Naval News figure are not reconcilable at comparable speeds."
+  }
+ ],
+ "gaps": [
+  "No commercial or civil customer is named in any source. Every named customer is the US Navy.",
+  "No unit price is published for any platform.",
+  "No venture funding rounds exist to compare against peers; the company is a private-equity platform company.",
+  "The AEVEX acquisition was announced 12 August 2026 and expected to close in September 2026. Whether it has closed is not confirmed here.",
+  "Escort appears as one mission in a long defence mission list, not as a service sold to shipowners.",
+  "Total funding is not disclosed."
+ ],
+ "source_ids": [
+  "blacksea-site",
+  "blacksea-comet",
+  "blacksea-chaser",
+  "blacksea-garc",
+  "blacksea-nighttrain",
+  "blacksea-spds-contract",
+  "blacksea-culture",
+  "navalnews-blacksea-comet",
+  "baltimore-banner-blacksea",
+  "defensescoop-garc",
+  "aevex-acquires-blacksea"
+ ]
+}

@@ -1,0 +1,201 @@
+{
+ "dataset": "industry-routes",
+ "title": "Routes, transit times and the exposure window",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "the_number_that_matters": {
+  "finding": "A ship is inside the Gulf of Aden danger corridor for roughly 33 to 49 hours. The Internationally Recommended Transit Corridor is about 490 nautical miles long and 2 nautical miles wide, as two one-mile lanes.",
+  "at_speed": [
+   {
+    "knots": 15,
+    "hours": 32.7
+   },
+   {
+    "knots": 12,
+    "hours": 40.8
+   },
+   {
+    "knots": 10,
+    "hours": 49.0
+   }
+  ],
+  "why_it_matters": "This is the mission length an escort has to cover. It is a bounded, well-defined corridor with published traffic lanes, not open ocean. Any platform that can hold merchant speed for two days covers it.",
+  "caveat": "The hours are arithmetic on the published 490 nm length, not a published figure. They exclude manoeuvring, weather and traffic.",
+  "source_ids": [
+   "imo-piracy"
+  ]
+ },
+ "irtc": {
+  "length_nm": 490,
+  "width_nm": 2,
+  "lanes": "two one-mile lanes, one each direction",
+  "reporting": "Vessels register with MSCHOA and report to UKMTO. Naval coordination is organised around the corridor. BMP does not specify a permanent scheduled convoy timetable.",
+  "source_ids": [
+   "imo-piracy"
+  ]
+ },
+ "suez": [
+  {
+   "metric": "Vessel transits",
+   "value": 26434,
+   "period": "2023",
+   "source_ids": [
+    "reuters-suez-2024"
+   ]
+  },
+  {
+   "metric": "Vessel transits",
+   "value": 13213,
+   "period": "2024",
+   "note": "About 50% fewer than 2023.",
+   "source_ids": [
+    "reuters-suez-2024"
+   ]
+  },
+  {
+   "metric": "Canal revenue",
+   "value": "$10.25 billion",
+   "period": "2023",
+   "source_ids": [
+    "reuters-suez-2024"
+   ]
+  },
+  {
+   "metric": "Canal revenue",
+   "value": "$3.991 billion",
+   "period": "2024",
+   "note": "Down 61%.",
+   "source_ids": [
+    "reuters-suez-2024"
+   ]
+  },
+  {
+   "metric": "Toll basis",
+   "value": "SDR per Suez Canal Net Tonnage band, varying by vessel type. No single flat rate.",
+   "source_ids": [
+    "sca-tolls"
+   ]
+  }
+ ],
+ "panama": [
+  {
+   "metric": "Max daily transits",
+   "value": 24,
+   "period": "from 2023-12-16",
+   "source_ids": [
+    "pancanal-adjust"
+   ]
+  },
+  {
+   "metric": "Max daily transits",
+   "value": 20,
+   "period": "2024-01-01",
+   "source_ids": [
+    "pancanal-adjust"
+   ]
+  },
+  {
+   "metric": "Max daily transits",
+   "value": 18,
+   "period": "2024-02-01",
+   "source_ids": [
+    "pancanal-adjust"
+   ]
+  },
+  {
+   "metric": "Max daily transits",
+   "value": 27,
+   "period": "from 2024-07-22",
+   "source_ids": [
+    "pancanal-27"
+   ]
+  },
+  {
+   "metric": "Slot auction, one additional transit, LNG carrier",
+   "value": "$3.975 million",
+   "period": "2023-11-08",
+   "source_ids": [
+    "reuters-panama-slot"
+   ]
+  }
+ ],
+ "cape_diversion": [
+  {
+   "metric": "Additional distance",
+   "value": "up to 3,500 nautical miles",
+   "source_ids": [
+    "unctad-redsea-routes"
+   ]
+  },
+  {
+   "metric": "Additional time",
+   "value": "10 days or more",
+   "source_ids": [
+    "unctad-redsea-routes"
+   ]
+  },
+  {
+   "metric": "Additional fuel",
+   "value": "up to 40% more for a journey",
+   "source_ids": [
+    "unctad-redsea-routes"
+   ]
+  },
+  {
+   "metric": "Additional daily operating cost, largest container ships",
+   "value": "about $1 million per day",
+   "period": "2024-01-12",
+   "source_ids": [
+    "reuters-divert-cost"
+   ]
+  },
+  {
+   "metric": "Extra fuel cost, Asia to North Europe round trip",
+   "value": "up to $1 million",
+   "period": "2024-01-05",
+   "source_ids": [
+    "reuters-maersk-divert"
+   ]
+  }
+ ],
+ "distances": [
+  {
+   "route": "Shanghai to Rotterdam",
+   "via": "Suez",
+   "nm": 10577,
+   "source_ids": [
+    "sea-distances"
+   ]
+  },
+  {
+   "route": "Singapore to Rotterdam",
+   "via": "Suez",
+   "nm": 8288,
+   "source_ids": [
+    "sea-distances"
+   ]
+  }
+ ],
+ "service_speeds": [
+  {
+   "vessel_type": "Container ship",
+   "knots": "20-25"
+  },
+  {
+   "vessel_type": "Oil tanker",
+   "knots": "13-15"
+  },
+  {
+   "vessel_type": "Bulk carrier",
+   "knots": "12-15"
+  }
+ ],
+ "gaps": [
+  "No Cape-route distances retrieved, so the Suez comparison cannot be computed from our own figures.",
+  "No transit times in days for any named route.",
+  "No representative Suez or Panama toll in dollars for a specific vessel. Both authorities publish calculators, not headline prices.",
+  "No length or exposure time for the Bab el-Mandeb and southern Red Sea segment, which is where the Houthi attacks happen. We have the Gulf of Aden corridor only.",
+  "The extra Cape fuel is published as a percentage, never in tonnes or dollars for a stated vessel.",
+  "2025 and 2026 Suez transit figures not retrieved."
+ ]
+}

@@ -1,0 +1,371 @@
+{
+ "dataset": "gtm",
+ "title": "Go to market: who to contact and why",
+ "description": "A prioritised outreach list built from this library. Every target and every number carries the dataset it came from. The tiering and the message angles are judgment, and are marked as such; the facts under them are not.",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "who_buys": {
+  "basis": "ownership-model.json records buys_security per role.",
+  "buys": [
+   {
+    "role": "Technical / ISM manager",
+    "why": "Runs the ship day to day and holds the Document of Compliance. Operational decision maker."
+   },
+   {
+    "role": "Commercial manager / operator",
+    "why": "Fixes the ship on charters and decides where it trades."
+   },
+   {
+    "role": "Beneficial owner",
+    "why": "Ultimate economic owner; carries the loss."
+   },
+   {
+    "role": "Charterer",
+    "why": "On time and voyage charters the charterer usually bears the war risk premium."
+   }
+  ],
+  "do_not_target": [
+   {
+    "role": "Registered owner",
+    "why": "Usually a single-ship shell holding legal title. Does not buy."
+   },
+   {
+    "role": "Flag state",
+    "why": "Regulator, not a customer."
+   },
+   {
+    "role": "P&I club",
+    "why": "Mutual insurer, does not procure escort. But ESC Global Security states it is vetted by P&I clubs, and vetting appears to be a precondition of selling. Treat as a gate and a channel, not a buyer."
+   },
+   {
+    "role": "War risk underwriter",
+    "why": "Prices the risk rather than buying protection. MAST partners with Beazley and Ambrey with Insurwave, so underwriters and insurance platforms are a live route to the buyer."
+   }
+  ],
+  "channel_not_buyer": {
+   "basis": "incumbent-clients.json gatekeepers.",
+   "note": "Every incumbent that publishes partnerships routes through insurance: Ambrey with Insurwave, MAST with Beazley, Praesidium with Lloyd's policies, ESC vetted by flag states, ship managers and P&I clubs. Accreditation is likely a prerequisite before a manager will place us alongside a hull.",
+   "targets": [
+    "P&I clubs",
+    "War risk underwriters",
+    "Insurwave",
+    "Beazley Group",
+    "Lloyd's market brokers"
+   ]
+  }
+ },
+ "tiers": [
+  {
+   "rank": 1,
+   "id": "ship-managers",
+   "name": "Third-party ship managers",
+   "targets": 5,
+   "reach": "about 3,095 vessels under management",
+   "why": "The ISM manager is a buying role, and unlike owners this population is concentrated. Five conversations reach more tonnage than a hundred owner conversations.",
+   "basis": "customers.json ship_managers; ownership-model.json buys_security.",
+   "judgment": "Ranking these first is our call, on concentration alone.",
+   "named": [
+    {
+     "company": "V.Group",
+     "fleet": 900,
+     "channel": "LinkedIn, corporate site"
+    },
+    {
+     "company": "Anglo-Eastern",
+     "fleet": 740,
+     "channel": "LinkedIn, corporate site"
+    },
+    {
+     "company": "Bernhard Schulte Shipmanagement",
+     "fleet": 680,
+     "channel": "LinkedIn, corporate site"
+    },
+    {
+     "company": "Wilhelmsen Ship Management",
+     "fleet": 450,
+     "channel": "LinkedIn, corporate site"
+    },
+    {
+     "company": "Columbia Shipmanagement",
+     "fleet": 325,
+     "channel": "columbiagroup.org"
+    }
+   ],
+   "blocker": "No source breaks these fleets down by vessel type, so we cannot yet say how much of each sits on attacked routes."
+  },
+  {
+   "rank": 2,
+   "id": "attacked",
+   "name": "Companies whose ship was actually attacked",
+   "targets": 10,
+   "reach": "10 of 13 named companies sit in a buying role",
+   "why": "Demonstrated exposure. These firms have already absorbed the loss the product prevents, so the need does not have to be argued.",
+   "basis": "customers.json exposed, compiled from contemporaneous reporting on 11 attacked vessels.",
+   "judgment": "Warmest list we hold. Six of the thirteen are Greek managers in Piraeus and Athens.",
+   "named": [
+    {
+     "company": "Navigation Maritime Bulgare (Navibulgar)",
+     "role": "beneficial owner and operator",
+     "vessel": "Ruen",
+     "channel": "office@navbul.com, +359 52 633 100",
+     "reachable": true
+    },
+    {
+     "company": "Delta Tankers",
+     "role": "commercial manager",
+     "vessel": "Sounion",
+     "channel": "deltatankers.gr",
+     "reachable": true
+    },
+    {
+     "company": "Latsco Marine Management",
+     "role": "commercial manager",
+     "vessel": "Hellas Aphrodite",
+     "channel": "latsco.com, Kifisia office",
+     "reachable": true
+    },
+    {
+     "company": "Cosmoship Management S.A.",
+     "role": "technical manager",
+     "vessel": "Eternity C",
+     "channel": "+30 210 45 22 914, Piraeus office",
+     "reachable": true
+    },
+    {
+     "company": "Nippon Yusen K.K. (NYK Line)",
+     "role": "commercial manager",
+     "vessel": "Galaxy Leader",
+     "channel": "nyk.com",
+     "reachable": true
+    },
+    {
+     "company": "KSRM (Kabir Steel Re-Rolling Mills)",
+     "role": "cargo owner",
+     "vessel": "Abdullah",
+     "channel": "sales@ksrm.com.bd",
+     "reachable": true,
+     "note": "Steel manufacturer moving its own raw material, not a shipping company. Different buyer profile."
+    },
+    {
+     "company": "Allseas Marine",
+     "role": "beneficial owner",
+     "vessel": "Magic Seas",
+     "channel": "LinkedIn only",
+     "reachable": false
+    },
+    {
+     "company": "Evalend Shipping",
+     "role": "technical manager",
+     "vessel": "Tutor",
+     "channel": "LinkedIn only",
+     "reachable": false
+    },
+    {
+     "company": "Third January Maritime Ltd",
+     "role": "commercial manager",
+     "vessel": "True Confidence",
+     "channel": "LinkedIn only",
+     "reachable": false
+    },
+    {
+     "company": "SR Shipping",
+     "role": "commercial manager",
+     "vessel": "Abdullah",
+     "channel": "LinkedIn only",
+     "reachable": false
+    }
+   ],
+   "blocker": "Four of ten have no verifiable official website. Three of those four are Greek managers, which is the segment that dominates this list. LinkedIn is the realistic channel for them."
+  },
+  {
+   "rank": 3,
+   "id": "dry-bulk",
+   "name": "Dry bulk owners and operators",
+   "targets": 11,
+   "reach": "Oldendorff 700 vessels, Pacific Basin 266, Star Bulk 161, down to Genco 44",
+   "why": "Dry bulk is the most-attacked vessel type: 13 of the IMB H1 2026 incidents and 7 of the 17 named incidents in this library.",
+   "basis": "customers.json segments dry-bulk; attack-log.json patterns_2026_h1.",
+   "judgment": "Cold, but the segment exposure is the strongest argument we have that is not company-specific.",
+   "named": [
+    {
+     "company": "Oldendorff Carriers",
+     "fleet": 700,
+     "country": "Germany"
+    },
+    {
+     "company": "Pacific Basin Shipping",
+     "fleet": 266,
+     "country": "Hong Kong"
+    },
+    {
+     "company": "Star Bulk Carriers",
+     "fleet": 161,
+     "country": "Greece"
+    },
+    {
+     "company": "Western Bulk",
+     "fleet": 150,
+     "country": "Norway"
+    },
+    {
+     "company": "Navios Maritime Holdings",
+     "fleet": 142,
+     "country": "Greece"
+    }
+   ],
+   "blocker": "Fleet sizes come from a secondary listicle, not a registry. Check against Equasis before quoting them to anyone."
+  },
+  {
+   "rank": 4,
+   "id": "tanker",
+   "name": "Tanker owners and managers",
+   "targets": 7,
+   "reach": "Hafnia about 200 vessels, Bahri 107, Frontline 75",
+   "why": "Tankers appear in five named incidents in this library, including Sounion, Hellas Aphrodite and Honour 25.",
+   "basis": "customers.json segments tanker.",
+   "judgment": "Lower rank than dry bulk only because the incident count is lower, not because exposure is lower per hull.",
+   "named": [
+    {
+     "company": "Hafnia",
+     "fleet": 200
+    },
+    {
+     "company": "Bahri",
+     "fleet": 107
+    },
+    {
+     "company": "Frontline plc",
+     "fleet": 75
+    },
+    {
+     "company": "International Seaways",
+     "fleet": 36
+    }
+   ],
+   "blocker": "Tanker fleet counts mix owned and managed vessels and several sources do not say which."
+  },
+  {
+   "rank": 5,
+   "id": "charterers",
+   "name": "Charterers",
+   "targets": 1,
+   "reach": "unknown",
+   "why": "On voyage, time and bareboat charters the charterer usually bears the war risk premium, which makes them the party feeling the cost.",
+   "basis": "ownership-model.json charter_types.",
+   "judgment": "Structurally this may be the best-motivated buyer of all. We cannot act on it yet.",
+   "named": [
+    {
+     "company": "Cargill Ocean Transportation",
+     "country": "Singapore"
+    }
+   ],
+   "blocker": "Only one charterer is named in the entire library. This is the largest unresearched buyer population."
+  },
+  {
+   "rank": 6,
+   "id": "offshore-energy",
+   "name": "Offshore energy operators",
+   "targets": 0,
+   "reach": "unknown",
+   "why": "Six of the ten incumbent providers we researched state they serve offshore, oil and gas or subsea operators. It is the second most-served buyer type after shipowners, and it is entirely absent from our customer research.",
+   "basis": "incumbent-clients.json buyer_types.",
+   "judgment": "Ranked last only because we have not researched a single company in it. On the incumbents' own evidence it should probably rank higher.",
+   "named": [],
+   "blocker": "No offshore operator has been catalogued. This is the clearest gap the incumbent sweep exposed."
+  }
+ ],
+ "message_angles": [
+  {
+   "angle": "The competitor is the Cape, not another security firm",
+   "basis": "route-economics.json the_alternative: rerouting around the Cape of Good Hope is the substitute for buying protection.",
+   "use": "Price against the cost of not going, not against a rival vendor."
+  },
+  {
+   "angle": "Escort is structurally cheaper per hull than embarked guards",
+   "basis": "route-economics.json escort_precedent: Convoy Escort Programme charged about $30,000 for one boat escorting roughly four vessels for three to four days, which is about $7,500 per vessel against $50,000-60,000 for an embarked armed team.",
+   "caveat": "2012 figures, low confidence, and the per-vessel split is our arithmetic, not a published finding. Re-base against a current broker quote before using commercially.",
+   "use": "Establishes the shape of the market, not a quotable price."
+  },
+  {
+   "angle": "The premium is already being paid",
+   "basis": "risk-economics.json premiums: Hormuz war risk reached 7.5-10% of hull value in July 2026 against a 0.125% peacetime baseline.",
+   "use": "The budget line exists. The question is whether it can be moved, not created."
+  },
+  {
+   "angle": "Nobody is selling uncrewed escort to commercial shipping",
+   "basis": "market-players.json: of 123 companies, one scores 4 of 4 on the proximity model, and 22 sit at 3 of 4 all missing the same axis.",
+   "use": "Positioning, not a customer argument."
+  },
+  {
+   "angle": "The incumbent unit economics are visible",
+   "basis": "incumbent-clients.json: ESC Global Security publishes 25-35 vessels protected per month, more than 120 guards, approval on 40+ flag states, and clients whose fleets exceed 1,000 vessels. Britannia publishes over 4,000 transits.",
+   "use": "Sets the scale a credible entrant is measured against, and confirms the largest ship managers already buy this."
+  },
+  {
+   "angle": "We would be creating the category, not entering it",
+   "basis": "commercial-demand-evidence.json: no commercial maritime-security purchase and no insurer-funded escort could be located. Every commercial USV engagement found is survey or ocean data.",
+   "use": "Internal framing. It sets expectations on sales cycle length and means no reference customer exists to cite."
+  },
+  {
+   "angle": "Target the ISPS role, because it exists at every company by law",
+   "basis": "The ISPS Code requires a Company Security Officer responsible for the ship security assessment and the ship security plan. Unlike a CEO or a fleet director, this role is mandatory, so every target has one even where the website publishes nobody.",
+   "use": "Solves the biggest gap in the contact database. Eight of sixteen companies publish no leadership, but all of them have a CSO. Search on the role, not on the company page."
+  }
+ ],
+ "do_not_claim": [
+  "That escort prevents attack. Maersk Yorktown was fired on while under a two-destroyer escort.",
+  "That escort addresses the majority of incidents. 15 of the 32 successful attacks in H1 2026 were on vessels at anchor, where an escort is irrelevant.",
+  "Any current price. The only pricing in this library is from 2012 and is marked low confidence.",
+  "That any named company currently buys escort. No company in the customer list has been confirmed to buy any form of armed or escort protection.",
+  "That any commercial operator has bought autonomous escort. A deliberate search found no such transaction on record."
+ ],
+ "gaps": [
+  "No contact route exists for four of the ten attacked-and-named companies, three of them Greek managers.",
+  "Charterers are effectively unresearched despite bearing the war risk premium on most charter types.",
+  "No named individual in a buying role has been identified at any target company. Only corporate contact points are held.",
+  "Ship manager fleets are not broken down by vessel type, so route exposure per manager is unknown.",
+  "No evidence has been gathered on how any of these companies currently procures security, or from whom.",
+  "Offshore energy operators are served by six of ten incumbents and are not in our customer list at all.",
+  "Nine of ten incumbent providers name no shipowner client publicly, so the customer list cannot be lifted from them directly.",
+  "No commercial purchase of autonomous escort exists on record, so there is no reference sale to point a buyer at.",
+  "The contact search was run against published leadership pages rather than against the CSO and DPA roles directly. Searching by role is likely to find people at the eight companies that publish nothing."
+ ],
+ "scope": {
+  "rule": "We sell to commercial entities only.",
+  "source_ids": [
+   "oddfox-site"
+  ],
+  "site_wording": "We allow commercial ships to pass through. We are not associated with any military, nor do we sell to military organizations.",
+  "in_scope": [
+   "Shipowners",
+   "Ship managers",
+   "Commercial operators",
+   "Charterers and cargo owners",
+   "Offshore energy operators",
+   "Insurers, P&I clubs and brokers as a channel, not as a buyer"
+  ],
+  "out_of_scope": [
+   "Navies and defence ministries",
+   "Coast guards",
+   "Government missions such as EUCAP",
+   "NGOs and humanitarian organisations",
+   "Any military programme"
+  ],
+  "audit": "All 33 accounts in crm/accounts.json were checked on 2026-09-04. None is a government, defence or NGO target.",
+  "judgment_calls": [
+   {
+    "company": "COSCO Shipping Bulk",
+    "note": "Chinese state-owned group, but a commercial shipping line. Kept in scope as a commercial operator."
+   },
+   {
+    "company": "COSCO Shipping Energy Transportation",
+    "note": "Chinese state-owned group, commercial tanker operator. Kept in scope."
+   },
+   {
+    "company": "Bahri",
+    "note": "Saudi state-linked through PIF, but a commercial shipping company. Kept in scope."
+   }
+  ],
+  "note": "State ownership of a commercial shipping line is not the same as selling to a military. Flagged rather than decided unilaterally."
+ }
+}

@@ -1,0 +1,307 @@
+{
+  "$schema": "../schema/chokepoints.schema.json",
+  "dataset": "chokepoints",
+  "title": "High-risk passages",
+  "description": "The passages Odd Fox names as its market, plus the ones the data says belong on the list. Each carries the threat type, because the countermeasure differs: a boarding is stopped by hardening and speed, a drone boat is not.",
+  "updated": "2026-09-02",
+  "records": [
+    {
+      "id": "bab-el-mandeb",
+      "name": "Bab el-Mandeb",
+      "region": "Red Sea approaches",
+      "coords": [
+        12.58,
+        43.33
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "anti-ship missile",
+        "one-way attack UAV",
+        "uncrewed surface vessel",
+        "armed boarding"
+      ],
+      "primary_actor": "Houthi",
+      "status": "active",
+      "status_note": "War-risk premiums at 0.5% of hull value as of July 2026, against 0.1% for the northern Red Sea off western Saudi Arabia, out of range. Transits fell 30% in a single day in July 2026, from 41 vessels to 29.",
+      "reporting_body": "UKMTO",
+      "incident_ids": [
+        "rubymar-2024"
+      ],
+      "source_ids": [
+        "aljazeera-2026-07-insurance"
+      ]
+    },
+    {
+      "id": "red-sea",
+      "name": "Red Sea and Suez approaches",
+      "region": "Red Sea",
+      "coords": [
+        18.0,
+        39.5
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "anti-ship missile",
+        "one-way attack UAV",
+        "uncrewed surface vessel",
+        "helicopter boarding"
+      ],
+      "primary_actor": "Houthi",
+      "status": "active",
+      "status_note": "Maersk completed its first Red Sea transit since hostilities began in late 2023 in early 2026, and the ME11 service resumed Suez passages in mid-February 2026. Return is partial and reversible.",
+      "incident_ids": [
+        "galaxy-leader-2023",
+        "tutor-2024",
+        "sounion-2024",
+        "magic-seas-2025",
+        "eternity-c-2025"
+      ],
+      "source_ids": [
+        "supplychainbrain-warrisk",
+        "wikipedia-houthi-attacks"
+      ]
+    },
+    {
+      "id": "gulf-of-aden",
+      "name": "Gulf of Aden",
+      "region": "Horn of Africa",
+      "coords": [
+        12.5,
+        47.5
+      ],
+      "on_oddfox_site": false,
+      "threat_types": [
+        "anti-ship missile",
+        "armed boarding"
+      ],
+      "primary_actor": "Houthi; Somali pirates",
+      "status": "active, deteriorating",
+      "incident_ids": [
+        "true-confidence-2024",
+        "maersk-yorktown-2024"
+      ],
+      "source_ids": [
+        "wikipedia-houthi-attacks",
+        "lwj-2026-06-gulf-of-aden",
+        "ukmto"
+      ],
+      "status_note": "Both threat models live in the same water. UKMTO logged repeated skiff attacks through June 2026, several defeated by armed teams aboard. One vessel was approached to within 4 metres and fired upon before its security team returned fire."
+    },
+    {
+      "id": "somali-basin",
+      "name": "Somali Basin and western Indian Ocean",
+      "region": "Indian Ocean",
+      "coords": [
+        2.0,
+        52.0
+      ],
+      "on_oddfox_site": false,
+      "threat_types": [
+        "armed boarding",
+        "hijack for ransom"
+      ],
+      "primary_actor": "Somali pirate groups",
+      "status": "resurgent",
+      "status_note": "Reassessed September 2026. Attacks and seizures since late April 2026 at a rate not seen since 2011. UKMTO issued four warnings in the Somali Basin in April and eight in the Gulf of Aden in May and June; three hijacked vessels were held simultaneously in June. Somali groups accounted for 94% of all crew taken hostage worldwide in H1 2026. Puntland intelligence alleges pirates have received weapons and GPS equipment from the Houthis.",
+      "reporting_body": "UKMTO; EU NAVFOR ATALANTA",
+      "incident_ids": [
+        "hellas-aphrodite-2025"
+      ],
+      "source_ids": [
+        "lwj-2026-06-gulf-of-aden",
+        "imb-h1-2026",
+        "imb-annual-2025",
+        "eunavfor-atalanta"
+      ]
+    },
+    {
+      "id": "singapore-strait",
+      "name": "Singapore Strait and Phillip Channel",
+      "region": "Southeast Asia",
+      "coords": [
+        1.23,
+        103.83
+      ],
+      "on_oddfox_site": false,
+      "threat_types": [
+        "armed boarding",
+        "opportunistic theft"
+      ],
+      "primary_actor": "Small criminal groups",
+      "status": "declining from a 2025 peak",
+      "status_note": "80 IMB-reported incidents in 2025, 58% of the world total, falling to 21 in the wider Malacca-and-Singapore corridor in H1 2026 after Indonesian Marine Police arrests in July 2025. Residual cases are petty theft in the eastbound lane of the Phillip Channel. IMB counted 12 Singapore Straits boardings in H1 2026 against 57 in H1 2025.",
+      "reporting_body": "ReCAAP ISC",
+      "source_ids": [
+        "imb-annual-2025",
+        "recaap-hy-2026",
+        "imb-h1-2026"
+      ]
+    },
+    {
+      "id": "strait-of-malacca",
+      "name": "Strait of Malacca",
+      "region": "Southeast Asia",
+      "coords": [
+        2.5,
+        101.5
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "armed boarding",
+        "opportunistic theft"
+      ],
+      "status": "low",
+      "reporting_body": "ReCAAP ISC",
+      "source_ids": [
+        "recaap-hy-2026"
+      ]
+    },
+    {
+      "id": "strait-of-hormuz",
+      "name": "Strait of Hormuz",
+      "region": "Arabian Gulf",
+      "coords": [
+        26.57,
+        56.25
+      ],
+      "on_oddfox_site": false,
+      "threat_types": [
+        "state interdiction",
+        "seizure",
+        "mining",
+        "anti-ship missile"
+      ],
+      "status": "acute disruption during 2026",
+      "status_note": "War-risk premiums moved from about 0.25% of hull value before the late-February 2026 strikes to 7.5–10% by mid-2026. Transits collapsed by 97% by early March 2026, from 141 ships a day to four, stranding over 250 tankers inside the Gulf — around 6% of global deadweight.",
+      "source_ids": [
+        "aljazeera-2026-07-insurance",
+        "useluminix-hormuz"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gulf-of-guinea",
+      "name": "Gulf of Guinea",
+      "region": "West Africa",
+      "coords": [
+        3.0,
+        5.0
+      ],
+      "on_oddfox_site": false,
+      "threat_types": [
+        "armed boarding",
+        "kidnap for ransom"
+      ],
+      "status": "suppressed",
+      "status_note": "21 incidents in 2025 with 23 crew kidnapped in four of them, but only two IMB-reported incidents in H1 2026, one of them a failed boarding at San Pedro anchorage, Ivory Coast. Attributed to Nigeria's Deep Blue Project and sustained international naval presence.",
+      "source_ids": [
+        "imb-annual-2025",
+        "imb-h1-2026",
+        "marad-2026-009-gog"
+      ]
+    },
+    {
+      "id": "suez-canal",
+      "name": "Suez Canal",
+      "region": "Egypt",
+      "coords": [
+        30.03,
+        32.55
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "transit denial by association"
+      ],
+      "status": "traffic partially recovered 2026",
+      "source_ids": [
+        "supplychainbrain-warrisk"
+      ]
+    },
+    {
+      "id": "cape-of-good-hope",
+      "name": "Cape of Good Hope",
+      "region": "Southern Africa",
+      "coords": [
+        -34.35,
+        18.47
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "weather",
+        "no security threat"
+      ],
+      "status": "the alternative, not a risk"
+    },
+    {
+      "id": "panama-canal",
+      "name": "Panama Canal",
+      "region": "Central America",
+      "coords": [
+        9.08,
+        -79.68
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "transit slot scarcity",
+        "opportunistic theft at anchorage"
+      ],
+      "status": "no significant security threat in the incident data"
+    },
+    {
+      "id": "strait-of-gibraltar",
+      "name": "Strait of Gibraltar",
+      "region": "Western Mediterranean",
+      "coords": [
+        35.97,
+        -5.5
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "stowaway boarding",
+        "narcotics interdiction"
+      ],
+      "status": "no significant security threat in the incident data"
+    },
+    {
+      "id": "bosporus",
+      "name": "Bosporus Strait",
+      "region": "Turkey / Black Sea approaches",
+      "coords": [
+        41.12,
+        29.07
+      ],
+      "on_oddfox_site": true,
+      "threat_types": [
+        "sea mines",
+        "uncrewed surface vessel",
+        "war risk by proximity"
+      ],
+      "status": "elevated via the Black Sea",
+      "status_note": "Maritime war-risk premiums have been reported rising in the Black Sea even as Red Sea rates fell."
+    },
+    {
+      "id": "manila-anchorage",
+      "name": "Manila anchorage",
+      "region": "Philippines",
+      "coords": [
+        14.55,
+        120.9
+      ],
+      "on_oddfox_site": false,
+      "threat_types": [
+        "armed robbery at anchor",
+        "armed boarding"
+      ],
+      "status": "emerging hotspot",
+      "status_note": "Eight IMB-reported boardings in H1 2026 against zero in H1 2025. Violent armed robberies at anchor, perpetrators using knives and firearms to overpower watchmen and break into store lockers. ReCAAP separately recorded 10 incidents in Philippine ports and anchorages over the same period, prompting Philippine Coast Guard arrests between January and April 2026.",
+      "reporting_body": "ReCAAP ISC; Philippine Coast Guard",
+      "source_ids": [
+        "imb-h1-2026",
+        "recaap-hy-2026",
+        "safety4sea-recaap-hy2026"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "retrieved": "2026-09-02"
+}

@@ -1,0 +1,224 @@
+{
+  "$schema": "../schema/operators.schema.json",
+  "dataset": "operators",
+  "title": "Owners, operators and managers",
+  "description": "The companies at the economic and operational layers — the ones that can sign a contract. Container lines are here because they are named, ranked and reachable; the bulk and tanker owners whose ships are actually being sunk are harder to enumerate and are the main gap in this library.",
+  "updated": "2026-09-02",
+  "records": [
+    {
+      "id": "msc",
+      "name": "MSC Mediterranean Shipping Company",
+      "segment": "container",
+      "hq": "Geneva, Switzerland",
+      "ownership": "Private. Wholly owned by the Aponte-Diamant family; founded 1970 by Gianluigi Aponte and Rafaela Aponte-Diamant.",
+      "key_people": [
+        {
+          "name": "Gianluigi Aponte",
+          "role": "Executive Chairman"
+        },
+        {
+          "name": "Diego Aponte",
+          "role": "Group President"
+        },
+        {
+          "name": "Alexa Aponte Vago",
+          "role": "Group CFO"
+        },
+        {
+          "name": "Soren Toft",
+          "role": "CEO",
+          "note": "First CEO from outside the family, from December 2020"
+        }
+      ],
+      "fleet_vessels": 900,
+      "capacity_teu": 5505417,
+      "market_share_pct": 19.9,
+      "market_share_note": "21.2% of global container capacity as of November 2025 per a separate count; passed 7 million TEU in November 2025.",
+      "roles": [
+        "beneficial-owner",
+        "commercial-manager",
+        "charterer"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025",
+        "veson-shipowning-nations-2025"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "maersk",
+      "name": "A.P. Moller-Maersk",
+      "segment": "container",
+      "hq": "Copenhagen, Denmark",
+      "ownership": "Public, A.P. Moller Holding controlled",
+      "market_share_pct": 14.6,
+      "revenue_usd_bn": 44.08,
+      "revenue_year": 2024,
+      "roles": [
+        "beneficial-owner",
+        "commercial-manager",
+        "charterer"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025",
+        "supplychainbrain-warrisk"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "cma-cgm",
+      "name": "CMA CGM",
+      "segment": "container",
+      "hq": "Marseille, France",
+      "ownership": "Private, Saadé family",
+      "fleet_vessels": 685,
+      "capacity_teu": 4000000,
+      "market_share_pct": 12.7,
+      "revenue_usd_bn": 55.5,
+      "revenue_year": 2024,
+      "roles": [
+        "beneficial-owner",
+        "commercial-manager",
+        "charterer"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025"
+      ],
+      "confidence": "medium",
+      "note": "CMA CGM Symi was targeted on 24 November 2023, five days into the campaign."
+    },
+    {
+      "id": "cosco",
+      "name": "COSCO Shipping",
+      "segment": "container",
+      "hq": "Shanghai, China",
+      "ownership": "Chinese state-owned",
+      "fleet_vessels": 557,
+      "capacity_teu": 3400000,
+      "market_share_pct": 10.8,
+      "roles": [
+        "beneficial-owner",
+        "commercial-manager"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025"
+      ],
+      "confidence": "medium",
+      "note": "State-owned. Transited the Red Sea through periods when Western carriers would not. Not a prospect; a benchmark for what the risk is worth to someone with a different threat profile."
+    },
+    {
+      "id": "hapag-lloyd",
+      "name": "Hapag-Lloyd",
+      "segment": "container",
+      "hq": "Hamburg, Germany",
+      "ownership": "Public",
+      "fleet_vessels": 313,
+      "capacity_teu": 2500000,
+      "market_share_pct": 7.0,
+      "roles": [
+        "beneficial-owner",
+        "commercial-manager",
+        "charterer"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "one",
+      "name": "Ocean Network Express",
+      "segment": "container",
+      "hq": "Singapore",
+      "ownership": "Joint venture of NYK, MOL and K Line",
+      "fleet_vessels": 260,
+      "capacity_teu": 2000000,
+      "revenue_usd_bn": 19.23,
+      "revenue_year": 2024,
+      "roles": [
+        "commercial-manager",
+        "charterer"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "evergreen",
+      "name": "Evergreen Marine",
+      "segment": "container",
+      "hq": "Taoyuan, Taiwan",
+      "ownership": "Public",
+      "fleet_vessels": 223,
+      "capacity_teu": 1759089,
+      "roles": [
+        "beneficial-owner",
+        "commercial-manager"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "zim",
+      "name": "ZIM Integrated Shipping Services",
+      "segment": "container",
+      "hq": "Haifa, Israel",
+      "ownership": "Public, NYSE",
+      "fleet_vessels": 260,
+      "capacity_teu": 761715,
+      "market_share_pct": 2.3,
+      "roles": [
+        "commercial-manager",
+        "charterer"
+      ],
+      "source_ids": [
+        "freightender-carriers-2025"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "cosmoship",
+      "name": "Cosmoship Management S.A.",
+      "segment": "dry bulk",
+      "hq": "Piraeus, Greece",
+      "roles": [
+        "technical-manager",
+        "commercial-manager"
+      ],
+      "fleet_note": "Manager of the Eternity C, sunk 7-8 July 2025 with loss of life and five months of crew captivity.",
+      "source_ids": [
+        "reuters-eternity-c-crew",
+        "wikipedia-houthi-attacks"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "third-party-managers",
+      "name": "Third-party technical managers",
+      "segment": "cross-segment",
+      "roles": [
+        "technical-manager"
+      ],
+      "examples": [
+        "Anglo-Eastern",
+        "V.Group",
+        "Bernhard Schulte Shipmanagement",
+        "Columbia Shipmanagement",
+        "Synergy Marine"
+      ],
+      "confidence": "low",
+      "note": "Named from general industry knowledge, not from a source in this register. Verify fleet counts against Equasis DOC records before use."
+    }
+  ],
+  "gaps": [
+    "No tanker owners: Frontline, Tsakos, Euronav/CMB.TECH, Angelicoussis. Tankers are the segment being hit.",
+    "No dry bulk owners beyond Cosmoship. Bulk carriers were 62% of Malacca and Singapore incidents in H1 2026 and account for most named Red Sea losses.",
+    "No charterers at all: the oil majors and traders — Shell, BP, Vitol, Trafigura, Cargill — who bear the war-risk premium under most charter parties.",
+    "No P&I clubs or war-risk brokers, who influence the purchase without making it.",
+    "Container market-share figures come from an aggregator. Replace with Alphaliner or Linerlytica before quoting externally."
+  ],
+  "retrieved": "2026-09-02"
+}

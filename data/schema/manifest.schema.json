@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/manifest.schema.json",
+  "title": "Library manifest",
+  "type": "object",
+  "required": ["library", "version", "updated", "datasets"],
+  "properties": {
+    "library": { "type": "string" },
+    "title": { "type": "string" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "updated": { "type": "string", "format": "date" },
+    "purpose": { "type": "string" },
+    "conventions": { "type": "object", "additionalProperties": { "type": "string" } },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file", "title", "kind"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "file": { "type": "string", "pattern": "\\.json$" },
+          "title": { "type": "string" },
+          "kind": { "enum": ["reference", "model", "timeseries", "events", "places", "entities", "economics"] },
+          "blurb": { "type": "string" }
+        }
+      }
+    },
+    "roadmap": { "type": "array", "items": { "type": "string" } }
+  }
+}

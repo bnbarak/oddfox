@@ -1,0 +1,371 @@
+{
+ "dataset": "attacked-vessel-registry",
+ "title": "Identities of vessels attacked in the Houthi campaign",
+ "description": "IMO and MMSI resolved from vessel names in houthi-timeline.json using the ShipFinder AIS API. Only exact name matches with a valid seven-digit IMO are recorded.",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "source_ids": [
+  "shipfinder-api"
+ ],
+ "method": "Exact case-insensitive name match, most recent AIS report chosen where a name returned several hulls. A name match is not proof of identity: names are reused across vessels and an MMSI can change on sale.",
+ "records": [
+  {
+   "vessel": "Abliani",
+   "imo": 9693068,
+   "mmsi": 256903000,
+   "call_sign": "9HA4031",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Anadolu S",
+   "imo": 9667758,
+   "mmsi": 373312000,
+   "call_sign": "3FDI7",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Ardmore Encounter",
+   "imo": 9654579,
+   "mmsi": 538005093,
+   "call_sign": "V7AY3",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Bentley I",
+   "imo": 9253129,
+   "mmsi": 373259000,
+   "call_sign": "3FHA8",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Blue Lagoon I",
+   "imo": 9248447,
+   "mmsi": 311571000,
+   "call_sign": "3E2281",
+   "last_ais": "2025-11-02"
+  },
+  {
+   "vessel": "CMA CGM Symi",
+   "imo": 9867839,
+   "mmsi": 229779000,
+   "call_sign": "9HA5600",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Chem Ranger",
+   "imo": 9490296,
+   "mmsi": 538004628,
+   "call_sign": "V7YC8",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Cyclades",
+   "imo": 9268485,
+   "mmsi": 636021947,
+   "call_sign": "5LGL7",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Delonix",
+   "imo": 9298387,
+   "mmsi": 636022979,
+   "call_sign": "5LLI6",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Delta Atlantica",
+   "imo": 9419101,
+   "mmsi": 636018765,
+   "call_sign": "D5RH3",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Delta Blue",
+   "imo": 9601235,
+   "mmsi": 636021700,
+   "call_sign": "5LFG9",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Eternity C",
+   "imo": 9588249,
+   "mmsi": 636015837,
+   "call_sign": "D5DC2",
+   "last_ais": "2025-11-02"
+  },
+  {
+   "vessel": "Genco Picardy",
+   "imo": 9105243,
+   "mmsi": 538002840,
+   "call_sign": "V7JJ5",
+   "last_ais": "2026-08-27"
+  },
+  {
+   "vessel": "Islander",
+   "imo": 9323704,
+   "mmsi": 311001287,
+   "call_sign": "C6GM5",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Koi",
+   "imo": 9461489,
+   "mmsi": 636018059,
+   "call_sign": "D5NZ4",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Laax",
+   "imo": 9512355,
+   "mmsi": 538004478,
+   "call_sign": "V7XG9",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Layla",
+   "imo": 9694036,
+   "mmsi": 563148600,
+   "call_sign": "9V7725",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Lobivia",
+   "imo": 9228564,
+   "mmsi": 563183800,
+   "call_sign": "9V8676",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "MSC Alanya",
+   "imo": 9785483,
+   "mmsi": 636021123,
+   "call_sign": "5LCK3",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "MSC Clara",
+   "imo": 9708693,
+   "mmsi": 374766000,
+   "call_sign": "3FZW9",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "MSC Sarah V",
+   "imo": 9181675,
+   "mmsi": 636018320,
+   "call_sign": "D5PE8",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "MSC United VIII",
+   "imo": 9302619,
+   "mmsi": 210610000,
+   "call_sign": "5BSL6",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Maersk Detroit",
+   "imo": 9333034,
+   "mmsi": 338474000,
+   "call_sign": "WMDK",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Maersk Gibraltar",
+   "imo": 9739692,
+   "mmsi": 563287500,
+   "call_sign": "9VGD2",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Maersk Hangzhou",
+   "imo": 9784300,
+   "mmsi": 563042200,
+   "call_sign": "9V5602",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Maersk Sentosa",
+   "imo": 9315202,
+   "mmsi": 369246000,
+   "call_sign": "WSEP",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Maersk Yorktown",
+   "imo": 9289192,
+   "mmsi": 369248000,
+   "call_sign": "WSNU",
+   "last_ais": "2026-02-28"
+  },
+  {
+   "vessel": "Magic Seas",
+   "imo": 9736169,
+   "mmsi": 636016531,
+   "call_sign": "D5GP6",
+   "last_ais": "2026-07-03"
+  },
+  {
+   "vessel": "Marlin Luanda",
+   "imo": 9829899,
+   "mmsi": 72489256,
+   "call_sign": "V7KT9",
+   "last_ais": "2024-06-21"
+  },
+  {
+   "vessel": "Minervagracht",
+   "imo": 9571521,
+   "mmsi": 246769000,
+   "call_sign": "PCJF",
+   "last_ais": "2025-11-04"
+  },
+  {
+   "vessel": "Minoan Courage",
+   "imo": 9288526,
+   "mmsi": 636016404,
+   "call_sign": "D5GA2",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Morning Tide",
+   "imo": 9320506,
+   "mmsi": 314617000,
+   "call_sign": "8PBI9",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Motaro",
+   "imo": 9310290,
+   "mmsi": 636016529,
+   "call_sign": "D5GP4",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "Mount Fuji",
+   "imo": 9509011,
+   "mmsi": 636014252,
+   "call_sign": "A8SM7",
+   "last_ais": "2026-09-04"
+  },
+  {
+   "vessel": "NCC Ghazal",
+   "imo": 9685205,
+   "mmsi": 636017508,
+   "call_sign": "D5LH8",
+   "last_ais": "2026-08-21"
+  },
+  {
+   "vessel": "NCC Masa",
+   "imo": 9688336,
+   "mmsi": 403114001,
+   "call_sign": "HZGA",
+   "last_ais": "2026-07-21"
+  },
+  {
+   "vessel": "NCC Wafa",
+   "imo": 9688348,
+   "mmsi": 403115001,
+   "call_sign": "HZGB",
+   "last_ais": "2026-08-29"
+  },
+  {
+   "vessel": "Norderney",
+   "imo": 9506124,
+   "mmsi": 305901000,
+   "call_sign": "V2GD5",
+   "last_ais": "2026-09-04"
+  }
+ ],
+ "rejected": {
+  "reason": "API returned a value in the imo field that is not a seven-digit IMO number.",
+  "records": [
+   {
+    "vessel": "Cordelia Moon",
+    "imo": 781049824,
+    "mmsi": 352003168,
+    "call_sign": "3E7468",
+    "last_ais": "2026-08-20"
+   },
+   {
+    "vessel": "Daisy",
+    "imo": 0,
+    "mmsi": 238703740,
+    "call_sign": "9A6419",
+    "last_ais": "2026-09-04"
+   },
+   {
+    "vessel": "Faize Noore Oliya",
+    "imo": 0,
+    "mmsi": 419956572,
+    "call_sign": "8UMV",
+    "last_ais": "2026-06-21"
+   },
+   {
+    "vessel": "Groton",
+    "imo": 546117222,
+    "mmsi": 636020577,
+    "call_sign": "ELZY3",
+    "last_ais": "2026-01-06"
+   },
+   {
+    "vessel": "MSC Aby",
+    "imo": 0,
+    "mmsi": 636020611,
+    "call_sign": "5LAK7",
+    "last_ais": "2026-08-15"
+   },
+   {
+    "vessel": "Norway",
+    "imo": 0,
+    "mmsi": 244730717,
+    "call_sign": "PF3593",
+    "last_ais": "2026-09-04"
+   }
+  ]
+ },
+ "coverage": {
+  "named_vessels_in_timeline": 75,
+  "searched": 75,
+  "resolved": 38,
+  "no_exact_match": 31,
+  "note": "All 75 named vessels in houthi-timeline.json have now been searched."
+ },
+ "gaps": [
+  "Name matching alone cannot confirm identity; several matches (e.g. Tutor) were later found to be wrong and retracted. Cross-check against Equasis before treating any of these as authoritative.",
+  "No owner or manager is available from this API; it resolves identity only.",
+  "31 named vessels returned no exact match: Andromeda Star, Central Park, Galaxy Leader, Gibraltar Eagle, Hope Island, Houthi cruise missile, Huang Pu, Khalissa, MSC Tavivshi, Number 9…."
+ ],
+ "no_match": [
+  "Andromeda Star",
+  "Central Park",
+  "Galaxy Leader",
+  "Gibraltar Eagle",
+  "Hope Island",
+  "Houthi cruise missile",
+  "Huang Pu",
+  "Khalissa",
+  "MSC Tavivshi",
+  "Number 9",
+  "Ocean Jazz",
+  "Olympic Spirit",
+  "Pollux",
+  "Portugal",
+  "Propel Fortune",
+  "Pumba",
+  "Rubymar",
+  "Scarlet Ray",
+  "Sea Champion",
+  "Sounion",
+  "Star Iris",
+  "Strinda",
+  "Tihamah",
+  "Transworld Navigator",
+  "True Confidence",
+  "Tutor",
+  "United States",
+  "Verbena",
+  "Wind",
+  "Yannis",
+  "Zografia"
+ ]
+}

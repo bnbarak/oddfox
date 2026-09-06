@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/flag-states.schema.json",
+  "title": "Flag states and registries",
+  "type": "object",
+  "required": ["dataset", "records"],
+  "properties": {
+    "dataset": { "const": "flag-states" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2." },
+          "name": { "type": "string" },
+          "type": { "enum": ["open registry", "national registry", "second registry"] },
+          "dwt_million": { "type": "number" },
+          "dwt_as_of": { "type": "string" },
+          "dwt_million_2025": { "type": "number" },
+          "share_world_dwt_pct_2025": { "type": "number" },
+          "vessels_2025": { "type": "integer" },
+          "rank": { "type": "integer" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "concentration": { "type": "object" },
+    "shipowning_nations": { "type": "object" }
+  }
+}

@@ -1,0 +1,290 @@
+{
+ "dataset": "vc-diligence",
+ "title": "What a VC would ask, and what we can actually answer",
+ "updated": "2026-09-04",
+ "description": "Every question a seed or Series A investor would put to us, scored by how well the library can answer it today. Strength is strong, weak or none. The questions we cannot answer are the point of this document.",
+ "market_sizing": {
+  "anchor": "The war risk premium already being paid is the cleanest proxy for budget in the room.",
+  "calc": [
+   {
+    "metric": "Suez-route transits",
+    "value": 13213,
+    "period": "2024",
+    "kind": "published",
+    "source_ids": [
+     "reuters-suez-2024"
+    ]
+   },
+   {
+    "metric": "Same, pre-crisis",
+    "value": 26434,
+    "period": "2023",
+    "kind": "published",
+    "source_ids": [
+     "reuters-suez-2024"
+    ]
+   },
+   {
+    "metric": "War risk premium",
+    "value": "0.3% to 1.0% of hull per seven-day cover",
+    "period": "July 2026",
+    "kind": "published",
+    "source_ids": [
+     "reuters-warrisk-2026-07"
+    ]
+   },
+   {
+    "metric": "Assumed average hull value",
+    "value": "$50 million",
+    "kind": "assumption",
+    "warning": "NOT SOURCED. We hold exactly one hull value, an $80m press estimate for the Sounion. This assumption drives the whole TAM and must be replaced."
+   },
+   {
+    "metric": "Implied war risk spend on that route",
+    "value": "about $4.3 billion a year at 2024 volumes, $8.6 billion at 2023 volumes",
+    "kind": "derived",
+    "method": "transits x 0.65% midpoint premium x $50m assumed hull"
+   },
+   {
+    "metric": "Premium per transit",
+    "value": "$325,000 on a $50m hull, $520,000 on an $80m hull",
+    "kind": "derived"
+   }
+  ],
+  "honest_caveat": "This is a spend pool, not a serviceable market. Nobody has ever bought autonomous escort, so our obtainable share of it is zero today and unproven at any level."
+ },
+ "questions": [
+  {
+   "theme": "Market",
+   "items": [
+    {
+     "question": "How big is the market?",
+     "why_they_ask": "They need a path to a large outcome.",
+     "our_answer_today": "About $4.3bn a year of war risk premium is paid on Suez-route transits at 2024 volumes, $8.6bn at 2023 volumes. That is the budget we compete with, not our revenue.",
+     "strength": "weak",
+     "evidence": "Derived from published transits and premiums, but rests on an unsourced $50m average hull value.",
+     "what_kills_us": "They will push on the hull assumption immediately, and we have one data point."
+    },
+    {
+     "question": "Is the problem growing?",
+     "why_they_ask": "Growth markets forgive execution risk.",
+     "our_answer_today": "Wrong question, and we can now show why. Piracy fell because protection worked. NATO attributes the decline to naval presence, BMP and embarked armed security teams. IMB says the same in its 2026 report. The World Bank studied navies and armed guards as the two measures behind the Somali collapse. The timing fits: operations began 2008-2009, armed guards were permitted on UK ships in October 2011, and the count fell from 445 in 2010 to 296 in 2012. We are proposing the intervention that already worked, without the warship.",
+     "strength": "strong",
+     "evidence": "why-piracy-fell.json. NATO, IMB, World Bank, ETH Zurich and UK Government all on the record.",
+     "what_kills_us": "It also proves the incumbent solutions work, which invites the question of why anyone needs a new one. The answer must be cost and availability, not efficacy. And navies are finite: the resurgence in 2023-2026 coincides with attention shifting elsewhere."
+    },
+    {
+     "question": "Why now?",
+     "why_they_ask": "Timing thesis.",
+     "our_answer_today": "Suez transits halved and canal revenue fell 61% in one year. War risk went from 0.03% to over 1% of hull. Uncrewed platforms became commercially available.",
+     "strength": "strong",
+     "evidence": "reuters-suez-2024, the Reuters premium series, market-players.json.",
+     "what_kills_us": "'Why now' cuts both ways: if the Red Sea calms, the premium and the urgency both vanish."
+    }
+   ]
+  },
+  {
+   "theme": "Problem",
+   "items": [
+    {
+     "question": "What is the actual chance a ship gets attacked?",
+     "why_they_ask": "They will do this arithmetic themselves.",
+     "our_answer_today": "About 0.55% per transit in the Red Sea in 2024, expected loss around 0.128% of hull. But the sharper number is scope: across 6,595 recorded attacks from 1993 to 2020, 59.6% happened to ships at anchor, berthed or moored. Only 40.4% were under way. An escort addresses the 40%.",
+     "strength": "weak",
+     "evidence": "risk-quantification.json and attack-data-validation.json, cross-checked against Crime at Sea.",
+     "what_kills_us": "Any market sizing built on total incident counts is overstated by more than half. We should present the 40% figure ourselves rather than have it found."
+    },
+    {
+     "question": "Why is the premium five times expected loss?",
+     "why_they_ask": "Tests whether we understand our own market.",
+     "our_answer_today": "Underwriters price uncertainty, scarcity and everything beyond hull loss. That gap is where a risk-reduction product earns.",
+     "strength": "strong",
+     "evidence": "risk-quantification.json with both sides argued.",
+     "what_kills_us": "If they think the gap is just underwriter conservatism, they will expect it to close."
+    },
+    {
+     "question": "How long is a ship actually exposed?",
+     "why_they_ask": "Sizes the engineering problem.",
+     "our_answer_today": "The Gulf of Aden corridor is 490 nm and 2 nm wide. A ship is inside for 33 hours at 15 knots, 49 at 10.",
+     "strength": "strong",
+     "evidence": "imo-piracy. Bounded corridor with published lanes.",
+     "what_kills_us": "We have no equivalent figure for Bab el-Mandeb, where the Houthi attacks actually happen."
+    }
+   ]
+  },
+  {
+   "theme": "Product",
+   "items": [
+    {
+     "question": "Can you actually build it?",
+     "why_they_ask": "Technical risk.",
+     "our_answer_today": "Unknown to me. Nothing in this library records our platform, its cost, or its endurance.",
+     "strength": "none",
+     "evidence": "Nothing.",
+     "what_kills_us": "This is an internal gap, not a research one. It must be filled before any pitch."
+    },
+    {
+     "question": "Can your platform hold merchant speed for two days?",
+     "why_they_ask": "The corridor demands it.",
+     "our_answer_today": "The requirement is known: 33 to 49 hours at 10 to 15 knots. Whether we meet it is not recorded.",
+     "strength": "none",
+     "evidence": "Requirement derived from imo-piracy.",
+     "what_kills_us": "Platform research shows fast platforms have hours of endurance and persistent ones cruise at 2 to 5 knots, below merchant speed. This is the central engineering tension in the whole category."
+    },
+    {
+     "question": "What happens when it is attacked?",
+     "why_they_ask": "Escort that dies first is worthless.",
+     "our_answer_today": "Not recorded.",
+     "strength": "none",
+     "evidence": "Nothing.",
+     "what_kills_us": ""
+    }
+   ]
+  },
+  {
+   "theme": "Competition",
+   "items": [
+    {
+     "question": "Who else does this?",
+     "why_they_ask": "Standard.",
+     "our_answer_today": "123 companies catalogued. One scores 4 of 4 on our proximity model, Seasats, whose site names HVU escort. BlackSea scores 3 of 4 and is being acquired by AEVEX.",
+     "strength": "strong",
+     "evidence": "market-players.json, two full dossiers.",
+     "what_kills_us": "Seasats raised $20m led by Konvoy with $40m total and holds $89m and $24m Navy contracts. They are ahead on capital and customers."
+    },
+    {
+     "question": "Why has nobody done this?",
+     "why_they_ask": "The killer question.",
+     "our_answer_today": "59 companies build USVs. Every commercial-only one does survey or ocean data, not security. The military builders do not sell to shipowners.",
+     "strength": "strong",
+     "evidence": "market-players.json, commercial-demand-evidence.json.",
+     "what_kills_us": "The honest reading is that it may be unbuilt because the demand is not there, not because nobody thought of it."
+    },
+    {
+     "question": "What stops Anduril or Saronic doing this tomorrow?",
+     "why_they_ask": "Defensibility.",
+     "our_answer_today": "Focus, and a different business. They sell platforms to navies. We sell a service to shipowners. Of 123 companies catalogued, 59 build uncrewed surface vessels and 23 deliver protection as a service, but only 2 do both, and only 1 does both for commercial customers. The service providers deliver with crewed boats and armed teams; the USV builders sell hardware to defence programmes. Nobody is running an uncrewed protection service for merchant shipping.",
+     "strength": "weak",
+     "evidence": "market-players.json proximity axes. escort means delivering protection alongside a client vessel rather than selling a component; uncrewed means building the platform; commercial means serving non-defence buyers.",
+     "what_kills_us": "Focus is a real advantage but it is not a moat. A defence prime could stand up a service arm. The honest version is that the barrier is business model and customer relationship, not technology, and business model barriers fall when a market is proven. Our defensibility has to come from being first to the shipowner relationship, not from anything they cannot build.",
+     "the_positioning": "We are not a vessel manufacturer. We sell Marine Security as a Service. That distinction decides who we hire, what we publish, how we price, and which customers we chase."
+    }
+   ]
+  },
+  {
+   "theme": "Business model",
+   "items": [
+    {
+     "question": "What do you charge?",
+     "why_they_ask": "Unit economics.",
+     "our_answer_today": "No price is set. The only escort pricing that exists anywhere is from 2012: about $30,000 for one boat covering four vessels for three to four days.",
+     "strength": "none",
+     "evidence": "route-economics.json, low confidence, fourteen years old.",
+     "what_kills_us": "We cannot answer the most basic commercial question."
+    },
+    {
+     "question": "What is the customer's alternative?",
+     "why_they_ask": "Anchors your price ceiling.",
+     "our_answer_today": "Three: reroute via the Cape at +3,500 nm, +10 days and +40% fuel; embarked armed guards; or accept the premium. About $1m a day extra for the largest boxships on the Cape route.",
+     "strength": "strong",
+     "evidence": "unctad-redsea-routes, reuters-divert-cost.",
+     "what_kills_us": "The Cape is a real, working substitute that needs no vendor."
+    },
+    {
+     "question": "What are the unit economics?",
+     "why_they_ask": "Margin.",
+     "our_answer_today": "Not recorded. We know what ships cost to run, $5,071 to $8,162 a day, but nothing about our own platform.",
+     "strength": "none",
+     "evidence": "vessel-economics.json for their side only.",
+     "what_kills_us": ""
+    }
+   ]
+  },
+  {
+   "theme": "Traction",
+   "items": [
+    {
+     "question": "Who wants this?",
+     "why_they_ask": "The only question that really matters at seed.",
+     "our_answer_today": "Nobody yet. Zero customers, zero letters of intent, zero pilots recorded.",
+     "strength": "none",
+     "evidence": "commercial-demand-evidence.json.",
+     "what_kills_us": "A deliberate search found no commercial purchase of autonomous escort by anyone, ever. We are creating the category."
+    },
+    {
+     "question": "Have you talked to customers?",
+     "why_they_ask": "Evidence of demand discovery.",
+     "our_answer_today": "Not yet. We hold 33 target accounts, 18 named contacts and a written sequence, but nothing has been sent.",
+     "strength": "weak",
+     "evidence": "crm/accounts.json, crm/contacts.json.",
+     "what_kills_us": "The strongest asset we have is a DPA/CSO first-degree connection. One conversation would change this answer."
+    },
+    {
+     "question": "What did the last people to try this learn?",
+     "why_they_ask": "Pattern matching.",
+     "our_answer_today": "Convoy Escort Programme ran armed patrol boats escorting convoys in 2012. We do not know what happened to it.",
+     "strength": "none",
+     "evidence": "route-economics.json escort_precedent.",
+     "what_kills_us": "Not knowing why the only precedent stopped is a bad look in a diligence call."
+    }
+   ]
+  },
+  {
+   "theme": "Risk",
+   "items": [
+    {
+     "question": "What if the Red Sea calms down?",
+     "why_they_ask": "Concentration risk.",
+     "our_answer_today": "The premium collapses and the budget with it. Bab el-Mandeb was 0.03% before December 2023 and over 1% in July 2026.",
+     "strength": "weak",
+     "evidence": "Reuters premium series.",
+     "what_kills_us": "We have no answer for a peacetime scenario. Somali piracy resurgence is a partial hedge, not a plan."
+    },
+    {
+     "question": "Regulatory position?",
+     "why_they_ask": "Can you deploy.",
+     "our_answer_today": "Deliberately parked. Not researched.",
+     "strength": "none",
+     "evidence": "questions.json, parked domain.",
+     "what_kills_us": "Four open questions on uncrewed escort legality, none started."
+    }
+   ]
+  }
+ ],
+ "the_five_that_hurt": [
+  "Nobody has ever bought this. Zero transactions on record anywhere.",
+  "Only about 40% of recorded attacks happen to a ship under way. The rest are at anchor or berthed, where an escort does nothing.",
+  "We have no price, because no current market price for escort exists.",
+  "Per transit, the attack probability is about half a percent. A rational owner may decline.",
+  "Focus is a positioning advantage, not a structural moat. Nothing stops a platform builder adding a service arm."
+ ],
+ "what_we_would_answer_well": [
+  "Why piracy fell. Protection worked, on the record from NATO, IMB and the World Bank, and the timing fits. That turns our weakest question into our strongest.",
+  "The integrity of our own numbers. The IMB series cross-checks against an independent geocoded dataset to within six incidents a year across eleven years.",
+  "The threat picture, sourced to incident level, with the ownership chains behind attacked vessels.",
+  "The competitive map: 123 companies, scored, with the whitespace identified and two full dossiers.",
+  "The economics of the alternative: Cape reroute, armed guards, and the premium being paid.",
+  "The exposure window, which turns a vague mission into a bounded 490 nm, 33 to 49 hour engineering spec.",
+  "That we know exactly what we do not know. The question bank is 32 questions with status on each."
+ ],
+ "cheapest_things_that_would_change_the_answer": [
+  "One conversation with a DPA or CSO. We have a first-degree connection who holds that role.",
+  "One broker call for a current security price and a real hull value distribution.",
+  "One underwriter conversation on whether escort earns a premium discount.",
+  "Finding out what happened to the Convoy Escort Programme."
+ ],
+ "moat": {
+  "claim": "Focus, and selling a service rather than vessels.",
+  "evidence": {
+   "companies_catalogued": 123,
+   "build_usvs": 59,
+   "deliver_protection_as_a_service": 23,
+   "do_both": 2,
+   "do_both_for_commercial_buyers": 1,
+   "service_providers_using_crew_and_boats": 21,
+   "usv_builders_selling_hardware_only": 57
+  },
+  "reading": "The market splits cleanly. Service providers protect ships using crewed boats and armed men. Platform builders sell uncrewed hardware to navies. The crossing point is nearly empty.",
+  "honest_limit": "This is a positioning advantage, not a structural moat. Nothing stops a platform builder adding a service arm. What we can defend is the customer relationship, if we get there first."
+ }
+}

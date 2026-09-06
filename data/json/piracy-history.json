@@ -1,0 +1,5333 @@
+{
+  "$schema": "../schema/piracy-history.schema.json",
+  "dataset": "piracy-history",
+  "title": "Reported attacks, 1993-2020",
+  "description": "7,511 IMB-reported pirate attacks, geocoded, from the Crime at Sea dataset. Aggregates and a 2-degree binned grid derived from the raw CSV, which is not committed. Series ends in 2020; for 2023 onward use threat-stats.json and attack-log.json.",
+  "updated": "2026-09-02",
+  "source_ids": [
+    "crime-at-sea"
+  ],
+  "confidence": "medium",
+  "count": 7511,
+  "date_range": [
+    "1993-01-02",
+    "2020-12-29"
+  ],
+  "by_year": [
+    {
+      "label": "1993",
+      "value": 101
+    },
+    {
+      "label": "1994",
+      "value": 95
+    },
+    {
+      "label": "1995",
+      "value": 166
+    },
+    {
+      "label": "1996",
+      "value": 175
+    },
+    {
+      "label": "1997",
+      "value": 232
+    },
+    {
+      "label": "1998",
+      "value": 186
+    },
+    {
+      "label": "1999",
+      "value": 299
+    },
+    {
+      "label": "2000",
+      "value": 469
+    },
+    {
+      "label": "2001",
+      "value": 335
+    },
+    {
+      "label": "2002",
+      "value": 369
+    },
+    {
+      "label": "2003",
+      "value": 440
+    },
+    {
+      "label": "2004",
+      "value": 314
+    },
+    {
+      "label": "2005",
+      "value": 277
+    },
+    {
+      "label": "2006",
+      "value": 236
+    },
+    {
+      "label": "2007",
+      "value": 261
+    },
+    {
+      "label": "2008",
+      "value": 293
+    },
+    {
+      "label": "2009",
+      "value": 404
+    },
+    {
+      "label": "2010",
+      "value": 445
+    },
+    {
+      "label": "2011",
+      "value": 438
+    },
+    {
+      "label": "2012",
+      "value": 296
+    },
+    {
+      "label": "2013",
+      "value": 264
+    },
+    {
+      "label": "2014",
+      "value": 243
+    },
+    {
+      "label": "2015",
+      "value": 250
+    },
+    {
+      "label": "2016",
+      "value": 186
+    },
+    {
+      "label": "2017",
+      "value": 186
+    },
+    {
+      "label": "2018",
+      "value": 202
+    },
+    {
+      "label": "2019",
+      "value": 159
+    },
+    {
+      "label": "2020",
+      "value": 190
+    }
+  ],
+  "by_region_year": [
+    {
+      "region": "Southeast Asia",
+      "points": [
+        {
+          "label": "1993",
+          "value": 36
+        },
+        {
+          "label": "1994",
+          "value": 53
+        },
+        {
+          "label": "1995",
+          "value": 64
+        },
+        {
+          "label": "1996",
+          "value": 87
+        },
+        {
+          "label": "1997",
+          "value": 99
+        },
+        {
+          "label": "1998",
+          "value": 87
+        },
+        {
+          "label": "1999",
+          "value": 162
+        },
+        {
+          "label": "2000",
+          "value": 255
+        },
+        {
+          "label": "2001",
+          "value": 160
+        },
+        {
+          "label": "2002",
+          "value": 163
+        },
+        {
+          "label": "2003",
+          "value": 183
+        },
+        {
+          "label": "2004",
+          "value": 154
+        },
+        {
+          "label": "2005",
+          "value": 120
+        },
+        {
+          "label": "2006",
+          "value": 85
+        },
+        {
+          "label": "2007",
+          "value": 77
+        },
+        {
+          "label": "2008",
+          "value": 66
+        },
+        {
+          "label": "2009",
+          "value": 66
+        },
+        {
+          "label": "2010",
+          "value": 113
+        },
+        {
+          "label": "2011",
+          "value": 99
+        },
+        {
+          "label": "2012",
+          "value": 109
+        },
+        {
+          "label": "2013",
+          "value": 141
+        },
+        {
+          "label": "2014",
+          "value": 147
+        },
+        {
+          "label": "2015",
+          "value": 176
+        },
+        {
+          "label": "2016",
+          "value": 76
+        },
+        {
+          "label": "2017",
+          "value": 77
+        },
+        {
+          "label": "2018",
+          "value": 65
+        },
+        {
+          "label": "2019",
+          "value": 54
+        },
+        {
+          "label": "2020",
+          "value": 64
+        }
+      ]
+    },
+    {
+      "region": "Horn of Africa & Arabian Sea",
+      "points": [
+        {
+          "label": "1993",
+          "value": 2
+        },
+        {
+          "label": "1994",
+          "value": 5
+        },
+        {
+          "label": "1995",
+          "value": 17
+        },
+        {
+          "label": "1996",
+          "value": 3
+        },
+        {
+          "label": "1997",
+          "value": 11
+        },
+        {
+          "label": "1998",
+          "value": 9
+        },
+        {
+          "label": "1999",
+          "value": 17
+        },
+        {
+          "label": "2000",
+          "value": 26
+        },
+        {
+          "label": "2001",
+          "value": 24
+        },
+        {
+          "label": "2002",
+          "value": 23
+        },
+        {
+          "label": "2003",
+          "value": 23
+        },
+        {
+          "label": "2004",
+          "value": 16
+        },
+        {
+          "label": "2005",
+          "value": 56
+        },
+        {
+          "label": "2006",
+          "value": 27
+        },
+        {
+          "label": "2007",
+          "value": 51
+        },
+        {
+          "label": "2008",
+          "value": 105
+        },
+        {
+          "label": "2009",
+          "value": 165
+        },
+        {
+          "label": "2010",
+          "value": 122
+        },
+        {
+          "label": "2011",
+          "value": 176
+        },
+        {
+          "label": "2012",
+          "value": 67
+        },
+        {
+          "label": "2013",
+          "value": 14
+        },
+        {
+          "label": "2014",
+          "value": 13
+        },
+        {
+          "label": "2015",
+          "value": 1
+        },
+        {
+          "label": "2016",
+          "value": 3
+        },
+        {
+          "label": "2017",
+          "value": 15
+        },
+        {
+          "label": "2018",
+          "value": 3
+        },
+        {
+          "label": "2019",
+          "value": 1
+        },
+        {
+          "label": "2020",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "region": "West Africa",
+      "points": [
+        {
+          "label": "1993",
+          "value": 6
+        },
+        {
+          "label": "1994",
+          "value": 2
+        },
+        {
+          "label": "1995",
+          "value": 5
+        },
+        {
+          "label": "1996",
+          "value": 14
+        },
+        {
+          "label": "1997",
+          "value": 28
+        },
+        {
+          "label": "1998",
+          "value": 16
+        },
+        {
+          "label": "1999",
+          "value": 34
+        },
+        {
+          "label": "2000",
+          "value": 32
+        },
+        {
+          "label": "2001",
+          "value": 53
+        },
+        {
+          "label": "2002",
+          "value": 42
+        },
+        {
+          "label": "2003",
+          "value": 63
+        },
+        {
+          "label": "2004",
+          "value": 55
+        },
+        {
+          "label": "2005",
+          "value": 26
+        },
+        {
+          "label": "2006",
+          "value": 29
+        },
+        {
+          "label": "2007",
+          "value": 52
+        },
+        {
+          "label": "2008",
+          "value": 59
+        },
+        {
+          "label": "2009",
+          "value": 46
+        },
+        {
+          "label": "2010",
+          "value": 39
+        },
+        {
+          "label": "2011",
+          "value": 54
+        },
+        {
+          "label": "2012",
+          "value": 61
+        },
+        {
+          "label": "2013",
+          "value": 51
+        },
+        {
+          "label": "2014",
+          "value": 42
+        },
+        {
+          "label": "2015",
+          "value": 32
+        },
+        {
+          "label": "2016",
+          "value": 55
+        },
+        {
+          "label": "2017",
+          "value": 49
+        },
+        {
+          "label": "2018",
+          "value": 81
+        },
+        {
+          "label": "2019",
+          "value": 62
+        },
+        {
+          "label": "2020",
+          "value": 82
+        }
+      ]
+    },
+    {
+      "region": "Indian subcontinent",
+      "points": [
+        {
+          "label": "1993",
+          "value": 3
+        },
+        {
+          "label": "1994",
+          "value": 4
+        },
+        {
+          "label": "1995",
+          "value": 16
+        },
+        {
+          "label": "1996",
+          "value": 21
+        },
+        {
+          "label": "1997",
+          "value": 33
+        },
+        {
+          "label": "1998",
+          "value": 19
+        },
+        {
+          "label": "1999",
+          "value": 47
+        },
+        {
+          "label": "2000",
+          "value": 92
+        },
+        {
+          "label": "2001",
+          "value": 54
+        },
+        {
+          "label": "2002",
+          "value": 52
+        },
+        {
+          "label": "2003",
+          "value": 88
+        },
+        {
+          "label": "2004",
+          "value": 33
+        },
+        {
+          "label": "2005",
+          "value": 35
+        },
+        {
+          "label": "2006",
+          "value": 53
+        },
+        {
+          "label": "2007",
+          "value": 31
+        },
+        {
+          "label": "2008",
+          "value": 23
+        },
+        {
+          "label": "2009",
+          "value": 33
+        },
+        {
+          "label": "2010",
+          "value": 59
+        },
+        {
+          "label": "2011",
+          "value": 42
+        },
+        {
+          "label": "2012",
+          "value": 22
+        },
+        {
+          "label": "2013",
+          "value": 26
+        },
+        {
+          "label": "2014",
+          "value": 33
+        },
+        {
+          "label": "2015",
+          "value": 24
+        },
+        {
+          "label": "2016",
+          "value": 17
+        },
+        {
+          "label": "2017",
+          "value": 15
+        },
+        {
+          "label": "2018",
+          "value": 18
+        },
+        {
+          "label": "2019",
+          "value": 4
+        },
+        {
+          "label": "2020",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "region": "South America & Caribbean",
+      "points": [
+        {
+          "label": "1993",
+          "value": 5
+        },
+        {
+          "label": "1994",
+          "value": 11
+        },
+        {
+          "label": "1995",
+          "value": 19
+        },
+        {
+          "label": "1996",
+          "value": 29
+        },
+        {
+          "label": "1997",
+          "value": 33
+        },
+        {
+          "label": "1998",
+          "value": 30
+        },
+        {
+          "label": "1999",
+          "value": 27
+        },
+        {
+          "label": "2000",
+          "value": 37
+        },
+        {
+          "label": "2001",
+          "value": 21
+        },
+        {
+          "label": "2002",
+          "value": 64
+        },
+        {
+          "label": "2003",
+          "value": 63
+        },
+        {
+          "label": "2004",
+          "value": 44
+        },
+        {
+          "label": "2005",
+          "value": 24
+        },
+        {
+          "label": "2006",
+          "value": 29
+        },
+        {
+          "label": "2007",
+          "value": 22
+        },
+        {
+          "label": "2008",
+          "value": 14
+        },
+        {
+          "label": "2009",
+          "value": 36
+        },
+        {
+          "label": "2010",
+          "value": 40
+        },
+        {
+          "label": "2011",
+          "value": 25
+        },
+        {
+          "label": "2012",
+          "value": 17
+        },
+        {
+          "label": "2013",
+          "value": 18
+        },
+        {
+          "label": "2014",
+          "value": 5
+        },
+        {
+          "label": "2015",
+          "value": 8
+        },
+        {
+          "label": "2016",
+          "value": 25
+        },
+        {
+          "label": "2017",
+          "value": 25
+        },
+        {
+          "label": "2018",
+          "value": 28
+        },
+        {
+          "label": "2019",
+          "value": 28
+        },
+        {
+          "label": "2020",
+          "value": 28
+        }
+      ]
+    }
+  ],
+  "by_attack_type": [
+    {
+      "label": "Boarded",
+      "value": 4788
+    },
+    {
+      "label": "Attempted",
+      "value": 1999
+    },
+    {
+      "label": "Hijacked",
+      "value": 511
+    },
+    {
+      "label": "Fired Upon",
+      "value": 73
+    },
+    {
+      "label": "Suspicious",
+      "value": 16
+    },
+    {
+      "label": "Explosion",
+      "value": 3
+    },
+    {
+      "label": "Detained",
+      "value": 1
+    }
+  ],
+  "by_vessel_type": [
+    {
+      "label": "Bulk Carrier",
+      "value": 322
+    },
+    {
+      "label": "Product Tanker",
+      "value": 252
+    },
+    {
+      "label": "Container",
+      "value": 119
+    },
+    {
+      "label": "General Cargo",
+      "value": 67
+    },
+    {
+      "label": "Chemical Tanker",
+      "value": 53
+    },
+    {
+      "label": "Tug",
+      "value": 45
+    },
+    {
+      "label": "LPG Tanker",
+      "value": 40
+    },
+    {
+      "label": "Crude Oil Tanker",
+      "value": 40
+    },
+    {
+      "label": "Tanker",
+      "value": 30
+    },
+    {
+      "label": "Fishing Vessel",
+      "value": 27
+    },
+    {
+      "label": "Crude Tanker",
+      "value": 23
+    },
+    {
+      "label": "Refrigerated Cargo",
+      "value": 16
+    }
+  ],
+  "by_vessel_status": [
+    {
+      "label": "Anchored",
+      "value": 3262
+    },
+    {
+      "label": "Steaming",
+      "value": 2587
+    },
+    {
+      "label": "Berthed",
+      "value": 653
+    },
+    {
+      "label": "Underway",
+      "value": 56
+    },
+    {
+      "label": "Stationary",
+      "value": 14
+    },
+    {
+      "label": "steaming",
+      "value": 11
+    },
+    {
+      "label": "Drifting",
+      "value": 10
+    },
+    {
+      "label": "Moored",
+      "value": 2
+    }
+  ],
+  "by_country": [
+    {
+      "label": "IDN",
+      "iso3": "IDN",
+      "flag_iso": "ID",
+      "value": 1939
+    },
+    {
+      "label": "NGA",
+      "iso3": "NGA",
+      "flag_iso": "NG",
+      "value": 559
+    },
+    {
+      "label": "YEM",
+      "iso3": "YEM",
+      "flag_iso": "YE",
+      "value": 546
+    },
+    {
+      "label": "MYS",
+      "iso3": "MYS",
+      "flag_iso": "MY",
+      "value": 529
+    },
+    {
+      "label": "BGD",
+      "iso3": "BGD",
+      "flag_iso": "BD",
+      "value": 470
+    },
+    {
+      "label": "IND",
+      "iso3": "IND",
+      "flag_iso": "IN",
+      "value": 386
+    },
+    {
+      "label": "PHL",
+      "iso3": "PHL",
+      "flag_iso": "PH",
+      "value": 227
+    },
+    {
+      "label": "SOM",
+      "iso3": "SOM",
+      "flag_iso": "SO",
+      "value": 224
+    },
+    {
+      "label": "VNM",
+      "iso3": "VNM",
+      "flag_iso": "VN",
+      "value": 204
+    },
+    {
+      "label": "CHN",
+      "iso3": "CHN",
+      "flag_iso": "CN",
+      "value": 154
+    },
+    {
+      "label": "BRA",
+      "iso3": "BRA",
+      "flag_iso": "BR",
+      "value": 153
+    },
+    {
+      "label": "OMN",
+      "iso3": "OMN",
+      "flag_iso": "OM",
+      "value": 123
+    },
+    {
+      "label": "PER",
+      "iso3": "PER",
+      "flag_iso": "PE",
+      "value": 121
+    },
+    {
+      "label": "TZA",
+      "iso3": "TZA",
+      "flag_iso": "TZ",
+      "value": 110
+    },
+    {
+      "label": "GHA",
+      "iso3": "GHA",
+      "flag_iso": "GH",
+      "value": 101
+    },
+    {
+      "label": "VEN",
+      "iso3": "VEN",
+      "flag_iso": "VE",
+      "value": 101
+    },
+    {
+      "label": "ECU",
+      "iso3": "ECU",
+      "flag_iso": "EC",
+      "value": 94
+    },
+    {
+      "label": "SYC",
+      "iso3": "SYC",
+      "flag_iso": "SC",
+      "value": 91
+    },
+    {
+      "label": "COL",
+      "iso3": "COL",
+      "flag_iso": "CO",
+      "value": 86
+    },
+    {
+      "label": "THA",
+      "iso3": "THA",
+      "flag_iso": "TH",
+      "value": 82
+    },
+    {
+      "label": "GIN",
+      "iso3": "GIN",
+      "flag_iso": "GN",
+      "value": 77
+    },
+    {
+      "label": "CIV",
+      "iso3": "CIV",
+      "flag_iso": "CI",
+      "value": 76
+    },
+    {
+      "label": "CMR",
+      "iso3": "CMR",
+      "flag_iso": "CM",
+      "value": 63
+    },
+    {
+      "label": "LKA",
+      "iso3": "LKA",
+      "flag_iso": "LK",
+      "value": 51
+    },
+    {
+      "label": "KEN",
+      "iso3": "KEN",
+      "flag_iso": "KE",
+      "value": 49
+    }
+  ],
+  "distance_from_shore_km": {
+    "note": "Straight-line distance from the incident position to the nearest shore, in kilometres, as computed by the source.",
+    "median": 10.1,
+    "p75": 36.2,
+    "p90": 128.6,
+    "p95": 278.9,
+    "max": 1024.0,
+    "bands": [
+      {
+        "label": "0-1 km",
+        "value": 705
+      },
+      {
+        "label": "1-5 km",
+        "value": 1850
+      },
+      {
+        "label": "5-12 km",
+        "value": 1557
+      },
+      {
+        "label": "12-50 km",
+        "value": 1784
+      },
+      {
+        "label": "50-200 km",
+        "value": 1127
+      },
+      {
+        "label": "200-500 km",
+        "value": 298
+      },
+      {
+        "label": "over 500 km",
+        "value": 190
+      }
+    ]
+  },
+  "grid": {
+    "cell_degrees": 2,
+    "note": "Attack positions binned into 2-degree cells. Coordinates are cell centres, not incident positions.",
+    "cells": [
+      {
+        "coords": [
+          2,
+          104
+        ],
+        "count": 577
+      },
+      {
+        "coords": [
+          22,
+          92
+        ],
+        "count": 405
+      },
+      {
+        "coords": [
+          -6,
+          106
+        ],
+        "count": 339
+      },
+      {
+        "coords": [
+          6,
+          4
+        ],
+        "count": 265
+      },
+      {
+        "coords": [
+          4,
+          98
+        ],
+        "count": 208
+      },
+      {
+        "coords": [
+          2,
+          102
+        ],
+        "count": 190
+      },
+      {
+        "coords": [
+          0,
+          118
+        ],
+        "count": 155
+      },
+      {
+        "coords": [
+          4,
+          6
+        ],
+        "count": 150
+      },
+      {
+        "coords": [
+          -2,
+          116
+        ],
+        "count": 124
+      },
+      {
+        "coords": [
+          14,
+          50
+        ],
+        "count": 114
+      },
+      {
+        "coords": [
+          -12,
+          -78
+        ],
+        "count": 103
+      },
+      {
+        "coords": [
+          -6,
+          40
+        ],
+        "count": 92
+      },
+      {
+        "coords": [
+          10,
+          108
+        ],
+        "count": 92
+      },
+      {
+        "coords": [
+          12,
+          44
+        ],
+        "count": 82
+      },
+      {
+        "coords": [
+          -2,
+          -80
+        ],
+        "count": 82
+      },
+      {
+        "coords": [
+          10,
+          -64
+        ],
+        "count": 82
+      },
+      {
+        "coords": [
+          6,
+          2
+        ],
+        "count": 81
+      },
+      {
+        "coords": [
+          14,
+          120
+        ],
+        "count": 73
+      },
+      {
+        "coords": [
+          4,
+          8
+        ],
+        "count": 73
+      },
+      {
+        "coords": [
+          10,
+          -14
+        ],
+        "count": 72
+      },
+      {
+        "coords": [
+          14,
+          48
+        ],
+        "count": 72
+      },
+      {
+        "coords": [
+          6,
+          118
+        ],
+        "count": 71
+      },
+      {
+        "coords": [
+          6,
+          -4
+        ],
+        "count": 69
+      },
+      {
+        "coords": [
+          4,
+          100
+        ],
+        "count": 63
+      },
+      {
+        "coords": [
+          14,
+          80
+        ],
+        "count": 62
+      },
+      {
+        "coords": [
+          14,
+          42
+        ],
+        "count": 61
+      },
+      {
+        "coords": [
+          12,
+          48
+        ],
+        "count": 57
+      },
+      {
+        "coords": [
+          22,
+          70
+        ],
+        "count": 56
+      },
+      {
+        "coords": [
+          4,
+          106
+        ],
+        "count": 55
+      },
+      {
+        "coords": [
+          2,
+          106
+        ],
+        "count": 55
+      },
+      {
+        "coords": [
+          22,
+          90
+        ],
+        "count": 54
+      },
+      {
+        "coords": [
+          -2,
+          108
+        ],
+        "count": 50
+      },
+      {
+        "coords": [
+          4,
+          10
+        ],
+        "count": 50
+      },
+      {
+        "coords": [
+          22,
+          114
+        ],
+        "count": 49
+      },
+      {
+        "coords": [
+          -4,
+          114
+        ],
+        "count": 47
+      },
+      {
+        "coords": [
+          14,
+          100
+        ],
+        "count": 46
+      },
+      {
+        "coords": [
+          10,
+          76
+        ],
+        "count": 46
+      },
+      {
+        "coords": [
+          -24,
+          -46
+        ],
+        "count": 43
+      },
+      {
+        "coords": [
+          6,
+          0
+        ],
+        "count": 41
+      },
+      {
+        "coords": [
+          -4,
+          12
+        ],
+        "count": 41
+      },
+      {
+        "coords": [
+          6,
+          -58
+        ],
+        "count": 40
+      },
+      {
+        "coords": [
+          -8,
+          112
+        ],
+        "count": 39
+      },
+      {
+        "coords": [
+          -2,
+          118
+        ],
+        "count": 39
+      },
+      {
+        "coords": [
+          18,
+          -72
+        ],
+        "count": 38
+      },
+      {
+        "coords": [
+          6,
+          6
+        ],
+        "count": 37
+      },
+      {
+        "coords": [
+          -4,
+          116
+        ],
+        "count": 36
+      },
+      {
+        "coords": [
+          10,
+          -76
+        ],
+        "count": 36
+      },
+      {
+        "coords": [
+          12,
+          50
+        ],
+        "count": 35
+      },
+      {
+        "coords": [
+          22,
+          88
+        ],
+        "count": 35
+      },
+      {
+        "coords": [
+          20,
+          108
+        ],
+        "count": 35
+      },
+      {
+        "coords": [
+          6,
+          98
+        ],
+        "count": 35
+      },
+      {
+        "coords": [
+          12,
+          46
+        ],
+        "count": 35
+      },
+      {
+        "coords": [
+          14,
+          52
+        ],
+        "count": 35
+      },
+      {
+        "coords": [
+          -4,
+          40
+        ],
+        "count": 34
+      },
+      {
+        "coords": [
+          4,
+          -78
+        ],
+        "count": 33
+      },
+      {
+        "coords": [
+          0,
+          104
+        ],
+        "count": 33
+      },
+      {
+        "coords": [
+          18,
+          -70
+        ],
+        "count": 33
+      },
+      {
+        "coords": [
+          4,
+          -2
+        ],
+        "count": 32
+      },
+      {
+        "coords": [
+          6,
+          80
+        ],
+        "count": 31
+      },
+      {
+        "coords": [
+          -22,
+          -44
+        ],
+        "count": 30
+      },
+      {
+        "coords": [
+          4,
+          4
+        ],
+        "count": 30
+      },
+      {
+        "coords": [
+          0,
+          106
+        ],
+        "count": 29
+      },
+      {
+        "coords": [
+          -6,
+          14
+        ],
+        "count": 28
+      },
+      {
+        "coords": [
+          14,
+          122
+        ],
+        "count": 28
+      },
+      {
+        "coords": [
+          8,
+          -14
+        ],
+        "count": 28
+      },
+      {
+        "coords": [
+          14,
+          -18
+        ],
+        "count": 27
+      },
+      {
+        "coords": [
+          4,
+          48
+        ],
+        "count": 27
+      },
+      {
+        "coords": [
+          6,
+          100
+        ],
+        "count": 26
+      },
+      {
+        "coords": [
+          -8,
+          14
+        ],
+        "count": 25
+      },
+      {
+        "coords": [
+          18,
+          -76
+        ],
+        "count": 25
+      },
+      {
+        "coords": [
+          24,
+          70
+        ],
+        "count": 23
+      },
+      {
+        "coords": [
+          -2,
+          -48
+        ],
+        "count": 23
+      },
+      {
+        "coords": [
+          -2,
+          106
+        ],
+        "count": 22
+      },
+      {
+        "coords": [
+          30,
+          48
+        ],
+        "count": 22
+      },
+      {
+        "coords": [
+          4,
+          112
+        ],
+        "count": 21
+      },
+      {
+        "coords": [
+          2,
+          6
+        ],
+        "count": 21
+      },
+      {
+        "coords": [
+          14,
+          44
+        ],
+        "count": 20
+      },
+      {
+        "coords": [
+          10,
+          106
+        ],
+        "count": 20
+      },
+      {
+        "coords": [
+          20,
+          106
+        ],
+        "count": 19
+      },
+      {
+        "coords": [
+          -4,
+          108
+        ],
+        "count": 19
+      },
+      {
+        "coords": [
+          0,
+          10
+        ],
+        "count": 19
+      },
+      {
+        "coords": [
+          6,
+          120
+        ],
+        "count": 18
+      },
+      {
+        "coords": [
+          4,
+          104
+        ],
+        "count": 18
+      },
+      {
+        "coords": [
+          2,
+          108
+        ],
+        "count": 18
+      },
+      {
+        "coords": [
+          18,
+          84
+        ],
+        "count": 18
+      },
+      {
+        "coords": [
+          2,
+          46
+        ],
+        "count": 18
+      },
+      {
+        "coords": [
+          4,
+          2
+        ],
+        "count": 18
+      },
+      {
+        "coords": [
+          18,
+          120
+        ],
+        "count": 17
+      },
+      {
+        "coords": [
+          12,
+          52
+        ],
+        "count": 17
+      },
+      {
+        "coords": [
+          16,
+          82
+        ],
+        "count": 17
+      },
+      {
+        "coords": [
+          -14,
+          40
+        ],
+        "count": 16
+      },
+      {
+        "coords": [
+          16,
+          42
+        ],
+        "count": 15
+      },
+      {
+        "coords": [
+          14,
+          56
+        ],
+        "count": 15
+      },
+      {
+        "coords": [
+          -6,
+          108
+        ],
+        "count": 14
+      },
+      {
+        "coords": [
+          6,
+          122
+        ],
+        "count": 14
+      },
+      {
+        "coords": [
+          4,
+          118
+        ],
+        "count": 14
+      },
+      {
+        "coords": [
+          18,
+          82
+        ],
+        "count": 14
+      },
+      {
+        "coords": [
+          -2,
+          104
+        ],
+        "count": 13
+      },
+      {
+        "coords": [
+          8,
+          126
+        ],
+        "count": 13
+      },
+      {
+        "coords": [
+          -6,
+          104
+        ],
+        "count": 13
+      },
+      {
+        "coords": [
+          8,
+          76
+        ],
+        "count": 13
+      },
+      {
+        "coords": [
+          18,
+          -78
+        ],
+        "count": 13
+      },
+      {
+        "coords": [
+          20,
+          116
+        ],
+        "count": 12
+      },
+      {
+        "coords": [
+          32,
+          30
+        ],
+        "count": 12
+      },
+      {
+        "coords": [
+          2,
+          110
+        ],
+        "count": 12
+      },
+      {
+        "coords": [
+          6,
+          -10
+        ],
+        "count": 12
+      },
+      {
+        "coords": [
+          16,
+          56
+        ],
+        "count": 12
+      },
+      {
+        "coords": [
+          38,
+          118
+        ],
+        "count": 12
+      },
+      {
+        "coords": [
+          4,
+          120
+        ],
+        "count": 11
+      },
+      {
+        "coords": [
+          0,
+          -52
+        ],
+        "count": 11
+      },
+      {
+        "coords": [
+          0,
+          -50
+        ],
+        "count": 11
+      },
+      {
+        "coords": [
+          20,
+          60
+        ],
+        "count": 11
+      },
+      {
+        "coords": [
+          0,
+          50
+        ],
+        "count": 11
+      },
+      {
+        "coords": [
+          16,
+          60
+        ],
+        "count": 11
+      },
+      {
+        "coords": [
+          30,
+          32
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          10,
+          -74
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          -12,
+          -38
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          -32,
+          -52
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          12,
+          62
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          10,
+          -62
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          16,
+          52
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          26,
+          58
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          12,
+          64
+        ],
+        "count": 10
+      },
+      {
+        "coords": [
+          22,
+          116
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          8,
+          50
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          12,
+          54
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          4,
+          50
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          8,
+          112
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          6,
+          96
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          8,
+          78
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          6,
+          116
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          4,
+          114
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          24,
+          108
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          22,
+          64
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          12,
+          66
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          -20,
+          34
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          14,
+          54
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          18,
+          58
+        ],
+        "count": 9
+      },
+      {
+        "coords": [
+          38,
+          122
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          12,
+          102
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          10,
+          80
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          -8,
+          110
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          2,
+          50
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          0,
+          42
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          22,
+          60
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          -4,
+          48
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          -4,
+          -82
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          -2,
+          48
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          16,
+          58
+        ],
+        "count": 8
+      },
+      {
+        "coords": [
+          20,
+          118
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          6,
+          106
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          16,
+          120
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          22,
+          108
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          30,
+          50
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          8,
+          98
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          -4,
+          106
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          4,
+          108
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          12,
+          60
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          10,
+          -84
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          14,
+          58
+        ],
+        "count": 7
+      },
+      {
+        "coords": [
+          36,
+          124
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          12,
+          112
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          16,
+          114
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          6,
+          124
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          8,
+          122
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          -8,
+          46
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          12,
+          100
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          16,
+          96
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          -2,
+          50
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          26,
+          56
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          20,
+          72
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          0,
+          8
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          10,
+          -68
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          24,
+          90
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          2,
+          48
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          -4,
+          42
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          -4,
+          44
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          -2,
+          56
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          14,
+          66
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          14,
+          68
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          18,
+          62
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          16,
+          62
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          2,
+          4
+        ],
+        "count": 6
+      },
+      {
+        "coords": [
+          10,
+          102
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          20,
+          122
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          30,
+          54
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          24,
+          114
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          0,
+          108
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          -6,
+          110
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          -10,
+          160
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          20,
+          -18
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          22,
+          72
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          6,
+          126
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          -10,
+          40
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          14,
+          64
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          2,
+          44
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          6,
+          54
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          4,
+          54
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          2,
+          54
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          32,
+          32
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          4,
+          52
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          14,
+          46
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          -2,
+          42
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          10,
+          58
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          16,
+          68
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          10,
+          70
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          18,
+          66
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          -10,
+          42
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          20,
+          64
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          16,
+          54
+        ],
+        "count": 5
+      },
+      {
+        "coords": [
+          8,
+          106
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          6,
+          8
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          8,
+          104
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          26,
+          120
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          20,
+          120
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          26,
+          52
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          8,
+          108
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          10,
+          -80
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          10,
+          104
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -8,
+          116
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          6,
+          82
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          34,
+          -8
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          8,
+          118
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -24,
+          -44
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -6,
+          12
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          4,
+          0
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          0,
+          6
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          0,
+          44
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -12,
+          50
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          0,
+          -80
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          10,
+          52
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          2,
+          118
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          6,
+          52
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          14,
+          60
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -2,
+          46
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          2,
+          52
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -6,
+          46
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -8,
+          48
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -4,
+          60
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -12,
+          46
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          -8,
+          42
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          2,
+          56
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          20,
+          62
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          4,
+          -4
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          2,
+          2
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          38,
+          120
+        ],
+        "count": 4
+      },
+      {
+        "coords": [
+          30,
+          124
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          28,
+          124
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          6,
+          108
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          22,
+          120
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          22,
+          118
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          22,
+          110
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          20,
+          114
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -6,
+          116
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -6,
+          120
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          40,
+          20
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          6,
+          50
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -4,
+          -80
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          8,
+          102
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          16,
+          74
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          12,
+          74
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          4,
+          126
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          18,
+          -80
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -26,
+          -48
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          6,
+          104
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -4,
+          118
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          10,
+          98
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          10,
+          -72
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          8,
+          124
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          2,
+          100
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          16,
+          -88
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          2,
+          112
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          20,
+          92
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -30,
+          32
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -8,
+          -78
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          30,
+          -10
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          36,
+          4
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          10,
+          -18
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          12,
+          -74
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          20,
+          88
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          2,
+          126
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          14,
+          -62
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -16,
+          46
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          0,
+          48
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          24,
+          60
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -8,
+          40
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          10,
+          62
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          18,
+          60
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          32,
+          -10
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          4,
+          58
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          0,
+          52
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -4,
+          46
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -8,
+          52
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -2,
+          52
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -2,
+          58
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -2,
+          62
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          0,
+          62
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          0,
+          64
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          12,
+          58
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          8,
+          64
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          2,
+          60
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          18,
+          64
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          -12,
+          42
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          24,
+          58
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          4,
+          110
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          18,
+          -94
+        ],
+        "count": 3
+      },
+      {
+        "coords": [
+          26,
+          124
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          16,
+          112
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          24,
+          68
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          22,
+          124
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          18,
+          114
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          30,
+          122
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          30,
+          126
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          14,
+          112
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          18,
+          118
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          14,
+          110
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          16,
+          122
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -24,
+          -48
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          12,
+          114
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          -80
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          38,
+          4
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          24,
+          120
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          80
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          40,
+          18
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          0,
+          110
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          36,
+          14
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          12,
+          122
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          42,
+          42
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -18,
+          50
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          16,
+          94
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -10,
+          148
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          82
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          42,
+          20
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -8,
+          118
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          26,
+          -80
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -8,
+          158
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          112
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -2,
+          148
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          2,
+          116
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          4,
+          116
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          0,
+          120
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          54
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          12,
+          -16
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          12,
+          96
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -14,
+          48
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          14,
+          94
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          12,
+          -72
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          28,
+          56
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          110
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          128
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          52,
+          4
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          28,
+          34
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          118
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          42,
+          28
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          -16
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -2,
+          -82
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          54,
+          0
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          14,
+          -90
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          -66
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          14,
+          -16
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          24,
+          -82
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          -82
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          28,
+          50
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          116
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          120
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          0,
+          -82
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          24,
+          62
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          6,
+          112
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          6,
+          48
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          4,
+          -6
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          114
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          16,
+          80
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          12,
+          -64
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -2,
+          44
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          18,
+          38
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          4,
+          124
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          54
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          -60
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -10,
+          150
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          18,
+          72
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -4,
+          56
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          58
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          50
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -2,
+          60
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -4,
+          52
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          48
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -12,
+          44
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          44
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          60
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          42
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -10,
+          44
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          68
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          6,
+          70
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          4,
+          60
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -6,
+          52
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          6,
+          68
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          20,
+          66
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          22,
+          62
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          52
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          10,
+          66
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          8,
+          70
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -8,
+          12
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          4,
+          122
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          32,
+          120
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          2,
+          10
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          36,
+          120
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          -4,
+          10
+        ],
+        "count": 2
+      },
+      {
+        "coords": [
+          16,
+          118
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          112
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          16,
+          110
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          116
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          28,
+          126
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          38,
+          124
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          30,
+          128
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          112
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          36,
+          128
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          110
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -10,
+          116
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          98
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          90
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          22,
+          122
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          26,
+          122
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          108
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -20,
+          -40
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          156
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          34,
+          126
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          44,
+          132
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          24,
+          118
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          42,
+          30
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          56,
+          12
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          128
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          42,
+          40
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -34,
+          -56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          40,
+          34
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          -74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          36,
+          34
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          108
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          14,
+          102
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          30,
+          116
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          52,
+          6
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          40,
+          -10
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          46,
+          152
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          102
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          136
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          122
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          94
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          50,
+          2
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          126
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          38,
+          16
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          130
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          144
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          124
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          44,
+          10
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          -86
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          44,
+          12
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          114
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          82
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          110
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          92
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          40,
+          -74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          16,
+          -84
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          16,
+          134
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          14,
+          74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          30,
+          -12
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -14,
+          -76
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -14,
+          114
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          38,
+          24
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          42
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          110
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          86
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          110
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          24,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          96
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          -34
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          24,
+          110
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          14,
+          114
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          102
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          126
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          -68
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -32,
+          30
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          24,
+          122
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          28,
+          -112
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          96
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          14,
+          76
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          130
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          92
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          -164
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          -78
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          128
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          128
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          50
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          40,
+          10
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -18,
+          36
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          154
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          -54
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          -6
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          -86
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          22,
+          -82
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          34,
+          -78
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          26,
+          92
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          84
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          -60
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          22,
+          -84
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          24,
+          88
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          -54
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          138
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          128
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          76
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -10,
+          134
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          -62
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          100
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          140
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          -84
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          -70
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          -74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          34,
+          -118
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          32,
+          118
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -22,
+          -42
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          120
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -18,
+          -72
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          14,
+          -88
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          112
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          120
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          -66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          124
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -26,
+          -46
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -10,
+          112
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -34,
+          -58
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          124
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          80
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          -58
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          8
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          16,
+          40
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          54,
+          4
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          24,
+          92
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          78
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          -56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          42,
+          10
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          -38
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          60
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          54
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          54
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -10,
+          54
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          -18
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          84
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          46,
+          50
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -28,
+          -48
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          -14
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -10,
+          46
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          132
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          62
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          124
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          62
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          132
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -4,
+          62
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -12,
+          -76
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          64
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          68
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          68
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -8,
+          -76
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          62
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          68
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          68
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          64
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          64
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          6,
+          66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -2,
+          68
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          70
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          58
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          72
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          38
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -18,
+          40
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -20,
+          38
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -12,
+          52
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -22,
+          36
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -10,
+          -78
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          14,
+          62
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          58
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          26,
+          60
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          12,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          72
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          70
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          36,
+          20
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          4,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          12
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          2,
+          -80
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          64
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          16,
+          66
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          8,
+          56
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          -16
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          30,
+          34
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          22,
+          94
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          38
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          88
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          -74
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          102
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          120
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          118
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          16,
+          -18
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          0
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          122
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          -6,
+          10
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          10,
+          -78
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          0,
+          132
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          20,
+          -92
+        ],
+        "count": 1
+      },
+      {
+        "coords": [
+          18,
+          -92
+        ],
+        "count": 1
+      }
+    ]
+  },
+  "retrieved": "2026-09-02"
+}

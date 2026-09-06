@@ -1,0 +1,12 @@
+.DS_Store
+.firebase/
+
+# any nested Node project's build output/deps, wherever it lives
+node_modules/
+dist/
+*.tmp-*
+
+# secrets — never commit
+.env
+*.env
+.secrets/

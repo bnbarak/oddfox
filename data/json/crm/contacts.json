@@ -1,0 +1,634 @@
+{
+ "dataset": "crm-contacts",
+ "title": "People",
+ "updated": "2026-09-06",
+ "records": [
+  {
+   "id": "george-petropoulos",
+   "account_id": null,
+   "company": "Undisclosed on profile",
+   "full_name": "George Petropoulos",
+   "title": "DPA/CSO/HSQE Manager",
+   "role_class": "cso",
+   "buying_role": "technical-manager",
+   "priority": 1,
+   "location": "Greece",
+   "background": "Naval Architect and Marine Engineer, NTUA, MSc Renewable Energy. 18 years in shipping technical management, quality assurance and safety compliance. Has held DPA, CSO and HSQE Manager roles.",
+   "connection_degree": 1,
+   "connection_note": "New first-degree connection.",
+   "linkedin_url": "https://gr.linkedin.com/in/george-petropoulos-1482a04a",
+   "linkedin_source": "founder's first-degree connections, confirmed by public profile search",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": null,
+   "source": "LinkedIn profile supplied by the founder, 2026-09-04",
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Highest-value profile on record. DPA, CSO and HSQE held together is exactly the buying role, and it is a first-degree connection. Employer is not stated on the profile and must be established before any approach."
+  },
+  {
+   "id": "frank-lasse",
+   "account_id": "bernhard-schulte-shipmanagement",
+   "company": "Bernhard Schulte Shipmanagement",
+   "full_name": "Frank Lasse",
+   "title": "Director - Loss Prevention, Safety and Quality (LPSQ)",
+   "role_class": "dpa",
+   "buying_role": "technical-manager",
+   "priority": 1,
+   "linkedin_url": null,
+   "linkedin_source": null,
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.bs-shipmanagement.com/about-us/management/",
+   "published": null,
+   "retrieved": "2026-09-04",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "No public LinkedIn profile found on 2026-09-05. Reach him through the BSM management page instead."
+  },
+  {
+   "id": "nicholas-rich",
+   "account_id": "bernhard-schulte-shipmanagement",
+   "company": "Bernhard Schulte Shipmanagement",
+   "full_name": "Nicholas Rich",
+   "title": "Director Fleet Management",
+   "role_class": "fleet",
+   "buying_role": "technical-manager",
+   "priority": 1,
+   "linkedin_url": "https://www.linkedin.com/in/nicholas-rich-918b0639/",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.bs-shipmanagement.com/about-us/management/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "vikrant-malhotra",
+   "account_id": "anglo-eastern",
+   "company": "Anglo-Eastern",
+   "full_name": "Vikrant Malhotra",
+   "title": "Group Managing Director - QHSE",
+   "role_class": "dpa",
+   "buying_role": "technical-manager",
+   "priority": 1,
+   "linkedin_url": "https://hk.linkedin.com/in/vikrant-malhotra-b1b69a23",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.angloeastern.com/about-us/leadership/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "ofer-rogers",
+   "account_id": null,
+   "company": "SAPPAN Agencies",
+   "full_name": "Ofer Rogers",
+   "title": "Sales & Commercial Manager",
+   "role_class": "ops",
+   "buying_role": "commercial-manager",
+   "priority": 2,
+   "location": "Ashdod, Israel",
+   "background": "Nearly two decades in maritime, started at Hapag-Lloyd. Covers Middle East and Black Sea. Profile headline references maritime security, defence and intelligence.",
+   "connection_degree": 1,
+   "connection_note": "First-degree. Mutual connection: Ami.",
+   "linkedin_url": "https://il.linkedin.com/in/oferrogers",
+   "linkedin_source": "founder's first-degree connections, confirmed by public profile search",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": null,
+   "source": "LinkedIn profile supplied by the founder, 2026-09-04",
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Agency and commercial side rather than a shipowner. Covers the Middle East and Black Sea, which is our geography, and states an interest in maritime security. Better as a route-in and a sense-check than as a buyer."
+  },
+  {
+   "id": "antonis-georgantzis",
+   "account_id": "latsco-marine-management",
+   "company": "Latsco Marine Management",
+   "full_name": "Antonis Georgantzis",
+   "title": "Chief Operating Officer",
+   "role_class": "ops",
+   "buying_role": "commercial-manager",
+   "priority": 2,
+   "linkedin_url": "https://gr.linkedin.com/in/antonios-georgantzis-16a2a68",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.latsco.com/en/magazine/lmm-vision-issue-24",
+   "published": "2026",
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Profile is published under the spelling Antonios Georgantzis."
+  },
+  {
+   "id": "carsten-ostenfeldt",
+   "account_id": "anglo-eastern",
+   "company": "Anglo-Eastern",
+   "full_name": "Carsten Ostenfeldt",
+   "title": "Chief Operating Officer",
+   "role_class": "ops",
+   "buying_role": "commercial-manager",
+   "priority": 2,
+   "linkedin_url": "https://hk.linkedin.com/in/carsten-brix-ostenfeldt-b228085",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.angloeastern.com/about-us/leadership/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "dilip-swarup",
+   "account_id": "anglo-eastern",
+   "company": "Anglo-Eastern",
+   "full_name": "Dilip Swarup",
+   "title": "Group Director - Risk",
+   "role_class": "risk",
+   "buying_role": "beneficial-owner",
+   "priority": 2,
+   "linkedin_url": "https://www.linkedin.com/in/dilip-swarup-mics-aciarb-39a2998/",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.angloeastern.com/about-us/leadership/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "jeroen-deelen",
+   "account_id": "bernhard-schulte-shipmanagement",
+   "company": "Bernhard Schulte Shipmanagement",
+   "full_name": "Jeroen Deelen",
+   "title": "Chief Operating Officer",
+   "role_class": "ops",
+   "buying_role": "commercial-manager",
+   "priority": 2,
+   "linkedin_url": "https://cy.linkedin.com/in/jeroen-deelen-951276154",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.bs-shipmanagement.com/about-us/management/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "nicos-rescos",
+   "account_id": "star-bulk-carriers",
+   "company": "Star Bulk Carriers",
+   "full_name": "Nicos Rescos",
+   "title": "Chief Operating Officer",
+   "role_class": "ops",
+   "buying_role": "commercial-manager",
+   "priority": 2,
+   "linkedin_url": "https://gr.linkedin.com/in/nicos-rescos-44801b19",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.starbulk.com/gr/en/management",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "swapnodeep-mondal",
+   "account_id": "anglo-eastern",
+   "company": "Anglo-Eastern",
+   "full_name": "Swapnodeep Mondal",
+   "title": "Group Managing Director - Operations & Shared Services",
+   "role_class": "ops",
+   "buying_role": "commercial-manager",
+   "priority": 2,
+   "linkedin_url": "https://hk.linkedin.com/in/swapnodeep-mondal-a886665b",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.angloeastern.com/about-us/leadership/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "bjorn-hojgaard",
+   "account_id": "anglo-eastern",
+   "company": "Anglo-Eastern",
+   "full_name": "Bjorn Hojgaard",
+   "title": "Chief Executive Officer",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://hk.linkedin.com/in/bjornhojgaard",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.angloeastern.com/about-us/leadership/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "haakon-lenz",
+   "account_id": "wilhelmsen-ship-management",
+   "company": "Wilhelmsen Ship Management",
+   "full_name": "Haakon Lenz",
+   "title": "Chief Executive Officer",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://www.linkedin.com/in/h%C3%A5kon-lenz-22ba0511/",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.wilhelmsen.com/media-news-and-events/press-releases/2024/new-ceo-for-wilhelmsen-ship-management/",
+   "published": "2024",
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Profile is published under the spelling Hakon Lenz."
+  },
+  {
+   "id": "lars-h-barstad",
+   "account_id": "frontline-plc",
+   "company": "Frontline plc",
+   "full_name": "Lars H. Barstad",
+   "title": "Chief Executive Officer of Frontline Management AS",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://no.linkedin.com/in/lars-h-barstad-0a74206",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.frontlineplc.cy/corporate-governance/directors-and-executive-officers/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "martin-fruergaard",
+   "account_id": "pacific-basin-shipping",
+   "company": "Pacific Basin Shipping",
+   "full_name": "Martin Fruergaard",
+   "title": "Chief Executive Officer",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://dk.linkedin.com/in/martinfruergaard",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.pacificbasin.com/en/about-us/management-team",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "mikael-skov",
+   "account_id": "hafnia",
+   "company": "Hafnia",
+   "full_name": "Mikael Skov",
+   "title": "Chief Executive Officer",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://www.linkedin.com/in/mikael-skov-5b06102/",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://hafnia.com/about/management/",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Stepped down as CEO on 2026-09-01 — Soren Steenberg Jensen now holds the role. Skov is proposed as a non-independent director at the 2026-09-23 EGM. Re-target this account before sequencing."
+  },
+  {
+   "id": "petros-pappas",
+   "account_id": "star-bulk-carriers",
+   "company": "Star Bulk Carriers",
+   "full_name": "Petros Pappas",
+   "title": "CEO, Director",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://gr.linkedin.com/in/petros-pappas-3b406494",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.starbulk.com/gr/en/management",
+   "published": null,
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  },
+  {
+   "id": "sebastian-von-hardenberg",
+   "account_id": "bernhard-schulte-shipmanagement",
+   "company": "Bernhard Schulte Shipmanagement",
+   "full_name": "Sebastian von Hardenberg",
+   "title": "Chief Executive Officer",
+   "role_class": "ceo",
+   "buying_role": "beneficial-owner",
+   "priority": 3,
+   "linkedin_url": "https://www.linkedin.com/in/sebastian-graf-von-hardenberg-141056145/",
+   "linkedin_source": "public profile search, matched on name, employer and title",
+   "email": null,
+   "email_status": "unknown",
+   "source_url": "https://www.bs-shipmanagement.com/about-us/management/",
+   "published": "2025",
+   "retrieved": "2026-09-05",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null
+  }
+ ],
+ "description": "One row per named individual at a target account. LinkedIn profile URLs were matched on 2026-09-05 from public search results, on name plus employer plus published title. Nothing was read from behind a login.",
+ "record_schema": {
+  "id": "string, slug",
+  "account_id": "string, references crm/accounts.json",
+  "full_name": "string",
+  "title": "string, as published",
+  "buying_role": "one of: technical-manager, commercial-manager, beneficial-owner, charterer, other",
+  "seniority": "one of: c-suite, director, manager, other",
+  "linkedin_url": "string or null — public profile URL",
+  "email": "string or null — corporate address only",
+  "email_status": "one of: unknown, guessed, verified, bounced",
+  "source_ids": "array of source ids",
+  "retrieved": "date",
+  "status": "one of the pipeline values in crm/accounts.json",
+  "sequence": {
+   "round_1": "date or null",
+   "round_2": "date or null",
+   "round_3": "date or null"
+  },
+  "replied": "boolean",
+  "notes": "string or null",
+  "linkedin_source": "string or null — how the profile URL was matched"
+ },
+ "policy": [
+  "Corporate contact points only. No personal phone numbers, no personal email addresses, no home addresses.",
+  "A LinkedIn profile URL is a published professional identifier and may be stored. Nothing scraped from behind a login is stored.",
+  "Every person record must carry the source it came from and the date it was retrieved.",
+  "Anyone who asks to be removed is deleted, not suppressed."
+ ],
+ "target": "1,000+ people across the account list.",
+ "gaps": [
+  "18 people on record against a target of 1,000+.",
+  "Eight of sixteen researched companies publish no named leadership at all, including V.Group, our largest tier 1 target by fleet.",
+  "No LinkedIn profile has been attached to any record. That research is still deferred.",
+  "No email address and no email pattern has been derived for any person.",
+  "Only two priority-1 QHSE or fleet roles were found across all sixteen companies, at Anglo-Eastern and Bernhard Schulte. Everywhere else the only published name is a CEO.",
+  "George Petropoulos's employer is listed only as 'Shipping Company' on his profile. Establish which one before approaching."
+ ],
+ "role_map": {
+  "note": "Which published job titles map to the buying roles in ownership-model.json. Used to rank a POC, not to guess one. CSO added 2026-09-04 after a real profile showed DPA/CSO/HSQE held as one combined role, which appears to be common at Greek managers.",
+  "roles": [
+   {
+    "id": "cso",
+    "titles": [
+     "Company Security Officer",
+     "CSO",
+     "Ship Security Officer",
+     "SSO",
+     "DPA/CSO",
+     "Security Manager"
+    ],
+    "buying_role": "technical-manager",
+    "priority": 1,
+    "why": "The ISPS Code makes the Company Security Officer responsible for the ship security assessment and the ship security plan. This is the role that formally owns whether a vessel takes protective measures. It outranks DPA for our purposes and was missing from the first version of this map."
+   },
+   {
+    "id": "dpa",
+    "titles": [
+     "Designated Person Ashore",
+     "DPA",
+     "Head of Safety and Quality",
+     "HSSEQ Manager",
+     "Head of HSSEQ"
+    ],
+    "buying_role": "technical-manager",
+    "priority": 1,
+    "why": "The ISM Code puts the DPA between ship and top management on safety and security. Named in the Document of Compliance, so this role exists at every manager by law."
+   },
+   {
+    "id": "fleet",
+    "titles": [
+     "Fleet Director",
+     "Head of Fleet",
+     "Fleet Manager",
+     "Marine Director",
+     "Technical Director"
+    ],
+    "buying_role": "technical-manager",
+    "priority": 1,
+    "why": "Owns the operational decision on a given hull, which is where escort is accepted or refused."
+   },
+   {
+    "id": "ops",
+    "titles": [
+     "Chief Operating Officer",
+     "Director of Operations",
+     "Head of Marine Operations"
+    ],
+    "buying_role": "commercial-manager",
+    "priority": 2,
+    "why": "Owns routing and transit decisions."
+   },
+   {
+    "id": "risk",
+    "titles": [
+     "Head of Risk",
+     "Insurance Manager",
+     "Head of Insurance",
+     "Risk and Compliance Director"
+    ],
+    "buying_role": "beneficial-owner",
+    "priority": 2,
+    "why": "Holds the war risk premium, which is the budget the product competes with."
+   },
+   {
+    "id": "chartering",
+    "titles": [
+     "Head of Chartering",
+     "Chartering Manager",
+     "Commercial Director"
+    ],
+    "buying_role": "charterer",
+    "priority": 3,
+    "why": "On time and voyage charters the charterer bears the premium and can specify escort in the fixture."
+   },
+   {
+    "id": "ceo",
+    "titles": [
+     "Chief Executive Officer",
+     "Managing Director",
+     "President"
+    ],
+    "buying_role": "beneficial-owner",
+    "priority": 3,
+    "why": "Route in only at the smaller owners and managers, where the CEO is the operator."
+   }
+  ],
+  "ranking": "Priority 1 is the first approach at a ship manager. Priority 3 is a fallback where the company publishes no operational names."
+ },
+ "collection_rules": [
+  "Published corporate sources only: leadership pages, press releases, annual reports, regulatory filings.",
+  "Name and job title as published. Nothing inferred, nothing guessed.",
+  "No personal email addresses, personal phone numbers or home addresses. Ever.",
+  "A LinkedIn profile URL may be stored as a published professional identifier. Nothing from behind a login is stored.",
+  "Every person carries the source URL and the date retrieved.",
+  "Delete on request, do not suppress."
+ ],
+ "no_named_leadership": [
+  "V.Group",
+  "Columbia Shipmanagement",
+  "Navigation Maritime Bulgare (Navibulgar)",
+  "Delta Tankers",
+  "Cosmoship Management",
+  "Allseas Marine",
+  "Evalend Shipping",
+  "Oldendorff Carriers"
+ ],
+ "conflicts": [
+  {
+   "company": "Wilhelmsen Ship Management",
+   "issue": "The 2024 press release was extracted as naming Haakon Lenz as both CEO and COO, and Carl Schou as CEO.",
+   "resolution": "Recorded Lenz as CEO from 1 January 2025 only. Schou continued as senior advisor for six months and is not recorded as a current POC.",
+   "source_ids": []
+  }
+ ],
+ "channels": {
+  "warm_first_degree": {
+   "why": "Eight of sixteen researched companies publish no named leadership, and four of the ten attacked-and-named companies have no website at all. A first-degree connection routes around both problems.",
+   "rule": "Where a target is a first-degree connection, it is a LinkedIn message from the founder, not a cold email.",
+   "sequence": "warm"
+  },
+  "cold_email": {
+   "rule": "Only where a corporate address is published and no warm path exists.",
+   "sequence": "tier 1-5"
+  },
+  "mutual_intro": {
+   "rule": "Where a mutual connection exists, ask for the introduction before messaging directly."
+  }
+ }
+}

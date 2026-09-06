@@ -1,0 +1,340 @@
+{
+ "$schema": "../schema/risk-economics.schema.json",
+ "dataset": "risk-economics",
+ "title": "What risk costs",
+ "description": "War-risk premium is the price the market puts on a passage, quoted as a percentage of the ship's hull and machinery value per transit or per period. It is the number an escort service is ultimately sold against, because it is the only maritime risk figure that is already a line item on someone's voyage budget.",
+ "updated": "2026-09-02",
+ "how_it_works": {
+  "basis": "Percentage of hull and machinery value, per transit or for a defined period",
+  "quoting": "Voyage-specific, commonly renewed on seven-day cycles when an area is hot",
+  "trigger": "The Joint War Committee's listed-areas circular turns a geography into a premium",
+  "who_pays": "Under most time and voyage charters the charterer bears it, which is why the charterer, not the owner, is often the party with the budget",
+  "source_ids": [
+   "supplychainbrain-warrisk",
+   "aljazeera-2026-07-insurance"
+  ]
+ },
+ "premiums": [
+  {
+   "id": "gulf-pre-crisis",
+   "area": "Arabian Gulf",
+   "period": "before the 2026 escalation",
+   "pct_of_hull_low": 0.125,
+   "pct_of_hull_high": 0.125,
+   "label": "0.125%",
+   "source_ids": [
+    "supplychainbrain-warrisk"
+   ],
+   "confidence": "medium",
+   "note": "The peacetime baseline. Everything else in this table is a multiple of it."
+  },
+  {
+   "id": "gulf-early-escalation",
+   "area": "Arabian Gulf",
+   "period": "early phase of the crisis",
+   "pct_of_hull_low": 0.2,
+   "pct_of_hull_high": 0.4,
+   "label": "0.2-0.4%",
+   "source_ids": [
+    "supplychainbrain-warrisk"
+   ],
+   "confidence": "medium",
+   "note": "Material daily cost, but not yet enough to deter transits. This is the band where risk is absorbed rather than avoided."
+  },
+  {
+   "id": "red-sea-late-2024",
+   "area": "Red Sea",
+   "period": "late 2024",
+   "pct_of_hull_low": 1.0,
+   "pct_of_hull_high": 2.0,
+   "label": "1-2%",
+   "source_ids": [
+    "useluminix-hormuz"
+   ],
+   "confidence": "low",
+   "note": "Roughly 1-2 million dollars on a 100 million dollar vessel, up from about 0.7% in September 2024. Attributed to Marsh and Howden by an aggregator, not read from the brokers directly — verify before external use."
+  },
+  {
+   "id": "bab-el-mandeb-2026-07",
+   "area": "Bab el-Mandeb",
+   "period": "July 2026",
+   "pct_of_hull_low": 0.5,
+   "pct_of_hull_high": 0.5,
+   "label": "0.5%",
+   "source_ids": [
+    "aljazeera-2026-07-insurance"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "red-sea-north-2026-07",
+   "area": "Northern Red Sea, off western Saudi Arabia",
+   "period": "July 2026",
+   "pct_of_hull_low": 0.1,
+   "pct_of_hull_high": 0.1,
+   "label": "0.1%",
+   "source_ids": [
+    "aljazeera-2026-07-insurance"
+   ],
+   "confidence": "high",
+   "note": "Five times cheaper than Bab el-Mandeb, a few hundred miles north and out of range. The premium is a map of weapon reach."
+  },
+  {
+   "id": "hormuz-historic",
+   "area": "Strait of Hormuz",
+   "period": "historic normal",
+   "pct_of_hull_low": 1.0,
+   "pct_of_hull_high": 3.0,
+   "label": "1-3%",
+   "source_ids": [
+    "aljazeera-2026-07-insurance"
+   ],
+   "confidence": "low",
+   "note": "Flagged 2026-09-04: 1-3% is well above the 0.2-0.3% Reuters gives as the pre-escalation Hormuz rate."
+  },
+  {
+   "id": "hormuz-2026-07",
+   "area": "Strait of Hormuz",
+   "period": "July 2026",
+   "pct_of_hull_low": 7.5,
+   "pct_of_hull_high": 10.0,
+   "label": "7.5-10%",
+   "source_ids": [
+    "aljazeera-2026-07-insurance"
+   ],
+   "confidence": "low",
+   "note": "FLAGGED 2026-09-04. Reuters reports Hormuz war risk at 0.5% in June 2025, up from 0.2-0.3%, and the highest Red Sea figure found anywhere is 2%. 7.5-10% is far outside that range and is probably a units error. Do not use externally until confirmed by a broker. See industry/insurance.json conflict."
+  }
+ ],
+ "traffic_effects": [
+  {
+   "id": "hormuz-collapse-2026",
+   "area": "Strait of Hormuz",
+   "date": "2026-03",
+   "metric": "daily transits",
+   "from": 141,
+   "to": 4,
+   "change_pct": -97,
+   "consequence": "Over 250 tankers stranded inside the Gulf, roughly 6% of global deadweight",
+   "source_ids": [
+    "useluminix-hormuz"
+   ],
+   "confidence": "low",
+   "note": "Attributed to a UNCTAD report of 10 March 2026 by an aggregator. Verify against UNCTAD directly."
+  },
+  {
+   "id": "bab-el-mandeb-drop-2026-07",
+   "area": "Bab el-Mandeb",
+   "date": "2026-07",
+   "metric": "daily crossings",
+   "from": 41,
+   "to": 29,
+   "change_pct": -30,
+   "source_ids": [
+    "aljazeera-2026-07-insurance"
+   ],
+   "confidence": "high",
+   "note": "A single-day fall, reported by S&P Global. Traffic responds to threat faster than premiums do."
+  }
+ ],
+ "market_signals": [
+  {
+   "id": "maersk-return-2026",
+   "date": "2026-02",
+   "signal": "Maersk completed its first Red Sea transit since hostilities began in late 2023; the ME11 service resumed Suez Canal passages in mid-February 2026.",
+   "source_ids": [
+    "supplychainbrain-warrisk"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "black-sea-rotation",
+   "date": "2026",
+   "signal": "War-risk premiums reported falling in the Red Sea while rising in the Black Sea.",
+   "confidence": "low",
+   "note": "Seen in a secondary headline only. Needs a Joint War Committee circular to confirm."
+  },
+  {
+   "id": "saudi-coalition-2026",
+   "date": "2026-07",
+   "signal": "Saudi Arabia reported to be seeking a coalition to protect Red Sea shipping.",
+   "source_ids": [
+    "safety4sea-recaap-hy2026"
+   ],
+   "confidence": "low"
+  }
+ ],
+ "open_questions": [
+  "What does a private armed guard team cost per transit today, and what premium discount does carrying one actually earn? This is the direct price comparison for an escort product and it is missing from this library.",
+  "What is the all-in cost of routing round the Cape of Good Hope instead — extra days, bunkers, charter hire, and the working capital tied up in cargo at sea? That delta is the true addressable price.",
+  "Do underwriters discount for an escort at all, and who has to certify it? Without a broker willing to write the discount, the value has to come entirely out of the routing saving.",
+  "How much of the Red Sea premium is severity and how much is uninsurability of consequence — crew death, total loss, environmental liability?"
+ ],
+ "premium_series": {
+  "unit": "percent of hull and machinery value per transit",
+  "y_scale": "log, because the range spans 0.1% to 10%",
+  "note": "Points are dated where the source dates them. Points marked approx were described by the source in relative terms ('before the current crisis', 'early phase') and have been placed on an approximate date; the value is sourced, the position on the x-axis is not.",
+  "series": [
+   {
+    "id": "hormuz",
+    "area": "Strait of Hormuz",
+    "tone": "hot",
+    "points": [
+     {
+      "date": "2026-02-27",
+      "low": 0.25,
+      "high": 0.25,
+      "label": "0.25%",
+      "approx": false,
+      "note": "Before the 28 February strikes.",
+      "source_ids": [
+       "useluminix-hormuz"
+      ],
+      "confidence": "low"
+     },
+     {
+      "date": "2026-03-15",
+      "low": 1.0,
+      "high": 1.5,
+      "label": "1-1.5%",
+      "approx": false,
+      "note": "Marsh McLennan.",
+      "source_ids": [
+       "useluminix-hormuz"
+      ],
+      "confidence": "low"
+     },
+     {
+      "date": "2026-03-21",
+      "low": 5.0,
+      "high": 5.0,
+      "label": "5%",
+      "approx": false,
+      "note": "Short-term quotes for transits.",
+      "source_ids": [
+       "useluminix-hormuz"
+      ],
+      "confidence": "low"
+     },
+     {
+      "date": "2026-07-23",
+      "low": 7.5,
+      "high": 10.0,
+      "label": "7.5-10%",
+      "approx": false,
+      "source_ids": [
+       "aljazeera-2026-07-insurance"
+      ],
+      "confidence": "high"
+     }
+    ]
+   },
+   {
+    "id": "red-sea",
+    "area": "Red Sea / Bab el-Mandeb",
+    "tone": "warm",
+    "points": [
+     {
+      "date": "2024-09-01",
+      "low": 0.7,
+      "high": 0.7,
+      "label": "0.7%",
+      "approx": false,
+      "source_ids": [
+       "useluminix-hormuz"
+      ],
+      "confidence": "low"
+     },
+     {
+      "date": "2024-12-01",
+      "low": 1.0,
+      "high": 2.0,
+      "label": "1-2%",
+      "approx": false,
+      "note": "Attributed to Marsh and Howden by an aggregator.",
+      "source_ids": [
+       "useluminix-hormuz"
+      ],
+      "confidence": "low"
+     },
+     {
+      "date": "2026-07-23",
+      "low": 0.5,
+      "high": 0.5,
+      "label": "0.5%",
+      "approx": false,
+      "note": "Bab el-Mandeb.",
+      "source_ids": [
+       "aljazeera-2026-07-insurance"
+      ],
+      "confidence": "high"
+     }
+    ]
+   },
+   {
+    "id": "red-sea-north",
+    "area": "Northern Red Sea, off western Saudi Arabia",
+    "tone": "cool",
+    "points": [
+     {
+      "date": "2026-07-23",
+      "low": 0.1,
+      "high": 0.1,
+      "label": "0.1%",
+      "approx": false,
+      "note": "Out of weapon range of Bab el-Mandeb.",
+      "source_ids": [
+       "aljazeera-2026-07-insurance"
+      ],
+      "confidence": "high"
+     }
+    ]
+   },
+   {
+    "id": "arabian-gulf",
+    "area": "Arabian Gulf",
+    "tone": "calm",
+    "points": [
+     {
+      "date": "2025-06-01",
+      "low": 0.125,
+      "high": 0.125,
+      "label": "0.125%",
+      "approx": true,
+      "note": "Source says 'prior to the current crisis'; date approximate.",
+      "source_ids": [
+       "supplychainbrain-warrisk"
+      ],
+      "confidence": "medium"
+     },
+     {
+      "date": "2026-01-15",
+      "low": 0.2,
+      "high": 0.4,
+      "label": "0.2-0.4%",
+      "approx": true,
+      "note": "Source says 'already climbed' before the current crisis; date approximate.",
+      "source_ids": [
+       "supplychainbrain-warrisk"
+      ],
+      "confidence": "medium"
+     }
+    ]
+   }
+  ],
+  "undated_reference": [
+   {
+    "area": "Strait of Hormuz",
+    "period": "historic normal",
+    "low": 1.0,
+    "high": 3.0,
+    "label": "1-3%",
+    "source_ids": [
+     "aljazeera-2026-07-insurance"
+    ],
+    "confidence": "medium"
+   }
+  ]
+ },
+ "retrieved": "2026-09-02"
+}

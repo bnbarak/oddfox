@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/risk-economics.schema.json",
+  "title": "What risk costs",
+  "type": "object",
+  "required": ["dataset", "how_it_works", "premiums", "open_questions"],
+  "properties": {
+    "dataset": { "const": "risk-economics" },
+    "how_it_works": {
+      "type": "object",
+      "required": ["basis", "who_pays"],
+      "properties": {
+        "basis": { "type": "string" },
+        "quoting": { "type": "string" },
+        "worked_example": { "type": "string" },
+        "trigger": { "type": "string" },
+        "who_pays": { "type": "string" },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+      }
+    },
+    "premiums": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "area", "period", "pct_of_hull_low", "pct_of_hull_high", "source_ids", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "area": { "type": "string" },
+          "period": { "type": "string" },
+          "pct_of_hull_low": { "type": "number", "minimum": 0 },
+          "pct_of_hull_high": { "type": "number", "minimum": 0 },
+          "label": { "type": "string", "description": "Display form, e.g. \"7.5-10%\"." },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "traffic_effects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "area", "metric", "from", "to"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "area": { "type": "string" },
+          "date": { "type": "string" },
+          "metric": { "type": "string" },
+          "from": { "type": "number" },
+          "to": { "type": "number" },
+          "change_pct": { "type": "number" },
+          "consequence": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "market_signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "signal", "reading"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "date": { "type": "string" },
+          "signal": { "type": "string", "description": "What happened. Observable." },
+          "reading": { "type": "string", "description": "What we think it means. Opinion, kept separate from the signal on purpose." },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Required and non-empty. The questions we cannot yet answer are more useful than the ones we can."
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/threat-stats.schema.json",
+  "title": "Incident counts",
+  "type": "object",
+  "required": ["dataset", "counting_bodies", "series"],
+  "properties": {
+    "dataset": { "const": "threat-stats" },
+    "counting_bodies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "scope", "counts"],
+        "properties": {
+          "id": { "enum": ["IMB", "ReCAAP", "IMO"] },
+          "name": { "type": "string" },
+          "scope": { "type": "string" },
+          "counts": { "type": "string" },
+          "source_id": { "$ref": "common.schema.json#/$defs/id" }
+        }
+      }
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "body", "metric", "points"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "body": { "enum": ["IMB", "ReCAAP", "IMO"] },
+          "metric": { "type": "string" },
+          "unit": { "type": "string" },
+          "period": { "type": "string" },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["period", "value", "source_id"],
+              "properties": {
+                "period": { "$ref": "common.schema.json#/$defs/period" },
+                "value": { "type": "number" },
+                "source_id": { "$ref": "common.schema.json#/$defs/id" },
+                "confidence": { "$ref": "common.schema.json#/$defs/confidence" },
+                "note": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "breakdowns": { "type": "array", "items": { "type": "object" } },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "claim", "evidence", "implication"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "claim": { "type": "string", "description": "One sentence, falsifiable." },
+          "evidence": { "type": "string", "description": "The numbers that support it, with the counting body named." },
+          "implication": { "type": "string", "description": "What it means for the business. Kept separate from the evidence on purpose." },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+ "dataset": "unknowns",
+ "title": "What we do not know",
+ "updated": "2026-09-04",
+ "description": "A standing register of the holes in this library, ranked by how much they block a decision. Compiled by walking the gaps arrays of every dataset and adding the questions nobody has asked yet.",
+ "blocking": [
+  {
+   "id": "security-price",
+   "question": "What does maritime security actually cost today?",
+   "why_it_blocks": "Every pricing argument we have rests on a 2012 figure. We cannot price a product against a fourteen-year-old anchor.",
+   "what_we_have": "$5,000 per day for a four-man team, up to $60,000 per Gulf of Aden voyage, 2012, Cato.",
+   "how_to_close": "A broker quote, or one conversation with a P&I club or a security provider. This is a phone call, not a research task.",
+   "cost": "free"
+  },
+  {
+   "id": "daily-opex",
+   "question": "What does it cost to run a ship for one day?",
+   "why_it_blocks": "Without daily OPEX and charter rates we cannot express escort cost as a percentage of voyage cost, which is how a shipowner will judge it.",
+   "what_we_have": "Nothing. Bunker prices only.",
+   "how_to_close": "Moore OpCost report, or Clarksons. Both paid.",
+   "cost": "paid"
+  },
+  {
+   "id": "escort-precedent-price",
+   "question": "What did the Convoy Escort Programme actually charge, and what happened to it?",
+   "why_it_blocks": "It is the only escort business model precedent we have, and our per-vessel figure is our own arithmetic on 2012 numbers.",
+   "what_we_have": "About $30,000 for one boat escorting roughly four vessels for three to four days.",
+   "how_to_close": "Companies House filings, trade press archive, or the people involved.",
+   "cost": "free"
+  },
+  {
+   "id": "commercial-demand",
+   "question": "Has any commercial operator ever bought autonomous escort?",
+   "why_it_blocks": "A deliberate search found zero. If the answer is genuinely never, the sales cycle is category creation, not displacement.",
+   "what_we_have": "Nothing found. Nine of ten incumbents publish no client at all, so absence of evidence is weak evidence.",
+   "how_to_close": "Ask a broker or a P&I club directly. They see the contracts.",
+   "cost": "free"
+  },
+  {
+   "id": "bab-el-mandeb-exposure",
+   "question": "How long is a ship actually exposed in the Bab el-Mandeb and southern Red Sea?",
+   "why_it_blocks": "We have the Gulf of Aden corridor at 490 nm and 33-49 hours. The Houthi attacks happen further north and we have no equivalent figure.",
+   "what_we_have": "IRTC only.",
+   "how_to_close": "Chart measurement plus a published transit corridor definition. Doable from open sources.",
+   "cost": "free"
+  }
+ ],
+ "important": [
+  {
+   "id": "hormuz-premium",
+   "question": "Is the 7.5-10% Hormuz war risk figure real?",
+   "note": "Flagged as probably wrong. Reuters has Hormuz at 0.5%. It is currently displayed as a headline number in the app.",
+   "how_to_close": "One broker check.",
+   "cost": "free"
+  },
+  {
+   "id": "vessel-counts",
+   "question": "How many bulk carriers, tankers and container ships exist, by count not tonnage?",
+   "note": "UNCTAD publishes the type split by DWT only. We cannot size the addressable fleet by hull.",
+   "how_to_close": "Clarksons, Equasis annual report, or IHS.",
+   "cost": "mixed"
+  },
+  {
+   "id": "charterers",
+   "question": "Who are the charterers, and do they ever buy protection directly?",
+   "note": "They bear the war risk premium on most charter types. We name one company, Cargill.",
+   "how_to_close": "Research task. Trade press, fixture reports.",
+   "cost": "free"
+  },
+  {
+   "id": "offshore-energy",
+   "question": "Who are the offshore energy operators, and do they buy differently?",
+   "note": "Six of ten incumbents serve offshore. We have catalogued zero companies.",
+   "how_to_close": "Research task.",
+   "cost": "free"
+  },
+  {
+   "id": "cso-contacts",
+   "question": "Who is the Company Security Officer at each target?",
+   "note": "ISPS makes the role mandatory, so every company has one, but eight of sixteen publish no names. Searching by role rather than by company page should find them.",
+   "how_to_close": "LinkedIn role search.",
+   "cost": "free"
+  },
+  {
+   "id": "suez-2025-26",
+   "question": "How many ships transited Suez in 2025 and 2026?",
+   "note": "We have 2023 and 2024. The recovery or non-recovery is the demand signal for the whole product.",
+   "how_to_close": "Suez Canal Authority statistics.",
+   "cost": "free"
+  }
+ ],
+ "unasked": [
+  {
+   "question": "What is the legal position on an uncrewed vessel escorting a crewed one? Who is the master? Which COLREGs apply? Does a flag state have to approve it?",
+   "why": "This may be the real constraint rather than the technology or the price. Nothing in this library touches it."
+  },
+  {
+   "question": "Would a P&I club or war risk underwriter reduce a premium for a vessel under escort, and by how much?",
+   "why": "If yes, the product sells itself on the insurance line. If no, it is a pure cost and much harder."
+  },
+  {
+   "question": "What does BMP, the industry's own best management practice guidance, say about escort? Is it recognised at all?",
+   "why": "If escort is not in BMP, a manager has no framework to justify buying it."
+  },
+  {
+   "question": "Who actually decides at a shipowner: the DPA, the CSO, the fleet director or the charterer? We have inferred it from the ISM and ISPS codes but never confirmed it with a practitioner.",
+   "why": "The entire target list is built on this assumption."
+  },
+  {
+   "question": "What happened to the Convoy Escort Programme, and why did it stop?",
+   "why": "The only precedent. Its failure mode is the thing most likely to repeat."
+  },
+  {
+   "question": "How does a shipowner currently procure armed guards? Through the manager, the charterer, a broker, or direct?",
+   "why": "The purchase path for the substitute is the purchase path for us."
+  },
+  {
+   "question": "What is the actual attack probability per transit, and does any owner compute it?",
+   "why": "38 incidents against tens of thousands of transits is a very low per-voyage probability. If owners price it that way, the product is a hard sell regardless of premium."
+  }
+ ],
+ "data_sources_we_do_not_have": [
+  {
+   "source": "Clarksons Research (Shipping Intelligence Network)",
+   "gives": "Fleet counts by type, charter rates, newbuild and secondhand values, trade flows. The industry standard.",
+   "access": "Paid subscription",
+   "priority": 1
+  },
+  {
+   "source": "Moore OpCost",
+   "gives": "Daily operating cost benchmark by vessel type and size.",
+   "access": "Paid annual report",
+   "priority": 1
+  },
+  {
+   "source": "Baltic Exchange",
+   "gives": "BDI, TCE assessments, tanker and dry bulk indices.",
+   "access": "Paid",
+   "priority": 2
+  },
+  {
+   "source": "Lloyd's List Intelligence",
+   "gives": "Vessel movements, ownership resolution, casualty data.",
+   "access": "Paid",
+   "priority": 2
+  },
+  {
+   "source": "Equasis",
+   "gives": "Registered owner, ISM manager, class and P&I per IMO number. Free but account required.",
+   "access": "Free with account",
+   "priority": 1
+  },
+  {
+   "source": "IMO GISIS",
+   "gives": "Ship particulars, company particulars, piracy reports.",
+   "access": "Free with account",
+   "priority": 1
+  },
+  {
+   "source": "AIS feed (Spire, MarineTraffic, VesselFinder API)",
+   "gives": "Live vessel positions and transit counts through any corridor. Would let us compute exposure and traffic ourselves.",
+   "access": "Paid API",
+   "priority": 1
+  },
+  {
+   "source": "Drewry / Xeneta",
+   "gives": "Container rate indices and contract rates.",
+   "access": "Paid",
+   "priority": 3
+  }
+ ],
+ "note": "Ranked by whether the answer changes a decision, not by how hard it is to get."
+}

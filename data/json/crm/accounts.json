@@ -1,0 +1,1149 @@
+{
+ "dataset": "crm-accounts",
+ "title": "Accounts",
+ "updated": "2026-09-06",
+ "description": "One row per target company. Seeded from gtm.json, customers.json and the segment research. Pipeline fields (status, owner, last_touch, sequence, contacts, notes) are working state and are edited in the app, not researched. Everything else carries a source. Website URLs were verified on 2026-09-05 by fetching each one; logos in the app are derived from the URL host, so a company with no url falls back to a monogram. linkedin_url is the company page, carried only where the company publishes no website of its own.",
+ "pipeline": [
+  "not started",
+  "queued",
+  "round 1 sent",
+  "round 2 sent",
+  "round 3 sent",
+  "replied",
+  "meeting",
+  "won",
+  "dead"
+ ],
+ "records": [
+  {
+   "id": "vgroup",
+   "company": "V.Group",
+   "tier": 1,
+   "tier_name": "Third-party ship managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 900,
+   "vessel_attacked": null,
+   "url": "https://vgrouplimited.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "anglo-eastern",
+   "company": "Anglo-Eastern",
+   "tier": 1,
+   "tier_name": "Third-party ship managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 740,
+   "vessel_attacked": null,
+   "url": "https://www.angloeastern.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "bernhard-schulte-shipmanagement",
+   "company": "Bernhard Schulte Shipmanagement",
+   "tier": 1,
+   "tier_name": "Third-party ship managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 680,
+   "vessel_attacked": null,
+   "url": "https://www.bs-shipmanagement.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "wilhelmsen-ship-management",
+   "company": "Wilhelmsen Ship Management",
+   "tier": 1,
+   "tier_name": "Third-party ship managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 450,
+   "vessel_attacked": null,
+   "url": "https://www.wilhelmsen.com/ship-management/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "columbia-shipmanagement",
+   "company": "Columbia Shipmanagement",
+   "tier": 1,
+   "tier_name": "Third-party ship managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 325,
+   "vessel_attacked": null,
+   "url": "https://columbiagroup.org/ship-management-services/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "navigation-maritime-bulgare-navibulgar",
+   "company": "Navigation Maritime Bulgare (Navibulgar)",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "beneficial-owner",
+    "commercial-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Ruen"
+   ],
+   "url": "https://www.navbul.com/",
+   "linkedin_url": null,
+   "email": "office@navbul.com",
+   "phone": "+359 52 633 100",
+   "head_office": "Navibulgar House 1, Primorski Boulevard, 9000 Varna, Bulgaria",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "navibulgar-site"
+   ]
+  },
+  {
+   "id": "delta-tankers",
+   "company": "Delta Tankers",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "commercial-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Sounion"
+   ],
+   "url": "https://deltatankers.gr",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "delta-tankers-site"
+   ]
+  },
+  {
+   "id": "latsco-marine-management",
+   "company": "Latsco Marine Management",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "commercial-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Hellas Aphrodite"
+   ],
+   "url": "https://www.latsco.com",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": "4 Xenias Str., 145-62 Kifisia-Kefalari, Greece",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "latsco-site"
+   ]
+  },
+  {
+   "id": "cosmoship-management-sa",
+   "company": "Cosmoship Management S.A.",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "technical-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Eternity C"
+   ],
+   "url": "http://www.cosmoships.gr",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+30 210 45 22 914",
+   "head_office": "34 Leosthenous str., 185 36 Piraeus, Greece",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "cosmoship-site"
+   ]
+  },
+  {
+   "id": "nippon-yusen-kk-nyk-line",
+   "company": "Nippon Yusen K.K. (NYK Line)",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "commercial-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Galaxy Leader"
+   ],
+   "url": "https://www.nyk.com/english/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "nyk-site"
+   ]
+  },
+  {
+   "id": "ksrm-kabir-steel-re-rolling-mills",
+   "company": "KSRM (Kabir Steel Re-Rolling Mills)",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "registered-owner"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Abdullah"
+   ],
+   "url": "https://ksrm.com.bd/",
+   "linkedin_url": null,
+   "email": "sales@ksrm.com.bd",
+   "phone": "+88 02-333311501-3",
+   "head_office": "Kabir Manzil, Sk. Mujib Road, Agrabad, Chattogram, Bangladesh",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "ksrm-site"
+   ]
+  },
+  {
+   "id": "allseas-marine",
+   "company": "Allseas Marine",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "beneficial-owner"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Magic Seas"
+   ],
+   "url": "https://www.allseasmarine.gr/en",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "evalend-shipping",
+   "company": "Evalend Shipping",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "technical-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Tutor"
+   ],
+   "url": null,
+   "linkedin_url": "https://www.linkedin.com/company/evalend-shipping-co-s-a",
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "No company website found; Athens office, reachable by phone. LinkedIn company page only.",
+   "source_ids": []
+  },
+  {
+   "id": "third-january-maritime-ltd",
+   "company": "Third January Maritime Ltd",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "commercial-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "True Confidence"
+   ],
+   "url": null,
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "No company website found. Piraeus operator of the True Confidence; press coverage only.",
+   "source_ids": []
+  },
+  {
+   "id": "sr-shipping",
+   "company": "SR Shipping",
+   "tier": 2,
+   "tier_name": "Companies whose ship was actually attacked",
+   "buying_roles": [
+    "commercial-manager"
+   ],
+   "country": null,
+   "fleet": null,
+   "vessel_attacked": [
+    "Abdullah"
+   ],
+   "url": "https://ksrm.com.bd/shipping/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "oldendorff-carriers",
+   "company": "Oldendorff Carriers",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Germany",
+   "fleet": 700,
+   "vessel_attacked": null,
+   "url": "https://www.oldendorff.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "pacific-basin-shipping",
+   "company": "Pacific Basin Shipping",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Hong Kong",
+   "fleet": 266,
+   "vessel_attacked": null,
+   "url": "https://www.pacificbasin.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "star-bulk-carriers",
+   "company": "Star Bulk Carriers",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Greece",
+   "fleet": 161,
+   "vessel_attacked": null,
+   "url": "https://www.starbulk.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "western-bulk",
+   "company": "Western Bulk",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Norway",
+   "fleet": 150,
+   "vessel_attacked": null,
+   "url": "https://www.westernbulk.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "navios-maritime-holdings",
+   "company": "Navios Maritime Holdings",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Greece",
+   "fleet": 142,
+   "vessel_attacked": null,
+   "url": "https://www.navios.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "hafnia",
+   "company": "Hafnia",
+   "tier": 4,
+   "tier_name": "Tanker owners and managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 200,
+   "vessel_attacked": null,
+   "url": "https://hafnia.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "bahri",
+   "company": "Bahri",
+   "tier": 4,
+   "tier_name": "Tanker owners and managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 107,
+   "vessel_attacked": null,
+   "url": "https://www.bahri.sa/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "frontline-plc",
+   "company": "Frontline plc",
+   "tier": 4,
+   "tier_name": "Tanker owners and managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 75,
+   "vessel_attacked": null,
+   "url": "https://www.frontlineplc.cy/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "international-seaways",
+   "company": "International Seaways",
+   "tier": 4,
+   "tier_name": "Tanker owners and managers",
+   "buying_roles": [],
+   "country": null,
+   "fleet": 36,
+   "vessel_attacked": null,
+   "url": "https://www.intlseas.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "cargill-ocean-transportation",
+   "company": "Cargill Ocean Transportation",
+   "tier": 5,
+   "tier_name": "Charterers",
+   "buying_roles": [],
+   "country": "Singapore",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.cargill.com/transportation/cargill-ocean-transportation",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": []
+  },
+  {
+   "id": "golden-ocean-group",
+   "company": "Golden Ocean Group",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Norway",
+   "fleet": 94,
+   "vessel_attacked": null,
+   "url": "https://www.goldenocean.no/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "Site TLS certificate is invalid — https://www.goldenocean.no/ fails to load over https, http works. Golden Ocean was taken over by CMB.TECH in August 2025 and delisted; confirm the entity still exists before sequencing.",
+   "source_ids": [
+    "marineinsight-bulk-companies",
+    "fortune-drybulk-market"
+   ]
+  },
+  {
+   "id": "safe-bulkers",
+   "company": "Safe Bulkers",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Greece",
+   "fleet": 45,
+   "vessel_attacked": null,
+   "url": "https://www.safebulkers.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "marineinsight-bulk-companies",
+    "fortune-drybulk-market"
+   ]
+  },
+  {
+   "id": "genco-shipping-and-trading",
+   "company": "Genco Shipping and Trading",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": 44,
+   "vessel_attacked": null,
+   "url": "https://www.gencoshipping.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "marineinsight-bulk-companies",
+    "fortune-drybulk-market"
+   ]
+  },
+  {
+   "id": "diana-shipping",
+   "company": "Diana Shipping",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "Greece",
+   "fleet": 40,
+   "vessel_attacked": null,
+   "url": "https://www.dianashippinginc.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "marineinsight-bulk-companies",
+    "fortune-drybulk-market"
+   ]
+  },
+  {
+   "id": "cosco-shipping-bulk",
+   "company": "COSCO Shipping Bulk",
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "buying_roles": [],
+   "country": "China",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.coscoshipping.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "marineinsight-bulk-companies",
+    "fortune-drybulk-market"
+   ]
+  },
+  {
+   "id": "cosco-shipping-energy-transportation",
+   "company": "COSCO Shipping Energy Transportation",
+   "tier": 4,
+   "tier_name": "Tankers owners and operators",
+   "buying_roles": [],
+   "country": "China",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://energy.coscoshipping.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "gettransport-tankers-2026"
+   ]
+  },
+  {
+   "id": "odfjell",
+   "company": "Odfjell",
+   "tier": 4,
+   "tier_name": "Tankers owners and operators",
+   "buying_roles": [],
+   "country": "Norway",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.odfjell.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "odfjell-annual-2025"
+   ]
+  },
+  {
+   "id": "stolt-tankers",
+   "company": "Stolt Tankers",
+   "tier": 4,
+   "tier_name": "Tankers owners and operators",
+   "buying_roles": [],
+   "country": "",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.stolt-nielsen.com/our-businesses/stolt-tankers/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "stolt-tankers"
+   ]
+  },
+  {
+   "id": "kyra-global-marine-services",
+   "company": "Kyra Global Marine Services",
+   "tier": 2,
+   "tier_name": "Companies whose ship was attacked",
+   "buying_roles": [
+    "technical-manager"
+   ],
+   "country": "United Arab Emirates",
+   "fleet": null,
+   "vessel_attacked": [
+    "Lila Norfolk"
+   ],
+   "url": "https://www.kyramarine.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": null,
+   "source_ids": [
+    "magicport-lila-norfolk"
+   ]
+  },
+  {
+   "id": "avr-shipping-llc",
+   "company": "AVR Shipping LLC",
+   "tier": 2,
+   "tier_name": "Companies whose ship was attacked",
+   "buying_roles": [
+    "registered-owner"
+   ],
+   "country": "United Arab Emirates",
+   "fleet": null,
+   "vessel_attacked": [
+    "Lila Norfolk"
+   ],
+   "url": null,
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed. No company website found. Appears in registry filings via Central Ship Management (DMCC), Dubai.",
+   "source_ids": [
+    "magicport-lila-norfolk"
+   ]
+  },
+  {
+   "id": "gmz-ship-management-company-s-a",
+   "company": "GMZ Ship Management Company S.A.",
+   "tier": 2,
+   "tier_name": "Companies whose ship was attacked",
+   "buying_roles": [
+    "technical-manager"
+   ],
+   "country": "Lebanon",
+   "fleet": null,
+   "vessel_attacked": [
+    "Rubymar"
+   ],
+   "url": "https://gmzhellas.com/",
+   "linkedin_url": "https://www.linkedin.com/company/gmz-ship-management-co-hellas-sa",
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed.",
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  },
+  {
+   "id": "golden-adventure-shipping-s-a",
+   "company": "Golden Adventure Shipping S.A.",
+   "tier": 2,
+   "tier_name": "Companies whose ship was attacked",
+   "buying_roles": [
+    "beneficial-owner"
+   ],
+   "country": "Marshall Islands",
+   "fleet": null,
+   "vessel_attacked": [
+    "Rubymar"
+   ],
+   "url": null,
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": false,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed. No company website found. Marshall Islands registered owner of the Rubymar; managed by GMZ.",
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  },
+  {
+   "id": "ma-aden-saudi-arabian-mining-company",
+   "company": "Ma'aden (Saudi Arabian Mining Company)",
+   "tier": 2,
+   "tier_name": "Companies whose ship was attacked",
+   "buying_roles": [
+    "charterer"
+   ],
+   "country": "Saudi Arabia",
+   "fleet": null,
+   "vessel_attacked": [
+    "Rubymar"
+   ],
+   "url": "https://www.maaden.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [],
+   "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed.",
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  }
+ ]
+}

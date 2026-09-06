@@ -1,0 +1,274 @@
+{
+ "schema": "company-dossier/1.0",
+ "id": "seasats",
+ "name": "Seasats",
+ "as_of": "2026-09-03",
+ "compiled": "2026-09-03",
+ "note": "Per-company dossier. Every field carries the source it came from and the date it was retrieved. Nothing here is inferred; where a fact is absent it is listed under gaps rather than estimated.",
+
+ "identity": {
+  "legal_name": "Seasats",
+  "country": "United States",
+  "country_iso": "US",
+  "hq_city": "San Diego",
+  "hq_state": "California",
+  "url": "https://www.seasats.com/",
+  "description_by_company": "Rugged self-righting USV operating in sea states up to 6, with collision avoidance, GPS-denied navigation and redundant communications for global reach.",
+  "described_by_press_as": "California-based USV startup",
+  "source_ids": ["seasats", "seasats-tectonic-seriesa"],
+  "retrieved": "2026-09-03"
+ },
+
+ "classification": {
+  "relation": "direct competitor",
+  "market": "both",
+  "proximity": 4,
+  "proximity_band": "same business",
+  "axes": { "escort": true, "uncrewed": true, "commercial": true, "security": true },
+  "axis_evidence": {
+   "escort": "Quickfish can protect the perimeter of vessels and infrastructure, intercepting and escorting anything that enters their space.",
+   "escort_mission_list": "MDA, ASW, sonar surveys, harbor security and HVU escort.",
+   "security": "Survey, research, security patrol.",
+   "commercial": "Missions completed for defense, science, and commercial customers around the world.",
+   "uncrewed": "All three products are uncrewed surface vessels."
+  },
+  "reclassified": {
+   "date": "2026-09-03",
+   "from": { "relation": "adjacent platform builder", "proximity": 2, "band": "adjacent" },
+   "to": { "relation": "direct competitor", "proximity": 4, "band": "same business" },
+   "reason": "The escort and security axes were recorded false. seasats.com names HVU escort and harbour security as intended missions, so both are true on the company's own wording."
+  },
+  "source_ids": ["seasats"],
+  "retrieved": "2026-09-03"
+ },
+
+ "funding": {
+  "total_disclosed": "over $40M",
+  "total_source_id": "seasats-tectonic-seriesa",
+  "rounds": [
+   {
+    "stage": "Series A",
+    "amount": "$20 million",
+    "announced": "2026-02-17",
+    "date_basis": "Article published 2026-02-18 says the round was announced 'yesterday'.",
+    "lead_investor": "Konvoy Ventures",
+    "other_investors": ["Shield Capital", "Techstars"],
+    "stated_use": "Expand production of its small uncrewed surface vessels.",
+    "source_ids": ["seasats-tectonic-seriesa", "seasats-defensedaily-seriesa"],
+    "retrieved": "2026-09-03"
+   }
+  ],
+  "investor_types": ["venture capital"],
+  "retrieved": "2026-09-03"
+ },
+
+ "contracts": [
+  {
+   "value": "$89 million ceiling",
+   "instrument": "SBIR Phase III IDIQ",
+   "customer": "US Navy",
+   "end_user": "US Marine Corps",
+   "programme_office": "NIWC Atlantic",
+   "scope": "Deliver Lightfish USVs.",
+   "announced": "2025-10",
+   "date_basis": "Article of 2026-02-18 states the award came 'in October'; naval today of 2026-03-20 places it in 2025.",
+   "source_ids": ["seasats-tectonic-seriesa", "seasats-quickfish-prnewswire", "seasats-navaltoday-trial"],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "value": "$24 million",
+   "instrument": "APFIT (Accelerate the Procurement and Fielding of Innovative Technologies)",
+   "customer": "US Navy and US Marine Corps, joint",
+   "scope": "Ramp production of the Lightfish and fund R&D on the other USVs.",
+   "announced": "2026-01-15",
+   "date_basis": "Press release dated 15 January 2026.",
+   "source_ids": ["seasats-apfit-prnewswire", "seasats-tectonic-seriesa"],
+   "retrieved": "2026-09-03"
+  }
+ ],
+
+ "platforms": [
+  {
+   "name": "Lightfish",
+   "length": "11 feet",
+   "weight": "305 lbs (138 kg)",
+   "top_speed": "5 kt",
+   "endurance": "up to 6 months",
+   "payload": "66 lbs (29.9 kg)",
+   "unit_price": "around $250,000",
+   "role_by_company": "Survey, research, security patrol",
+   "role_by_press": "Maritime ISR and sensing",
+   "deployment": "1-2 person manual deployment",
+   "power": "solar with backup generator",
+   "status": "in production",
+   "share_of_business": "CEO states all substantial business is on Lightfish, roughly 95% of focus.",
+   "source_ids": ["seasats", "seasats-tectonic-seriesa", "seasats-cbinsights"],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "Quickfish",
+   "length": "17 feet",
+   "weight": "1,600 lbs",
+   "top_speed": "over 35 knots",
+   "endurance": "operates for days; completed an 8-day continuous autonomous sea trial",
+   "unit_price": "around $500,000",
+   "role_by_company": "Tactical and fast-response operations; protect the perimeter of vessels and infrastructure, intercepting and escorting",
+   "role_by_press": "interceptor USV",
+   "propulsion": "hybrid-electric and combustion",
+   "status": "in production",
+   "announced": "2025-10",
+   "source_ids": ["seasats", "seasats-tectonic-seriesa", "seasats-quickfish-prnewswire", "seasats-navaltoday-trial"],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "name": "Heavyfish",
+   "weight": "9,000 lbs (4,082 kg)",
+   "top_speed": "12 kt",
+   "payload": "1,000 lbs (453.5 kg)",
+   "role_by_company": "MDA, ASW, sonar surveys, harbor security and HVU escort",
+   "status": "in development as of 2026-02-18; expected in the water later that year",
+   "source_ids": ["seasats", "seasats-tectonic-seriesa"],
+   "retrieved": "2026-09-03"
+  }
+ ],
+
+ "leadership": [
+  { "person": "Mike Flanigan", "title": "Chief Executive Officer", "source_ids": ["seasats", "seasats-tectonic-seriesa"], "retrieved": "2026-09-03" },
+  { "person": "Dylan Rodriguez", "title": "Chief Technology Officer", "source_ids": ["seasats"], "retrieved": "2026-09-03" }
+ ],
+
+ "proof_points": [
+  { "claim": "Missions up to 6 months", "stated_by": "company", "source_ids": ["seasats"] },
+  { "claim": "Operational in sea state 6", "stated_by": "company", "source_ids": ["seasats"] },
+  { "claim": "Operational during GPS denial", "stated_by": "company", "source_ids": ["seasats"] },
+  { "claim": "50+ payload options", "stated_by": "company", "source_ids": ["seasats"] },
+  { "claim": "Iridium and Starlink communications with onboard AI", "stated_by": "company", "source_ids": ["seasats"] },
+  { "claim": "7,500-mile autonomous trans-Pacific voyage, San Diego to Japan", "stated_by": "press", "when": "stated in Feb 2026 as 'last year', so 2025", "source_ids": ["seasats-tectonic-seriesa", "seasats-cbinsights"] },
+  { "claim": "Quickfish completed an 8-day continuous autonomous sea trial", "stated_by": "press", "when": "2026-03-20", "source_ids": ["seasats-navaltoday-trial"] },
+  { "claim": "Joint milestone with L3Harris on resilient distributed maritime autonomous operations", "stated_by": "L3Harris", "when": "2024-06", "source_ids": ["seasats-l3harris"] }
+ ],
+
+ "quotes": [
+  {
+   "text": "Funding helps us move faster and do a lot of things a lot quicker. Maritime is quite competitive right now, and there are a lot of people vying for space, so it made sense to do the raise.",
+   "person": "Mike Flanigan", "role": "CEO", "date": "2026-02-18",
+   "source_ids": ["seasats-tectonic-seriesa"]
+  },
+  {
+   "text": "Quickfish can protect the perimeter of vessels and infrastructure, intercepting and escorting anything that enters their space.",
+   "person": null, "role": "company website", "date": "2026-09-03",
+   "source_ids": ["seasats"]
+  }
+ ],
+
+ "articles": [
+  {
+   "title": "Seasats Aims to Boost USV Production after $20M Series A",
+   "publisher": "Tectonic Defense",
+   "author": "Barratt Dewey",
+   "url": "https://www.tectonicdefense.com/seasats-aims-to-boost-usv-production-after-20m-series-a/",
+   "published": "2026-02-18",
+   "retrieved": "2026-09-03",
+   "type": "trade press",
+   "key_points": [
+    "$20M Series A led by Konvoy Ventures, with Shield Capital and Techstars.",
+    "Total funding over $40M.",
+    "Lightfish about $250,000 a unit; Quickfish about $500,000.",
+    "Quickfish described as an interceptor USV, over 35 knots.",
+    "Heavyfish still in development at time of writing."
+   ],
+   "source_id": "seasats-tectonic-seriesa"
+  },
+  {
+   "title": "Seasats Awarded $24M in Department of War APFIT Funding to Accelerate Fielding of its Autonomous Surface Vessels",
+   "publisher": "PR Newswire",
+   "url": "https://www.prnewswire.com/news-releases/seasats-awarded-24m-in-department-of-war-apfit-funding-to-accelerate-fielding-of-its-autonomous-surface-vessels-302662524.html",
+   "published": "2026-01-15",
+   "retrieved": "2026-09-03",
+   "type": "company press release",
+   "key_points": ["$24M APFIT award to accelerate fielding of its autonomous surface vessels."],
+   "source_id": "seasats-apfit-prnewswire"
+  },
+  {
+   "title": "Seasats Unveils The Quickfish: a High-Speed, Long-Endurance Autonomous Surface Vessel Proven in US Navy Exercise",
+   "publisher": "PR Newswire",
+   "url": "https://www.prnewswire.com/news-releases/seasats-unveils-the-quickfish-a-high-speed-long-endurance-autonomous-surface-vessel-proven-in-us-navy-exercise-302588427.html",
+   "published": "2025-10",
+   "retrieved": "2026-09-03",
+   "type": "company press release",
+   "key_points": ["Quickfish launch.", "Performance led to an $89M SBIR Phase III IDIQ supporting NIWC Atlantic and USMC USV efforts."],
+   "source_id": "seasats-quickfish-prnewswire"
+  },
+  {
+   "title": "Seasats Raises $20 Million To Increase Production Of Small USVs",
+   "publisher": "Defense Daily",
+   "url": "https://www.defensedaily.com/seasats-raises-20-million-to-increase-production-of-small-usvs/unmanned-systems/",
+   "published": "2026-02",
+   "retrieved": "2026-09-03",
+   "type": "trade press",
+   "key_points": ["Series A proceeds to expand production of small uncrewed surface vessels."],
+   "source_id": "seasats-defensedaily-seriesa"
+  },
+  {
+   "title": "Seasats: Quickfish USV completes 8-day continuous sea trial",
+   "publisher": "Naval Today",
+   "url": "https://navaltoday.com/2026/03/20/seasats-quickfish-usv-completes-8-day-continuous-sea-trial-video",
+   "published": "2026-03-20",
+   "retrieved": "2026-09-03",
+   "type": "trade press",
+   "key_points": [
+    "8-day continuous autonomous sea trial.",
+    "Places the $89M SBIR Phase III in 2025, followed by the $24M APFIT award."
+   ],
+   "source_id": "seasats-navaltoday-trial"
+  },
+  {
+   "title": "L3Harris and Startup Seasats Accomplish Milestone in Proving Resilient, Distributed Maritime Autonomous Operations",
+   "publisher": "L3Harris",
+   "url": "https://www.l3harris.com/newsroom/press-release/2024/06/l3harris-and-startup-seasats-accomplish-milestone-proving-resilient",
+   "published": "2024-06",
+   "retrieved": "2026-09-03",
+   "type": "partner press release",
+   "key_points": ["Joint milestone in distributed maritime autonomous operations.", "Lightfish operates autonomously for up to six months."],
+   "source_id": "seasats-l3harris"
+  },
+  {
+   "title": "Seasats company profile",
+   "publisher": "CB Insights",
+   "url": "https://www.cbinsights.com/company/seasatellites",
+   "published": null,
+   "retrieved": "2026-09-03",
+   "type": "database profile",
+   "key_points": [
+    "Lightfish ~12 ft, Quickfish 20 ft, Heavyfish 35 ft as described here; these lengths differ from the Tectonic figures and from the company site.",
+    "CEO quoted that roughly 95% of focus is Lightfish.",
+    "Heavyfish described as a stretched Lightfish that does not need an expeditionary force to carry it off a beach."
+   ],
+   "source_id": "seasats-cbinsights",
+   "caution": "Undated profile. Its platform lengths conflict with other sources; recorded here but not treated as authoritative."
+  }
+ ],
+
+ "conflicts": [
+  {
+   "field": "platform length",
+   "values": [
+    { "value": "Lightfish 11 ft, Quickfish 17 ft", "source_id": "seasats-tectonic-seriesa", "date": "2026-02-18" },
+    { "value": "Lightfish ~12 ft, Quickfish 20 ft, Heavyfish 35 ft", "source_id": "seasats-cbinsights", "date": null }
+   ],
+   "resolution": "Unresolved. The company site publishes weight and speed but not length."
+  }
+ ],
+
+ "gaps": [
+  "No published price for Heavyfish.",
+  "No confirmation that Heavyfish entered the water; last statement was 'expected later this year' as of February 2026.",
+  "No commercial shipping customer is named anywhere. Every named customer is a defence one: US Navy, USMC, NIWC Atlantic.",
+  "No escort service offering, pricing or contract is published - escort appears as a platform capability, not a service sold to shipowners.",
+  "Employee count not published.",
+  "Founding year not confirmed by a primary source.",
+  "Total funding 'over $40M' is a press characterisation; the components before the Series A are not itemised."
+ ],
+
+ "source_ids": ["seasats", "seasats-tectonic-seriesa", "seasats-apfit-prnewswire", "seasats-quickfish-prnewswire", "seasats-defensedaily-seriesa", "seasats-navaltoday-trial", "seasats-l3harris", "seasats-cbinsights"]
+}

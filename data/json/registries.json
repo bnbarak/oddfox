@@ -1,0 +1,204 @@
+{
+  "$schema": "../schema/registries.schema.json",
+  "dataset": "registries",
+  "title": "Registries and reporting bodies",
+  "description": "Every authoritative list that matters at sea, sorted by what question it answers. Three kinds: identity registries that tell you what a ship is and who owns it, reporting centres that tell you what is happening to ships now, and risk registries that turn a geography into a price.",
+  "updated": "2026-09-02",
+  "records": [
+    {
+      "id": "imo-gisis-reg",
+      "name": "IMO GISIS",
+      "kind": "identity",
+      "operator": "International Maritime Organization",
+      "url": "https://gisis.imo.org/Public/Default.aspx",
+      "answers": "What is this ship, and what has happened to it?",
+      "holds": [
+        "IMO numbers",
+        "ship particulars",
+        "company and DOC records",
+        "piracy and armed robbery module",
+        "port reception facilities"
+      ],
+      "access": "free, registration required",
+      "machine_readable": true,
+      "source_ids": [
+        "imo-gisis"
+      ]
+    },
+    {
+      "id": "equasis-reg",
+      "name": "Equasis",
+      "kind": "identity",
+      "operator": "European Commission and the French Ministry of Transport with partner states",
+      "url": "https://www.equasis.org/",
+      "answers": "Who legally owns and operates this ship, and who insures it?",
+      "holds": [
+        "registered owner",
+        "ship manager",
+        "ISM manager",
+        "classification society",
+        "P&I cover",
+        "port state control history"
+      ],
+      "access": "free, registration required",
+      "machine_readable": false,
+      "source_ids": [
+        "equasis"
+      ]
+    },
+    {
+      "id": "flag-registers",
+      "name": "Flag state registers",
+      "kind": "identity",
+      "operator": "Liberia, Panama, Marshall Islands and around 150 others",
+      "answers": "Whose law applies on board, and who issues the certificates?",
+      "access": "varies by registry, mostly commercial",
+      "source_ids": [
+        "unctad-maritime"
+      ]
+    },
+    {
+      "id": "commercial-ownership",
+      "name": "Commercial ownership databases",
+      "kind": "identity",
+      "operator": "Lloyd's List Intelligence, S&P Global, VesselsValue, Clarksons",
+      "answers": "Who is the beneficial owner, and who has the ship on charter?",
+      "access": "paid subscription",
+      "machine_readable": true,
+      "source_ids": [
+        "marinetraffic-ownership"
+      ]
+    },
+    {
+      "id": "ukmto-reg",
+      "name": "UKMTO — United Kingdom Maritime Trade Operations",
+      "kind": "reporting",
+      "operator": "Royal Navy",
+      "url": "https://www.ukmto.org/",
+      "area": "Red Sea, Gulf of Aden, Indian Ocean, Arabian Sea and wider Middle East",
+      "answers": "What is happening to ships right now, and who do I call?",
+      "role": "Primary point of contact between merchant ships and military forces. Ships register on entering the Voluntary Reporting Area and send initial, daily and final position reports.",
+      "access": "public; registration for the VRA",
+      "source_ids": [
+        "ukmto",
+        "bmp5"
+      ]
+    },
+    {
+      "id": "mschoa-reg",
+      "name": "MSCHOA — Maritime Security Centre, Horn of Africa",
+      "kind": "reporting",
+      "operator": "EU naval forces",
+      "url": "https://www.mschoa.org/",
+      "area": "Horn of Africa counter-piracy coordination",
+      "role": "Vessel registration so naval planners can track and protect merchant traffic, plus self-protection advice and threat assessments.",
+      "access": "public; registration for transits",
+      "source_ids": [
+        "bmp5"
+      ]
+    },
+    {
+      "id": "mdat-gog-reg",
+      "name": "MDAT-GoG — Maritime Domain Awareness for Trade, Gulf of Guinea",
+      "kind": "reporting",
+      "operator": "French and UK navies jointly",
+      "url": "https://gog-mdat.org/",
+      "area": "Gulf of Guinea and West African waters",
+      "role": "Voluntary Reporting Area registration and incident reporting, 24-hour watch.",
+      "access": "public",
+      "caveat": "MDAT-GoG does not coordinate responses to vessels under attack. It is an information centre, not a rescue service — a distinction that matters when selling response.",
+      "source_ids": [
+        "marad-2026-009-gog",
+        "bmp5"
+      ]
+    },
+    {
+      "id": "imb-prc-reg",
+      "name": "IMB Piracy Reporting Centre",
+      "kind": "reporting",
+      "operator": "ICC International Maritime Bureau, Kuala Lumpur",
+      "url": "https://icc-ccs.org/piracy-reporting-centre/",
+      "area": "worldwide",
+      "role": "24-hour manned centre taking reports directly from the Master under attack or the owner. Relays to coastal and regional authorities, broadcasts to shipping via GMDSS Safety Net, and emails alerts to Company Security Officers.",
+      "access": "public, free",
+      "founded": 1991,
+      "source_ids": [
+        "imb-prc",
+        "imb-h1-2026"
+      ]
+    },
+    {
+      "id": "recaap-isc-reg",
+      "name": "ReCAAP Information Sharing Centre",
+      "kind": "reporting",
+      "operator": "21 contracting party states, based in Singapore",
+      "url": "https://www.recaap.org/",
+      "area": "Asia",
+      "role": "Weekly, quarterly, half-yearly and annual reports routed through government focal points, plus the Re-VAMP dashboard.",
+      "access": "public, free; dashboard needs registration",
+      "source_ids": [
+        "recaap-hy-2026",
+        "recaap-weekly-2026-08-18"
+      ]
+    },
+    {
+      "id": "marad-msci",
+      "name": "US MARAD Maritime Security Communications with Industry",
+      "kind": "reporting",
+      "operator": "US Department of Transportation Maritime Administration",
+      "url": "https://www.maritime.dot.gov/msci",
+      "area": "worldwide",
+      "role": "Numbered maritime advisories per region, with MARSEC directives binding on US-flag vessels.",
+      "access": "public",
+      "source_ids": [
+        "marad-2026-009-gog"
+      ]
+    },
+    {
+      "id": "jwc-listed-areas",
+      "name": "Joint War Committee Listed Areas",
+      "kind": "risk",
+      "operator": "Lloyd's Market Association and the International Underwriting Association",
+      "url": "https://lmalloyds.com/specialist-areas/underwriting/listed-areas/",
+      "answers": "Which waters carry an additional war-risk premium?",
+      "role": "The JWC comprises underwriting representatives from Lloyd's and the IUA who write marine hull war business in the London market. Its circulars define the listed areas. Entering one obliges the ship to notify insurers and may trigger an additional premium.",
+      "current_circular": "JWLA-034, Saudi Arabia, issued 29 July 2026. JWLA-033 covering Iran was issued 3 March 2026.",
+      "listed_regions": [
+        "Arabian Gulf / Persian Gulf / Indian Ocean / Red Sea",
+        "Gulf of Guinea",
+        "Venezuela / Guyana"
+      ],
+      "access": "public PDF circulars",
+      "source_ids": [
+        "jwc-lma",
+        "bmp5"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "class-societies",
+      "name": "Classification societies",
+      "kind": "identity",
+      "operator": "IACS members — DNV, Lloyd's Register, ABS, ClassNK, Bureau Veritas and others",
+      "answers": "Is this ship structurally and operationally certified?",
+      "access": "class records via Equasis; full records commercial"
+    },
+    {
+      "id": "psc-mous",
+      "name": "Port State Control regimes",
+      "kind": "identity",
+      "operator": "Paris MoU, Tokyo MoU, US Coast Guard and seven other regional MoUs",
+      "url": "https://www.parismou.org/",
+      "answers": "Has this ship been detained, and how well is it run?",
+      "access": "public inspection and detention databases",
+      "machine_readable": true
+    }
+  ],
+  "how_they_fit": [
+    "Identity registries answer who and what. Start at GISIS for the IMO number, then Equasis for owner, manager, class and P&I. Everything below the manager costs money.",
+    "Reporting centres answer what is happening now. UKMTO for the Middle East and Indian Ocean, MDAT-GoG for West Africa, ReCAAP for Asia, IMB PRC worldwide. A ship in a high-risk area is expected to be registered with the relevant one — which means the reporting centres also know who is transiting, though they do not publish it.",
+    "Risk registries answer what it costs. The Joint War Committee listed areas are the trigger; the premium follows. See risk-economics.json.",
+    "None of these is a customer list. But Equasis plus a JWC listed area plus an AIS feed is, in effect, a targeting list for sales: ships whose managers are named, that are entering water the underwriters have priced."
+  ],
+  "retrieved": "2026-09-02"
+}

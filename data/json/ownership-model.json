@@ -1,0 +1,218 @@
+{
+  "$schema": "../schema/ownership-model.schema.json",
+  "dataset": "ownership-model",
+  "title": "Who actually owns and controls a ship",
+  "description": "A ship has no single owner. It has a stack of parties, and the one who buys protection is not usually the one on the registration papers. This dataset is the vocabulary the rest of the library uses, and the map of which registry answers which question.",
+  "updated": "2026-09-02",
+  "records": [
+    {
+      "id": "flag-state",
+      "role": "Flag state",
+      "layer": "legal",
+      "definition": "The country whose register the ship is entered in. Sets the law that applies on board, the certificates the ship carries, and which navy is nominally responsible for it.",
+      "who_it_usually_is": "An open registry — Liberia, Panama, Marshall Islands — regardless of where the money or the crew comes from.",
+      "buys_security": false,
+      "found_in": [
+        "imo-gisis",
+        "equasis"
+      ],
+      "source_ids": [
+        "imo-gisis",
+        "unctad-maritime"
+      ]
+    },
+    {
+      "id": "registered-owner",
+      "role": "Registered owner",
+      "layer": "legal",
+      "definition": "The entity holding legal title as documented in the registration papers.",
+      "who_it_usually_is": "A single-purpose company holding exactly one ship, often a subsidiary of a larger group or a bank. Frequently a shell with no staff. Naming it tells you almost nothing about who runs the ship.",
+      "buys_security": false,
+      "found_in": [
+        "equasis",
+        "imo-gisis"
+      ],
+      "source_ids": [
+        "marinetraffic-ownership",
+        "equasis"
+      ]
+    },
+    {
+      "id": "beneficial-owner",
+      "role": "Beneficial owner",
+      "layer": "economic",
+      "definition": "The entity with ultimate beneficial ownership — it either owns the ship directly or controls it through a subsidiary or financial vehicle. The group beneficial owner is the parent of the registered owner.",
+      "who_it_usually_is": "The shipping family or group everybody actually names: Aponte, Angelicoussis, Ofer, Fredriksen, Tsakos.",
+      "buys_security": true,
+      "found_in": [
+        "Lloyd's List Intelligence",
+        "S&P Global / IHS",
+        "VesselsValue",
+        "Clarksons"
+      ],
+      "notes": "Not reliably in any free registry. This is the layer that costs money to resolve and the layer that signs a service contract.",
+      "source_ids": [
+        "marinetraffic-ownership"
+      ]
+    },
+    {
+      "id": "technical-manager",
+      "role": "Technical / ISM manager",
+      "layer": "operational",
+      "definition": "Runs the ship day to day: crewing, maintenance, class and flag compliance. Holds the Document of Compliance under the ISM Code.",
+      "who_it_usually_is": "Either an in-house arm of the owner, or a third-party manager such as Anglo-Eastern, V.Group, Bernhard Schulte or Columbia.",
+      "buys_security": true,
+      "found_in": [
+        "equasis",
+        "imo-gisis"
+      ],
+      "notes": "Named on the ISM certificate, so this one is free to look up. In practice the technical manager is who a master calls, and who signs off on hardening measures, citadels and guard teams.",
+      "source_ids": [
+        "equasis",
+        "marinetraffic-ownership"
+      ]
+    },
+    {
+      "id": "commercial-manager",
+      "role": "Commercial manager / operator",
+      "layer": "commercial",
+      "definition": "Sells the ship's carrying capacity — fixes it on charters, decides where it trades.",
+      "who_it_usually_is": "A pool manager, a chartering desk inside the owning group, or the liner operator itself.",
+      "buys_security": true,
+      "found_in": [
+        "Lloyd's List Intelligence",
+        "commercial databases"
+      ],
+      "notes": "The party that decides whether a ship goes through Bab el-Mandeb or round the Cape. Routing decisions are commercial decisions.",
+      "source_ids": [
+        "marinetraffic-ownership"
+      ]
+    },
+    {
+      "id": "charterer",
+      "role": "Charterer",
+      "layer": "commercial",
+      "definition": "Rents the ship, or space on it, from the owner. The renter, not the owner.",
+      "who_it_usually_is": "An oil major, a commodity trader, a liner company chartering in tonnage, or a miner. Shell, Trafigura, Vitol, Cargill, Maersk chartering in.",
+      "buys_security": true,
+      "found_in": [
+        "fixture reports",
+        "Lloyd's List",
+        "broker circulars"
+      ],
+      "notes": "Charterers are rarely in any registry at all — fixtures are reported by brokers, not filed publicly. But under a time or voyage charter the charterer often bears the war-risk premium and the deviation cost, which makes them a direct buyer of anything that lowers either.",
+      "source_ids": [
+        "marinetraffic-ownership"
+      ]
+    },
+    {
+      "id": "p-and-i-club",
+      "role": "P&I club",
+      "layer": "risk",
+      "definition": "Mutual insurer covering third-party liabilities, including crew injury, kidnap and ransom exposure.",
+      "who_it_usually_is": "One of the thirteen International Group clubs — Gard, UK Club, Steamship, North Standard.",
+      "buys_security": false,
+      "influences_purchase": true,
+      "found_in": [
+        "equasis"
+      ],
+      "notes": "Free in Equasis. Clubs and war-risk underwriters do not buy escort services, but they price the risk, and a discount from them is the strongest commercial argument an escort service has.",
+      "source_ids": [
+        "equasis"
+      ]
+    },
+    {
+      "id": "war-risk-underwriter",
+      "role": "War risk underwriter",
+      "layer": "risk",
+      "definition": "Writes the additional premium charged for entering a listed area, priced as a percentage of hull and machinery value per transit or per period.",
+      "who_it_usually_is": "Lloyd's syndicates and specialist markets, brokered by Marsh, Aon, Howden or Gallagher.",
+      "buys_security": false,
+      "influences_purchase": true,
+      "notes": "The Joint War Committee's listed-areas circular is what turns a geography into a line item. See the risk-economics dataset.",
+      "source_ids": [
+        "aljazeera-2026-07-insurance",
+        "supplychainbrain-warrisk"
+      ]
+    }
+  ],
+  "charter_types": [
+    {
+      "id": "voyage-charter",
+      "name": "Voyage charter",
+      "what_is_rented": "One voyage, A to B, for a freight rate per tonne",
+      "who_crews": "Owner",
+      "who_pays_bunkers": "Owner",
+      "who_picks_the_route": "Owner, within the charter party terms",
+      "war_risk_premium_usually_borne_by": "Charterer, via a war risk clause"
+    },
+    {
+      "id": "time-charter",
+      "name": "Time charter",
+      "what_is_rented": "The ship and its crew for a period, at a daily hire rate",
+      "who_crews": "Owner",
+      "who_pays_bunkers": "Charterer",
+      "who_picks_the_route": "Charterer gives orders; owner may refuse unsafe ports or areas",
+      "war_risk_premium_usually_borne_by": "Charterer"
+    },
+    {
+      "id": "bareboat-charter",
+      "name": "Bareboat / demise charter",
+      "what_is_rented": "The bare hull. The charterer crews, insures and operates it",
+      "who_crews": "Charterer",
+      "who_pays_bunkers": "Charterer",
+      "who_picks_the_route": "Charterer",
+      "war_risk_premium_usually_borne_by": "Charterer"
+    },
+    {
+      "id": "coa",
+      "name": "Contract of affreightment",
+      "what_is_rented": "A quantity of cargo moved over a period, ships unspecified",
+      "who_crews": "Owner",
+      "who_pays_bunkers": "Owner",
+      "who_picks_the_route": "Owner",
+      "war_risk_premium_usually_borne_by": "Negotiated; often owner, priced into the rate"
+    }
+  ],
+  "resolution_path": {
+    "description": "How to get from a ship sighting to a named buyer, cheapest step first.",
+    "steps": [
+      {
+        "step": 1,
+        "input": "Ship name or AIS MMSI",
+        "action": "Resolve to the IMO number — the only identifier that never changes",
+        "tool": "imo-gisis",
+        "cost": "free"
+      },
+      {
+        "step": 2,
+        "input": "IMO number",
+        "action": "Pull registered owner, ISM manager, class and P&I cover",
+        "tool": "equasis",
+        "cost": "free, account required"
+      },
+      {
+        "step": 3,
+        "input": "ISM manager",
+        "action": "Technical manager is usually the operational decision maker — this is often enough to make contact",
+        "tool": "equasis",
+        "cost": "free"
+      },
+      {
+        "step": 4,
+        "input": "Registered owner",
+        "action": "Resolve the shell to a group beneficial owner",
+        "tool": "Lloyd's List Intelligence / S&P Global / VesselsValue",
+        "cost": "paid"
+      },
+      {
+        "step": 5,
+        "input": "IMO number and date range",
+        "action": "Find the charterer from fixture reports to identify who bears the war-risk premium",
+        "tool": "broker fixture reports / Lloyd's List",
+        "cost": "paid"
+      }
+    ]
+  },
+  "retrieved": "2026-09-02"
+}

@@ -1,0 +1,827 @@
+{
+  "$schema": "../schema/platforms.schema.json",
+  "dataset": "platforms",
+  "title": "Vessel platforms and published specifications",
+  "description": "One record per named platform. Specifications as published by the manufacturer or credible defence trade press. Fields the maker does not publish are absent, not estimated. The company dataset holds 101 platform names; these are the ones with retrievable specifications.",
+  "updated": "2026-09-03",
+  "retrieved": "2026-09-03",
+  "method": "Two schema-constrained extraction passes over manufacturer spec sheets and defence trade press, 3 September 2026, instructed to return null rather than estimate.",
+  "spec_coverage": {
+    "platforms": 39,
+    "named_platforms_in_company_data": 101,
+    "length_m": 32,
+    "max_speed_kn": 36,
+    "cruise_speed_kn": 11,
+    "range_nm": 17,
+    "endurance": 24,
+    "payload": 29,
+    "sea_state": 18,
+    "propulsion": 32,
+    "armed": 35
+  },
+  "records": [
+    {
+      "id": "saronic-spyglass",
+      "platform": "Spyglass",
+      "maker_id": "saronic",
+      "maker": "Saronic Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "small ISR",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 1.83,
+      "length_note": "6 ft",
+      "max_speed_kn": 20,
+      "range_nm": 30,
+      "payload": "40 lb"
+    },
+    {
+      "id": "saronic-cutlass",
+      "platform": "Cutlass",
+      "maker_id": "saronic",
+      "maker": "Saronic Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "ISR",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 4.27,
+      "length_note": "14 ft",
+      "max_speed_kn": 20,
+      "range_nm": 300,
+      "payload": "200 lb"
+    },
+    {
+      "id": "saronic-corsair",
+      "platform": "Corsair",
+      "maker_id": "saronic",
+      "maker": "Saronic Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "multi-mission",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 7.32,
+      "length_note": "24 ft",
+      "max_speed_kn": 35,
+      "range_nm": 1000,
+      "payload": "1,000 lb",
+      "propulsion": "Diesel",
+      "note": "Subject of the reported $392 million US Navy award."
+    },
+    {
+      "id": "saronic-marauder",
+      "platform": "Marauder",
+      "maker_id": "saronic",
+      "maker": "Saronic Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "medium USV, modular logistics and payload",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 54.86,
+      "length_note": "180 ft on the manufacturer page; some trade coverage reports 150 ft",
+      "max_speed_kn": 25,
+      "cruise_speed_kn": 12,
+      "range_nm": 5400,
+      "payload": "Up to 150 metric tons; four 40-ft or eight 20-ft ISO containers",
+      "propulsion": "Diesel, four waterjets",
+      "armed": "No standard weapon fit disclosed; modular payload integration advertised",
+      "note": "Length conflict recorded rather than resolved."
+    },
+    {
+      "id": "blacksea-garc",
+      "platform": "GARC",
+      "maker_id": "blacksea-tech",
+      "maker": "BlackSea Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "reconnaissance and interdiction",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 4.88,
+      "length_note": "16 ft",
+      "max_speed_kn": 40,
+      "range_nm": 600,
+      "payload": "Up to 1,000 lb (454 kg)",
+      "propulsion": "200 hp engine",
+      "armed": "Modular: ISR, strike, survey and interdiction payloads; no permanent weapon fit specified"
+    },
+    {
+      "id": "blacksea-chaser",
+      "platform": "Chaser",
+      "maker_id": "blacksea-tech",
+      "maker": "BlackSea Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "long-range multi-mission",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "max_speed_kn": 40,
+      "range_nm": 1900,
+      "payload": "About 600 kg"
+    },
+    {
+      "id": "blacksea-comet",
+      "platform": "Comet",
+      "maker_id": "blacksea-tech",
+      "maker": "BlackSea Technologies",
+      "country_iso": "US",
+      "market": "military",
+      "role": "high-speed combat",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 13.1,
+      "length_note": "13.1 m, about 43 ft",
+      "max_speed_kn": 45,
+      "range_nm": 1626,
+      "endurance": "Range figure is at 40 kn, Sea State 0, zero mission payload; varies with payload and speed",
+      "payload": "Maximum payload including fuel reported as 10,000 lb (4,536 kg)",
+      "sea_state": "Sea State 0 and Sea State 3 profiles in the manufacturer range calculator",
+      "propulsion": "Volvo Penta",
+      "armed": "Yes — shown with BRAWLR missile system and EOS 30 mm gun"
+    },
+    {
+      "id": "havocai-rampage",
+      "platform": "Rampage",
+      "maker_id": "havocai",
+      "maker": "HavocAI",
+      "country_iso": "US",
+      "market": "military",
+      "role": "collaborative autonomy, attritable",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 4.27,
+      "length_note": "About 14 ft; later reporting describes a 16 ft variant",
+      "max_speed_kn": 15,
+      "range_nm": 100,
+      "payload": "Up to 300 lb (136 kg)",
+      "propulsion": "Fully electric, solar-augmented",
+      "armed": "Not intrinsically armed; stated roles include electronic warfare and kinetic strike, and launch and recovery of drones"
+    },
+    {
+      "id": "seamachines-stormrunner",
+      "platform": "STORMRUNNER",
+      "maker_id": "sea-machines",
+      "maker": "Sea Machines",
+      "country_iso": "US",
+      "market": "both",
+      "role": "autonomy test and mission platform",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "low",
+      "armed": "Unarmed; payload and mission dependent",
+      "note": "Company material elsewhere gives 8 m HDPE hull, 40 knots and 500 nm at 27 knots, but the spec pass could not confirm these on a datasheet."
+    },
+    {
+      "id": "seamachines-selkie",
+      "platform": "SELKIE 7",
+      "maker_id": "sea-machines",
+      "maker": "Sea Machines",
+      "country_iso": "US",
+      "market": "both",
+      "role": "ISR and logistics",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "low",
+      "armed": "Unarmed or configurable; no weapon specification found"
+    },
+    {
+      "id": "seasats-lightfish",
+      "platform": "Lightfish",
+      "maker_id": "seasats",
+      "maker": "Seasats",
+      "country_iso": "US",
+      "market": "both",
+      "role": "long-endurance survey, research and security patrol",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "max_speed_kn": 5,
+      "range_nm": 8000,
+      "endurance": "Up to 6 months",
+      "payload": "66 lb (29.9 kg) internal; payload voltage 5-28 V; 300+ W peak burst",
+      "sea_state": "Sea State 6",
+      "propulsion": "Solar-electric with hybrid reserve",
+      "armed": "Unarmed; modular payloads"
+    },
+    {
+      "id": "seasats-quickfish",
+      "platform": "Quickfish",
+      "maker_id": "seasats",
+      "maker": "Seasats",
+      "country_iso": "US",
+      "market": "both",
+      "role": "monitor, intercept and identify",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "max_speed_kn": 35,
+      "range_nm": 400,
+      "endurance": "Multi-week",
+      "payload": "450 lb; integrated UAV payload bay",
+      "sea_state": "Sea State 6",
+      "propulsion": "High-speed diesel drive or gas jet drive",
+      "armed": "Unarmed or configurable",
+      "note": "Proven in a US Navy exercise per the company's launch release."
+    },
+    {
+      "id": "seasats-heavyfish",
+      "platform": "Heavyfish",
+      "maker_id": "seasats",
+      "maker": "Seasats",
+      "country_iso": "US",
+      "market": "both",
+      "role": "MDA, ASW, sonar survey, harbour security and high-value-unit escort",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "max_speed_kn": 12,
+      "cruise_speed_kn": 12,
+      "endurance": "Up to 6 months",
+      "payload": "Up to 1,000 lb (453.5 kg) including heavy acoustic arrays",
+      "sea_state": "Sea State 6",
+      "propulsion": "Combined electric and diesel in a single unit",
+      "armed": "Unarmed or configurable",
+      "note": "The only platform in this dataset whose maker names escort of a high-value unit as an intended mission."
+    },
+    {
+      "id": "saildrone-explorer",
+      "platform": "Explorer",
+      "maker_id": "saildrone",
+      "maker": "Saildrone",
+      "country_iso": "US",
+      "market": "both",
+      "role": "ocean data and ISR",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 7,
+      "max_speed_kn": 5,
+      "cruise_speed_kn": 2.5,
+      "endurance": "Up to 12 months, mission dependent",
+      "payload": "100 kg; modular oceanographic, acoustic and imaging sensors",
+      "sea_state": "Designed for severe ocean conditions; no single sea-state limit published",
+      "propulsion": "Wind-powered rigid wing sail with solar-electric auxiliary",
+      "armed": "No"
+    },
+    {
+      "id": "saildrone-voyager",
+      "platform": "Voyager",
+      "maker_id": "saildrone",
+      "maker": "Saildrone",
+      "country_iso": "US",
+      "market": "both",
+      "role": "hydrographic and maritime domain awareness",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 10,
+      "max_speed_kn": 7,
+      "cruise_speed_kn": 3,
+      "endurance": "Up to 180 days, mission dependent",
+      "payload": "Up to 400 kg; configurable hydrographic, acoustic and oceanographic payloads",
+      "propulsion": "Wind-powered rigid wing sail plus solar-electric",
+      "armed": "No",
+      "note": "Ten Voyagers deployed by the US Navy for Operation Windward Stack, September 2023."
+    },
+    {
+      "id": "saildrone-surveyor",
+      "platform": "Surveyor",
+      "maker_id": "saildrone",
+      "maker": "Saildrone",
+      "country_iso": "US",
+      "market": "both",
+      "role": "deep-ocean survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 20,
+      "max_speed_kn": 10,
+      "cruise_speed_kn": 5,
+      "endurance": "Up to 365 days, mission dependent",
+      "payload": "6 tonnes; multibeam echosounder, sub-bottom profiler, ADCP",
+      "propulsion": "Wind-powered rigid wing sail with solar-electric",
+      "armed": "No"
+    },
+    {
+      "id": "ocius-bluebottle",
+      "platform": "Bluebottle",
+      "maker_id": "ocius",
+      "maker": "Ocius Technology",
+      "country_iso": "AU",
+      "market": "both",
+      "role": "persistent maritime domain awareness",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 7.8,
+      "max_speed_kn": 5,
+      "cruise_speed_kn": 2,
+      "endurance": "Persistent, months at sea, mission dependent",
+      "payload": "Modular bay for radar, EO/IR, AIS and acoustic sensors",
+      "sea_state": "Sea State 6",
+      "propulsion": "Wind, solar and wave with auxiliary electric motor",
+      "armed": "No"
+    },
+    {
+      "id": "elbit-seagull",
+      "platform": "Seagull",
+      "maker_id": "elbit",
+      "maker": "Elbit Systems",
+      "country_iso": "IL",
+      "market": "military",
+      "role": "mine countermeasures, ASW and ISR",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 12,
+      "max_speed_kn": 32,
+      "cruise_speed_kn": 20,
+      "endurance": "Up to 4 days, mission dependent",
+      "payload": "Up to 2.5 tonnes; modular MCM, ASW and ISR payloads",
+      "sea_state": "Up to Sea State 4",
+      "propulsion": "Twin diesel, waterjets",
+      "armed": "Not inherently armed; supports remote weapon integration"
+    },
+    {
+      "id": "rafael-protector",
+      "platform": "Protector",
+      "maker_id": "rafael",
+      "maker": "Rafael Advanced Defense Systems",
+      "country_iso": "IL",
+      "market": "military",
+      "role": "harbour and coastal force protection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 9,
+      "max_speed_kn": 40,
+      "cruise_speed_kn": 20,
+      "range_nm": 250,
+      "endurance": "Up to 72 hours, configuration dependent",
+      "payload": "Electro-optical suite, radar, communications; remote weapon station and mission modules",
+      "sea_state": "Up to Sea State 4",
+      "propulsion": "Diesel waterjets",
+      "armed": "Yes — can be fitted with Rafael Mini-Typhoon remote weapon station"
+    },
+    {
+      "id": "iai-katana",
+      "platform": "Katana",
+      "maker_id": "iai",
+      "maker": "Israel Aerospace Industries",
+      "country_iso": "IL",
+      "market": "military",
+      "role": "autonomous patrol and infrastructure protection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 11.9,
+      "max_speed_kn": 60,
+      "cruise_speed_kn": 30,
+      "range_nm": 350,
+      "payload": "2,200 kg",
+      "propulsion": "2 x 560 hp marine diesel",
+      "armed": "Mission dependent; no standard weapon fit specified"
+    },
+    {
+      "id": "exail-drix-90",
+      "platform": "DriX 90",
+      "maker_id": "exail",
+      "maker": "Exail",
+      "country_iso": "FR",
+      "market": "both",
+      "role": "hydrographic and oceanographic survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 9,
+      "max_speed_kn": 14,
+      "endurance": "Up to 7 days",
+      "payload": "Up to 300 kg",
+      "sea_state": "Up to Sea State 5",
+      "propulsion": "Diesel-electric hybrid",
+      "armed": "Unarmed"
+    },
+    {
+      "id": "exail-drix-o16",
+      "platform": "DriX O-16",
+      "maker_id": "exail",
+      "maker": "Exail",
+      "country_iso": "FR",
+      "market": "both",
+      "role": "oceanographic survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 16,
+      "max_speed_kn": 18,
+      "endurance": "Up to 30 days",
+      "payload": "Up to 5 tonnes",
+      "sea_state": "Up to Sea State 6",
+      "propulsion": "Diesel-electric hybrid",
+      "armed": "Unarmed"
+    },
+    {
+      "id": "exail-drix-h8",
+      "platform": "DriX H-8",
+      "maker_id": "exail",
+      "maker": "Exail",
+      "country_iso": "FR",
+      "market": "both",
+      "role": "hydrographic survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 8,
+      "max_speed_kn": 14,
+      "endurance": "Up to 7 days",
+      "payload": "Up to 150 kg",
+      "sea_state": "Up to Sea State 5",
+      "propulsion": "Diesel-electric hybrid",
+      "armed": "Unarmed"
+    },
+    {
+      "id": "seakit-maxlimer",
+      "platform": "Maxlimer",
+      "maker_id": "sea-kit",
+      "maker": "SEA-KIT International",
+      "country_iso": "GB",
+      "market": "both",
+      "role": "survey and ocean science",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 12,
+      "max_speed_kn": 10,
+      "cruise_speed_kn": 7,
+      "range_nm": 5000,
+      "endurance": "Up to 45 days",
+      "payload": "Up to 2.5 tonnes",
+      "sea_state": "Up to Sea State 6",
+      "propulsion": "Diesel-electric",
+      "armed": "Unarmed"
+    },
+    {
+      "id": "seakit-xclass",
+      "platform": "X-class",
+      "maker_id": "sea-kit",
+      "maker": "SEA-KIT International",
+      "country_iso": "GB",
+      "market": "both",
+      "role": "commercial and defence support",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 18,
+      "max_speed_kn": 20,
+      "range_nm": 5000,
+      "endurance": "Up to 30 days",
+      "payload": "Up to 10 tonnes",
+      "sea_state": "Up to Sea State 6",
+      "propulsion": "Diesel-electric",
+      "armed": "Not specified as weapon-equipped"
+    },
+    {
+      "id": "xocean-xo450",
+      "platform": "XO-450",
+      "maker_id": "xocean",
+      "maker": "XOCEAN",
+      "country_iso": "IE",
+      "market": "commercial",
+      "role": "ocean data collection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 4.5,
+      "max_speed_kn": 7,
+      "endurance": "Up to 3 months",
+      "payload": "150 kg",
+      "sea_state": "Sea State 5",
+      "propulsion": "Solar-electric",
+      "armed": "No"
+    },
+    {
+      "id": "xocean-xo500",
+      "platform": "XO-500",
+      "maker_id": "xocean",
+      "maker": "XOCEAN",
+      "country_iso": "IE",
+      "market": "commercial",
+      "role": "ocean data collection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 5,
+      "max_speed_kn": 7,
+      "endurance": "Up to 3 months",
+      "payload": "200 kg",
+      "sea_state": "Sea State 5",
+      "propulsion": "Solar-electric",
+      "armed": "No"
+    },
+    {
+      "id": "hydrosurv-reav40",
+      "platform": "REAV-40",
+      "maker_id": "hydrosurv",
+      "maker": "HydroSurv",
+      "country_iso": "GB",
+      "market": "commercial",
+      "role": "survey and inspection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "low",
+      "armed": "No",
+      "note": "No published specification found in the spec pass."
+    },
+    {
+      "id": "maritimerobotics-marinerx",
+      "platform": "Mariner X",
+      "maker_id": "maritime-robotics",
+      "maker": "Maritime Robotics",
+      "country_iso": "NO",
+      "market": "both",
+      "role": "open-ocean survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 10,
+      "max_speed_kn": 20,
+      "cruise_speed_kn": 8,
+      "endurance": "Up to 30 days",
+      "propulsion": "Diesel-electric hybrid",
+      "armed": "No"
+    },
+    {
+      "id": "maritimerobotics-otter",
+      "platform": "Otter",
+      "maker_id": "maritime-robotics",
+      "maker": "Maritime Robotics",
+      "country_iso": "NO",
+      "market": "both",
+      "role": "inshore survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 2,
+      "max_speed_kn": 5,
+      "endurance": "Up to 20 hours",
+      "payload": "Up to 30 kg",
+      "propulsion": "Electric",
+      "armed": "No"
+    },
+    {
+      "id": "atlas-arcims",
+      "platform": "ARCIMS",
+      "maker_id": "atlas-elektronik",
+      "maker": "ATLAS ELEKTRONIK",
+      "country_iso": "DE",
+      "market": "military",
+      "role": "mine countermeasures",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 11.5,
+      "max_speed_kn": 40,
+      "endurance": "Up to 10 days",
+      "payload": "Up to 2 tonnes",
+      "sea_state": "Up to Sea State 5",
+      "propulsion": "Twin diesel with waterjets",
+      "armed": "Mission dependent; modular MCM payloads, not inherently armed"
+    },
+    {
+      "id": "aselsan-marlin",
+      "platform": "MARLIN",
+      "maker_id": "aselsan",
+      "maker": "ASELSAN",
+      "country_iso": "TR",
+      "market": "military",
+      "role": "armed ISR and electronic warfare",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 8,
+      "max_speed_kn": 36,
+      "propulsion": "Diesel waterjet",
+      "armed": "Yes — demonstrated with a remote weapon station and electronic warfare payloads"
+    },
+    {
+      "id": "aselsan-sida",
+      "platform": "SIDA",
+      "maker_id": "aselsan",
+      "maker": "ASELSAN",
+      "country_iso": "TR",
+      "market": "military",
+      "role": "armed surface warfare",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 12.5,
+      "max_speed_kn": 40,
+      "range_nm": 400,
+      "propulsion": "Diesel with waterjets",
+      "armed": "Yes — configured with a Roketsan missile launcher and remote weapon station"
+    },
+    {
+      "id": "ares-ulaq",
+      "platform": "ULAQ",
+      "maker_id": "ares-shipyard",
+      "maker": "ARES Shipyard / Meteksan Defence",
+      "country_iso": "TR",
+      "market": "military",
+      "role": "armed anti-surface",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 11,
+      "max_speed_kn": 35,
+      "range_nm": 215,
+      "propulsion": "Diesel and waterjet",
+      "armed": "Yes — original combat configuration carries four UMTAS missiles"
+    },
+    {
+      "id": "dearsan-sancar",
+      "platform": "SANCAR",
+      "maker_id": "dearsan",
+      "maker": "Dearsan Shipyard",
+      "country_iso": "TR",
+      "market": "military",
+      "role": "armed patrol and precision strike",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 12.5,
+      "max_speed_kn": 40,
+      "range_nm": 400,
+      "payload": "Up to 2 tonnes",
+      "propulsion": "Twin diesel with waterjets",
+      "armed": "Yes — designed to carry a remote weapon station and missile systems"
+    },
+    {
+      "id": "stengg-venus16",
+      "platform": "Venus 16",
+      "maker_id": "st-engineering",
+      "maker": "ST Engineering",
+      "country_iso": "SG",
+      "market": "military",
+      "role": "patrol and force protection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 16,
+      "max_speed_kn": 30,
+      "endurance": "Up to 36 hours",
+      "payload": "Up to 3 tonnes",
+      "sea_state": "Up to Sea State 4",
+      "propulsion": "Diesel with waterjets",
+      "armed": "Mission-configurable; unarmed unless fitted with a weapon payload"
+    },
+    {
+      "id": "lignex1-seasword2",
+      "platform": "Sea Sword-2",
+      "maker_id": "lig-nex1",
+      "maker": "LIG Nex1",
+      "country_iso": "KR",
+      "market": "military",
+      "role": "armed combat USV",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "medium",
+      "length_m": 12,
+      "max_speed_kn": 20,
+      "endurance": "24 hours",
+      "armed": "Yes — designed as an armed combat USV with remote weapon station integration"
+    },
+    {
+      "id": "oceaninfinity-armada78",
+      "platform": "Armada 78",
+      "maker_id": "ocean-infinity",
+      "maker": "Ocean Infinity",
+      "country_iso": "US",
+      "market": "commercial",
+      "role": "offshore survey",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 78,
+      "max_speed_kn": 12,
+      "endurance": "Up to 180 days",
+      "propulsion": "Diesel-electric",
+      "armed": "No weapons specified"
+    },
+    {
+      "id": "fugro-blue-essence",
+      "platform": "Blue Essence",
+      "maker_id": "fugro",
+      "maker": "Fugro",
+      "country_iso": "NL",
+      "market": "commercial",
+      "role": "offshore survey and inspection",
+      "retrieved": "2026-09-03",
+      "source_ids": [
+        "firecrawl-platform-specs"
+      ],
+      "confidence": "high",
+      "length_m": 12,
+      "max_speed_kn": 9,
+      "endurance": "Up to 30 days",
+      "sea_state": "Up to Sea State 5",
+      "propulsion": "Diesel-electric hybrid",
+      "armed": "No"
+    }
+  ],
+  "gaps": [
+    "39 of 101 named platforms have specifications. The remaining 62 are names only.",
+    "Range is published for 17 of 39. Endurance for 26. Sea state for 17. It is not possible to rank the field on a single axis.",
+    "Where a maker publishes range, the conditions usually are not stated. BlackSea Comet is the exception and shows why it matters: 1,626 nm is at 40 knots, Sea State 0 and zero payload.",
+    "Saronic Marauder length is 180 ft on the manufacturer page and 150 ft in some trade coverage. Both recorded, neither resolved.",
+    "No cost, unit price or operating cost for any platform.",
+    "No autonomy level, collision-avoidance certification or class approval recorded for any platform.",
+    "Sea Machines STORMRUNNER and SELKIE 7 specs quoted in conference material could not be confirmed on a datasheet."
+  ]
+}

@@ -1,0 +1,246 @@
+{
+ "dataset": "why-piracy-fell",
+ "title": "Why piracy fell, and what that means for us",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "the_finding": "Piracy did not decline because the threat went away. Every authoritative body that has looked at it attributes the fall to protection: naval presence, transit corridors, vessel hardening and armed guards. The intervention we are proposing is a version of the intervention that already worked.",
+ "attribution": [
+  {
+   "body": "NATO",
+   "attributes_to": "Naval presence, BMP, and embarked armed security teams",
+   "quote": "The very presence of this international naval force deterred pirates. The implementation of best management practices by the shipping industry, as well as the embarkation of armed security teams on board, also contributed to this trend.",
+   "source_ids": [
+    "nato-counterpiracy"
+   ]
+  },
+  {
+   "body": "ICC IMB, 2026 report on 2025",
+   "attributes_to": "Sustained naval presence, vessel hardening, BMP",
+   "quote": "The lack of a broader resurgence in Somali piracy continues to reflect the strong deterrent effect of sustained naval presence, supported by vessel hardening and the use of best management practices.",
+   "source_ids": [
+    "imb-2025-annual"
+   ]
+  },
+  {
+   "body": "World Bank",
+   "attributes_to": "Tests naval deployment and armed guards as the two measures widely believed responsible for the collapse",
+   "quote": "two crime deterrence measures widely believed to be responsible for the collapse of Somali piracy",
+   "source_ids": [
+    "worldbank-piracy-2016"
+   ]
+  },
+  {
+   "body": "ETH Zurich",
+   "attributes_to": "International naval patrols",
+   "quote": "The presence of international naval patrols in the Gulf of Aden and their efforts to disrupt and deter pirate activity have greatly contributed to reducing piracy.",
+   "source_ids": [
+    "ethz-counterpiracy"
+   ]
+  },
+  {
+   "body": "UK Government",
+   "attributes_to": "Naval protection, armed guards, prosecutions, and onshore stabilisation. Does not quantify relative effects.",
+   "source_ids": [
+    "ukgov-piracy"
+   ]
+  }
+ ],
+ "intervention_timeline": [
+  {
+   "date": "2008-12",
+   "intervention": "EU NAVFOR Operation Atalanta",
+   "source_ids": [
+    "ethz-counterpiracy"
+   ]
+  },
+  {
+   "date": "2009-01",
+   "intervention": "Combined Task Force 151",
+   "source_ids": [
+    "ethz-counterpiracy"
+   ]
+  },
+  {
+   "date": "2009",
+   "intervention": "Internationally Recommended Transit Corridor and naval convoying",
+   "source_ids": [
+    "ukgov-piracy"
+   ]
+  },
+  {
+   "date": "2009",
+   "intervention": "Best Management Practices adopted by industry",
+   "source_ids": [
+    "nato-counterpiracy"
+   ]
+  },
+  {
+   "date": "2009-08-17",
+   "intervention": "NATO Operation Ocean Shield",
+   "source_ids": [
+    "nato-counterpiracy"
+   ]
+  },
+  {
+   "date": "2011-10",
+   "intervention": "UK allows armed guards on UK-flagged ships",
+   "source_ids": [
+    "ukgov-piracy"
+   ]
+  },
+  {
+   "date": "2012 onward",
+   "intervention": "Regional prosecutions, RAPPICC, Somali stabilisation",
+   "source_ids": [
+    "ukgov-piracy"
+   ]
+  }
+ ],
+ "timing": "Attacks peaked in 2010-2011 at 445 and 438. The naval operations began in late 2008 and 2009, armed guards were permitted on UK ships in October 2011, and the count collapsed to 296 in 2012 and 264 in 2013. The fall follows the interventions, not the other way round.",
+ "the_armed_guard_claim": {
+  "claim": "No vessel with an armed security team aboard has ever been successfully hijacked.",
+  "verdict": "Do not use it. It is not a sound statistic.",
+  "why": [
+   "Duke Law describes it as an anecdote, expressly limited to mid-2012.",
+   "A vessel was hijacked off Somalia in November 2015, ending a three-year gap. No source states whether it carried guards.",
+   "No body publishes a denominator of guarded versus unguarded transits, so the claim cannot be tested."
+  ],
+  "source_ids": [
+   "duke-pcasp",
+   "worldbank-piracy-2016"
+  ]
+ },
+ "what_weakens_the_numbers": [
+  {
+   "issue": "Under-reporting",
+   "detail": "An academic estimate puts unreported attacks at at least 50%. IMB acknowledges under-reporting but publishes no ratio. Every count in this library is a floor.",
+   "source_ids": [
+    "dalhousie-underreporting",
+    "imb-annual-reports"
+   ]
+  },
+  {
+   "issue": "The series is not piracy only",
+   "detail": "IMO has separated piracy from armed robbery since July 2002, and the IMB total includes both.",
+   "source_ids": [
+    "imo-piracy-definitions"
+   ]
+  },
+  {
+   "issue": "Recent counts are inflated by low-level theft",
+   "detail": "IMB describes Singapore Strait incidents as low-level opportunistic crimes falling under armed robbery. In 2024 IMB recorded 14 anchorage incidents in Bangladesh alone, 13 of them at Chattogram.",
+   "source_ids": [
+    "imb-2022-annual",
+    "imb-2024-annual"
+   ]
+  }
+ ],
+ "the_reversal": {
+  "note": "The decline did not continue. 2025 rose.",
+  "global": [
+   {
+    "year": 2022,
+    "incidents": 115
+   },
+   {
+    "year": 2023,
+    "incidents": 120
+   },
+   {
+    "year": 2024,
+    "incidents": 116
+   },
+   {
+    "year": 2025,
+    "incidents": 137
+   }
+  ],
+  "singapore_strait": [
+   {
+    "year": 2022,
+    "incidents": 38
+   },
+   {
+    "year": 2023,
+    "incidents": 37
+   },
+   {
+    "year": 2024,
+    "incidents": 43
+   },
+   {
+    "year": 2025,
+    "incidents": 80
+   }
+  ],
+  "gulf_of_guinea": [
+   {
+    "year": 2020,
+    "incidents": 81
+   },
+   {
+    "year": 2021,
+    "incidents": 35
+   },
+   {
+    "year": 2022,
+    "incidents": 19
+   },
+   {
+    "year": 2023,
+    "incidents": 22
+   },
+   {
+    "year": 2024,
+    "incidents": 18
+   },
+   {
+    "year": 2025,
+    "incidents": 21
+   }
+  ],
+  "reading": "The 2025 rise is driven almost entirely by the Singapore Strait, which nearly doubled to 80. IMB classifies those as low-level opportunistic armed robbery. So the headline increase is not an increase in the kind of attack an escort addresses.",
+  "source_ids": [
+   "imb-2025-annual",
+   "imb-2024-annual",
+   "imb-2022-annual"
+  ]
+ },
+ "somali_resurgence": [
+  {
+   "date": "2023-12-14",
+   "event": "First successful Somali hijacking since 2017. Two dhows also hijacked, potentially as mother ships.",
+   "source_ids": [
+    "imb-2022-annual"
+   ]
+  },
+  {
+   "date": "2024 H1",
+   "event": "At least eight East Africa incidents including two fishing vessels and a bulk carrier hijacked.",
+   "source_ids": [
+    "imb-2024-annual"
+   ]
+  },
+  {
+   "date": "2025-11",
+   "event": "Two Somali incidents far from shore, showing retained long-range capability.",
+   "source_ids": [
+    "imb-2025-annual"
+   ]
+  }
+ ],
+ "how_to_use_this": {
+  "the_strong_version": "Piracy fell because protection worked. Naval escorts, transit corridors and armed guards did it, on the record, according to NATO, IMB and the World Bank. Navies are finite and are being pulled elsewhere. An uncrewed escort is the same intervention without the warship.",
+  "the_risk_in_it": "It also proves the incumbent solutions work, which invites the question of why anyone needs a new one. The answer has to be cost and availability, not efficacy.",
+  "do_not_say": [
+   "That no guarded ship has ever been hijacked.",
+   "That piracy is rising. The 2025 rise is Singapore Strait armed robbery, which escort does not address.",
+   "That the counts are complete. At least half may go unreported."
+  ]
+ },
+ "gaps": [
+  "No source quantifies the relative contribution of navies versus guards versus BMP.",
+  "No guarded-versus-unguarded denominator exists anywhere.",
+  "The under-reporting estimate is one academic citation and is old."
+ ]
+}

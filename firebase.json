@@ -1,0 +1,167 @@
+{
+  "hosting": [
+    {
+      "site": "vocal-vigil-497322-k8",
+      "public": ".",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**",
+        "media-src/**",
+        "deck/**",
+        "tools/**",
+        "data/**",
+        "OddFoxOffice/**",
+        "Dockerfile",
+        "nginx.conf",
+        "deploy-gcs.sh",
+        "contact-sheet.gs",
+        "README.md"
+      ],
+      "headers": [
+        {
+          "source": "**/*.pdf",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=3600"
+            },
+            {
+              "key": "Content-Disposition",
+              "value": "inline"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(mp4|jpg|jpeg|png|webp|svg|woff2)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=31536000, immutable"
+            }
+          ]
+        },
+        {
+          "source": "/assets/d/**",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            },
+            {
+              "key": "Content-Disposition",
+              "value": "attachment"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=0, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "/brief*",
+          "headers": [
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=0, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "/index.html",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=0, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "oddfox-office",
+      "public": "OddFoxOffice/dist",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "Referrer-Policy",
+              "value": "strict-origin-when-cross-origin"
+            },
+            {
+              "key": "X-Robots-Tag",
+              "value": "noindex, nofollow"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=0, must-revalidate"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(mp4|jpg|jpeg|png|webp|svg|woff2)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=31536000, immutable"
+            }
+          ]
+        },
+        {
+          "source": "/assets/**",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public, max-age=31536000, immutable"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "emulators": {
+    "hosting": {
+      "port": 4173
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true
+  }
+}

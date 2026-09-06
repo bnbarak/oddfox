@@ -1,0 +1,253 @@
+{
+ "dataset": "crm-sequences",
+ "title": "Outreach sequences",
+ "updated": "2026-09-04",
+ "description": "Three-round email drafts per tier. Written against the do_not_claim list in gtm.json: no claim that escort prevents attack, no current pricing, no assertion that any recipient buys escort today. Variables in double braces are filled per account.",
+ "variables": [
+  {
+   "key": "{{first_name}}",
+   "from": "crm/contacts.json"
+  },
+  {
+   "key": "{{company}}",
+   "from": "crm/accounts.json"
+  },
+  {
+   "key": "{{vessel}}",
+   "from": "customers.json vessel_chains"
+  },
+  {
+   "key": "{{incident_date}}",
+   "from": "incidents.json"
+  },
+  {
+   "key": "{{fleet}}",
+   "from": "crm/accounts.json"
+  },
+  {
+   "key": "{{sender}}",
+   "from": "manual"
+  }
+ ],
+ "cadence": {
+  "round_1": "day 0",
+  "round_2": "day 4",
+  "round_3": "day 11",
+  "then": "mark dead or move to quarterly"
+ },
+ "compliance_note": "Most tier 1 and 2 targets are EU or UK entities. Business-to-business outreach to a corporate address is generally permitted, but include a real sender identity, a postal address and a one-click opt-out, and honour opt-outs immediately. Check current GDPR and PECR position before the first send.",
+ "sequences": [
+  {
+   "tier": 0,
+   "tier_name": "Warm — first-degree connections",
+   "channel": "LinkedIn message from the founder, not email",
+   "premise": "A first-degree connection routes around the two things blocking us: eight of sixteen companies publish no named leadership, and four of the attacked companies have no website. Ask for their judgment, not for a meeting about our product. It is a far easier yes and it gets us the truth.",
+   "length_rule": "Three or four lines. A LinkedIn message is not an email.",
+   "rounds": [
+    {
+     "round": 1,
+     "variant": "the buyer — someone who holds DPA, CSO or fleet",
+     "subject": "(LinkedIn message, no subject)",
+     "body": "{{first_name}} — We build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nYou have sat in the {{their_role}} seat, so you know better than I do whether a manager would ever put one alongside a hull.\n\nTwenty minutes to tell me where it falls down?"
+    },
+    {
+     "round": 2,
+     "variant": "the route-in — commercial, agency or broker side",
+     "subject": "(LinkedIn message, no subject)",
+     "body": "{{first_name}} — We build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{their_patch}} is exactly your patch. Two things I would value more than a market report: have you seen anyone actually buy protection like this, and who at your customers makes that call?\n\nTwenty minutes?"
+    },
+    {
+     "round": 3,
+     "variant": "mutual connection — ask for the introduction first",
+     "subject": "(message to the mutual, not the target)",
+     "body": "{{mutual_name}} — you know {{target_name}} at {{target_company}}. We build autonomous vessels that escort commercial ships through high-risk passages.\n\n{{target_first_name}} sits close to the decision we need to understand. Worth an introduction, or would you rather I approach directly?"
+    }
+   ]
+  },
+  {
+   "tier": 1,
+   "tier_name": "Third-party ship managers",
+   "premise": "They hold the ISM Document of Compliance and make the operational call. They manage hundreds of hulls, so the conversation scales.",
+   "rounds": [
+    {
+     "round": 1,
+     "subject": "Autonomous escort for commercial ships",
+     "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{company}} manages around {{fleet}} hulls. Every one that goes through the southern Red Sea is a decision that lands on your desk, not the owner's.\n\nIf any of them are still making that transit, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
+    },
+    {
+     "round": 2,
+     "subject": "Re: Escort cover across the {{company}} managed fleet",
+     "body": "{{first_name}},\n\nOne follow-up, with the number that made us take this seriously.\n\nThere were 38 reported attacks worldwide in the first half of 2026, the fewest since 1992. But 84% of them ended with the ship boarded or hijacked, and 67 seafarers were taken. Fewer attacks, higher consequence each time.\n\nIf protection is not your desk, just point me at the right one.\n\nStill happy to walk you through the record. Early next week?\n\n{{sender}}"
+    },
+    {
+     "round": 3,
+     "subject": "Last note",
+     "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+    }
+   ]
+  },
+  {
+   "tier": 2,
+   "tier_name": "Companies whose ship was attacked",
+   "premise": "They have already absorbed the loss. The need does not need arguing, so the email should be short and specific to their vessel.",
+   "warning": "Crew were killed on True Confidence and taken hostage on Eternity C and Abdullah. The incident is referenced once, after the introduction, and never as the opening line. A human reads every tier 2 send before it goes.",
+   "rounds": [
+    {
+     "round": 1,
+     "subject": "Autonomous escort for commercial ships",
+     "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{vessel}} is why you are on a very short list. Most owners have read about these attacks. You have had one.\n\nIf {{company}} still has ships on that route, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
+    },
+    {
+     "round": 2,
+     "subject": "Re: Marine security, autonomous escort vessels",
+     "body": "{{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort. About half the successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nWe think the case is strongest against drones and small boats on a moving hull in a defined passage, and weakest at anchor. Whether that narrow case is worth paying for is your call, not ours.\n\nThe offer stands: twenty minutes, and you get the incident record regardless. Early next week?\n\n{{sender}}"
+    },
+    {
+     "round": 3,
+     "subject": "Last note",
+     "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+    }
+   ]
+  },
+  {
+   "tier": 3,
+   "tier_name": "Dry bulk owners and operators",
+   "premise": "Most-attacked vessel type. The segment statistic is the opener; nothing company-specific is known.",
+   "rounds": [
+    {
+     "round": 1,
+     "subject": "Autonomous escort for commercial ships",
+     "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nDry bulk was the most-attacked vessel type in the first half of 2026. Bulk and container together were about 60% of targeted tonnage. Your ships are the ones being hit.\n\nIf {{company}} is still routing through the Red Sea or the Gulf of Aden, we can escort those transits.\n\nThursday or Friday?\n\n{{sender}}"
+    },
+    {
+     "round": 2,
+     "subject": "Re: Dry bulk was the most-targeted type in H1 2026",
+     "body": "{{first_name}},\n\nShort follow-up with the number that made us take this seriously.\n\nWar risk cover in the Strait of Hormuz reached 7.5 to 10% of hull value in July 2026, against a peacetime baseline of 0.125%. On a hundred million dollar vessel that is a real line item, and it is already being paid.\n\nThe question we are chasing is whether any of it can be moved. If the answer at {{company}} is no, that is a useful answer too.\n\nTwenty minutes and the route data is yours. Early next week?\n\n{{sender}}"
+    },
+    {
+     "round": 3,
+     "subject": "Last note",
+     "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+    }
+   ]
+  },
+  {
+   "tier": 4,
+   "tier_name": "Tanker owners and managers",
+   "premise": "Five named incidents in the library involve tankers. High hull value, so the war risk premium bites hardest.",
+   "rounds": [
+    {
+     "round": 1,
+     "subject": "Autonomous escort for commercial ships",
+     "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nTankers carry the highest hull values through the worst water. The Red Sea attacks have been drone and missile led, and a hull your size is the target that justifies the missile.\n\nIf your tankers are still making that passage, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
+    },
+    {
+     "round": 2,
+     "subject": "Re: War risk on tanker transits",
+     "body": "{{first_name}},\n\nOne more, with the honest caveat attached.\n\nThe only published escort pricing we can find is from 2012: a convoy escort operation charged roughly $30,000 for one boat covering about four vessels for three to four days. That works out near $7,500 a vessel against $50,000 to $60,000 for an embarked armed team. Those are old numbers and the per-vessel split is our arithmetic, not a published finding.\n\nWhich is exactly why we want a current view from an owner rather than another report.\n\nWhich is exactly why I want a current read from an owner rather than another report. Early next week?\n\n{{sender}}"
+    },
+    {
+     "round": 3,
+     "subject": "Last note",
+     "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+    }
+   ]
+  },
+  {
+   "tier": 5,
+   "tier_name": "Charterers and cargo owners",
+   "premise": "On voyage, time and bareboat charters the charterer usually bears the war risk premium. Structurally the best-motivated buyer, and the one we know least about.",
+   "rounds": [
+    {
+     "round": 1,
+     "subject": "Autonomous escort for commercial ships",
+     "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nOn voyage and time charters the war risk premium sits with you, not the owner. When a passage lights up it is your money.\n\nYou can specify an escort in the fixture. If {{company}} moves cargo through the Red Sea, we can cover it.\n\nThursday or Friday?\n\n{{sender}}"
+    },
+    {
+     "round": 2,
+     "subject": "Re: Who pays for war risk on your fixtures",
+     "body": "{{first_name}},\n\nFollowing up once.\n\nThe reason I am asking you rather than an owner: if the charterer carries the premium, the charterer has the incentive to reduce it, but almost nothing in this market is sold to charterers. That looks like a gap to us and we may be wrong about it.\n\nIf you can tell me we are wrong, that is worth the email.\n\nIf you can tell me we are wrong about that, it is worth the twenty minutes. Early next week?\n\n{{sender}}"
+    },
+    {
+     "round": 3,
+     "subject": "Last note",
+     "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+    }
+   ]
+  }
+ ],
+ "gaps": [
+  "No sequence has been sent or tested. Reply rates are unknown.",
+  "No sender identity, postal address or opt-out mechanism is configured yet.",
+  "Tier 2 drafts reference vessels on which crew were killed or taken. Have a human read every one before it sends.",
+  "The drafts now lead with the site's own positioning. None has been reviewed by whoever owns the brand voice."
+ ],
+ "positioning": {
+  "source": "Taken from oddfox.ai, not written for this sequence.",
+  "source_ids": [
+   "oddfox-site"
+  ],
+  "site_h1": "Marine Security as a Service",
+  "site_line": "Our vessels escort commercial ships through high-risk passages, protecting them from piracy and drone attacks.",
+  "site_stance": "We allow commercial ships to pass through. We are not associated with any military, nor do we sell to military organizations.",
+  "threats_named_on_site": [
+   "Piracy",
+   "Drone attacks",
+   "Aerial threats",
+   "Maritime threats"
+  ],
+  "standard_intro": "We build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.",
+  "rule": "Every round 1 opens with this introduction verbatim, before saying why we are writing to that company.",
+  "corrections": [
+   "Earlier drafts described the product only against piracy and boarding. The site names drone and aerial threats first-class, and the Houthi campaign is drone and missile based, so the drafts were understating the product.",
+   "Earlier drafts omitted the commercial-only stance. It is a deliberate position on the site and a genuine differentiator: 45 of the 123 companies in market-players.json are military-only.",
+   "First version read as a corporate boilerplate: 'We provide Marine Security as a Service:', a legalistic military disclaimer and a line about being in stealth. Replaced with the mission in one sentence.",
+   "Removed 'Commercial operators only. We do not work with navies.' from the body. The constraint is enforced by who is on the list, not by a disclaimer in the email.",
+   "Cut 'I am writing to you because' from every round 1 and removed 'modelled'. Both are stock cold-email tells: the first announces the email rather than giving the reason, the second is desk language.",
+   "Round 1 close was apologetic and asked three open questions, which invites a reply instead of a meeting. Replaced with a concrete offer of the research plus a two-day close.",
+   "Round 1 was offering free research instead of selling escort, and undercut the product in the pitch paragraph. Rewritten to make the offer: first operators, one route, one ship.",
+   "Replaced the 'selecting the first operators' offer with a plain one: if you have ships on that route, we can escort them.",
+   "Cut 'If you would rather not, say so and I will leave it' from the tier 2 close. It handed them the exit before they reached the ask. The close is two words: Thursday or Friday?"
+  ],
+  "voice": [
+   "First person. Short sentences.",
+   "State the mission, then the reason for writing, then one ask. Never announce that you are writing.",
+   "Lead the second paragraph with the fact itself, not with why it is being mentioned.",
+   "Say the honest limitation before they have to ask for it.",
+   "Never more than about 150 words in round 1."
+  ],
+  "scope_note": "We sell to commercial entities only. That is a targeting rule, not a line in the email: the account list is filtered to commercial operators, so stating it in the copy is redundant and reads defensively.",
+  "banned": [
+   "I am writing to you / I am reaching out / I wanted to reach out — announcing the email instead of giving the reason.",
+   "modelled",
+   "as a Service, solutions, leading provider, best-in-class, cutting-edge",
+   "I hope this finds you well",
+   "Just following up / circling back / touching base",
+   "synergy, leverage, partner with you on",
+   "book a call / book time / grab 15 minutes",
+   "let me know if you are interested",
+   "We are early (as an opener — apologising for yourself)",
+   "offering to 'bring what we hold' or share research in round 1",
+   "hedging the product in the same paragraph that pitches it",
+   "selecting the first operators / first cohort / limited slots — invented scarcity",
+   "If you would rather not… / no pressure / apologies for the intrusion — offering the exit inside the ask"
+  ],
+  "close": {
+   "rule": "Round 1 and 2 close by offering something they keep, then naming two days. Never say 'book a call', 'book time', 'grab 15 minutes' or 'let me know if you are interested'.",
+   "why": "The asset is real: a sourced attack record, the ownership chains and a 39-platform comparison. Leading with what they get makes the meeting worth taking even if they never buy.",
+   "pattern": "[what they get] + [Thursday or Friday?]"
+  },
+  "selling": {
+   "rule": "Round 1 offers the service in one plain sentence: if you have ships on that route, we can escort them.",
+   "structure": "[what we do] + [why this company, one specific fact] + [the offer, one sentence] + [two days]",
+   "rejected": [
+    "Offering to bring our research. Gives away the asset and makes us sound like consultants.",
+    "'We are selecting the first operators we escort.' Fake scarcity, and awkward.",
+    "'One route, one ship, and you see what it does.' Hedging the offer while making it."
+   ],
+   "hedging": "The honest limitation stays in round 2. It does not belong in the opening pitch."
+  },
+  "warm_rule": "Where a target is a first-degree connection, it is a short LinkedIn message from the founder asking for their judgment. Never the cold email sequence. Where a mutual connection exists, ask for the introduction before messaging directly."
+ },
+ "open_question_for_founder": "Round 1 now states flatly: 'we can escort them'. That is a capability claim and nothing in this library backs it. Before any send, confirm what we can actually commit to today — a live escorted transit, a paid pilot, or a design-partner conversation — because a ship manager may say yes on Thursday."
+}

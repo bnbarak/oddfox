@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Odd Fox — System Overview</title>
+<style>
+@page{size:A4;margin:0}
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --paper:#f1f0ec;--ink:#0b0b0b;--grey:#6e6e6e;--rule:#c7c6c1;--red:#d8462c;
+  --sans:HelveticaNowDisplay,Helvetica,Arial,sans-serif;
+}
+html,body{margin:0;padding:0;background:#000}
+body{font-family:var(--sans);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{position:relative;width:210mm;height:297mm;overflow:hidden;background:var(--paper);color:var(--ink);
+  page-break-after:always;display:flex;flex-direction:column;
+  clip-path:polygon(0 0, calc(100% - 16mm) 0, 100% 16mm, 100% 100%, 0 100%)}
+.page:last-child{page-break-after:auto}
+.pad{padding:0 16mm}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14mm 16mm 0}
+.brand{display:flex;align-items:center;gap:8px}
+.brand svg{width:17px;height:19px;display:block}
+.brand b{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:700}
+.tag{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
+h1{margin:12mm 0 0;font-size:34px;line-height:1.02;font-weight:700;letter-spacing:-.022em}
+h2{position:relative;margin:10mm 0 0;font-size:29px;line-height:1.05;font-weight:700;letter-spacing:-.022em;max-width:19ch}
+.kicker{position:relative;margin:5mm 0 0;font-size:11.5px;line-height:1.6;color:var(--grey);max-width:74ch}
+
+/* vessel — shadow only, soft and roundedised */
+.stage{position:relative;height:84mm;margin:3mm 0 0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage .field{position:absolute;left:0;right:0;bottom:-6mm;width:100%;height:62mm;object-fit:cover;object-position:center bottom}
+.stage .craft{position:relative;z-index:2;filter:blur(7px);opacity:.82}
+.stage .craft2{position:absolute;z-index:2;filter:blur(15px);opacity:.5}
+.stage .ground{position:absolute;z-index:1;left:50%;transform:translateX(-50%);bottom:20mm;width:104mm;height:8mm;
+  border-radius:50%;background:radial-gradient(ellipse at center, rgba(11,11,11,.26) 0%, rgba(11,11,11,.10) 44%, rgba(11,11,11,0) 74%);filter:blur(6px)}
+.stamp{position:absolute;right:16mm;bottom:1mm;z-index:3;font-size:7.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
+
+.row{border-top:1px solid var(--rule);padding:3.4mm 0 3mm}
+.row:last-child{border-bottom:1px solid var(--rule)}
+.row .k{font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.row .v{font-size:12px;color:var(--grey);margin-top:1.2mm;line-height:1.45}
+
+/* dark graphic panels */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:6mm}
+.panel{background:#05070a;overflow:hidden}
+.panel img{width:100%;display:block}
+.cl{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);margin-top:2.5mm}
+.pnote{font-size:9.5px;line-height:1.45;color:var(--grey);margin:1.6mm 0 0}
+
+/* full-bleed map */
+.mapfull{position:relative;width:210mm;height:140mm;margin:8mm 0 0;background:#04070a;overflow:hidden}
+.mapfull .ov{position:absolute;inset:0;width:100%;height:100%;display:block}
+.mapfull img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(1.2)}
+
+.threats{display:flex;margin-top:7mm;border-top:1px solid var(--rule)}
+.threats div{flex:1;padding:4mm 0 0;font-size:12px;font-weight:700;letter-spacing:-.02em}
+.foot{margin-top:auto;padding:0 16mm 11mm;display:flex;justify-content:space-between;align-items:flex-end;gap:8mm}
+.lm{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey)}
+.lm a{color:inherit;text-decoration:none;border-bottom:.4px solid rgba(11,11,11,.3);padding-bottom:1px}
+.disc{font-size:7.2px;line-height:1.6;color:var(--grey);max-width:76mm;text-align:right}
+</style></head><body>
+
+<!-- ================= PAGE 1 ================= -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><svg viewBox="0 0 32 36" fill="none"><path d="M16 2 L28.5 6.6 V17.6 C28.5 25.8 22.9 31.4 16 34 C9.1 31.4 3.5 25.8 3.5 17.6 V6.6 Z" fill="none" stroke="#0b0b0b" stroke-width="1.4"/><path d="M6.4 18.6 L11.8 17.1 L11.8 13.9 H14.2 L17.4 15.6 L26.2 13.2 L20.2 21.4 H7.6 Z" fill="#0b0b0b"/></svg><b>Odd Fox</b></div>
+    <div class="tag">General System Description</div>
+  </div>
+  <div class="pad">
+    <h1>Marine Security<br>as a Service</h1>
+    <p class="kicker">Autonomously escort and protect commercial vessels. Our vessels escort commercial ships through high-risk passages, protecting them from piracy and drone attacks.</p>
+  </div>
+
+  <div class="stage">
+    <img class="field" src="field.svg" alt="">
+    <div class="ground"></div>
+    <svg class="craft2" width="620" height="200" viewBox="0 0 740 210" fill="none"><use href="#hull"/></svg>
+    <svg class="craft" width="620" height="200" viewBox="0 0 740 210" fill="none">
+      <g id="hull" fill="#0b0b0b">
+        <path d="M62 126 C74 110 104 104 150 103 L596 96 C636 92 668 82 698 72 C708 80 700 100 674 124 C652 145 626 154 596 155 L124 156 C90 156 68 141 62 126 Z"/>
+        <path d="M262 102 C270 78 292 60 324 57 L432 55 C458 57 474 76 482 100 C440 104 320 106 262 102 Z"/>
+        <path d="M358 58 C358 44 360 34 364 28 C370 34 372 44 372 58 Z"/>
+        <path d="M334 30 C348 20 382 20 396 30 C382 38 348 38 334 30 Z"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="pad">
+    <div class="row"><div class="k">Protection</div><div class="v">Commercial ships transiting high-risk waters</div></div>
+    <div class="row"><div class="k">Role</div><div class="v">Escort through the dangerous passages, alongside the ship, from entry to exit</div></div>
+    <div class="row"><div class="k">Navigation</div><div class="v">Autonomous. Unmanned — no crew aboard, no crew at risk</div></div>
+    <div class="row"><div class="k">Sensing</div><div class="v">Marine radar and multi-sensor watch — surface and aerial threats tracked and classified on approach</div></div>
+    <div class="row"><div class="k">Effectors</div><div class="v">Defence drones and torpedoes, engaged at standoff distance</div></div>
+    <div class="row"><div class="k">Endurance</div><div class="v">Full transit of the high-risk zone, entry to exit</div></div>
+    <div class="row"><div class="k">Deployment</div><div class="v">Cluster-stationed at maritime choke points; dispatched to the transiting ship</div></div>
+  </div>
+
+  <div class="foot">
+    <div class="lm">Currently in stealth · Brooklyn, NY · <a href="https://oddfox.ai">oddfox.ai</a></div>
+    <div class="disc">We allow commercial ships to pass through. We are not associated with any military, nor do we sell to military organizations.</div>
+  </div>
+</section>
+
+<!-- ================= PAGE 2 ================= -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><svg viewBox="0 0 32 36" fill="none"><path d="M16 2 L28.5 6.6 V17.6 C28.5 25.8 22.9 31.4 16 34 C9.1 31.4 3.5 25.8 3.5 17.6 V6.6 Z" fill="none" stroke="#0b0b0b" stroke-width="1.4"/><path d="M6.4 18.6 L11.8 17.1 L11.8 13.9 H14.2 L17.4 15.6 L26.2 13.2 L20.2 21.4 H7.6 Z" fill="#0b0b0b"/></svg><b>Odd Fox</b></div>
+    <div class="tag">Detect &amp; Intercept</div>
+  </div>
+  <div class="pad">
+    <h2 style="max-width:31ch">Autonomously escort and protect commercial vessels.</h2>
+    <p class="kicker">Contacts are classified on approach and engaged inside the intercept envelope — never alongside the hull.</p>
+
+    <div class="panels" style="margin-top:6mm">
+      <div>
+        <div class="panel"><img src="g-radar.svg" alt=""></div>
+        <div class="cl">Detection and intercept envelope</div>
+        <p class="pnote">Radar and multi-sensor watch, held continuously around the escorted ship.</p>
+      </div>
+      <div>
+        <div class="panel"><img src="g-effectors.svg" alt=""></div>
+        <div class="cl">Effectors</div>
+        <p class="pnote">Defence drones engage aerial threats; torpedoes run out to hostile craft.</p>
+      </div>
+    </div>
+
+
+    <div class="panel" style="margin-top:6mm"><img src="g-stern.svg" alt=""></div>
+  </div>
+  <div class="foot">
+    <div class="lm">Currently in stealth · Brooklyn, NY · <a href="https://oddfox.ai">oddfox.ai</a></div>
+    <div class="disc">We allow commercial ships to pass through. We are not associated with any military, nor do we sell to military organizations.</div>
+  </div>
+</section>
+
+<!-- ================= PAGE 3 ================= -->
+<section class="page">
+  <div class="top">
+    <div class="brand"><svg viewBox="0 0 32 36" fill="none"><path d="M16 2 L28.5 6.6 V17.6 C28.5 25.8 22.9 31.4 16 34 C9.1 31.4 3.5 25.8 3.5 17.6 V6.6 Z" fill="none" stroke="#0b0b0b" stroke-width="1.4"/><path d="M6.4 18.6 L11.8 17.1 L11.8 13.9 H14.2 L17.4 15.6 L26.2 13.2 L20.2 21.4 H7.6 Z" fill="#0b0b0b"/></svg><b>Odd Fox</b></div>
+    <div class="tag">Fleet &amp; Coverage</div>
+  </div>
+  <div class="pad">
+    <h2>Built for high-risk passages.</h2>
+    <p class="kicker">Odd Fox holds vessel clusters at the maritime choke points where piracy and drone attacks concentrate. An escort is dispatched from the nearest cluster, runs the passage with the ship, and rejoins the cluster on the far side.</p>
+  </div>
+
+  <div class="mapfull"><img src="../assets/map.png" alt=""><img class="ov" src="g-map-overlay.svg" alt=""></div>
+
+  <div class="pad">
+    <div class="cl">Fleet clusters — high-risk passages</div>
+    <div class="threats"><div>Piracy.</div><div>Drone attacks.</div><div>Aerial threats.</div><div>Maritime threats.</div></div>
+  </div>
+
+  <div class="foot">
+    <div class="lm">Currently in stealth · Brooklyn, NY · <a href="https://oddfox.ai">oddfox.ai</a></div>
+    <div class="disc">We allow commercial ships to pass through. We are not associated with any military, nor do we sell to military organizations.</div>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,273 @@
+{
+ "dataset": "attack-data-validation",
+ "title": "Are the attack numbers real?",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "question": "The IMB series is the backbone of our threat case. It is one body, with voluntary reporting. Does it hold up?",
+ "cross_check": {
+  "method": "Compared the IMB published annual totals against the Crime at Sea dataset, an independently geocoded record of 7,511 IMB-reported attacks from 1993 to 2020 held in piracy-history.json.",
+  "years_compared": 11,
+  "largest_annual_difference": 6,
+  "table": [
+   {
+    "year": 2010,
+    "crime_at_sea": 445,
+    "imb_annual": 445,
+    "difference": 0
+   },
+   {
+    "year": 2011,
+    "crime_at_sea": 438,
+    "imb_annual": 439,
+    "difference": -1
+   },
+   {
+    "year": 2012,
+    "crime_at_sea": 296,
+    "imb_annual": 297,
+    "difference": -1
+   },
+   {
+    "year": 2013,
+    "crime_at_sea": 264,
+    "imb_annual": 264,
+    "difference": 0
+   },
+   {
+    "year": 2014,
+    "crime_at_sea": 243,
+    "imb_annual": 245,
+    "difference": -2
+   },
+   {
+    "year": 2015,
+    "crime_at_sea": 250,
+    "imb_annual": 246,
+    "difference": 4
+   },
+   {
+    "year": 2016,
+    "crime_at_sea": 186,
+    "imb_annual": 191,
+    "difference": -5
+   },
+   {
+    "year": 2017,
+    "crime_at_sea": 186,
+    "imb_annual": 180,
+    "difference": 6
+   },
+   {
+    "year": 2018,
+    "crime_at_sea": 202,
+    "imb_annual": 201,
+    "difference": 1
+   },
+   {
+    "year": 2019,
+    "crime_at_sea": 159,
+    "imb_annual": 162,
+    "difference": -3
+   },
+   {
+    "year": 2020,
+    "crime_at_sea": 190,
+    "imb_annual": 195,
+    "difference": -5
+   }
+  ],
+  "verdict": "The two agree within six incidents in every overlapping year. The series is internally consistent and the decline is real, not a reporting artefact within IMB's own numbers.",
+  "what_this_does_not_prove": [
+   "Both derive from IMB reporting, so a systematic under-report would affect both equally.",
+   "It says nothing about incidents never reported to IMB at all.",
+   "The series ends in 2020; 2021 onward is not cross-checked."
+  ],
+  "source_ids": [
+   "crime-at-sea",
+   "imb-annual-reports"
+  ]
+ },
+ "longer_history": {
+  "note": "The 2010 peak was not the historical peak. Reported attacks were higher in 2000.",
+  "series": [
+   {
+    "year": 1993,
+    "incidents": 101
+   },
+   {
+    "year": 1994,
+    "incidents": 95
+   },
+   {
+    "year": 1995,
+    "incidents": 166
+   },
+   {
+    "year": 1996,
+    "incidents": 175
+   },
+   {
+    "year": 1997,
+    "incidents": 232
+   },
+   {
+    "year": 1998,
+    "incidents": 186
+   },
+   {
+    "year": 1999,
+    "incidents": 299
+   },
+   {
+    "year": 2000,
+    "incidents": 469
+   },
+   {
+    "year": 2001,
+    "incidents": 335
+   },
+   {
+    "year": 2002,
+    "incidents": 369
+   },
+   {
+    "year": 2003,
+    "incidents": 440
+   },
+   {
+    "year": 2004,
+    "incidents": 314
+   },
+   {
+    "year": 2005,
+    "incidents": 277
+   },
+   {
+    "year": 2006,
+    "incidents": 236
+   },
+   {
+    "year": 2007,
+    "incidents": 261
+   },
+   {
+    "year": 2008,
+    "incidents": 293
+   },
+   {
+    "year": 2009,
+    "incidents": 404
+   },
+   {
+    "year": 2010,
+    "incidents": 445
+   },
+   {
+    "year": 2011,
+    "incidents": 438
+   },
+   {
+    "year": 2012,
+    "incidents": 296
+   },
+   {
+    "year": 2013,
+    "incidents": 264
+   },
+   {
+    "year": 2014,
+    "incidents": 243
+   },
+   {
+    "year": 2015,
+    "incidents": 250
+   },
+   {
+    "year": 2016,
+    "incidents": 186
+   },
+   {
+    "year": 2017,
+    "incidents": 186
+   },
+   {
+    "year": 2018,
+    "incidents": 202
+   },
+   {
+    "year": 2019,
+    "incidents": 159
+   },
+   {
+    "year": 2020,
+    "incidents": 190
+   }
+  ],
+  "peak_year": 2000,
+  "peak_value": 469,
+  "reading": "Attacks ran at 400-470 around 2000 and again in 2009-2011, with a trough between. This is a cyclical series with two peaks, not a one-way decline. That materially weakens the 'piracy is a solved problem' reading and it also weakens any claim of a permanent structural fall.",
+  "source_ids": [
+   "crime-at-sea"
+  ]
+ },
+ "where_attacks_happen": {
+  "finding": "Half of all recorded attacks happened to a ship at anchor, not under way.",
+  "n": 6595,
+  "breakdown": [
+   {
+    "status": "anchored",
+    "count": 3262,
+    "pct": 49.5
+   },
+   {
+    "status": "steaming",
+    "count": 2598,
+    "pct": 39.4
+   },
+   {
+    "status": "berthed",
+    "count": 653,
+    "pct": 9.9
+   },
+   {
+    "status": "underway",
+    "count": 56,
+    "pct": 0.8
+   },
+   {
+    "status": "stationary",
+    "count": 14,
+    "pct": 0.2
+   },
+   {
+    "status": "drifting",
+    "count": 10,
+    "pct": 0.2
+   },
+   {
+    "status": "moored",
+    "count": 2,
+    "pct": 0.0
+   }
+  ],
+  "stationary_pct": 59.6,
+  "under_way_pct": 40.4,
+  "why_it_matters": "An escort protects a ship under way in a corridor. That is 40.4% of recorded attacks. The other 59.6% happened at anchor, berthed or moored, where an escort does nothing. This is the single most important number for scoping the product, and it cuts the addressable share of the threat by more than half before any other filter.",
+  "corroboration": "Independently corroborated by IMB H1 2026: 15 of the 32 successful attacks were on vessels at anchor. Two datasets thirty years apart agree.",
+  "source_ids": [
+   "crime-at-sea",
+   "imb-h1-2026"
+  ]
+ },
+ "implication_for_the_vc_answer": [
+  "The decline is real and survives an independent cross-check. Do not try to argue it away.",
+  "But it is cyclical, not structural. 2000 was higher than 2010, and the trough between them ended.",
+  "The stronger argument is composition, not count: fewer incidents, higher success rate, and a resurgence in 2024-2026.",
+  "Only about 40% of historical attacks are addressable by an escort at all. Any TAM that uses total incidents is overstated by more than a factor of two."
+ ],
+ "gaps": [
+  "Crime at Sea ends in 2020. No independent cross-check exists for 2021 onward.",
+  "No source yet on why the decline happened, which is the causal question still running.",
+  "Under-reporting rate still unknown, so all of these are a floor."
+ ]
+}

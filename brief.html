@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Odd Fox — System Overview</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#04070a">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<style>
+:root{
+  --void:#04070a;
+  --paper:#ffffff; --mist:#8c8c8c; --fog:#6f6f6f;
+  --line:rgba(255,255,255,.16); --line-soft:rgba(255,255,255,.08);
+  --sans:HelveticaNowDisplay,Helvetica,Arial,sans-serif;
+  --pad:clamp(20px,5vw,68px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;min-height:100vh;min-height:100svh;background:var(--void);color:var(--paper);
+  font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.5;letter-spacing:-.01em;
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;
+}
+::selection{background:var(--paper);color:var(--void)}
+a{color:inherit;text-decoration:none}
+h1,p{margin:0}
+
+body::after{
+  content:"";position:fixed;inset:0;z-index:9;pointer-events:none;opacity:.038;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:140px 140px;
+}
+
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:clamp(18px,2.4vw,30px) var(--pad);
+}
+.lockup{display:inline-flex;align-items:center;color:var(--paper)}
+.mark{width:clamp(26px,2.1vw,31px);height:auto;aspect-ratio:32/36;display:block;flex:none}
+.nav a.link{
+  font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--mist);transition:color .35s var(--ease);
+}
+.nav a.link:hover{color:var(--paper)}
+
+main{flex:1;display:flex;align-items:center;padding:clamp(48px,10vh,120px) var(--pad)}
+.gate{width:100%;max-width:440px}
+.eyebrow{font-weight:500;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--fog)}
+h1{
+  margin-top:clamp(20px,2.6vw,30px);
+  font-size:clamp(1.9rem,4.4vw,2.9rem);line-height:1.06;letter-spacing:-.035em;font-weight:400;
+}
+.sub{margin-top:18px;font-size:1rem;line-height:1.6;color:var(--mist);max-width:34ch}
+
+.field{margin:clamp(34px,5vw,46px) 0 0}
+.field label{
+  display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--fog);margin-bottom:12px;transition:color .35s var(--ease);
+}
+.field input{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
+  color:var(--paper);font-family:var(--sans);font-size:1.06rem;letter-spacing:.08em;
+  padding:0 0 12px;border-radius:0;transition:border-color .35s var(--ease);
+}
+.field input:focus{outline:0;border-bottom-color:var(--paper)}
+.field:focus-within label{color:var(--mist)}
+
+.btn{
+  display:inline-flex;align-items:center;gap:14px;margin-top:38px;
+  padding:17px 26px;border:1px solid var(--line);background:transparent;color:var(--paper);
+  font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  cursor:pointer;transition:border-color .4s var(--ease),background-color .4s var(--ease),opacity .4s var(--ease);
+}
+.btn svg{transition:transform .4s var(--ease)}
+.btn:hover:not(:disabled){border-color:rgba(255,255,255,.5);background-color:rgba(255,255,255,.05)}
+.btn:hover:not(:disabled) svg{transform:translateX(5px)}
+.btn:focus-visible{outline:1px solid var(--paper);outline-offset:3px}
+.btn:disabled{opacity:.45;cursor:default}
+
+.note{
+  margin-top:22px;min-height:1.4em;
+  font-size:11px;letter-spacing:.06em;color:var(--fog);
+  opacity:0;transition:opacity .4s var(--ease);
+}
+.note.show{opacity:1}
+.note.bad{color:var(--paper)}
+
+.done{animation:rise .9s var(--ease) both}
+.done h1{margin-top:clamp(20px,2.6vw,30px)}
+.done .sub span{color:var(--paper)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+footer{
+  border-top:1px solid var(--line-soft);padding:clamp(32px,4vw,44px) var(--pad);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--fog);
+  display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="/" class="lockup" aria-label="Odd Fox"><svg class="mark" viewBox="0 0 32 36" fill="none" aria-hidden="true"><path d="M16 2 L28.5 6.6 V17.6 C28.5 25.8 22.9 31.4 16 34 C9.1 31.4 3.5 25.8 3.5 17.6 V6.6 Z" fill="var(--void)" stroke="currentColor" stroke-opacity=".55" stroke-width="1.2"/><path d="M6.4 18.6 L11.8 17.1 L11.8 13.9 H14.2 L17.4 15.6 L26.2 13.2 L20.2 21.4 H7.6 Z" fill="currentColor"/></svg></a>
+  <a href="/#contact" class="link">Contact</a>
+</header>
+
+<main>
+  <div class="gate">
+
+    <form id="gate">
+      <p class="eyebrow">Restricted</p>
+      <h1 id="title">System Overview</h1>
+      <p class="sub">Enter the password you were given to download the overview.</p>
+
+      <div class="field">
+        <label for="pw">Password</label>
+        <input id="pw" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+      </div>
+
+      <button class="btn" id="go" type="submit">
+        <span id="go-label">Unlock</span>
+        <svg width="16" height="7" viewBox="0 0 16 7" fill="none" aria-hidden="true"><path d="M0 3.5h14M11 .5l3 3-3 3" stroke="currentColor"/></svg>
+      </button>
+
+      <p class="note" id="note" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="done" id="done" hidden>
+      <p class="eyebrow">Unlocked</p>
+      <h1>Here it is.</h1>
+      <p class="sub">The download should have started. <span id="again-line">If it didn't:</span></p>
+      <a class="btn" id="save" download>
+        <span>Save the PDF</span>
+        <svg width="16" height="7" viewBox="0 0 16 7" fill="none" aria-hidden="true"><path d="M0 3.5h14M11 .5l3 3-3 3" stroke="currentColor"/></svg>
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <span>Odd Fox</span>
+  <span>Confidential</span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  // The filename the reader receives. There is no PDF URL in this file on
+  // purpose — it is worked out from the password, so viewing source gets you
+  // neither the password nor the file. See tools/gate-pdf.mjs.
+  var DOWNLOAD_NAME = "Odd Fox \u2014 System Overview.pdf";
+
+  var form  = document.getElementById("gate");
+  var done  = document.getElementById("done");
+  var pw    = document.getElementById("pw");
+  var go    = document.getElementById("go");
+  var label = document.getElementById("go-label");
+  var note  = document.getElementById("note");
+  var save  = document.getElementById("save");
+
+  function say(msg){
+    note.textContent = msg;
+    note.classList.add("show");
+  }
+  function busy(on){
+    go.disabled = on;
+    label.textContent = on ? "Checking" : "Unlock";
+  }
+
+  if (!(window.crypto && crypto.subtle)) {
+    say("This browser can't open it. Try Safari, Chrome or Firefox.");
+    go.disabled = true;
+    return;
+  }
+
+  // Same normalisation as tools/gate-pdf.mjs, so case and stray spaces are fine.
+  function pathFor(pass){
+    var clean = pass.trim().toLowerCase().replace(/\s+/g, " ");
+    return crypto.subtle.digest("SHA-256", new TextEncoder().encode(clean)).then(function(buf){
+      var hex = "";
+      new Uint8Array(buf).forEach(function(b){ hex += ("0" + b.toString(16)).slice(-2); });
+      return "/assets/d/" + hex.slice(0, 32) + ".pdf";
+    });
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!pw.value.trim()) { say("Enter the password."); pw.focus(); return; }
+
+    note.classList.remove("show");
+    busy(true);
+
+    pathFor(pw.value).then(function(url){
+      return fetch(url, {cache:"no-cache"});
+    }).then(function(r){
+      if (!r.ok) throw new Error("nope");
+      return r.blob();
+    }).then(function(blob){
+      deliver(blob);
+    }).catch(function(){
+      busy(false);
+      say("That password doesn't open it.");
+      pw.select();
+    });
+  });
+
+  function deliver(blob){
+    var url = URL.createObjectURL(blob.type === "application/pdf" ? blob : new Blob([blob], {type:"application/pdf"}));
+    save.href = url;
+    save.setAttribute("download", DOWNLOAD_NAME);
+
+    form.hidden = true;
+    done.hidden = false;
+
+    // Start the download once; the button stays for a second copy.
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = DOWNLOAD_NAME;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+})();
+</script>
+</body>
+</html>

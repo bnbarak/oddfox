@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/attack-log.schema.json",
+  "title": "Attack log",
+  "type": "object",
+  "required": ["dataset", "entries", "feeds"],
+  "properties": {
+    "dataset": { "const": "attack-log" },
+    "coverage_note": { "type": "string", "description": "Required in spirit: this log is a sample, and saying so prevents it being mistaken for a complete record." },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "reported_by", "event", "outcome", "source_ids"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "date": { "type": "string", "description": "ISO date, or a period like 2026-H1 when the source only gives one." },
+          "reported_by": { "type": "string", "description": "UKMTO, IMB PRC, ReCAAP ISC, MDAT-GoG, MARAD." },
+          "ref": { "type": "string", "description": "The reporting body's own reference, e.g. UKMTO Warning 071-26. Lets an entry be traced back to the primary PDF." },
+          "area_id": { "$ref": "common.schema.json#/$defs/id" },
+          "position": { "type": "string" },
+          "vessel": { "type": "string" },
+          "attackers": { "type": "string" },
+          "closest_approach_m": { "type": "number" },
+          "event": { "type": "string" },
+          "outcome": { "enum": ["hijacked", "hijacked, held", "boarded", "repelled", "not boarded", "boarding attempt failed", "crew kidnapped", "nil return"] },
+          "armed_team_aboard": { "type": "boolean", "description": "Whether PCASP were aboard and engaged. The closest thing available to an efficacy signal for embarked security." },
+          "why_it_matters": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+    "patterns_2026_h1": { "type": "object" },
+    "feeds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "url", "cadence", "area", "machine_readable"],
+        "properties": {
+          "name": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "format": { "type": "string" },
+          "cadence": { "type": "string" },
+          "area": { "type": "string" },
+          "machine_readable": { "type": "boolean" },
+          "access": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

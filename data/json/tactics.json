@@ -1,0 +1,309 @@
+{
+  "$schema": "../schema/tactics.schema.json",
+  "dataset": "tactics",
+  "title": "How ships are actually attacked",
+  "description": "Four distinct threat models operate at sea, and they share almost nothing. Confusing them is the most common error in maritime security marketing: the countermeasure that stops a man with a ladder does nothing against a drone boat, and vice versa. Each model below is separated by attacker, approach, weapon, intent and what actually defeats it.",
+  "updated": "2026-09-02",
+  "threat_models": [
+    {
+      "id": "somali-pag",
+      "name": "Somali Pirate Action Group",
+      "intent": "Hijack the ship and hold ship and crew together for ransom",
+      "status_2026": "Actively resurgent. Attacking and seizing vessels at a rate not seen since 2011.",
+      "organisation": "Pirate Action Groups (PAGs) operating from motherships, enabling operations far offshore",
+      "platforms": [
+        {
+          "type": "Attack skiff",
+          "detail": "Small high-speed open boat, up to 25 knots. Usually two or more per attack."
+        },
+        {
+          "type": "Open whaler",
+          "detail": "Carries significant fuel, often towing one or more attack skiffs."
+        },
+        {
+          "type": "Mothership",
+          "detail": "Most commonly dhows, but also hijacked fishing vessels and merchant ships. Carries pirates, stores, fuel and skiffs. Where size allows, skiffs are carried aboard and camouflaged. The original crew is often held aboard as hostages."
+        }
+      ],
+      "range": "Motherships extend skiff range far into the Indian Ocean and are far less weather-limited. Historic reach beyond 1,000 nautical miles; the Hellas Aphrodite was boarded roughly 700 nautical miles off Somalia in November 2025.",
+      "approach": "From the quarter or the stern — the blind, low, slow part of the ship",
+      "timing": "Any time, day or night, but experience shows dawn and dusk are more likely",
+      "weapons": [
+        "Small arms",
+        "Rocket-propelled grenades"
+      ],
+      "weapon_use": "Fired at the bridge and accommodation to intimidate the Master into slowing or stopping, not to sink the ship",
+      "boarding_method": "Long lightweight ladders, knotted climbing ropes, or long hooked poles up the ship's side. Once aboard they head for the bridge and demand the ship slows so the rest can board.",
+      "treatment_of_crew": "Crew normally kept aboard with the ship while ransom is negotiated. Occasionally separated by nationality and taken ashore. It is in the pirates' interest to keep captives alive, though intimidation and torture have occurred, and some captivities have lasted years.",
+      "vulnerability_factors": [
+        "Low freeboard",
+        "Low speed",
+        "Ocean transits far from response",
+        "No embarked security team"
+      ],
+      "defeated_by": [
+        "Enhanced lookout and early detection",
+        "Speed and freeboard",
+        "Evasive manoeuvring",
+        "Razor wire and physical barriers",
+        "Water spray and foam monitors",
+        "Citadel",
+        "Armed security team",
+        "Naval response within range"
+      ],
+      "source_ids": [
+        "bmp5",
+        "imb-h1-2026",
+        "lwj-2026-06-gulf-of-aden",
+        "gcaptain-hellas-aphrodite"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "houthi-standoff",
+      "name": "Houthi stand-off attack",
+      "intent": "Damage or sink the ship, or deter the trade. Not to board and not to ransom.",
+      "status_2026": "Reduced from the 2024 peak but the capability and the risk classification remain",
+      "organisation": "State-adjacent armed group with a stated targeting criterion based on ownership, management or port-call affiliation",
+      "platforms": [
+        {
+          "type": "Anti-ship missile",
+          "detail": "Long range, accurate and powerful. Ships other than the intended target have been hit when the controller misidentified or the missile homed on the wrong return."
+        },
+        {
+          "type": "One-way attack UAV",
+          "detail": "Used against the Eternity C among others."
+        },
+        {
+          "type": "Uncrewed surface vessel",
+          "detail": "Remotely operated explosive boat. Sank the Tutor in June 2024."
+        },
+        {
+          "type": "Manned assault boat",
+          "detail": "Small arms and RPGs from speed boats, as used against the Magic Seas."
+        },
+        {
+          "type": "Helicopter",
+          "detail": "The Galaxy Leader was boarded from a Mil Mi-17 in November 2023 — the only such case."
+        },
+        {
+          "type": "Sea mine",
+          "detail": "Used to deny access to Yemeni ports. Usually tethered, but can break free and drift into lanes. Merchant ships are not the target."
+        }
+      ],
+      "approach": "Stand-off. The attacker never needs to come alongside.",
+      "weapons": [
+        "Anti-ship missiles",
+        "UAVs",
+        "USVs",
+        "Small arms",
+        "RPGs",
+        "Sea mines"
+      ],
+      "targeting_logic": "Affiliation, not opportunity. The Eternity C and Magic Seas were reportedly selected over prior Israeli port calls or ownership and ship-manager affiliations. A ship cannot harden its way out of who owns it.",
+      "vulnerability_factors": [
+        "Ownership or management affiliation",
+        "Prior port calls",
+        "Transit through Bab el-Mandeb within weapon range"
+      ],
+      "defeated_by": [
+        "Routing outside weapon range",
+        "Naval air defence",
+        "Hard-kill or soft-kill counter-UAS and counter-USV"
+      ],
+      "not_defeated_by": [
+        "Razor wire",
+        "Water cannon",
+        "Citadel",
+        "Armed guards on deck",
+        "Speed"
+      ],
+      "note": "BMP itself says the difference matters: attacks by extremists may be more determined because the attackers may be willing to risk their lives, and against a water-borne IED the mitigation measures available to a merchant ship are explicitly limited.",
+      "source_ids": [
+        "bmp5",
+        "wikipedia-houthi-attacks",
+        "reuters-eternity-c-crew"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "se-asia-robbery",
+      "name": "Southeast Asian armed robbery",
+      "intent": "Steal and leave. Not to take the ship, not to take the crew.",
+      "status_2026": "Sharply down after enforcement — 12 IMB-reported Singapore Straits boardings in H1 2026 against 57 in H1 2025",
+      "organisation": "Small opportunistic groups, typically two to five perpetrators, non-confrontational, hit-and-run",
+      "platforms": [
+        {
+          "type": "Small boat",
+          "detail": "Approaches from astern in a busy, restricted, slow-steaming lane."
+        }
+      ],
+      "approach": "From astern, mostly after dark, while the ship is underway in a traffic lane or at anchor",
+      "timing": "Mostly after dark",
+      "weapons": [
+        "Knives",
+        "Increasingly firearms — Singapore Straits gun reports rose from 8 in 2024 to 27 in 2025"
+      ],
+      "what_they_take": "Engine spare parts, scrap metal, store contents. Perpetrators are frequently sighted in or near the engine room.",
+      "target_profile": "Larger, slower vessels. In the Malacca and Singapore Straits in H1 2026: 62% bulk carriers, 29% barges under tow, 9% tankers.",
+      "vulnerability_factors": [
+        "Slow steaming in restricted lanes",
+        "Low freeboard",
+        "Barges under tow",
+        "Unlit access points",
+        "Anchor watch lapses"
+      ],
+      "defeated_by": [
+        "Visible countermeasures on deck",
+        "Deck lighting and randomised patrols",
+        "Securing store lockers and hawse pipes",
+        "Littoral law enforcement — two Indonesian Marine Police arrests in July 2025 cut the regional count by roughly three quarters"
+      ],
+      "source_ids": [
+        "recaap-hy-2026",
+        "imb-annual-2025",
+        "imb-h1-2026"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gog-kfr",
+      "name": "Gulf of Guinea kidnap for ransom",
+      "intent": "Take senior crew ashore and ransom the people, not the ship",
+      "status_2026": "Heavily suppressed — only two IMB-reported incidents in H1 2026, against a historic position as the world's primary kidnapping hotspot",
+      "organisation": "Organised KFR groups operating from the Niger Delta",
+      "platforms": [
+        {
+          "type": "Fast boat",
+          "detail": "Capable of operating far offshore — one 2026-reported case saw six pirates board about 115 nautical miles southeast of Lomé."
+        }
+      ],
+      "approach": "Offshore interception, boarding, then withdrawal by fast boat with hostages",
+      "who_they_take": "Senior crew — Master and Chief Engineer — and any Western or foreign crew members. Hostages are normally taken ashore in the Niger Delta and ransomed.",
+      "severity": "In 2025 this region accounted for 23 of the world's 25 kidnapped crew across just four incidents.",
+      "defeated_by": [
+        "Regional naval presence",
+        "Nigeria's Deep Blue Project and coordinated regional initiatives",
+        "Citadel procedures that keep senior officers off the deck"
+      ],
+      "reporting_body": "MDAT-GoG, operated by the French and UK navies. Note MDAT-GoG does not coordinate responses to vessels under attack — it is an information centre, not a rescue service.",
+      "source_ids": [
+        "imb-annual-2025",
+        "imb-h1-2026",
+        "marad-2026-009-gog"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "defence_layers": {
+    "framework": "BMP: detect, avoid, deter, delay, report. The company and Master cannot influence an attacker's capability or intent — only the opportunity. Every measure below removes opportunity.",
+    "source_ids": [
+      "bmp5",
+      "bmp-maritime-security"
+    ],
+    "layers": [
+      {
+        "layer": "Primary",
+        "measures": [
+          {
+            "name": "Lookout and vigilance",
+            "detail": "BMP calls an effective lookout the single most effective method of ship protection, because early detection is what makes every other measure usable. Elevated all-round watch, shortened rotations, anti-glare binoculars, thermal and night-vision optics, radar watch, bridge-wing anti-piracy mirrors, CCTV and fixed search lights covering the stern."
+          },
+          {
+            "name": "Manoeuvring",
+            "detail": "Practised avoidance manoeuvres at best possible speed. BMP notes the hydrostatic pressure generated by a hard-manoeuvring ship can defeat a determined attack more effectively than speed alone."
+          },
+          {
+            "name": "Speed and freeboard",
+            "detail": "Naval architecture as security. Boardability is a property of the hull before it is a property of the crew."
+          },
+          {
+            "name": "PCASP",
+            "detail": "Privately Contracted Armed Security Personnel. See the economics dataset for what they cost."
+          }
+        ]
+      },
+      {
+        "layer": "Secondary",
+        "measures": [
+          {
+            "name": "Razor wire",
+            "detail": "High-tensile concertina, 730mm or 980mm coils, double roll where possible, every third ring fixed to the rails with a steel cable through the core so it cannot be pulled away. Quality varies enormously and cheap wire is much less effective."
+          },
+          {
+            "name": "Water spray and foam monitors",
+            "detail": "Fixed, remotely operated — manual activation exposes the operator. Makes it hard for a boat to stay alongside and much harder to climb. Water cannons sweep a vertical arc; spray rails produce a curtain. Foam is disorienting and slippery but must be additional to firefighting stock."
+          },
+          {
+            "name": "Door and access hardening",
+            "detail": "Limited, controlled access points. Motion sensors and CCTV."
+          },
+          {
+            "name": "Alarms",
+            "detail": "Distinctive alarms backed by PA announcement, drilled so the time for all crew to reach safety is known. Continuous whistle can distract attackers."
+          }
+        ]
+      },
+      {
+        "layer": "Last",
+        "measures": [
+          {
+            "name": "Citadel or safe muster point",
+            "detail": "Internal hardening plus independent communications. The crew's fallback once the deck is lost."
+          },
+          {
+            "name": "Hidden position transmitter",
+            "detail": "BMP advises companies fit one, because disabling visible communications and tracking aerials is among the first things hijackers do."
+          },
+          {
+            "name": "Ship Security Alert System",
+            "detail": "Tested before entry, with an emergency communication plan and prepared messages posted at every external comms station including the citadel."
+          }
+        ]
+      }
+    ],
+    "operational_practice": [
+      "Avoid drifting, waiting, anchoring and slow steaming inside the transit corridor — 15 of the 32 successful attacks in H1 2026 happened while the vessel was anchored.",
+      "Keep AIS on so militaries can track the ship, but restrict the broadcast to identity, position, course, speed and navigational status.",
+      "Reschedule planned maintenance on voyage-critical equipment away from the high-risk transit, and confirm the plant can make full speed before entry.",
+      "Control information: keep correspondence with agents, charterers and chandlers minimal, particularly about rendezvous points and waiting positions. Voyage detail leaks.",
+      "Minimise VHF use inside the area and answer only known callers — impostors are possible.",
+      "Brief and drill the crew before entering, not during an attack, including the different actions required for a piracy attack versus a stand-off attack."
+    ]
+  },
+  "transit_corridors": [
+    {
+      "id": "mstc",
+      "name": "Maritime Security Transit Corridor",
+      "detail": "A military-established corridor where naval forces concentrate presence and surveillance. Comprises the Internationally Recommended Transit Corridor, the Bab el-Mandeb Traffic Separation Scheme, the TSS west of the Hanish Islands, and a two-way route connecting the IRTC to the BAM TSS. Shown on maritime security chart UKHO Q6099.",
+      "source_ids": [
+        "bmp5"
+      ]
+    },
+    {
+      "id": "irtc",
+      "name": "Internationally Recommended Transit Corridor",
+      "detail": "Not a traffic separation scheme but an established corridor in the Gulf of Aden where naval forces focus counter-piracy patrols. Group transits and national convoys may be offered within it.",
+      "source_ids": [
+        "bmp5"
+      ]
+    },
+    {
+      "id": "hra",
+      "name": "High Risk Area",
+      "detail": "An industry-defined area inside the UKMTO Voluntary Reporting Area where a higher risk of attack is considered to exist and additional security measures may be needed. Outlined on chart Q6099.",
+      "source_ids": [
+        "bmp5"
+      ]
+    },
+    {
+      "id": "vra",
+      "name": "Voluntary Reporting Area",
+      "detail": "The UKMTO area within which ships are encouraged to register, establishing direct contact between ship and UKMTO.",
+      "source_ids": [
+        "bmp5"
+      ]
+    }
+  ],
+  "retrieved": "2026-09-02"
+}

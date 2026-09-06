@@ -1,0 +1,149 @@
+{
+  "$schema": "../schema/flag-states.schema.json",
+  "dataset": "flag-states",
+  "title": "Flag states and registries",
+  "description": "Where the world's tonnage is registered. This is the legal layer, and it is deliberately decoupled from the economic one: three small states hold roughly half the world's carrying capacity and almost none of its shipowners.",
+  "updated": "2026-09-02",
+  "records": [
+    {
+      "id": "LR",
+      "name": "Liberia",
+      "type": "open registry",
+      "dwt_million": 447,
+      "dwt_as_of": "2026",
+      "dwt_million_2025": 424,
+      "share_world_dwt_pct_2025": 17.4,
+      "vessels_2025": 5562,
+      "rank": 1,
+      "source_ids": [
+        "unctad-maritime",
+        "safety4sea-unctad-registries"
+      ],
+      "confidence": "high",
+      "note": "Largest register in the world by capacity. Eternity C, Magic Seas and Tutor were all Liberian-flagged when they were sunk."
+    },
+    {
+      "id": "PA",
+      "name": "Panama",
+      "type": "open registry",
+      "dwt_million": 350,
+      "dwt_as_of": "2026",
+      "dwt_million_2025": 371,
+      "share_world_dwt_pct_2025": 15.2,
+      "rank": 2,
+      "source_ids": [
+        "unctad-maritime",
+        "safety4sea-unctad-registries"
+      ],
+      "confidence": "high",
+      "note": "Capacity contracted slightly year on year."
+    },
+    {
+      "id": "MH",
+      "name": "Marshall Islands",
+      "type": "open registry",
+      "dwt_million": 318,
+      "dwt_as_of": "2026",
+      "share_world_dwt_pct_2025": 12.5,
+      "rank": 3,
+      "source_ids": [
+        "unctad-maritime",
+        "safety4sea-unctad-registries"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "BS",
+      "name": "Bahamas",
+      "type": "open registry",
+      "source_ids": [
+        "safety4sea-unctad-registries"
+      ],
+      "note": "Flag of the Galaxy Leader. Capacity contracted year on year."
+    },
+    {
+      "id": "MT",
+      "name": "Malta",
+      "type": "open registry",
+      "note": "Flag of the Hellas Aphrodite. Largest register in the European Union."
+    },
+    {
+      "id": "GR",
+      "name": "Greece",
+      "type": "national registry",
+      "note": "Flag of the Sounion. Greece is a top-three shipowning nation whose owners mostly register elsewhere — the gap between the ownership and registry tables is the entire point of this dataset."
+    },
+    {
+      "id": "BZ",
+      "name": "Belize",
+      "type": "open registry",
+      "note": "Flag of the Rubymar."
+    },
+    {
+      "id": "BB",
+      "name": "Barbados",
+      "type": "open registry",
+      "note": "Flag of the True Confidence."
+    },
+    {
+      "id": "US",
+      "name": "United States",
+      "type": "national registry",
+      "note": "Flag of the Maersk Yorktown. US flag brings US Navy escort — and the Yorktown was fired on anyway."
+    }
+  ],
+  "concentration": {
+    "as_of": "2025-01-01",
+    "top_three": [
+      "Liberia",
+      "Panama",
+      "Marshall Islands"
+    ],
+    "share_world_dwt_pct": 46.5,
+    "share_world_vessel_count_pct": 16.2,
+    "share_world_fleet_value_pct": 36.1,
+    "source_ids": [
+      "safety4sea-unctad-registries"
+    ]
+  },
+  "shipowning_nations": {
+    "as_of": "2025",
+    "metric": "total fleet asset value",
+    "source_ids": [
+      "veson-shipowning-nations-2025"
+    ],
+    "confidence": "medium",
+    "records": [
+      {
+        "rank": 1,
+        "nation": "China",
+        "fleet_value_usd_bn": 255,
+        "note": "Most valuable bulker fleet (USD 68.4bn) and container fleet (USD 63.5bn); largest tanker fleet by count at 1,764 vessels, worth USD 47.9bn."
+      },
+      {
+        "rank": 3,
+        "nation": "Greece",
+        "note": "Tanker fleet worth USD 71.3bn, USD 23.3bn more than China's despite fewer hulls. Second-largest LNG fleet: 143 vessels, USD 32.4bn."
+      },
+      {
+        "rank": 4,
+        "nation": "United States",
+        "note": "Most expensive RoRo fleet at USD 2.6bn across only 40 vessels."
+      },
+      {
+        "rank": 8,
+        "nation": "Norway",
+        "fleet_value_usd_bn": 68.5,
+        "note": "Second-largest owner of vehicle carriers, USD 10.8bn."
+      },
+      {
+        "rank": 9,
+        "nation": "Switzerland",
+        "fleet_value_usd_bn": 68,
+        "note": "Re-entered the top ten on container values and continued MSC investment. A landlocked country in the top ten — ownership is a legal address, not a coastline."
+      }
+    ],
+    "gaps": "Ranks 2, 5, 6, 7 and 10 were not captured in the source excerpt. Fill from the UNCTAD Review of Maritime Transport before using this table."
+  },
+  "retrieved": "2026-09-02"
+}

@@ -1,0 +1,2656 @@
+{
+ "$schema": "../schema/sources.schema.json",
+ "dataset": "sources",
+ "title": "Source register",
+ "description": "Every external source cited by a record in this library. Records reference these by id. Nothing in this library should carry a number without a source_id pointing here.",
+ "updated": "2026-09-02",
+ "records": [
+  {
+   "id": "aa-suez-2026",
+   "name": "Egypt's Suez Canal posts revenue rebound, earning $449 million since start of 2026",
+   "publisher": "Anadolu Agency, quoting the Suez Canal Authority",
+   "url": "https://www.aa.com.tr/en/middle-east/egypt-s-suez-canal-posts-revenue-rebound-earning-449-million-since-start-of-2026/3824222",
+   "type": "secondary",
+   "access": "public",
+   "published": "2026-02",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "aevex-blacksea",
+   "name": "AEVEX to Acquire BlackSea Technologies",
+   "publisher": "AEVEX Corp",
+   "url": "https://aevex.com/aevex-to-acquire-blacksea-technologies-strengthening-its-multi-domain-autonomous-systems-capabilities/",
+   "type": "primary",
+   "access": "public",
+   "notes": "Announced 12 August 2026.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "aishub",
+   "name": "AISHub",
+   "publisher": "AISHub",
+   "url": "https://www.aishub.net/",
+   "type": "primary",
+   "access": "free with receiver contribution",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "aisstream",
+   "name": "AIS Stream",
+   "publisher": "aisstream.io",
+   "url": "https://aisstream.io/",
+   "type": "primary",
+   "access": "public, free tier",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "aljazeera-2026-07-insurance",
+   "name": "How shipping insurance rates are rising, as Hormuz and Bab al-Mandeb shut down",
+   "publisher": "Al Jazeera, citing S&P Global",
+   "url": "https://www.aljazeera.com/economy/2026/7/23/how-shipping-insurance-rates-are-rising-as-hormuz-bab-al-mandeb-shut-down",
+   "type": "secondary",
+   "access": "public",
+   "published": "2026-07-23",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "aljazeera-cameroon-vessel-2026",
+   "name": "Turkiye, Somalia forces free cargo vessel hijacked by pirates",
+   "publisher": "Al Jazeera",
+   "url": "https://www.aljazeera.com/news/2026/8/30/turkiye-somalia-forces-frees-cargo-vessel-hijacked-by-pirates",
+   "type": "secondary",
+   "access": "public",
+   "published": "2026-08-30",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "alphageo-usv-top10",
+   "name": "Top 10 Unmanned Vessel Manufacturers and Suppliers in 2025",
+   "publisher": "AlphaGeo",
+   "url": "https://www.alphageo-info.com/article/top-10-unmanned-vessel-manufacturers-suppliers-2025",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "ambrey-somali-hijackings",
+   "name": "Threat Circular: Somali Pirate Hijackings",
+   "publisher": "Ambrey",
+   "url": "https://ambrey.com/ara290426tc/",
+   "type": "primary",
+   "access": "public",
+   "published": "2026-04-29",
+   "notes": "Commercial maritime risk firm. Records the April 2026 hijackings as the first simultaneous merchant hijackings since March 2024.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "ambrey-vessel-support",
+   "name": "Vessel Support Services",
+   "publisher": "Ambrey",
+   "url": "https://ambrey.com/vessel-support-services/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "anduril-cuas",
+   "name": "Counter UAS",
+   "publisher": "Anduril Industries",
+   "url": "https://www.anduril.com/counter-uas",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "aquaterra-ng",
+   "name": "Top Maritime Security Escort Vessels in Nigeria",
+   "publisher": "Aquaterra Solutions Nigeria",
+   "url": "https://aquaterra-ng.com/top-maritime-security-escort-vessels-in-nigeria/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "bbc-somali-tanker-2026",
+   "name": "Pirates hijack oil tanker off the coast of Somalia",
+   "publisher": "BBC",
+   "url": "https://www.bbc.com/news/articles/c78l26yn981o",
+   "type": "secondary",
+   "access": "public",
+   "published": "2026-04",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-press",
+   "name": "BlackSea Technologies press releases",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/press",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "bmp-maritime-security",
+   "name": "BMP Maritime Security (v2, 2026)",
+   "publisher": "ICS / BIMCO / INTERTANKO / OCIMF and industry partners",
+   "url": "https://www.ics-shipping.org/publication/bmp-maritime-security/",
+   "type": "reference",
+   "access": "public PDF",
+   "notes": "The industry's own self-protection playbook. Defines what a shipowner is already expected to do — i.e. the baseline any escort service is sold on top of.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "bmp5",
+   "name": "BMP5 — Best Management Practices to Deter Piracy and Enhance Maritime Security in the Red Sea, Gulf of Aden, Indian Ocean and Arabian Sea",
+   "publisher": "BIMCO, ICS, IGP&I Clubs, INTERTANKO and OCIMF",
+   "url": "https://mc.nato.int/systems/file_download.ashx?pg=318&ver=17",
+   "type": "primary",
+   "access": "free PDF",
+   "published": "2018-06",
+   "notes": "Superseded in March 2025 by the consolidated BMP Maritime Security, and again by Version 2 in 2026. Retained because BMP5's threat section is the most detailed public description of pirate tactics available, and the tactics have not changed.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "britannia-risks",
+   "name": "West Africa",
+   "publisher": "Britannia Risks Group",
+   "url": "https://britanniarisks.com/west-africa/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "castor-vali-sev",
+   "name": "Castor Vali SEV support across the Gulf of Guinea",
+   "publisher": "Castor Vali",
+   "url": "https://www.castorvali.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "cato-pmsc-2012",
+   "name": "The Rise of Private Maritime Security Companies",
+   "publisher": "David Isenberg, Cato Institute (first published in Somalia Report)",
+   "url": "https://www.cato.org/publications/commentary/rise-private-maritime-security-companies",
+   "type": "secondary",
+   "access": "public",
+   "published": "2012-05-26",
+   "notes": "HISTORICAL. Every price in it is from 2012, at the peak of Somali piracy. Aggregates Stratfor, the Independent Maritime Security Association and SAMI. The only detailed public source found on private maritime security pricing and on convoy escort economics — re-base against a live broker quote before commercial use.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "conqueror-suez-vs-cape-2026",
+   "name": "Suez Canal vs Cape Route: Comparing Cost, Time and Risk in 2026",
+   "publisher": "Conqueror Freight Network",
+   "url": "https://blog.conquerornetwork.com/2026/07/06/suez-canal-vs-cape-route-comparing-cost-time-and-risk-in-2026/",
+   "type": "tertiary",
+   "access": "public",
+   "published": "2026-07-06",
+   "notes": "Industry blog aggregating carrier and analyst figures. Directionally consistent with other sources here, but one war-risk baseline it quotes (0.0001% of hull value) is implausible by three orders of magnitude against every other source in this library, so none of its insurance figures are used.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "contrary-saildrone",
+   "name": "Saildrone Business Breakdown and Founding Story",
+   "publisher": "Contrary Research",
+   "url": "https://research.contrary.com/company/saildrone",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "crime-at-sea",
+   "name": "Crime at Sea: A Global Database of Maritime Pirate Attacks (1993-2020)",
+   "publisher": "Journal of Open Humanities Data / Zenodo / GitHub",
+   "url": "https://github.com/newzealandpaul/Maritime-Pirate-Attacks",
+   "type": "primary",
+   "access": "open, CSV download",
+   "notes": "7,511 IMB-reported attacks, tidied and augmented with geospatial data. DOI 10.5334/johd.39. Fields: date, time, lat/lon, attack type, location description, nearest country, EEZ, distance from shore, vessel name/type/status. Ends December 2020.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "cyberowl",
+   "name": "CyberOwl",
+   "publisher": "CyberOwl",
+   "url": "https://cyberowl.io/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "defenseadvancement-sentinel",
+   "name": "Advanced Sonar Technology Protects Naval Assets",
+   "publisher": "Defense Advancement",
+   "url": "https://www.defenseadvancement.com/feature/advanced-sonar-technology-protects-naval-assets/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "dnv-cyber",
+   "name": "Maritime cybersecurity",
+   "publisher": "DNV",
+   "url": "https://www.dnv.com/cyber/industries/maritime/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "doric-ng",
+   "name": "Maritime Armed Security Escort Vessels in Nigeria",
+   "publisher": "Doric NG",
+   "url": "https://doricng.com/armed-security-escort-vessels/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "droneshield-maritime",
+   "name": "Navigating the Maritime Drone Frontier: Building Resilient Naval CUAS Protection",
+   "publisher": "DroneShield",
+   "url": "https://www.droneshield.com/blog/navigating-the-maritime-drone-frontier-building-resilient-naval-cuas-protection",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "dryad-bmp",
+   "name": "BMP Maritime Security: What It Changes Before a Voyage",
+   "publisher": "Dryad Global / Verihelm",
+   "url": "https://channel16.dryadglobal.com/best-management-practices-bmp",
+   "type": "secondary",
+   "access": "public",
+   "notes": "Records the March 2025 consolidation of BMP5 and the regional guides into a single BMP Maritime Security publication by BIMCO, ICS, IMCA, INTERCARGO, INTERTANKO and OCIMF.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "dryad-floating-armouries",
+   "name": "Why were floating armouries created?",
+   "publisher": "Dryad Global / Channel 16",
+   "url": "https://channel16.dryadglobal.com/floating-armouries-background",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "dryad-global",
+   "name": "Maritime Risk Intelligence Platform, Verihelm",
+   "publisher": "Dryad Global",
+   "url": "https://www.dryadglobal.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "egypt-sis-suez",
+   "name": "Suez Canal — State Information Service",
+   "publisher": "Egyptian State Information Service",
+   "url": "https://sis.gov.eg/en/economy-investment/economy/egyptian-economy-sectors/suez-canal/",
+   "type": "primary",
+   "access": "public",
+   "notes": "Egyptian government source. Carries IMF projections for canal revenue. Treat growth projections as an interested party's.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "elbit-seagull",
+   "name": "Seagull USV: Multi-Mission Unmanned Surface Vessel",
+   "publisher": "Elbit Systems",
+   "url": "https://www.elbitsystems.com/unmanned/maritime/unmanned-surface-vessel/seagull-usv",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "ensemble-saronic",
+   "name": "Why we're backing Saronic Technologies",
+   "publisher": "Ensemble VC",
+   "url": "https://www.ensemble.vc/research/why-were-backing-saronic-technologies-and-their-mission-to-redefine-us-maritime-superiority",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "equasis",
+   "name": "Equasis",
+   "publisher": "European Commission / French Ministry of Transport et al.",
+   "url": "https://www.equasis.org/",
+   "type": "primary-registry",
+   "access": "free account required",
+   "cadence": "continuous",
+   "notes": "Free source for registered owner, ISM manager, ship manager, class society and P&I cover per IMO number. Does not reliably give beneficial owner.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "esc-global-sev",
+   "name": "Maritime Security in Gulf of Guinea",
+   "publisher": "ESC Global Security",
+   "url": "https://www.escgs.com/services/maritime-security/security-in-west-africa",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "eunavfor-atalanta",
+   "name": "EU NAVFOR Operation ATALANTA",
+   "publisher": "European Union Naval Force Somalia",
+   "url": "https://eunavfor.eu/",
+   "type": "primary",
+   "access": "public",
+   "cadence": "continuous",
+   "notes": "Counter-piracy naval presence in the Somali Basin. Confirms and de-confirms piracy incidents.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "firecrawl-company-enrichment",
+   "name": "Structured company enrichment pass, 3 September 2026",
+   "publisher": "Firecrawl agent over company websites and press",
+   "url": "https://firecrawl.dev/",
+   "type": "aggregator",
+   "access": "internal",
+   "notes": "Schema-constrained extraction across 16 company sites, instructed to return null rather than guess and to record source URLs per company. Every value traces to a company site or its own press release. Not independently audited.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "firecrawl-leadership-enrichment",
+   "name": "Leadership enrichment pass, 3 September 2026",
+   "publisher": "Firecrawl agent over company sites, LinkedIn company pages and press",
+   "url": "https://firecrawl.dev/",
+   "type": "aggregator",
+   "access": "internal",
+   "notes": "Schema-constrained extraction of named leadership across 20 companies, instructed to return an empty list rather than guess. 12 returned names; 8 returned none. Titles are as published and may be stale.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "firecrawl-platform-specs",
+   "name": "Platform specification extraction passes, 3 September 2026",
+   "publisher": "Firecrawl agent over manufacturer spec sheets and defence trade press",
+   "url": "https://firecrawl.dev/",
+   "type": "aggregator",
+   "access": "internal",
+   "retrieved": "2026-09-03",
+   "notes": "Two schema-constrained passes over 39 platforms, instructed to return null rather than estimate. Per-platform source URLs captured. Manufacturer figures are marketing documents and are not independently verified."
+  },
+  {
+   "id": "firecrawl-positioning",
+   "name": "Competitor website positioning pass, 3 September 2026",
+   "publisher": "Firecrawl agent over company websites",
+   "url": "https://firecrawl.dev/",
+   "type": "aggregator",
+   "access": "internal",
+   "retrieved": "2026-09-03",
+   "notes": "Headlines, stated audience, proof points, CTA and threat framing read from company homepages and about pages only. Not one of the 16 publishes pricing."
+  },
+  {
+   "id": "firecrawl-usv-discovery",
+   "name": "Non-US USV builder discovery pass, 3 September 2026",
+   "publisher": "Firecrawl agent over company sites, Naval News, NATO and government releases",
+   "url": "https://firecrawl.dev/",
+   "type": "aggregator",
+   "access": "internal",
+   "notes": "Schema-constrained discovery of USV builders across Ukraine, Turkey, Israel, China, Korea, Japan, India, Singapore, UAE, Australia and Europe. Returned 42 entries with per-company source URLs. Platform names and contract claims come from company pages and defence trade press; not independently audited.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "flagsapi",
+   "name": "FlagsAPI",
+   "publisher": "FlagsAPI",
+   "url": "https://flagsapi.com/",
+   "type": "reference",
+   "access": "public, no key",
+   "notes": "Flag images by ISO 3166-1 alpha-2: https://flagsapi.com/{CC}/flat/{16|24|32|48|64}.png. Flat and shiny sets are MIT-licensed via GoSquared.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "forcys-sentinel",
+   "name": "Sentinel IDS",
+   "publisher": "Forcys",
+   "url": "https://www.forcys.com/instruments/sentinel-ids/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "freightender-carriers-2025",
+   "name": "20 Largest Container Shipping Companies Dominating Trade 2025",
+   "publisher": "Freightender",
+   "url": "https://www.freightender.com/20-largest-container-shipping-companies/",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Aggregated from carrier disclosures and Alphaliner. Directionally right, not audited. Replace with Alphaliner or Linerlytica before quoting externally.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "fugro-autonomous",
+   "name": "Remote and Autonomous Solutions",
+   "publisher": "Fugro",
+   "url": "https://www.fugro.com/expertise/remote-and-autonomous-solutions",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "gcaptain-hellas-aphrodite",
+   "name": "EU Forces Free Hijacked Tanker 700 Miles Off Somalia",
+   "publisher": "gCaptain",
+   "url": "https://gcaptain.com/eu-forces-free-hijacked-tanker-700-miles-off-somalia/",
+   "type": "secondary",
+   "access": "public",
+   "published": "2025-11",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "gcaptain-shadow-fleet",
+   "name": "Iranian Shadow Fleet And Greek Affiliated Ships Lead Strait of Hormuz Transits",
+   "publisher": "gCaptain",
+   "url": "https://gcaptain.com/iranian-shadow-fleet-and-greek-affiliated-ships-lead-strait-of-hormuz-transits/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "genasys-lrad",
+   "name": "LRAD Products",
+   "publisher": "Genasys",
+   "url": "https://www.genasys.com/lrad-products",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "geopera-hormuz",
+   "name": "Strait of Hormuz Satellite Imagery: Tracking Ships Gone Dark",
+   "publisher": "Geopera",
+   "url": "https://geopera.com/blog/strait-of-hormuz-satellite-imagery",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "gfw-dark-vessels",
+   "name": "Dark Vessels",
+   "publisher": "Global Fishing Watch",
+   "url": "https://globalfishingwatch.org/research-project-dark-vessels/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "gi-floating-armouries",
+   "name": "Floating armouries in the western Indian Ocean",
+   "publisher": "Global Initiative Against Transnational Organized Crime",
+   "url": "https://riskbulletins.globalinitiative.net/esa-obs-013/03-floating-armouries-in-the-western-indian-ocean.html",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "gog-georeferenced",
+   "name": "Georeferenced dataset of maritime piracy in the Gulf of Guinea",
+   "publisher": "PubMed Central",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10703830/",
+   "type": "primary",
+   "access": "open access",
+   "notes": "Region-specific geocoded dataset suitable for data mining. Not yet pulled into this library.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "honeywell-maritime-cyber",
+   "name": "Maritime OT Cybersecurity",
+   "publisher": "Honeywell",
+   "url": "https://www.honeywell.com/us/en/insights/articles/cybersecurity-at-sea-protecting-maritime-operations-in-a-satellite-connected-world",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "hormuz-ship-apis",
+   "name": "50 Best Ship Tracking APIs 2026",
+   "publisher": "Hormuz Monitor",
+   "url": "https://hormuzmonitor.com/50-best-ship-tracking-apis-2026/",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "icc-imb-map",
+   "name": "IMB Piracy & Armed Robbery Map",
+   "publisher": "ICC Commercial Crime Services",
+   "url": "https://icc-ccs.org/map/",
+   "type": "primary",
+   "access": "public",
+   "cadence": "continuous",
+   "notes": "Per-incident map with coordinates. Yearly archives at /2025-2/ and /piracy-map-2024/. Page markup is copy-protected.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "iceye-dark-vessels",
+   "name": "Dark Vessels in Northern Europe and how ICEYE's satellites find them",
+   "publisher": "ICEYE",
+   "url": "https://www.iceye.com/blog/dark-vessels-in-northern-europe-and-how-iceyes-satellites-find-them",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imb-annual-2025",
+   "name": "IMB Annual Piracy and Armed Robbery Report 2025",
+   "publisher": "ICC International Maritime Bureau",
+   "url": "https://iccwbo.org/news-publications/report/global-maritime-piracy-and-armed-robbery-increased-in-2025/",
+   "type": "primary",
+   "access": "summary public; full report on request",
+   "cadence": "annual",
+   "published": "2026-01",
+   "notes": "IMB counts incidents reported to its Piracy Reporting Centre in Kuala Lumpur. Under-reporting is acknowledged by IMB itself.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imb-h1-2026",
+   "name": "ICC-IMB Piracy and Armed Robbery Against Ships Report, January-June 2026",
+   "publisher": "ICC International Maritime Bureau, via MaritimeCyprus",
+   "url": "https://maritimecyprus.com/2026/08/03/icc-imb-world-wide-incidents-of-piracy-and-armed-robbery-against-ships-report-from-jan-to-june-2026/",
+   "type": "secondary",
+   "access": "summary public; full report on request from IMB",
+   "published": "2026-08-03",
+   "notes": "Detailed secondary summary of the IMB half-year report. Request the primary from icc-ccs.org before external use.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imb-prc",
+   "name": "IMB Piracy Reporting Centre — live map and 24h reporting line",
+   "publisher": "ICC Commercial Crime Services",
+   "url": "https://icc-ccs.org/piracy-reporting-centre/",
+   "type": "primary",
+   "access": "public",
+   "cadence": "continuous",
+   "notes": "Live incident map at https://icc-ccs.org/map/. The single best real-time public feed for boarding-type incidents.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imb-q1-2026",
+   "name": "IMB piracy and armed robbery report for January - March 2026",
+   "publisher": "ICC International Maritime Bureau, circulated by the Japan P&I Club",
+   "url": "https://www.piclub.or.jp/en/news/44055",
+   "type": "secondary",
+   "access": "public, with full PDF",
+   "published": "2026-04-13",
+   "notes": "Japan P&I Club circular No.1367 carrying the IMB PRC quarterly summary and both PDFs. Contains cross-tabs of outcome by vessel status and by region that the IMB press summaries omit.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imo-gisis",
+   "name": "IMO GISIS — Global Integrated Shipping Information System",
+   "publisher": "International Maritime Organization",
+   "url": "https://gisis.imo.org/Public/Default.aspx",
+   "type": "primary-registry",
+   "access": "free account required",
+   "cadence": "continuous",
+   "notes": "Authoritative for IMO numbers, ship particulars, company (DOC) records and the piracy module. The canonical join key for everything in this library is the IMO number.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imo-monthly-piracy",
+   "name": "IMO monthly piracy reports",
+   "publisher": "International Maritime Organization",
+   "url": "https://www.imo.org/en/ourwork/security/pages/piracy-reports-default.aspx",
+   "type": "primary",
+   "access": "public PDF",
+   "cadence": "monthly",
+   "notes": "Monthly PDFs published for easy reference alongside the annual MSC.4 circulars, archive going back to 2010.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imo-msc4-270",
+   "name": "MSC.4/Circ.270 — Annual report on acts of piracy and armed robbery against ships, 2025",
+   "publisher": "International Maritime Organization",
+   "url": "https://wwwcdn.imo.org/localresources/en/OurWork/Security/Documents/MSC.4-Circ.270_Annual%202025%20(1).pdf",
+   "type": "primary",
+   "access": "public PDF",
+   "cadence": "annual",
+   "published": "2026-06-08",
+   "notes": "IMO counts differ from IMB because IMO aggregates reports from member governments as well as industry bodies.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "imo-pcasp",
+   "name": "Private Armed Security",
+   "publisher": "International Maritime Organization",
+   "url": "https://www.imo.org/en/ourwork/security/pages/private-armed-security.aspx",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "issafrica-somali-comeback",
+   "name": "As Somali pirates make a comeback, collaboration is key",
+   "publisher": "Institute for Security Studies Africa",
+   "url": "https://issafrica.org/iss-today/as-somali-pirates-make-a-comeback-collaboration-is-key",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "jwc-lma",
+   "name": "Joint War Committee Listed Areas (JWLA circulars)",
+   "publisher": "Lloyd's Market Association",
+   "url": "https://lmalloyds.com/specialist-areas/underwriting/listed-areas/",
+   "type": "primary",
+   "access": "public PDF",
+   "cadence": "as amended",
+   "notes": "JWLA-034 (Saudi Arabia) issued 29 July 2026; JWLA-033 (Iran) 3 March 2026. The circular that turns a geography into a premium.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "kpler-ais",
+   "name": "Ship tracking with Kpler AIS data",
+   "publisher": "Kpler",
+   "url": "https://www.kpler.com/product/maritime/kplerais",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "l3harris-autonomous",
+   "name": "Autonomous Systems",
+   "publisher": "L3Harris",
+   "url": "https://www.l3harris.com/all-capabilities/autonomous-systems",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "leonardo-drs-mmep",
+   "name": "Leonardo DRS's Plan To Counter Drones For The U.S. Navy",
+   "publisher": "YouTube",
+   "url": "https://www.youtube.com/watch?v=H4qE07ucM8c",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Video only. Verify against Leonardo DRS material before use.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "liscr-pmsc",
+   "name": "Authorized Private Maritime Security Companies",
+   "publisher": "Liberian Registry (LISCR)",
+   "url": "https://www.liscr.com/maritime/regulations-and-standards/private-maritime-security-companies",
+   "type": "primary-registry",
+   "access": "public",
+   "notes": "Authoritative roster of PMSCs authorised by the Liberian flag to place contracted security personnel aboard ships in high-risk areas. 24 companies listed with country and licence dates as of September 2026.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "lloyds-list-redsea",
+   "name": "Lloyd's List — Red Sea risk: map and list of attacks",
+   "publisher": "Lloyd's List Intelligence",
+   "url": "https://www.lloydslist.com/hot-topics/red-sea-risk/map-and-list-of-attacks",
+   "type": "primary",
+   "access": "paywalled",
+   "notes": "Commercial-grade attack list. Worth a subscription if this library becomes a product input.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "lwj-2026-06-gulf-of-aden",
+   "name": "Pirate attacks on ships in the Gulf of Aden are on the rise",
+   "publisher": "FDD's Long War Journal",
+   "url": "https://www.longwarjournal.org/archives/2026/06/pirate-attacks-on-shipping-in-the-gulf-of-aden-are-on-the-rise.php",
+   "type": "secondary",
+   "access": "public",
+   "published": "2026-06-18",
+   "notes": "Quotes UKMTO warnings verbatim with direct links to the source PDFs, which is why the attack-log entries drawn from it are high confidence.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marad-2026-009-gog",
+   "name": "US Maritime Advisory 2026-009 — Gulf of Guinea: Piracy, Armed Robbery, Kidnapping for Ransom",
+   "publisher": "US Maritime Administration",
+   "url": "https://www.maritime.dot.gov/msci/2026-009-gulf-guinea-piracyarmed-robberykidnapping-ransom",
+   "type": "primary",
+   "access": "public",
+   "notes": "Cancels advisory 2025-015. Names specific abduction incidents.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marineinsight-antipiracy",
+   "name": "18 Anti-Piracy Weapons for Ships to Fight Pirates",
+   "publisher": "Marine Insight",
+   "url": "https://www.marineinsight.com/18-anti-piracy-weapons-for-ships-to-fight-pirates/",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marineinsight-security-firms",
+   "name": "10 Companies Offering Maritime Security Services",
+   "publisher": "Marine Insight",
+   "url": "https://www.marineinsight.com/11-companies-offering-maritime-security-services/",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marinelink-autonomy-offshore",
+   "name": "Autonomy Offshore: Uncrewed Systems Move From Trials To Critical Operations",
+   "publisher": "Marine Link",
+   "url": "https://www.marinelink.com/news/autonomy-offshore-uncrewed-systems-move-542080",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marinelink-gac-counterpiracy",
+   "name": "GAC's New Counter Piracy Partnerships",
+   "publisher": "Marine Link",
+   "url": "https://www.marinelink.com/news/partnerships-counter344481",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marinetraffic-ownership",
+   "name": "MarineTraffic — Vessel Ownership definitions",
+   "publisher": "MarineTraffic",
+   "url": "https://support.marinetraffic.com/en/articles/9552748-vessel-ownership",
+   "type": "reference",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "maritime-robotics",
+   "name": "Maritime Robotics",
+   "publisher": "Maritime Robotics",
+   "url": "https://www.maritimerobotics.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marketsandmarkets-usv",
+   "name": "Top Companies List of Unmanned Surface Vehicles Industry",
+   "publisher": "MarketsandMarkets",
+   "url": "https://www.marketsandmarkets.com/ResearchInsight/unmanned-surface-vehicle-market.asp",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Market-research vendor listing. Company names are checkable; market sizing is not verified here.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marlink-cyber",
+   "name": "Cybersecurity at Marlink",
+   "publisher": "Marlink",
+   "url": "https://marlink.com/resources/knowledge-hub/cybersecurity-at-marlink/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marsec-east-exhibitors",
+   "name": "Exhibitors and Sponsors Listing, 14th Annual Maritime Security East",
+   "publisher": "Maritime Security East",
+   "url": "https://marseceast.com/exhibitors-and-sponsors-listing/",
+   "type": "primary",
+   "access": "public",
+   "notes": "Conference exhibitor list. A useful running census of who is selling into maritime security in a given year.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "mpeld",
+   "name": "Maritime Piracy Event and Location Dataset (MPELD)",
+   "publisher": "Ursula Daxecker and Brandon Prins, in Pirate Lands: Governance and Maritime Piracy",
+   "url": "https://academic.oup.com/book/39743/chapter/339793584",
+   "type": "primary",
+   "access": "academic",
+   "notes": "Codebook published with the book. Event and location data used in the academic literature on piracy governance.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "mrfr-usv",
+   "name": "Unmanned Surface Vessel Market",
+   "publisher": "Market Research Future",
+   "url": "https://www.marketresearchfuture.com/reports/unmanned-surface-vessel-market-40357",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Market-research vendor listing. Used only for company names.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "natural-earth",
+   "name": "Natural Earth 110m land",
+   "publisher": "Natural Earth",
+   "url": "https://github.com/nvkelso/natural-earth-vector",
+   "type": "reference",
+   "access": "public domain",
+   "notes": "Land outline behind the map tab. Regenerate with tools/build-world-path.py.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "nauticus-oor",
+   "name": "Nauticus Robotics and Open Ocean Robotics Forge Strategic Partnership",
+   "publisher": "Nauticus Robotics",
+   "url": "https://ir.nauticusrobotics.com/news-events/press-releases/detail/84/nauticus-robotics-and-open-ocean-robotics-forge-strategic",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "navy-susv",
+   "name": "Small Unmanned Surface Vehicles Family of Systems",
+   "publisher": "US Navy",
+   "url": "https://www.navy.mil/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "navy-usv-shortlist",
+   "name": "US Navy USV shortlist and Saronic award",
+   "publisher": "VRS Radio via Facebook",
+   "url": "https://www.facebook.com/vrsradio/posts/the-us-navy-shortlisted-seven-out-of-roughly-two-dozen-companies-to-advance-to-t/1588870609403381/",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Social post reporting the Navy shortlist of seven and a $392 million Saronic award. Confirm against a Navy or trade-press release before external use.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "navyleaders-anduril",
+   "name": "Anduril Bags $642m Deal To Supply Counter-Drone Tech To US Marines",
+   "publisher": "Navy Leaders",
+   "url": "https://navyleaders.com/news/anduril-bags-642m-deal-to-supply-counter-drone-tech-to-us-marines/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "neptune-p2p",
+   "name": "Neptune P2P Group",
+   "publisher": "Neptune P2P Group",
+   "url": "https://neptunep2pgroup.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "nga-asam",
+   "name": "NGA Anti-Shipping Activity Messages (ASAM)",
+   "publisher": "US National Geospatial-Intelligence Agency",
+   "url": "https://msi.nga.mil/",
+   "type": "primary",
+   "access": "public, free to use with citation",
+   "cadence": "continuous",
+   "notes": "Roughly 40 years of geocoded hostile acts against ships and mariners, about 8,000 records, searchable and downloadable. Also mirrored on ArcGIS Online. The JSON API path used previously (/api/publications/asam) returns 404 as of September 2026 — the current endpoint needs to be rediscovered from the MSI portal before automating.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "nozomi-maritime",
+   "name": "Maritime Cybersecurity",
+   "publisher": "Nozomi Networks",
+   "url": "https://www.nozominetworks.com/industries/maritime-cybersecurity",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "nyt-somali-piracy-2026",
+   "name": "2 Hijackings in 4 Days: Somali Piracy Rises",
+   "publisher": "The New York Times",
+   "url": "https://www.nytimes.com/2026/08/20/world/africa/2-hijackings-in-4-days-somali-piracy-surges.html",
+   "type": "secondary",
+   "access": "paywalled",
+   "published": "2026-08-20",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "omega-floating-armouries",
+   "name": "Floating Armouries: Implications and Risks",
+   "publisher": "Omega Research Foundation",
+   "url": "https://omegaresearchfoundation.org/reports/floating-armouries-implications-and-risks/",
+   "type": "primary",
+   "access": "public",
+   "notes": "Concludes there is a worrying lack of regulation around the operation and use of floating armouries off the Gulf of Aden.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "open-ocean-robotics",
+   "name": "Open Ocean Robotics",
+   "publisher": "Open Ocean Robotics",
+   "url": "https://www.openoceanrobotics.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "praesidium-sev",
+   "name": "Security Escort Vessels",
+   "publisher": "Praesidium International",
+   "url": "https://praesidiumintl.com/maritime-solutions/security-escort-vessels/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "privateer-mda",
+   "name": "How Space-Based Maritime Intelligence Helps Detect Dark Vessels",
+   "publisher": "Privateer",
+   "url": "https://www.privateer.com/blog/how-space-based-maritime-intelligence-helps-detect-dark-vessels-illegal-fishing-and-global-security-risks",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "recaap-annual-2025",
+   "name": "ReCAAP ISC Annual Report 2025",
+   "publisher": "ReCAAP Information Sharing Centre",
+   "url": "https://www.recaap.org/reports",
+   "type": "primary",
+   "access": "public PDF",
+   "cadence": "annual",
+   "published": "2026-02",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "recaap-hy-2026",
+   "name": "ReCAAP ISC Half Yearly Report, January–June 2026",
+   "publisher": "ReCAAP Information Sharing Centre",
+   "url": "https://www.recaap.org/resources/ck/files/reports/half-year/ReCAAP%20ISC%20Half%20Yearly%20Report%202026.pdf",
+   "type": "primary",
+   "access": "public PDF",
+   "cadence": "semi-annual",
+   "published": "2026-07-14",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "recaap-openmap",
+   "name": "ReCAAP Interactive Incident Map",
+   "publisher": "ReCAAP ISC",
+   "url": "https://portal.recaap.org/OpenMap",
+   "type": "primary",
+   "access": "public",
+   "cadence": "continuous",
+   "notes": "Per-incident map for Asia. Companion to the Re-VAMP dashboard at dashboard.recaap.org.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "recaap-weekly-2026-08-18",
+   "name": "ReCAAP ISC Weekly Report, 18-24 August 2026",
+   "publisher": "ReCAAP Information Sharing Centre",
+   "url": "https://www.recaap.org/resources/ck/files/reports/weekly/2026/ReCAAP%20ISC%20Weekly%20Report%20(18-24%20Aug)%202026.pdf",
+   "type": "primary",
+   "access": "public PDF",
+   "cadence": "weekly",
+   "published": "2026-08",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "reuters-eternity-c-crew",
+   "name": "Houthis release crew of Greek-operated cargo ship struck in Red Sea",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/houthis-release-crew-greek-operated-cargo-ship-struck-red-sea-2025-12-03/",
+   "type": "secondary",
+   "access": "public",
+   "published": "2025-12-03",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "safety4sea-recaap-hy2026",
+   "name": "ReCAAP ISC Half Yearly Report: Incidents drop 64% in first half of 2026",
+   "publisher": "SAFETY4SEA",
+   "url": "https://safety4sea.com/recaap-isc-half-yearly-report-incidents-drop-64-in-first-half-of-2026/",
+   "type": "secondary",
+   "access": "public",
+   "published": "2026-07-14",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "safety4sea-unctad-registries",
+   "name": "UNCTAD: The top registries and ship owning nations of the world",
+   "publisher": "SAFETY4SEA",
+   "url": "https://safety4sea.com/unctad-the-top-registries-and-ship-owning-nations-of-the-world/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "saildrone",
+   "name": "Saildrone",
+   "publisher": "Saildrone",
+   "url": "https://www.saildrone.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "sailworld-antipiracy",
+   "name": "18 anti-piracy weapons for ships to fight pirates",
+   "publisher": "Sail-World",
+   "url": "https://www.sail-world.com/Australia/18-anti-piracy-weapons-for-ships-to-fight-pirates/-126431",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "saronic",
+   "name": "Saronic Technologies",
+   "publisher": "Saronic Technologies",
+   "url": "https://www.saronic.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats",
+   "name": "Seasats",
+   "publisher": "Seasats",
+   "url": "https://www.seasats.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seavantage-ais-platforms",
+   "name": "Best Vessel Tracking Software in 2026: 8 AIS Platforms Compared",
+   "publisher": "SeaVantage",
+   "url": "https://www.seavantage.com/blog/best-vessel-tracking-software-in-2026-8-ais-platforms-compared",
+   "type": "secondary",
+   "access": "public",
+   "notes": "Published by one of the platforms compared.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "solace-global",
+   "name": "Solace Global",
+   "publisher": "Solace Global",
+   "url": "https://www.solaceglobal.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "sonardyne-sentinel",
+   "name": "Sentinel",
+   "publisher": "Sonardyne",
+   "url": "https://www.sonardyne.com/product/sentinel/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "spglobal-cape-reroutes",
+   "name": "Cape of Good Hope reroutes likely to persist well into 2025 as industry adapts",
+   "publisher": "S&P Global Commodity Insights",
+   "url": "https://www.spglobal.com/energy/en/news-research/latest-news/crude-oil/092524-cape-of-good-hope-reroutes-likely-to-persist-well-into-2025-as-industry-adapts-one-ceo",
+   "type": "secondary",
+   "access": "public",
+   "published": "2024-09-25",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "stable-seas-piracy",
+   "name": "The State of Maritime Piracy (annual series)",
+   "publisher": "Stable Seas / One Earth Future, formerly Oceans Beyond Piracy",
+   "url": "https://imo.libguides.com/c.php?g=659460&p=4655525",
+   "type": "secondary",
+   "access": "public",
+   "notes": "Eleven years of annual assessments of the human and economic cost of piracy. The main published source for cost-of-piracy figures beyond insurance premiums.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "starboard-dark-vessel",
+   "name": "Satellite dark vessel detection for maritime domain awareness",
+   "publisher": "Starboard Maritime Intelligence",
+   "url": "https://www.starboardintelligence.com/articles/satellite-dark-vessel-detection-for-maritime-domain-awareness",
+   "type": "primary",
+   "access": "public",
+   "notes": "Includes a comparative field study of SAR versus RF detection with accuracy and false-positive findings.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "supplychain-top10",
+   "name": "Top 10 marine security companies",
+   "publisher": "Supply Chain Digital",
+   "url": "https://supplychaindigital.com/top10/top-10-marine-security-companies",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "supplychainbrain-warrisk",
+   "name": "War Risk Insurance and the Current Crisis in the Persian Gulf",
+   "publisher": "SupplyChainBrain",
+   "url": "https://www.supplychainbrain.com/blogs/1-think-tank/post/43590-war-risk-insurance-and-the-current-crisis-in-the-persian-gulf",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "thales-naval",
+   "name": "Naval Forces",
+   "publisher": "Thales Group",
+   "url": "https://www.thalesgroup.com/en/defence/naval",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "ukmto",
+   "name": "UKMTO — United Kingdom Maritime Trade Operations",
+   "publisher": "Royal Navy",
+   "url": "https://www.ukmto.org/",
+   "type": "primary",
+   "access": "public, registration for advisories",
+   "cadence": "continuous",
+   "notes": "First-call reporting body for the Indian Ocean, Gulf of Aden, Red Sea and Arabian Gulf. Issues live advisories and warnings.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "unctad-maritime",
+   "name": "UNCTAD Data Hub — maritime transport",
+   "publisher": "UN Trade and Development",
+   "url": "https://unctadstat.unctad.org/insights/theme/107",
+   "type": "primary",
+   "access": "public",
+   "cadence": "annual",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "useluminix-hormuz",
+   "name": "Economic Impact Analysis: Strait of Hormuz Closure Through April 2026",
+   "publisher": "Luminix (research aggregator)",
+   "url": "https://www.useluminix.com/reports/industry-analysis/economic-impact-analysis-strait-of-hormuz-closure-through-april-2026/source/4",
+   "type": "aggregator",
+   "access": "public",
+   "notes": "Aggregates Marsh, Howden, UNCTAD, Reuters and Bloomberg figures without primary citation in the visible text. Every number sourced to this entry is marked low confidence and must be verified against the underlying broker or UNCTAD publication before external use.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "usesentinel-ais",
+   "name": "Top AIS Data Providers Compared",
+   "publisher": "Sentinel",
+   "url": "https://www.usesentinel.io/blog/ais-data-providers-comparison",
+   "type": "secondary",
+   "access": "public",
+   "notes": "Vendor comparison published by one of the vendors compared.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "usni-anduril-acv",
+   "name": "U.S. Marine Corps ACVs to Counter Drones with Anduril Jammer Package",
+   "publisher": "USNI News",
+   "url": "https://news.usni.org/2026/08/05/u-s-marine-corps-acvs-to-counter-drones-with-anduril-jammer-package/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "veson-shipowning-nations-2025",
+   "name": "Top 10 Shipowning Nations by Total Asset Value for 2025",
+   "publisher": "Veson Nautical / VesselsValue",
+   "url": "https://veson.com/blog/top-10-shipowning-nations-by-total-asset-value-for-2025/",
+   "type": "secondary",
+   "access": "public",
+   "published": "2025-01-23",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "wikipedia-floating-armoury",
+   "name": "Floating armoury",
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Floating_armoury",
+   "type": "tertiary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "wikipedia-houthi-attacks",
+   "name": "Houthi attacks on commercial vessels — incident timeline",
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Houthi_attacks_on_commercial_vessels",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Useful as an index of incidents with per-incident citations to Reuters/AP. Treat the table as a pointer, not as the authority. Cross-check against Lloyd's List before using commercially.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "wikipedia-somali-piracy",
+   "name": "Piracy off the coast of Somalia",
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Piracy_off_the_coast_of_Somalia",
+   "type": "tertiary",
+   "access": "public",
+   "notes": "Index with per-incident citations. Cross-check before commercial use.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "windward-ai",
+   "name": "Windward Maritime AI",
+   "publisher": "Windward",
+   "url": "https://windward.ai/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "windward-somali-piracy",
+   "name": "Somali Piracy Is Back: What the Incident Data Shows",
+   "publisher": "Windward",
+   "url": "https://windward.ai/knowledge-base/somali-piracy-is-back-what-the-incident-data-shows-and-where-the-risk-is-concentrating/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "worldcargonews-suez-recovery",
+   "name": "Suez Canal in recovery mode",
+   "publisher": "WorldCargo News",
+   "url": "https://www.worldcargonews.com/news/2025/11/suez-canal-in-recovery-mode/",
+   "type": "secondary",
+   "access": "public",
+   "published": "2025-11",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "worldwideais-providers",
+   "name": "AIS Data Providers in 2026: Who's Independent, Who's Not",
+   "publisher": "Worldwide AIS Network",
+   "url": "https://www.worldwideais.org/post/ais-data-providers-in-2026-who-s-independent-who-s-not-and-why-it-matters",
+   "type": "secondary",
+   "access": "public",
+   "notes": "Interested party — it sells a competing decentralised AIS network. The consolidation timeline it gives is checkable against the acquisition announcements.",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "wsj-floating-armories",
+   "name": "How Floating Armories Help Guard Cargo Ships From Pirates on High Seas",
+   "publisher": "The Wall Street Journal",
+   "url": "https://www.wsj.com/articles/how-floating-armories-help-guard-cargo-ships-from-pirates-on-high-seas-1422934573",
+   "type": "secondary",
+   "access": "paywalled",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-tectonic-seriesa",
+   "name": "Seasats Aims to Boost USV Production after $20M Series A",
+   "publisher": "Tectonic Defense",
+   "url": "https://www.tectonicdefense.com/seasats-aims-to-boost-usv-production-after-20m-series-a/",
+   "type": "trade press",
+   "access": "public",
+   "published": "2026-02-18",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-apfit-prnewswire",
+   "name": "Seasats Awarded $24M in Department of War APFIT Funding",
+   "publisher": "PR Newswire",
+   "url": "https://www.prnewswire.com/news-releases/seasats-awarded-24m-in-department-of-war-apfit-funding-to-accelerate-fielding-of-its-autonomous-surface-vessels-302662524.html",
+   "type": "press release",
+   "access": "public",
+   "published": "2026-01-15",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-quickfish-prnewswire",
+   "name": "Seasats Unveils The Quickfish",
+   "publisher": "PR Newswire",
+   "url": "https://www.prnewswire.com/news-releases/seasats-unveils-the-quickfish-a-high-speed-long-endurance-autonomous-surface-vessel-proven-in-us-navy-exercise-302588427.html",
+   "type": "press release",
+   "access": "public",
+   "published": "2025-10",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-defensedaily-seriesa",
+   "name": "Seasats Raises $20 Million To Increase Production Of Small USVs",
+   "publisher": "Defense Daily",
+   "url": "https://www.defensedaily.com/seasats-raises-20-million-to-increase-production-of-small-usvs/unmanned-systems/",
+   "type": "trade press",
+   "access": "public",
+   "published": "2026-02",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-navaltoday-trial",
+   "name": "Seasats: Quickfish USV completes 8-day continuous sea trial",
+   "publisher": "Naval Today",
+   "url": "https://navaltoday.com/2026/03/20/seasats-quickfish-usv-completes-8-day-continuous-sea-trial-video",
+   "type": "trade press",
+   "access": "public",
+   "published": "2026-03-20",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-l3harris",
+   "name": "L3Harris and Startup Seasats Accomplish Milestone in Proving Resilient, Distributed Maritime Autonomous Operations",
+   "publisher": "L3Harris",
+   "url": "https://www.l3harris.com/newsroom/press-release/2024/06/l3harris-and-startup-seasats-accomplish-milestone-proving-resilient",
+   "type": "press release",
+   "access": "public",
+   "published": "2024-06",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "seasats-cbinsights",
+   "name": "Seasats company profile",
+   "publisher": "CB Insights",
+   "url": "https://www.cbinsights.com/company/seasatellites",
+   "type": "database profile",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "galaxy-leader-reuters",
+   "name": "Seized Galaxy Leader ship in Yemen's Hodeidah port area, owner says",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/seized-galaxy-leader-ship-yemens-hodeidah-port-area-owner-2023-11-20/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2023-11-20"
+  },
+  {
+   "id": "galaxy-leader-lloyds",
+   "name": "Crew of Houthi-hijacked Galaxy Leader allowed modest contact with families, says vessel's registered owner",
+   "publisher": "Lloyd's List",
+   "url": "https://lloydslist.com/LL1147509/Crew-of-Houthi-hijacked-Galaxy-Leader-allowed-modest-contact-with-families-says-vessels-registered-owner",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "ruen-lloyds",
+   "name": "Bulk carrier Ruen hijacked off Somalia",
+   "publisher": "Lloyd's List",
+   "url": "https://www.lloydslist.com/LL1147626/Bulk-carrier-Ruen-hijacked-off-Somalia",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2023-12-15"
+  },
+  {
+   "id": "ruen-voa",
+   "name": "EU's naval force says hijacked cargo ship moved toward Somalia coast",
+   "publisher": "Voice of America",
+   "url": "https://www.voanews.com/a/eu-s-naval-force-says-hijacked-cargo-ship-moved-toward-somalia-coast/7405134.html",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2023-12-18"
+  },
+  {
+   "id": "ruen-guardian",
+   "name": "India recaptures Somali pirate ship and frees crew",
+   "publisher": "The Guardian",
+   "url": "https://www.theguardian.com/world/2024/mar/17/india-recaptures-somali-pirate-ship-and-frees-crew",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-03-17"
+  },
+  {
+   "id": "lila-norfolk-pib",
+   "name": "Indian Navy responds to hijacking attempt on MV Lila Norfolk",
+   "publisher": "Press Information Bureau, Government of India",
+   "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1993711",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-01-05"
+  },
+  {
+   "id": "lila-norfolk-lloyds",
+   "name": "Liberia-flagged bulk carrier boarded off Somalia",
+   "publisher": "Lloyd's List",
+   "url": "https://www.lloydslist.com/LL1147825/Liberia-flagged-bulk-carrier-boarded-off-Somalia--Ambrey",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-01-05"
+  },
+  {
+   "id": "rubymar-cnbc",
+   "name": "Houthi-damaged ship awaits towing to Saudi Arabia amid oil slick concerns",
+   "publisher": "CNBC",
+   "url": "https://www.cnbc.com/2024/02/28/houthi-damaged-ship-awaits-towing-to-saudi-arabia-amid-oil-slick-concerns.html",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-02-28"
+  },
+  {
+   "id": "rubymar-reuters",
+   "name": "Freighter Rubymar has sunk in Red Sea",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/freighter-rubymar-has-sunk-red-sea-yemen-internationally-recognised-government-2024-03-02/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-03-02"
+  },
+  {
+   "id": "true-confidence-imo",
+   "name": "Attack on True Confidence",
+   "publisher": "International Maritime Organization",
+   "url": "https://www.imo.org/en/MediaCentre/PressBriefings/pages/Attack-on-True-Confidence.aspx",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-03-06"
+  },
+  {
+   "id": "true-confidence-wsc",
+   "name": "Attack on MV True Confidence, 06 March 2024",
+   "publisher": "World Shipping Council",
+   "url": "https://www.worldshipping.org/news/attack-on-mv-true-confidence-06-march-2024",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-03-06"
+  },
+  {
+   "id": "true-confidence-reuters",
+   "name": "Ship evacuated after first civilian fatalities from Houthi Red Sea attacks",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/ship-evacuated-after-first-civilian-fatalities-houthis-red-sea-attacks-2024-03-07/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-03-07"
+  },
+  {
+   "id": "abdullah-maritrace",
+   "name": "Hijacked cargo ship Abdullah released on the east coast of Somalia",
+   "publisher": "MariTrace",
+   "url": "https://www.maritrace.com/blog/hijacked-cargo-ship-abdullah-released-on-the-east-coast-of-somalia",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-04-24"
+  },
+  {
+   "id": "abdullah-eunavfor",
+   "name": "Update: piracy event involving Bangladesh-flagged bulk carrier MV Abdullah",
+   "publisher": "EUNAVFOR ATALANTA",
+   "url": "https://eunavfor.eu/news/update-piracy-event-involving-bangladesh-flagged-bulk-carrier-merchant-vessel-abdullah",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-03-14"
+  },
+  {
+   "id": "tutor-reuters",
+   "name": "Salvage firm confirms sinking of Greek-owned Tutor struck by Houthis",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/salvage-firm-confirms-sinking-greek-owned-tutor-struck-by-houthis-2024-06-19/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-06-19"
+  },
+  {
+   "id": "tutor-gcaptain",
+   "name": "Rescue underway for bulk carrier missing crew member after Houthi attack",
+   "publisher": "gCaptain",
+   "url": "https://gcaptain.com/rescue-underway-for-bulk-carrier-missing-crew-member-after-houthi-attack/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-06-14"
+  },
+  {
+   "id": "sounion-reuters",
+   "name": "Tanker reports attack off Yemen's Hodeidah, UKMTO says",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/tanker-reports-attack-off-yemens-hodeidah-ukmto-says-2024-08-21/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2024-08-21"
+  },
+  {
+   "id": "magic-seas-solace",
+   "name": "Alert: Houthi Red Sea attack",
+   "publisher": "Solace Global",
+   "url": "https://www.solaceglobal.com/news/2025/07/07/alert-plus-houthi-red-sea-attack/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025-07-07"
+  },
+  {
+   "id": "eternity-c-reuters",
+   "name": "Eternity C manager says one individual believed dead, four unaccounted for",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/eternity-c-manager-says-one-individual-believed-dead-four-unaccounted-after-2025-07-10/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025-07-10"
+  },
+  {
+   "id": "eternity-c-riviera",
+   "name": "Eternity C shipmanagers respond to Houthi video of captive survivors",
+   "publisher": "Riviera Maritime Media",
+   "url": "https://www.rivieramm.com/news-content-hub/eternity-c-shipmanagers-respond-to-houthi-video-of-captive-survivors-85655",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "hellas-aphrodite-lloyds",
+   "name": "Hellas Aphrodite crew liberated by navy",
+   "publisher": "Lloyd's List",
+   "url": "https://www.lloydslist.com/LL1155417/Hellas-Aphrodite-crew-liberated-by-navy",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025-11-07"
+  },
+  {
+   "id": "marineinsight-bulk-companies",
+   "name": "12 Biggest Bulk Shipping Companies",
+   "publisher": "Marine Insight",
+   "url": "https://www.marineinsight.com/biggest-bulk-shipping-companies/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "fortune-drybulk-market",
+   "name": "Dry Bulk Shipping Market Size, Share & Industry Analysis",
+   "publisher": "Fortune Business Insights",
+   "url": "https://www.fortunebusinessinsights.com/dry-bulk-shipping-market-115735",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "genco-site",
+   "name": "Genco Shipping & Trading Limited",
+   "publisher": "Genco Shipping & Trading",
+   "url": "https://www.gencoshipping.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "frontline-fleet",
+   "name": "Frontline plc fleet",
+   "publisher": "Frontline plc",
+   "url": "https://www.frontlineplc.cy/fleet/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "frontline-renewal",
+   "name": "Strategic fleet renewal and expansion",
+   "publisher": "Frontline plc",
+   "url": "https://www.frontlineplc.cy/fro-strategic-fleet-renewal-and-expansion/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "hafnia-about",
+   "name": "About Hafnia",
+   "publisher": "Hafnia",
+   "url": "https://hafniabw.com/about-us/about/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "stolt-tankers",
+   "name": "Stolt Tankers",
+   "publisher": "Stolt-Nielsen",
+   "url": "https://www.stolt-nielsen.com/our-businesses/stolt-tankers/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "odfjell-annual-2025",
+   "name": "Odfjell annual report 2025, governance and impact",
+   "publisher": "Odfjell",
+   "url": "https://annual2025.odfjell.com/reports/governance-and-impact",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025"
+  },
+  {
+   "id": "columbia-shipmanagement",
+   "name": "Ship management services",
+   "publisher": "Columbia Group",
+   "url": "https://columbiagroup.org/ship-management-services/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "lloyds-top-shipmanagers-2025",
+   "name": "Top 10 shipmanagers 2025",
+   "publisher": "Lloyd's List",
+   "url": "https://www.lloydslist.com/LL1155778/Top-10-shipmanagers-2025",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025"
+  },
+  {
+   "id": "marineinsight-shipmanagers",
+   "name": "Top 10 Ship Management Companies",
+   "publisher": "Marine Insight",
+   "url": "https://www.marineinsight.com/top-10-ship-management-companies/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "marine-digital-tankers",
+   "name": "10 largest oil tanker companies",
+   "publisher": "Marine Digital",
+   "url": "https://marine-digital.com/article_10largestoiltankercompanies",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "gettransport-tankers-2026",
+   "name": "Largest tanker shipping companies 2026",
+   "publisher": "GetTransport",
+   "url": "https://blog.gettransport.com/trends-in-logistic/largest-tanker-shipping-companies-2026/",
+   "type": "secondary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2026"
+  },
+  {
+   "id": "cosmoship-site",
+   "name": "Cosmoship Management S.A.",
+   "publisher": "Cosmoship Management S.A.",
+   "url": "http://www.cosmoships.gr",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "delta-tankers-site",
+   "name": "Delta Tankers Ltd.",
+   "publisher": "Delta Tankers",
+   "url": "https://deltatankers.gr",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "latsco-site",
+   "name": "Latsco Group",
+   "publisher": "Latsco Group",
+   "url": "https://www.latsco.com",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "navibulgar-site",
+   "name": "Navigation Maritime Bulgare",
+   "publisher": "Navibulgar",
+   "url": "https://www.navbul.com/en/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "ksrm-site",
+   "name": "KSRM",
+   "publisher": "Kabir Steel Re-Rolling Mills",
+   "url": "https://ksrm.com.bd/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "nyk-site",
+   "name": "NYK Line company profile",
+   "publisher": "Nippon Yusen Kabushiki Kaisha",
+   "url": "https://www.nyk.com/english/profile/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-site",
+   "name": "BlackSea Technologies",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-comet",
+   "name": "Comet",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/comet",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-chaser",
+   "name": "Chaser",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/chaser",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-garc",
+   "name": "GARC",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/garc",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-nighttrain",
+   "name": "NightTrain",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/nighttrain",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "blacksea-spds-contract",
+   "name": "BlackSea awarded $256M Navy SPDS contract",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/press/blacksea-256m-navy-spds-contract",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2026-05-05"
+  },
+  {
+   "id": "blacksea-culture",
+   "name": "Culture",
+   "publisher": "BlackSea Technologies",
+   "url": "https://www.blacksea.tech/culture",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "navalnews-blacksea-comet",
+   "name": "New Comet and Chaser USV by BlackSea Technologies",
+   "publisher": "Naval News",
+   "url": "https://www.navalnews.com/naval-news/2026/05/video-new-comet-and-chaser-usv-by-blacksea-technologies/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2026-05-10"
+  },
+  {
+   "id": "baltimore-banner-blacksea",
+   "name": "Baltimore naval drone boats: BlackSea Technologies",
+   "publisher": "The Baltimore Banner",
+   "url": "https://www.thebanner.com/economy/baltimore-naval-drone-boats-blacksea-technologies-F7CW4PKHVRBMRKBA3EGOKG243I/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025-10"
+  },
+  {
+   "id": "defensescoop-garc",
+   "name": "Navy GARC production ramp-up",
+   "publisher": "DefenseScoop",
+   "url": "https://defensescoop.com/2025/01/17/navy-garc-global-autonomous-reconnaissance-craft-ramp-up-production/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2025-01-17"
+  },
+  {
+   "id": "aevex-acquires-blacksea",
+   "name": "AEVEX to acquire BlackSea Technologies",
+   "publisher": "AEVEX",
+   "url": "https://aevex.com/aevex-to-acquire-blacksea-technologies-strengthening-its-multi-domain-autonomous-systems-capabilities/",
+   "type": "press release",
+   "access": "public",
+   "retrieved": "2026-09-03",
+   "published": "2026-08-12"
+  },
+  {
+   "id": "ambrey-partners",
+   "name": "Our partners",
+   "publisher": "Ambrey",
+   "url": "https://ambrey.com/our-partners/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "ambrey-insurwave",
+   "name": "Ambrey and Insurwave announce partnership",
+   "publisher": "Ambrey",
+   "url": "https://ambrey.com/app/uploads/2024/07/Press-Release-Ambrey-Insurwave-Partnership.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024-07"
+  },
+  {
+   "id": "mast-beazley",
+   "name": "MAST partners with Beazley Group",
+   "publisher": "MarineLink",
+   "url": "https://www.marinelink.com/news/partners-beazley-group349776",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "britannia-site",
+   "name": "Britannia Risks Group",
+   "publisher": "Britannia Risks Group",
+   "url": "https://britanniarisks.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "castorvali-clients",
+   "name": "Our clients",
+   "publisher": "Castor Vali",
+   "url": "https://www.castorvali.com/our-clients/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "castorvali-eucap",
+   "name": "EUCAP Somalia security logistics case study",
+   "publisher": "Castor Vali",
+   "url": "https://www.castorvali.com/news/eucap-somalia-security-logistics-case-study/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "praesidium-group",
+   "name": "The group",
+   "publisher": "Praesidium International",
+   "url": "https://praesidiumintl.com/the-group/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "esc-site",
+   "name": "ESC Global Security",
+   "publisher": "ESC Global Security",
+   "url": "https://escgs.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "esc-shiptech",
+   "name": "ESC contractor profile",
+   "publisher": "Ship Technology",
+   "url": "https://www.ship-technology.com/contractors/security/esc/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "solace-site",
+   "name": "Solace Global",
+   "publisher": "Solace Global",
+   "url": "https://www.solaceglobal.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "diaplous-bigoceandata",
+   "name": "Diaplous maritime services agreement renewal",
+   "publisher": "BigOceanData",
+   "url": "https://bigoceandata.com/partnership-renewal-strengthens-maritime-security-capabilities/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "oddfox-site",
+   "name": "Odd Fox — Marine Security as a Service",
+   "publisher": "Odd Fox",
+   "url": "https://oddfox.ai/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "saildrone-sulmara",
+   "name": "Sulmara teams up with Saildrone to use USVs to expand offshore survey capabilities",
+   "publisher": "Saildrone",
+   "url": "https://www.saildrone.com/news/sulmara-teams-up-with-saildrone-to-use-usvs-to-expand-offshore-survey-capabilities",
+   "type": "primary",
+   "access": "public",
+   "published": "2025",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "seasats-quickfish-trial-pr",
+   "name": "Seasats Quickfish USV completes continuous eight-day sea trial",
+   "publisher": "PR Newswire",
+   "url": "https://www.prnewswire.com/news-releases/seasats-quickfish-usv-completes-continuous-eight-day-sea-trial-302715566.html",
+   "type": "primary",
+   "access": "public",
+   "published": "2025",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "voyager-autonomy",
+   "name": "Voyager Autonomy",
+   "publisher": "Voyager Technologies",
+   "url": "https://voyagerautonomy.com/",
+   "type": "primary",
+   "access": "public",
+   "published": "2025-07-09",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "unctad-rmt-2025",
+   "name": "Review of Maritime Transport 2025",
+   "publisher": "UNCTAD",
+   "url": "https://unctad.org/system/files/official-document/rmt2025_en.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "unctad-rmt-2024",
+   "name": "Review of Maritime Transport 2024",
+   "publisher": "UNCTAD",
+   "url": "https://unctad.org/system/files/official-document/rmt2024_en.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024"
+  },
+  {
+   "id": "unctadstat-containers",
+   "name": "Container port throughput",
+   "publisher": "UNCTAD Data Hub",
+   "url": "https://unctadstat.unctad.org/insights/theme/109",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "unctad-suez-2024",
+   "name": "Navigating troubled waters: impact on global trade",
+   "publisher": "UNCTAD",
+   "url": "https://unctad.org/system/files/official-document/osginf2024d2_en.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024"
+  },
+  {
+   "id": "pancanal-fy2025",
+   "name": "Panama Canal maintains operational and financial strength",
+   "publisher": "Panama Canal Authority",
+   "url": "https://pancanal.com/en/panama-canal-maintains-operational-and-financial-strength/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "freightos-fbx",
+   "name": "Freightos Baltic Index",
+   "publisher": "Freightos / Baltic Exchange",
+   "url": "https://www.freightos.com/enterprise/terminal/freightos-baltic-index-global-container-pricing-index/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "shipandbunker-sin",
+   "name": "Singapore bunker prices",
+   "publisher": "Ship & Bunker",
+   "url": "https://shipandbunker.com/prices/apac/sea/sg-sin-singapore",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "shipandbunker-rtm",
+   "name": "Rotterdam bunker prices",
+   "publisher": "Ship & Bunker",
+   "url": "https://shipandbunker.com/prices/emea/nwe/nl-rtm-rotterdam",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "shipandbunker-fjr",
+   "name": "Fujairah bunker prices",
+   "publisher": "Ship & Bunker",
+   "url": "https://shipandbunker.com/prices/emea/me/ae-fjr-fujairah",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2023-12",
+   "name": "War risk insurance rates edge up after surge in Red Sea ship attacks",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/war-risk-insurance-rates-edge-up-after-surge-red-sea-ship-attacks-2023-12-04/",
+   "type": "press",
+   "access": "public",
+   "published": "2023-12-04",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2024-01",
+   "name": "Red Sea war insurance rises with more ships in firing line",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/business/finance/red-sea-war-insurance-rises-with-more-ships-firing-line-2024-01-16/",
+   "type": "press",
+   "access": "public",
+   "published": "2024-01-16",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2024-09",
+   "name": "Red Sea insurance costs soar as Houthi shipping threats loom",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/red-sea-insurance-costs-soar-houthi-shipping-threats-loom-sources-say-2024-09-19/",
+   "type": "press",
+   "access": "public",
+   "published": "2024-09-19",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2025-03",
+   "name": "Red Sea insurance rates stay firm as US airstrikes raise fears",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/business/red-sea-insurance-rates-stay-firm-us-airstrikes-raise-fears-ships-2025-03-17/",
+   "type": "press",
+   "access": "public",
+   "published": "2025-03-17",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2025-06",
+   "name": "Escalating Hormuz tensions drive up Middle East war risk insurance costs",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/escalating-hormuz-tensions-drive-up-middle-east-war-risk-insurance-costs-sources-2025-06-23/",
+   "type": "press",
+   "access": "public",
+   "published": "2025-06-23",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2025-07",
+   "name": "Red Sea insurance soars after deadly Houthi ship attacks",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/business/autos-transportation/red-sea-insurance-soars-after-deadly-houthi-ship-attacks-2025-07-10/",
+   "type": "press",
+   "access": "public",
+   "published": "2025-07-10",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-warrisk-2026-07",
+   "name": "War risk insurance costs surge for southern Red Sea voyages after Houthi attacks",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/war-risk-insurance-costs-surge-southern-red-sea-voyages-after-houthi-attacks-2026-07-23/",
+   "type": "press",
+   "access": "public",
+   "published": "2026-07-23",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-maersk-divert",
+   "name": "Maersk diverts vessels away from Red Sea for foreseeable future",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/maersk-diverts-vessels-away-red-sea-for-foreseeable-future-2024-01-05/",
+   "type": "press",
+   "access": "public",
+   "published": "2024-01-05",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "gard-2025",
+   "name": "Premium policy for the 2025 policy year",
+   "publisher": "Gard",
+   "url": "https://gard.no/en/circulars/10-2024-premium-policy-for-the-2025-policy-year/",
+   "type": "primary",
+   "access": "public",
+   "published": "2024",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "gard-2026",
+   "name": "Premium policy for the 2026 policy year",
+   "publisher": "Gard",
+   "url": "https://gard.no/en/circulars/premium-policy-for-the-2026-policy-year/",
+   "type": "primary",
+   "access": "public",
+   "published": "2025",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "northstandard-2026",
+   "name": "Financial review and renewal 2026",
+   "publisher": "NorthStandard",
+   "url": "https://north-standard.com/insights-and-resources/resources/circulars/financial-review-and-renewal-2026",
+   "type": "primary",
+   "access": "public",
+   "published": "2025",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "skuld-2026",
+   "name": "Skuld renewal update, policy year 2026/27",
+   "publisher": "Skuld",
+   "url": "https://www.skuld.com/about/-/circulars/2025/skuld-renewal-update-1-policy-year-202627/",
+   "type": "primary",
+   "access": "public",
+   "published": "2025",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "steamship-2025",
+   "name": "Financial report and 2025 renewal",
+   "publisher": "Steamship Mutual",
+   "url": "https://www.steamshipmutual.com/publications/articles/press-release-financial-report-and-2025-renewal",
+   "type": "primary",
+   "access": "public",
+   "published": "2025",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "steamship-2026",
+   "name": "Financial update and 2026 renewal",
+   "publisher": "Steamship Mutual",
+   "url": "https://www.steamshipmutual.com/press-release-financial-update-and-2026-renewal-board-meeting-report",
+   "type": "primary",
+   "access": "public",
+   "published": "2026",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "reuters-suez-2024",
+   "name": "Suez Canal revenues plunge 61% in 2024",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/suez-canal-revenues-plunge-61-2024-2025-01-01/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025-01-01"
+  },
+  {
+   "id": "unctad-redsea-routes",
+   "name": "Ships face longer routes, higher costs and emissions in Red Sea crisis",
+   "publisher": "UNCTAD",
+   "url": "https://unctad.org/news/ships-face-longer-routes-higher-costs-and-emissions-red-sea-crisis",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024-01-26"
+  },
+  {
+   "id": "imo-piracy",
+   "name": "Piracy and armed robbery against ships",
+   "publisher": "IMO",
+   "url": "https://www.imo.org/en/OurWork/Security/Pages/PiracyArmedRobberydefault.aspx",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "sca-tolls",
+   "name": "Suez Canal tolls",
+   "publisher": "Suez Canal Authority",
+   "url": "https://www.suezcanal.gov.eg/English/Navigation/Pages/Tolls.aspx",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "pancanal-tolls",
+   "name": "Panama Canal tolls",
+   "publisher": "Panama Canal Authority",
+   "url": "https://pancanal.com/en/maritime-services/tolls/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "pancanal-27",
+   "name": "Panama Canal to increase daily transits to 27",
+   "publisher": "Panama Canal Authority",
+   "url": "https://pancanal.com/en/news/panama-canal-to-increase-daily-transits-to-27/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024-07-11"
+  },
+  {
+   "id": "pancanal-adjust",
+   "name": "Panama Canal announces adjustments to daily transits",
+   "publisher": "Panama Canal Authority",
+   "url": "https://pancanal.com/en/news/panama-canal-announces-adjustments-to-daily-transits/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2023-12"
+  },
+  {
+   "id": "reuters-panama-slot",
+   "name": "Panama Canal auction slot fetches record $3.975 million",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/business/energy/panama-canal-auction-slot-fetches-record-3975-million-2023-11-08/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2023-11-08"
+  },
+  {
+   "id": "reuters-divert-cost",
+   "name": "Shipping firms avoid Red Sea and Suez Canal after US strikes in Yemen",
+   "publisher": "Reuters",
+   "url": "https://www.reuters.com/world/middle-east/shipping-firms-avoid-red-sea-suez-canal-after-us-strikes-yemen-2024-01-12/",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024-01-12"
+  },
+  {
+   "id": "sea-distances",
+   "name": "Sea distances calculator",
+   "publisher": "Sea-Distances.org",
+   "url": "https://sea-distances.org/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "shipfinder-api",
+   "name": "ShipFinder AIS Data API",
+   "publisher": "ShipFinder / Elane Global",
+   "url": "https://docs.shipfinder.com/",
+   "type": "api",
+   "access": "api key, 14-day starter trial",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "unctad-rmt-2024-ch2",
+   "name": "Review of Maritime Transport 2024, chapter 2",
+   "publisher": "UNCTAD",
+   "url": "https://unctad.org/system/files/official-document/rmt2024ch2_en.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024"
+  },
+  {
+   "id": "allianz-safety",
+   "name": "Safety and Shipping Review",
+   "publisher": "Allianz Commercial",
+   "url": "https://commercial.allianz.com/news-and-insights/reports/shipping-and-safety-review.html",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "imb-annual-reports",
+   "name": "IMB Piracy annual reports",
+   "publisher": "ICC Commercial Crime Services",
+   "url": "https://www.icc-ccs.org/piracy-reporting-centre/imb-piracy-annual-reports",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "bimco-ics-2021",
+   "name": "Seafarer Workforce Report 2021",
+   "publisher": "BIMCO / ICS",
+   "url": "https://www.ics-shipping.org/wp-content/uploads/2021/07/Seafarer-Workforce-Report-2021.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2021"
+  },
+  {
+   "id": "bimco-ics-2015",
+   "name": "Manpower Report 2015",
+   "publisher": "BIMCO / ICS",
+   "url": "https://www.ics-shipping.org/wp-content/uploads/2020/08/ics-bimco-seafarer-workforce-report-2015.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2015"
+  },
+  {
+   "id": "alphaliner-top100",
+   "name": "Alphaliner Top 100 operated fleets",
+   "publisher": "Alphaliner / AXSMarine",
+   "url": "https://alphaliner.axsmarine.com/PublicTop100/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "drewry-wci",
+   "name": "World Container Index",
+   "publisher": "Drewry",
+   "url": "https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "baltic-fbx-dec24",
+   "name": "FBX index December 2024 market summary",
+   "publisher": "Baltic Exchange",
+   "url": "https://www.balticexchange.com/en/news-and-events/news/guest-column/2025/fbx-index-dec-24-market-summary.html",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "ing-container-2025",
+   "name": "Container shipping: sailing through uncertainty and looming overcapacity",
+   "publisher": "ING Research",
+   "url": "https://think.ing.com/articles/container-shipping-sailing-through-uncertainty-and-looming-overcapacity/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "pem-container-value",
+   "name": "Value of containerized trade",
+   "publisher": "Port Economics, Management and Policy",
+   "url": "https://porteconomicsmanagement.org/pemp/contents/part1/maritime-shipping-and-international-trade/value-containerized-trade/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "axs-aug2025",
+   "name": "Key container shipping data trends, August 2025",
+   "publisher": "AXSMarine",
+   "url": "https://public.axsmarine.com/blog/key-container-shipping-data-trends-august-2025",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "genco-q4-2025",
+   "name": "Genco Q4 2025 financial results",
+   "publisher": "Genco Shipping & Trading",
+   "url": "https://investors.gencoshipping.com/news/press-releases/news-details/2026/Genco-Shipping--Trading-Limited-Announces-Q4-2025-Financial-Results/default.aspx",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026"
+  },
+  {
+   "id": "starbulk-q1-2026",
+   "name": "Star Bulk Q1 2026 results",
+   "publisher": "Star Bulk Carriers",
+   "url": "https://www.starbulk.com/media/uploads_file/2026/05/20/p1jp3g2m39dca9s41dsf1t6u1h8e4.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026-05-20"
+  },
+  {
+   "id": "scorpio-q3-2025",
+   "name": "Scorpio Tankers Q3 2025 results",
+   "publisher": "Scorpio Tankers",
+   "url": "https://www.scorpiotankers.com/scorpio-tankers-inc-announces-financial-results-for-the-third-quarter-of-2025-and-an-increase-to-its-quarterly-dividend/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "scorpio-q2-2025",
+   "name": "Scorpio Tankers Q2 2025 results",
+   "publisher": "Scorpio Tankers",
+   "url": "https://www.scorpiotankers.com/scorpio-tankers-inc-announces-financial-results-for-the-second-quarter-of-2025-and-the-declaration-of-a-dividend/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "danaos-20f-2024",
+   "name": "Danaos annual report 20-F 2024",
+   "publisher": "Danaos Corporation",
+   "url": "https://www.sec.gov/Archives/edgar/data/1369241/000141057825000277/dac-20241231x20f.htm",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "costamare-20f-2024",
+   "name": "Costamare annual report 20-F 2024",
+   "publisher": "Costamare",
+   "url": "https://www.costamare.com/images/annual_reports/cmre_2024_20-F.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "frontline-q4-2025",
+   "name": "Frontline Q4 and full year 2025 results",
+   "publisher": "Frontline",
+   "url": "https://www.frontlineplc.cy/fro-fourth-quarter-and-full-year-2025-results/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026"
+  },
+  {
+   "id": "teekay-q4-2025",
+   "name": "Teekay Tankers Q4 2025 earnings",
+   "publisher": "Teekay Tankers",
+   "url": "https://www.sec.gov/Archives/edgar/data/1419945/000141994526000004/tnkq4-25erdocument.htm",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026"
+  },
+  {
+   "id": "hafnia-q4-2025",
+   "name": "Hafnia Q4 2025 results",
+   "publisher": "Hafnia",
+   "url": "https://www.sec.gov/Archives/edgar/data/1815779/000114036126006874/ef20066314_ex99-2.htm",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026"
+  },
+  {
+   "id": "itf-wages",
+   "name": "ITF seafarer wage scales",
+   "publisher": "ITF",
+   "url": "https://www.itfseafarers.org/en/resources/wages",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "hellenic-bdi",
+   "name": "Baltic Dry Index reporting",
+   "publisher": "Hellenic Shipping News",
+   "url": "https://www.hellenicshippingnews.com/baltic-dry-index-climbs-to-3488-up-157-points/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026-09-03"
+  },
+  {
+   "id": "nato-counterpiracy",
+   "name": "Counter-piracy operations 2008-2016",
+   "publisher": "NATO",
+   "url": "https://www.nato.int/en/what-we-do/operations-and-missions/counter-piracy-operations-2008-2016",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "worldbank-piracy-2016",
+   "name": "Pirates of Somalia: crime and deterrence on the high seas",
+   "publisher": "World Bank",
+   "url": "https://lin-ma.com/uploads/4/1/2/4/4124942/pirates0ofsom0nce0on0the0high0seas.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2016-07"
+  },
+  {
+   "id": "duke-pcasp",
+   "name": "Gunslingers on the high seas: a call for regulation",
+   "publisher": "Duke Journal of Comparative and International Law",
+   "url": "https://scholarship.law.duke.edu/cgi/viewcontent.cgi?article=1397&context=djcil",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2013"
+  },
+  {
+   "id": "ukgov-piracy",
+   "name": "2010 to 2015 government policy: piracy off the coast of Somalia",
+   "publisher": "UK Government",
+   "url": "https://www.gov.uk/government/publications/2010-to-2015-government-policy-piracy-off-the-coast-of-somalia/2010-to-2015-government-policy-piracy-off-the-coast-of-somalia",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2015"
+  },
+  {
+   "id": "ethz-counterpiracy",
+   "name": "Counter-piracy in the Gulf of Aden fact sheet",
+   "publisher": "ETH Zurich Center for Security Studies",
+   "url": "https://www.files.ethz.ch/isn/180308/Fact%20Sheet_SDA_Counter_Piracy_in_the_Gulf_of_Aden_2014G.pdf",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2014"
+  },
+  {
+   "id": "dalhousie-underreporting",
+   "name": "Marine Affairs technical report on piracy reporting",
+   "publisher": "Dalhousie University",
+   "url": "https://dalspace.library.dal.ca/bitstreams/483b1b4e-aac2-4d90-8a70-82a3100a919b/download",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "imb-2025-annual",
+   "name": "Global maritime piracy and armed robbery increased in 2025",
+   "publisher": "ICC IMB",
+   "url": "https://icc-ccs.org/global-maritime-piracy-and-armed-robbery-increased-in-2025/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026"
+  },
+  {
+   "id": "imb-2024-annual",
+   "name": "Maritime piracy dropped in 2024 but crew safety remains at risk",
+   "publisher": "ICC IMB",
+   "url": "https://icc-ccs.org/maritime-piracy-dropped-in-2024-but-crew-safety-remains-at-risk/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2025"
+  },
+  {
+   "id": "imb-2022-annual",
+   "name": "Sustained efforts needed as global piracy incidents hit lowest levels in decades",
+   "publisher": "ICC IMB",
+   "url": "https://icc-ccs.org/sustained-efforts-needed-as-global-piracy-incidents-hit-lowest-levels-in-decades-2/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2023"
+  },
+  {
+   "id": "imo-piracy-definitions",
+   "name": "Piracy and armed robbery against ships, definitions",
+   "publisher": "IMO",
+   "url": "https://www.imo.org/en/ourwork/security/pages/piracyarmedrobberydefault.aspx",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "bbc-honour25",
+   "name": "Honour 25 hijacking report",
+   "publisher": "BBC News",
+   "url": "https://www.bbc.com/news/articles/c78l26yn981o",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026-04-24"
+  },
+  {
+   "id": "maritimeoptima-honour25",
+   "name": "Product tanker Honour 25 hijacked off Somalia carrying gasoline cargo bound for Mogadishu",
+   "publisher": "Maritime Optima",
+   "url": "https://maritimeoptima.com/maritime-news/product-tanker-honour-25-hijacked-off-somalia-carrying-gasoline-cargo-bound-for-mogadishu",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026-04-28"
+  },
+  {
+   "id": "magicport-lila-norfolk",
+   "name": "Lila Norfolk vessel profile",
+   "publisher": "MagicPort",
+   "url": "https://magicport.ai/vessels/bulk-carrier/lila-norfolk-mmsi-636023091",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2026-09-04"
+  },
+  {
+   "id": "kyramarine-site",
+   "name": "Kyra Global Marine Services",
+   "publisher": "Kyra Global Marine Services",
+   "url": "https://www.kyramarine.com/",
+   "type": "primary",
+   "access": "public",
+   "retrieved": "2026-09-04"
+  },
+  {
+   "id": "lloydslist-rubymar-insurance",
+   "name": "Sunken Rubymar's only UK link was its disputed insurance cover",
+   "publisher": "Lloyd's List",
+   "url": "https://www.lloydslist.com/LL1148459/Sunken-Rubymar%E2%80%99s-only-UK-link-was-its-disputed-insurance-cover",
+   "type": "press",
+   "access": "public",
+   "retrieved": "2026-09-04",
+   "published": "2024-03-05"
+  }
+ ],
+ "retrieved_note": "Every source carries a retrieved date: when this library last read it. Publisher figures can change after that date without notice.",
+ "retrieved": "2026-09-02",
+ "count": 274
+}

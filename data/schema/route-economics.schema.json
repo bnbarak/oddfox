@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/route-economics.schema.json",
+  "title": "What protection is worth",
+  "type": "object",
+  "required": ["dataset", "the_alternative", "the_substitute", "open_questions"],
+  "properties": {
+    "dataset": { "const": "route-economics" },
+    "the_alternative": {
+      "type": "object",
+      "description": "Routing around the risk. The true competitor to any escort product.",
+      "required": ["name", "penalties", "implication_for_oddfox"],
+      "properties": {
+        "name": { "type": "string" },
+        "note": { "type": "string" },
+        "penalties": { "type": "array", "items": { "$ref": "#/$defs/metric" } },
+        "what_it_avoids": { "type": "array", "items": { "$ref": "#/$defs/metric" } },
+        "the_finding": { "type": "string" },
+        "implication_for_oddfox": { "type": "string" },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+      }
+    },
+    "the_substitute": {
+      "type": "object",
+      "description": "Armed guards. What a shipowner buys today instead.",
+      "required": ["name", "vintage_warning", "prices"],
+      "properties": {
+        "name": { "type": "string" },
+        "vintage_warning": {
+          "type": "string",
+          "description": "Required. All published PCASP pricing found is from 2012; omitting the warning would make historical figures read as current."
+        },
+        "prices": { "type": "array", "items": { "$ref": "#/$defs/price" } },
+        "market_size_2012": { "type": "array", "items": { "type": "object" } },
+        "the_claim_that_sells_it": { "type": "string" },
+        "friction": { "type": "array", "items": { "type": "string" } },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+      }
+    },
+    "escort_precedent": {
+      "type": "object",
+      "description": "A prior attempt at the same business model. Derived arithmetic must be flagged as ours, not the source's.",
+      "properties": {
+        "name": { "type": "string" },
+        "period": { "type": "string" },
+        "model": { "type": "string" },
+        "price": { "type": "string" },
+        "derived": {
+          "type": "object",
+          "required": ["how", "caveat"],
+          "properties": {
+            "cost_per_vessel_per_transit_usd": { "type": "number" },
+            "how": { "type": "string", "description": "The calculation, shown." },
+            "versus_armed_team_usd": { "type": "string" },
+            "ratio": { "type": "string" },
+            "caveat": { "type": "string", "description": "Required. Derived numbers must carry their own limits." }
+          }
+        },
+        "why_it_matters": { "type": "string" },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+        "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+      }
+    },
+    "historic_cost_of_piracy_2012": { "type": "object" },
+    "suez_traffic": { "type": "object" },
+    "open_questions": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+  },
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "required": ["metric", "value"],
+      "properties": {
+        "metric": { "type": "string" },
+        "value": { "type": "string" },
+        "note": { "type": "string" },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+        "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+      }
+    },
+    "price": {
+      "type": "object",
+      "required": ["item", "value", "period"],
+      "properties": {
+        "item": { "type": "string" },
+        "value": { "type": "string" },
+        "period": { "type": "string", "description": "Required, because the pricing is historical and the year is the most important qualifier on it." },
+        "note": { "type": "string" },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+        "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+      }
+    }
+  }
+}

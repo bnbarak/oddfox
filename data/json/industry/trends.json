@@ -1,0 +1,399 @@
+{
+ "dataset": "industry-trends",
+ "title": "Industry time series",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "series": {
+  "total_ship_losses": {
+   "unit": "ships lost",
+   "publisher": "Allianz Commercial",
+   "source_ids": [
+    "allianz-safety"
+   ],
+   "points": [
+    [
+     2010,
+     127
+    ],
+    [
+     2011,
+     111
+    ],
+    [
+     2012,
+     117
+    ],
+    [
+     2013,
+     94
+    ],
+    [
+     2014,
+     88
+    ],
+    [
+     2015,
+     85
+    ],
+    [
+     2016,
+     85
+    ],
+    [
+     2017,
+     94
+    ],
+    [
+     2018,
+     46
+    ],
+    [
+     2019,
+     48
+    ],
+    [
+     2020,
+     49
+    ],
+    [
+     2021,
+     59
+    ],
+    [
+     2022,
+     41
+    ],
+    [
+     2023,
+     41
+    ],
+    [
+     2024,
+     27
+    ]
+   ],
+   "note": "Down 79% since 2010. The sea got much safer while piracy stayed roughly flat."
+  },
+  "piracy_incidents": {
+   "unit": "reported incidents",
+   "publisher": "ICC IMB",
+   "source_ids": [
+    "imb-annual-reports"
+   ],
+   "points": [
+    [
+     2010,
+     445
+    ],
+    [
+     2011,
+     439
+    ],
+    [
+     2012,
+     297
+    ],
+    [
+     2013,
+     264
+    ],
+    [
+     2014,
+     245
+    ],
+    [
+     2015,
+     246
+    ],
+    [
+     2016,
+     191
+    ],
+    [
+     2017,
+     180
+    ],
+    [
+     2018,
+     201
+    ],
+    [
+     2019,
+     162
+    ],
+    [
+     2020,
+     195
+    ],
+    [
+     2021,
+     132
+    ],
+    [
+     2022,
+     115
+    ],
+    [
+     2023,
+     120
+    ],
+    [
+     2024,
+     116
+    ]
+   ],
+   "note": "Down 74% from the 2010 peak. Reporting is voluntary, so these are a floor."
+  },
+  "world_fleet_dwt": {
+   "unit": "thousand DWT, 100 GT and above, at 1 January",
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-rmt-2024-ch2",
+    "unctad-rmt-2025"
+   ],
+   "points": [
+    [
+     2023,
+     2277379
+    ],
+    [
+     2024,
+     2353899
+    ],
+    [
+     2025,
+     2439830.8
+    ]
+   ]
+  },
+  "fleet_by_type_dwt": {
+   "unit": "thousand DWT",
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-rmt-2024-ch2",
+    "unctad-rmt-2025"
+   ],
+   "bulk_carriers": [
+    [
+     2023,
+     974452
+    ],
+    [
+     2024,
+     1004281
+    ],
+    [
+     2025,
+     1036158
+    ]
+   ],
+   "oil_tankers": [
+    [
+     2023,
+     652850
+    ],
+    [
+     2024,
+     665424
+    ],
+    [
+     2025,
+     669842
+    ]
+   ],
+   "container_ships": [
+    [
+     2023,
+     305844
+    ],
+    [
+     2024,
+     329490
+    ],
+    [
+     2025,
+     363759.1
+    ]
+   ],
+   "liquefied_gas": [
+    [
+     2023,
+     88221
+    ],
+    [
+     2024,
+     93882
+    ],
+    [
+     2025,
+     100462
+    ]
+   ],
+   "chemical_tankers": [
+    [
+     2023,
+     51535
+    ],
+    [
+     2024,
+     52582
+    ],
+    [
+     2025,
+     54333
+    ]
+   ],
+   "general_cargo": [
+    [
+     2023,
+     82708
+    ],
+    [
+     2024,
+     84047
+    ],
+    [
+     2025,
+     87421
+    ]
+   ]
+  },
+  "seafarer_workforce": {
+   "unit": "seafarers",
+   "publisher": "BIMCO / ICS",
+   "source_ids": [
+    "bimco-ics-2015",
+    "bimco-ics-2021"
+   ],
+   "total": [
+    [
+     2015,
+     1647500
+    ],
+    [
+     2021,
+     1892720
+    ]
+   ],
+   "officers": [
+    [
+     2015,
+     774000
+    ],
+    [
+     2021,
+     857540
+    ]
+   ],
+   "ratings": [
+    [
+     2015,
+     873500
+    ],
+    [
+     2021,
+     1035180
+    ]
+   ]
+  },
+  "suez_transits": {
+   "unit": "vessel transits",
+   "publisher": "Reuters citing SCA",
+   "source_ids": [
+    "reuters-suez-2024"
+   ],
+   "points": [
+    [
+     2023,
+     26434
+    ],
+    [
+     2024,
+     13213
+    ]
+   ],
+   "note": "Halved after the Houthi campaign began."
+  },
+  "suez_revenue": {
+   "unit": "USD billion",
+   "publisher": "Reuters citing SCA",
+   "source_ids": [
+    "reuters-suez-2024"
+   ],
+   "points": [
+    [
+     2023,
+     10.25
+    ],
+    [
+     2024,
+     3.991
+    ]
+   ],
+   "note": "Down 61%."
+  },
+  "panama_transits": {
+   "unit": "vessel transits, fiscal year",
+   "publisher": "Panama Canal Authority",
+   "source_ids": [
+    "pancanal-fy2025"
+   ],
+   "points": [
+    [
+     2024,
+     11240
+    ],
+    [
+     2025,
+     13404
+    ]
+   ]
+  }
+ },
+ "orderbook_2024": {
+  "publisher": "UNCTAD",
+  "source_ids": [
+   "unctad-rmt-2024-ch2"
+  ],
+  "total": "4,870 vessels on order, 283 million DWT, 12% of fleet deadweight",
+  "deliveries_2023": "1,665 vessels",
+  "by_type_pct_of_active_capacity": {
+   "LNG carriers": "over 50%",
+   "container ships": "25%",
+   "bulk carriers": "9.7%",
+   "tankers": "7.5%"
+  },
+  "note": "Container and LNG orderbooks are enormous relative to fleet. Bulk and tanker are not."
+ },
+ "fleet_age_2024": {
+  "publisher": "UNCTAD",
+  "source_ids": [
+   "unctad-rmt-2024-ch2"
+  ],
+  "all_ships_by_dwt": 12.5,
+  "all_ships_by_count": 22.4,
+  "bulk_carriers": 11.1,
+  "general_cargo": 28.0,
+  "note": "The gap between 12.5 by tonnage and 22.4 by count means the old ships are small ones."
+ },
+ "scrapping_2023": {
+  "vessels": 431,
+  "gross_tons_million": 7.5,
+  "publisher": "UNCTAD",
+  "source_ids": [
+   "unctad-rmt-2024-ch2"
+  ]
+ },
+ "reading": [
+  "Ship losses fell 79% from 2010 to 2024 while piracy fell 74%. Both trends are down, which cuts against a simple 'seas are more dangerous' story.",
+  "The fleet grew 7% in DWT over two years while losses fell, so loss rate per hull fell faster than the headline.",
+  "Container capacity grew 19% in two years, the fastest of any segment, with a 25% orderbook on top."
+ ],
+ "gaps": [
+  "No container TEU or trade tonnage series retrieved yet.",
+  "No freight rate annual averages.",
+  "No vessel counts by type in any year.",
+  "Seafarer numbers stop at 2021.",
+  "Piracy series stops at 2024; we hold 2025 and H1 2026 separately."
+ ]
+}

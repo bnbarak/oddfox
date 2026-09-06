@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/piracy-history.schema.json",
+  "title": "Reported attacks 1993-2020",
+  "type": "object",
+  "required": [
+    "dataset",
+    "count",
+    "by_year",
+    "grid",
+    "source_ids"
+  ],
+  "properties": {
+    "dataset": {
+      "const": "piracy-history"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "date_range": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "source_ids": {
+      "$ref": "common.schema.json#/$defs/sourceIds"
+    },
+    "confidence": {
+      "$ref": "common.schema.json#/$defs/confidence"
+    },
+    "by_year": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "value"
+        ]
+      }
+    },
+    "by_region_year": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "region",
+          "points"
+        ]
+      }
+    },
+    "by_attack_type": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "by_country": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "label",
+          "value"
+        ],
+        "properties": {
+          "iso3": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "flag_iso": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Z]{2}$"
+          }
+        }
+      }
+    },
+    "distance_from_shore_km": {
+      "type": "object",
+      "description": "Straight-line distance to nearest shore. The median matters operationally: it says whether attacks happen where an escort can be, or inside territorial water where it cannot.",
+      "required": [
+        "median",
+        "bands"
+      ]
+    },
+    "grid": {
+      "type": "object",
+      "required": [
+        "cell_degrees",
+        "cells"
+      ],
+      "properties": {
+        "cell_degrees": {
+          "type": "number"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "coords",
+              "count"
+            ],
+            "properties": {
+              "coords": {
+                "$ref": "common.schema.json#/$defs/coords"
+              },
+              "count": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Incidents by location",
+  "type": "object",
+  "required": [
+    "dataset",
+    "series"
+  ],
+  "properties": {
+    "dataset": {
+      "const": "geo-incidents"
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "body",
+          "period",
+          "total",
+          "complete",
+          "points",
+          "source_ids"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "label": {
+            "type": "string"
+          },
+          "body": {
+            "enum": [
+              "IMB",
+              "ReCAAP",
+              "IMO",
+              "UKMTO"
+            ]
+          },
+          "period": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "complete": {
+            "type": "boolean",
+            "description": "True only when the points sum to the published total. False means the source names hotspots, not every location."
+          },
+          "note": {
+            "type": "string"
+          },
+          "confidence": {
+            "$ref": "common.schema.json#/$defs/confidence"
+          },
+          "source_ids": {
+            "$ref": "common.schema.json#/$defs/sourceIds"
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "coords"
+              ],
+              "properties": {
+                "id": {
+                  "$ref": "common.schema.json#/$defs/id"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "coords": {
+                  "$ref": "common.schema.json#/$defs/coords"
+                },
+                "count": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "description": "Null where the source reports the location without a number; use unquantified to say what it did report."
+                },
+                "unquantified": {
+                  "type": "string"
+                },
+                "period_detail": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "reference_points": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "coords",
+          "kind"
+        ]
+      }
+    }
+  },
+  "$id": "https://oddfox.ai/data/schema/geo-incidents.schema.json"
+}

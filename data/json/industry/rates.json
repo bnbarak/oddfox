@@ -1,0 +1,92 @@
+{
+ "dataset": "industry-rates",
+ "title": "Freight rates and fuel",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "volatility_warning": "These move daily. Every figure is stamped with the date it was read. Anything older than a week is history, not a price.",
+ "container_freight": [
+  {
+   "lane": "Global composite",
+   "index": "FBX",
+   "rate_usd_per_feu": 3532,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "freightos-fbx"
+   ]
+  },
+  {
+   "lane": "China/East Asia to North America East Coast",
+   "index": "FBX03",
+   "rate_usd_per_feu": 9791,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "freightos-fbx"
+   ]
+  },
+  {
+   "lane": "China/East Asia to North America West Coast",
+   "index": "FBX01",
+   "rate_usd_per_feu": 7621,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "freightos-fbx"
+   ]
+  },
+  {
+   "lane": "China/East Asia to Mediterranean",
+   "index": "FBX13",
+   "rate_usd_per_feu": 4800,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "freightos-fbx"
+   ]
+  },
+  {
+   "lane": "China/East Asia to North Europe",
+   "index": "FBX11",
+   "rate_usd_per_feu": 4641,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "freightos-fbx"
+   ]
+  }
+ ],
+ "bunkers": [
+  {
+   "port": "Singapore",
+   "fuel": "VLSFO",
+   "usd_per_tonne": 860.5,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "shipandbunker-sin"
+   ]
+  },
+  {
+   "port": "Fujairah",
+   "fuel": "VLSFO",
+   "usd_per_tonne": 857.5,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "shipandbunker-fjr"
+   ]
+  },
+  {
+   "port": "Rotterdam",
+   "fuel": "VLSFO",
+   "usd_per_tonne": 684.5,
+   "read_on": "2026-09-04",
+   "source_ids": [
+    "shipandbunker-rtm"
+   ]
+  }
+ ],
+ "gaps": [
+  "No daily operating cost (OPEX) by vessel type. The benchmark is the Moore OpCost report, which is paid.",
+  "No time charter rates. Behind Clarksons and Baltic Exchange paywalls.",
+  "No Baltic Dry Index value or dry bulk TCE earnings.",
+  "No tanker Worldscale or TCE earnings.",
+  "No daily fuel consumption figures by vessel type, so bunker price cannot yet be turned into a daily cost.",
+  "No before-and-after container rates for the December 2023 Red Sea diversion.",
+  "Rotterdam VLSFO is $176 a tonne cheaper than Singapore, which is a large spread and should be sanity-checked."
+ ]
+}

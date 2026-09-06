@@ -1,0 +1,221 @@
+{
+ "dataset": "industry-fleet",
+ "title": "The world fleet and what it carries",
+ "description": "Size of the merchant fleet, seaborne trade volumes and chokepoint traffic. Primary sources only, every figure carries its threshold, reference year and publisher.",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "threshold_warning": "Fleet counts are meaningless without the size threshold. UNCTAD counts propelled seagoing merchant ships of 100 GT and above. Other bodies use 300 GT, 500 GT or 1,000 GT and report very different totals. Never compare a count from one body with a count from another.",
+ "totals": [
+  {
+   "metric": "Merchant vessels in the world fleet",
+   "value": 112501,
+   "unit": "vessels",
+   "threshold": "100 GT and above",
+   "as_of": "2025-01-01",
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-rmt-2025"
+   ]
+  },
+  {
+   "metric": "World fleet capacity",
+   "value": 2439830.8,
+   "unit": "thousand DWT",
+   "threshold": "100 GT and above",
+   "as_of": "2025-01-01",
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-rmt-2025"
+   ]
+  },
+  {
+   "metric": "Global seaborne trade",
+   "value": 12292,
+   "unit": "million tonnes",
+   "as_of": "2023",
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-rmt-2024"
+   ]
+  },
+  {
+   "metric": "Global container port throughput",
+   "value": 920,
+   "unit": "million TEU",
+   "as_of": "2024",
+   "publisher": "UNCTAD Data Hub",
+   "source_ids": [
+    "unctadstat-containers"
+   ]
+  },
+  {
+   "metric": "Cellular container ship fleet capacity",
+   "value": 30.3,
+   "unit": "million TEU",
+   "as_of": "2025-04",
+   "publisher": "UNCTAD citing MDS Transmodal",
+   "source_ids": [
+    "unctad-rmt-2025"
+   ]
+  }
+ ],
+ "by_type": [
+  {
+   "type": "Bulk carriers",
+   "dwt_thousand": 1036158,
+   "share_pct": 42.5
+  },
+  {
+   "type": "Oil tankers",
+   "dwt_thousand": 669842,
+   "share_pct": 27.5
+  },
+  {
+   "type": "Container ships",
+   "dwt_thousand": 363759.1,
+   "share_pct": 14.9
+  },
+  {
+   "type": "Liquefied gas carriers",
+   "dwt_thousand": 100462,
+   "share_pct": 4.1
+  },
+  {
+   "type": "Offshore supply",
+   "dwt_thousand": 91334,
+   "share_pct": 3.7
+  },
+  {
+   "type": "General cargo",
+   "dwt_thousand": 87421,
+   "share_pct": 3.6
+  },
+  {
+   "type": "Chemical tankers",
+   "dwt_thousand": 54333,
+   "share_pct": 2.2
+  },
+  {
+   "type": "Ferries and passenger ships",
+   "dwt_thousand": 8947,
+   "share_pct": 0.4
+  }
+ ],
+ "by_type_meta": {
+  "as_of": "2025-01-01",
+  "publisher": "UNCTAD",
+  "source_ids": [
+   "unctad-rmt-2025"
+  ],
+  "note": "UNCTAD publishes this split by DWT, not by vessel count. Vessel counts by type are not in the retrieved source."
+ },
+ "flags": [
+  {
+   "flag": "Panama",
+   "vessels": 8572,
+   "dwt_thousand": 371300.7
+  },
+  {
+   "flag": "Liberia",
+   "vessels": 5562,
+   "dwt_thousand": 424063.1
+  },
+  {
+   "flag": "Marshall Islands",
+   "vessels": 4254,
+   "dwt_thousand": 305471.2
+  },
+  {
+   "flag": "Hong Kong, China",
+   "vessels": 2513,
+   "dwt_thousand": 203047.9
+  },
+  {
+   "flag": "Singapore",
+   "vessels": 3088,
+   "dwt_thousand": 152344.1
+  },
+  {
+   "flag": "China",
+   "vessels": 10288,
+   "dwt_thousand": 137064.4
+  },
+  {
+   "flag": "Malta",
+   "vessels": 1949,
+   "dwt_thousand": 113193.6
+  },
+  {
+   "flag": "Bahamas",
+   "vessels": 1251,
+   "dwt_thousand": 70462.8
+  },
+  {
+   "flag": "Greece",
+   "vessels": 1203,
+   "dwt_thousand": 53459.1
+  },
+  {
+   "flag": "Japan",
+   "vessels": 5200,
+   "dwt_thousand": 43827.9
+  }
+ ],
+ "flags_meta": {
+  "as_of": "2025-01-01",
+  "publisher": "UNCTAD",
+  "source_ids": [
+   "unctad-rmt-2025"
+  ],
+  "note": "Flag of registration, not beneficial ownership. Liberia leads by DWT, Panama by vessel count."
+ },
+ "chokepoint_transits": [
+  {
+   "chokepoint": "Panama Canal",
+   "transits": 13404,
+   "period": "FY2025",
+   "prior": 11240,
+   "prior_period": "FY2024",
+   "publisher": "Panama Canal Authority",
+   "source_ids": [
+    "pancanal-fy2025"
+   ]
+  },
+  {
+   "chokepoint": "Suez Canal",
+   "transits": "about 26,000",
+   "period": "2023",
+   "publisher": "UNCTAD",
+   "source_ids": [
+    "unctad-suez-2024"
+   ]
+  },
+  {
+   "chokepoint": "Strait of Hormuz",
+   "transits": "144 ships per day",
+   "period": "to mid-June 2025",
+   "publisher": "UNCTAD citing Clarksons",
+   "source_ids": [
+    "unctad-rmt-2025"
+   ]
+  },
+  {
+   "chokepoint": "Strait of Hormuz",
+   "transits": "over 42,400 per year",
+   "period": "2025",
+   "publisher": "UNCTAD citing Clarksons",
+   "source_ids": [
+    "unctad-rmt-2025"
+   ]
+  }
+ ],
+ "gaps": [
+  "No vessel COUNT by type. UNCTAD publishes the type split by DWT only, so we cannot yet say how many bulk carriers exist.",
+  "No gross tonnage total for the world fleet.",
+  "Seaborne trade total is 2023. The 2024 figure was not in the retrieved source.",
+  "No annual transit totals for Bab el-Mandeb or the Strait of Malacca.",
+  "No Suez transit figures for 2024 or 2025, which is exactly the period the Houthi campaign covers.",
+  "Average fleet age not retrieved.",
+  "The two Hormuz figures are not reconcilable: 144 per day is about 52,600 a year, against a stated 42,400."
+ ]
+}

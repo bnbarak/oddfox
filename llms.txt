@@ -1,0 +1,33 @@
+# Odd Fox
+
+> Marine Security as a Service. Odd Fox provides autonomous maritime protection:
+> our vessels escort commercial ships through high-risk passages, protecting
+> them from piracy and drone attacks.
+
+The company is currently in stealth. Based in Brooklyn, NY.
+
+## What it is
+
+Odd Fox operates autonomous security vessels that travel alongside commercial
+cargo ships transiting high-risk waters. The escort vessel is unmanned and
+provides protection against piracy, armed boarding attempts, drone attacks and other aerial threats.
+
+The service is sold to commercial shipping operators. Odd Fox allows commercial
+ships to pass through. It is not associated with any military and does not sell
+to military organizations.
+
+## Threats addressed
+
+- Piracy and armed boarding
+- Drone attacks
+- Aerial threats
+- Maritime threats in high-risk passages
+
+## High-risk passages
+
+Panama Canal, Strait of Gibraltar, Suez Canal and Red Sea, Bab el-Mandeb,
+Bosporus Strait, Strait of Malacca, Cape of Good Hope.
+
+## Contact
+
+Waitlist and enquiries: https://oddfox.ai/#contact

@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "autoPort": true,
+  "configurations": [
+    {
+      "name": "office",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "OddFoxOffice"],
+      "port": 5173
+    }
+  ]
+}

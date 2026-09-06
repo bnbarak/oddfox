@@ -1,0 +1,1075 @@
+{
+ "$schema": "../schema/customers.schema.json",
+ "dataset": "customers",
+ "title": "Demand side: who would buy escort",
+ "description": "The buyer is not the ship. It is one of four parties in the ownership stack, and which one pays depends on the charter. This dataset holds the demand side in two tiers: companies with a vessel actually attacked, and the operator population in the segments that get attacked most. Roles and definitions come from ownership-model.json.",
+ "updated": "2026-09-03",
+ "retrieved": "2026-09-03",
+ "buying_roles": {
+  "note": "Taken from ownership-model.json, where buys_security is recorded per role. Four of the eight roles buy security.",
+  "buys": [
+   "beneficial-owner",
+   "technical-manager",
+   "commercial-manager",
+   "charterer"
+  ],
+  "does_not_buy": [
+   "flag-state",
+   "registered-owner",
+   "pandi-club",
+   "war-risk-underwriter"
+  ],
+  "who_pays_by_charter": [
+   {
+    "charter": "Voyage charter",
+    "war_risk_premium_borne_by": "Charterer, via a war risk clause"
+   },
+   {
+    "charter": "Time charter",
+    "war_risk_premium_borne_by": "Charterer"
+   },
+   {
+    "charter": "Bareboat / demise charter",
+    "war_risk_premium_borne_by": "Charterer"
+   },
+   {
+    "charter": "Contract of affreightment",
+    "war_risk_premium_borne_by": "Negotiated; often owner, priced into the rate"
+   }
+  ],
+  "source_ids": [
+   "imo-gisis",
+   "unctad-maritime"
+  ]
+ },
+ "segments": [
+  {
+   "id": "dry-bulk",
+   "name": "Dry bulk",
+   "why_in_scope": "Most-attacked vessel type in the current reporting period and in this library's own incident record.",
+   "exposure": [
+    {
+     "measure": "IMB H1 2026 incidents against dry bulk carriers",
+     "value": 13,
+     "source_ids": [
+      "imb-h1-2026"
+     ]
+    },
+    {
+     "measure": "Named incidents in this library with a bulk carrier as the target",
+     "value": 7,
+     "source_ids": [
+      "imb-h1-2026"
+     ]
+    }
+   ],
+   "operator_coverage_in_library": 1,
+   "confidence": "medium",
+   "operators": [
+    {
+     "name": "Oldendorff Carriers",
+     "country": "Germany",
+     "country_iso": "DE",
+     "fleet_bulk_carriers": 700,
+     "note": "Charter-heavy model; states 4,500 employees and 21 offices.",
+     "url": "https://www.oldendorff.com/"
+    },
+    {
+     "name": "Pacific Basin Shipping",
+     "country": "Hong Kong",
+     "country_iso": "HK",
+     "fleet_bulk_carriers": 266,
+     "note": "Owns 116, operates about 150 on charter. Handysize and Supramax.",
+     "url": "https://www.pacificbasin.com/"
+    },
+    {
+     "name": "Star Bulk Carriers",
+     "country": "Greece",
+     "country_iso": "GR",
+     "fleet_bulk_carriers": 161,
+     "note": "Largest publicly listed Greek dry bulk owner; primarily owns rather than charters. Athens and Limassol.",
+     "url": "https://www.starbulk.com/"
+    },
+    {
+     "name": "Western Bulk",
+     "country": "Norway",
+     "country_iso": "NO",
+     "fleet_bulk_carriers": 150,
+     "note": "Approximate; operator rather than owner.",
+     "url": "https://www.westernbulk.com/"
+    },
+    {
+     "name": "Navios Maritime Holdings",
+     "country": "Greece",
+     "country_iso": "GR",
+     "fleet_bulk_carriers": 142,
+     "url": "https://www.navios.com/"
+    },
+    {
+     "name": "Golden Ocean Group",
+     "country": "Norway",
+     "country_iso": "NO",
+     "fleet_bulk_carriers": 94,
+     "note": "Registered in Bermuda, based in Norway. Largest listed owner of Capesize ships.",
+     "url": "https://www.goldenocean.no/"
+    },
+    {
+     "name": "Safe Bulkers",
+     "country": "Greece",
+     "country_iso": "GR",
+     "fleet_bulk_carriers": 45,
+     "note": "Offices in Switzerland, Cyprus, Monaco and Greece.",
+     "url": "https://www.safebulkers.com/"
+    },
+    {
+     "name": "Genco Shipping and Trading",
+     "country": "United States",
+     "country_iso": "US",
+     "fleet_bulk_carriers": 44,
+     "note": "Largest US-headquartered dry bulk company. States 121 customers and 1,119 port calls.",
+     "url": "https://www.gencoshipping.com/"
+    },
+    {
+     "name": "Diana Shipping",
+     "country": "Greece",
+     "country_iso": "GR",
+     "fleet_bulk_carriers": 40,
+     "url": "https://www.dianashippinginc.com/"
+    },
+    {
+     "name": "COSCO Shipping Bulk",
+     "country": "China",
+     "country_iso": "CN",
+     "url": "https://www.coscoshipping.com/"
+    },
+    {
+     "name": "Cargill Ocean Transportation",
+     "country": "Singapore",
+     "country_iso": "SG",
+     "note": "Charterer rather than owner; named as a key industry player.",
+     "url": "https://www.cargill.com/transportation/ocean-transportation"
+    }
+   ],
+   "source_ids": [
+    "marineinsight-bulk-companies",
+    "fortune-drybulk-market",
+    "genco-site",
+    "imb-h1-2026"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "container",
+   "name": "Container",
+   "why_in_scope": "Second most-attacked type in IMB H1 2026, and the segment this library already covers.",
+   "exposure": [
+    {
+     "measure": "IMB H1 2026 incidents against container vessels",
+     "value": 10,
+     "source_ids": [
+      "imb-h1-2026"
+     ]
+    }
+   ],
+   "operator_coverage_in_library": 8,
+   "confidence": "high",
+   "operators_in_operators_json": [
+    "msc",
+    "maersk",
+    "cma-cgm",
+    "cosco",
+    "hapag-lloyd",
+    "one",
+    "evergreen",
+    "zim"
+   ],
+   "note": "Held in operators.json rather than duplicated here.",
+   "source_ids": [
+    "imb-h1-2026"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "id": "tanker",
+   "name": "Tankers",
+   "why_in_scope": "Crude, product and chemical tankers appear repeatedly in this library's named incidents, including the Sounion, Hellas Aphrodite and Honour 25.",
+   "exposure": [
+    {
+     "measure": "Named incidents in this library with a tanker as the target",
+     "value": 5,
+     "source_ids": [
+      "imb-h1-2026"
+     ]
+    }
+   ],
+   "operator_coverage_in_library": 7,
+   "confidence": "medium",
+   "operators": [
+    {
+     "name": "Hafnia",
+     "country": "",
+     "country_iso": null,
+     "fleet_tankers": 200,
+     "fleet_basis": "Company states it operates close to 200 vessels; rounded, operating fleet not owned count.",
+     "tanker_types": [
+      "product",
+      "chemical"
+     ],
+     "url": "https://hafniabw.com/",
+     "source_ids": [
+      "hafnia-about"
+     ]
+    },
+    {
+     "name": "Bahri",
+     "country": "",
+     "country_iso": null,
+     "fleet_tankers": 107,
+     "fleet_basis": "Industry ranking states 107 vessels at end-June 2026; does not distinguish owned from managed.",
+     "tanker_types": [
+      "Aframax",
+      "Suezmax",
+      "chemical"
+     ],
+     "source_ids": [
+      "gettransport-tankers-2026"
+     ]
+    },
+    {
+     "name": "Frontline plc",
+     "country": "Cyprus",
+     "country_iso": "CY",
+     "hq_city": "Limassol",
+     "fleet_tankers": 75,
+     "fleet_basis": "Fleet page states 38 VLCC, 19 Suezmax, 18 Aframax/LR2.",
+     "tanker_types": [
+      "VLCC",
+      "Suezmax",
+      "Aframax",
+      "product"
+     ],
+     "url": "https://www.frontlineplc.cy/",
+     "source_ids": [
+      "frontline-fleet",
+      "frontline-renewal"
+     ]
+    },
+    {
+     "name": "International Seaways",
+     "country": "United States",
+     "country_iso": "US",
+     "hq_city": "New York",
+     "fleet_tankers": 36,
+     "fleet_basis": "11 VLCC, 2 Suezmax, 4 Aframax, 13 Panamax, 4 MR. Excludes partially owned FSOs.",
+     "tanker_types": [
+      "VLCC",
+      "Suezmax",
+      "Aframax",
+      "product"
+     ],
+     "source_ids": [
+      "marine-digital-tankers"
+     ]
+    },
+    {
+     "name": "COSCO Shipping Energy Transportation",
+     "country": "China",
+     "country_iso": "CN",
+     "fleet_basis": "Described as more than 23 million DWT of oil-tanker capacity. No vessel count stated.",
+     "tanker_types": [
+      "crude",
+      "product",
+      "LNG"
+     ],
+     "source_ids": [
+      "gettransport-tankers-2026"
+     ]
+    },
+    {
+     "name": "Odfjell",
+     "country": "Norway",
+     "country_iso": "NO",
+     "hq_city": "Bergen",
+     "listed": "Oslo Stock Exchange since 1986",
+     "fleet_basis": "No vessel count stated in the fetched material.",
+     "tanker_types": [
+      "chemical"
+     ],
+     "url": "https://www.odfjell.com/",
+     "source_ids": [
+      "odfjell-annual-2025"
+     ]
+    },
+    {
+     "name": "Stolt Tankers",
+     "country": "",
+     "country_iso": null,
+     "fleet_basis": "No fleet total or headquarters stated on the fetched page.",
+     "tanker_types": [
+      "chemical"
+     ],
+     "url": "https://www.stolt-nielsen.com/our-businesses/stolt-tankers/",
+     "source_ids": [
+      "stolt-tankers"
+     ]
+    }
+   ],
+   "source_ids": [
+    "imb-h1-2026",
+    "frontline-fleet",
+    "hafnia-about",
+    "gettransport-tankers-2026",
+    "marine-digital-tankers",
+    "odfjell-annual-2025",
+    "stolt-tankers"
+   ],
+   "retrieved": "2026-09-03"
+  }
+ ],
+ "exposed": [
+  {
+   "company": "KSRM (Kabir Steel Re-Rolling Mills)",
+   "role": "registered-owner",
+   "country": "Bangladesh",
+   "country_iso": "BD",
+   "vessels": [
+    {
+     "vessel": "Abdullah",
+     "imo": "9745598",
+     "date": "2024-03-12"
+    }
+   ],
+   "source_ids": [
+    "abdullah-maritrace",
+    "abdullah-eunavfor"
+   ]
+  },
+  {
+   "company": "SR Shipping",
+   "role": "commercial-manager",
+   "country": "Bangladesh",
+   "country_iso": "BD",
+   "vessels": [
+    {
+     "vessel": "Abdullah",
+     "imo": "9745598",
+     "date": "2024-03-12"
+    }
+   ],
+   "source_ids": [
+    "abdullah-maritrace",
+    "abdullah-eunavfor"
+   ]
+  },
+  {
+   "company": "Navigation Maritime Bulgare (Navibulgar)",
+   "role": "beneficial-owner",
+   "country": "Bulgaria",
+   "country_iso": "BG",
+   "vessels": [
+    {
+     "vessel": "Ruen",
+     "imo": "9754903",
+     "date": "2023-12-14"
+    }
+   ],
+   "source_ids": [
+    "ruen-lloyds",
+    "ruen-voa",
+    "ruen-guardian"
+   ]
+  },
+  {
+   "company": "Navigation Maritime Bulgare (Navibulgar)",
+   "role": "commercial-manager",
+   "country": "Bulgaria",
+   "country_iso": "BG",
+   "vessels": [
+    {
+     "vessel": "Ruen",
+     "imo": "9754903",
+     "date": "2023-12-14"
+    }
+   ],
+   "source_ids": [
+    "ruen-lloyds",
+    "ruen-voa",
+    "ruen-guardian"
+   ]
+  },
+  {
+   "company": "Allseas Marine",
+   "role": "beneficial-owner",
+   "country": "Greece",
+   "country_iso": "GR",
+   "vessels": [
+    {
+     "vessel": "Magic Seas",
+     "imo": "9736169",
+     "date": "2025-07-06"
+    }
+   ],
+   "source_ids": [
+    "magic-seas-solace"
+   ]
+  },
+  {
+   "company": "Cosmoship Management S.A.",
+   "role": "technical-manager",
+   "country": "Greece",
+   "country_iso": "GR",
+   "vessels": [
+    {
+     "vessel": "Eternity C",
+     "imo": null,
+     "date": "2025-07-07"
+    }
+   ],
+   "source_ids": [
+    "eternity-c-reuters",
+    "eternity-c-riviera"
+   ]
+  },
+  {
+   "company": "Delta Tankers",
+   "role": "commercial-manager",
+   "country": "Greece",
+   "country_iso": "GR",
+   "vessels": [
+    {
+     "vessel": "Sounion",
+     "imo": "9312145",
+     "date": "2024-08-21"
+    }
+   ],
+   "source_ids": [
+    "sounion-reuters"
+   ]
+  },
+  {
+   "company": "Evalend Shipping",
+   "role": "technical-manager",
+   "country": "Greece",
+   "country_iso": "GR",
+   "vessels": [
+    {
+     "vessel": "Tutor",
+     "imo": null,
+     "date": "2024-06-12"
+    }
+   ],
+   "source_ids": [
+    "tutor-reuters",
+    "tutor-gcaptain"
+   ]
+  },
+  {
+   "company": "Latsco Marine Management",
+   "role": "commercial-manager",
+   "country": "Greece",
+   "country_iso": "GR",
+   "vessels": [
+    {
+     "vessel": "Hellas Aphrodite",
+     "imo": "9722766",
+     "date": "2025-11-06"
+    }
+   ],
+   "source_ids": [
+    "hellas-aphrodite-lloyds"
+   ]
+  },
+  {
+   "company": "Third January Maritime Ltd",
+   "role": "commercial-manager",
+   "country": "Greece",
+   "country_iso": "GR",
+   "vessels": [
+    {
+     "vessel": "True Confidence",
+     "imo": "9460784",
+     "date": "2024-03-06"
+    }
+   ],
+   "source_ids": [
+    "true-confidence-imo",
+    "true-confidence-wsc",
+    "true-confidence-reuters"
+   ]
+  },
+  {
+   "company": "Galaxy Maritime Ltd.",
+   "role": "registered-owner",
+   "country": "Isle of Man",
+   "country_iso": "IM",
+   "vessels": [
+    {
+     "vessel": "Galaxy Leader",
+     "imo": "9237307",
+     "date": "2023-11-19"
+    }
+   ],
+   "source_ids": [
+    "galaxy-leader-reuters",
+    "galaxy-leader-lloyds"
+   ]
+  },
+  {
+   "company": "Nippon Yusen K.K. (NYK Line)",
+   "role": "commercial-manager",
+   "country": "Japan",
+   "country_iso": "JP",
+   "vessels": [
+    {
+     "vessel": "Galaxy Leader",
+     "imo": "9237307",
+     "date": "2023-11-19"
+    }
+   ],
+   "source_ids": [
+    "galaxy-leader-reuters",
+    "galaxy-leader-lloyds"
+   ]
+  },
+  {
+   "company": "True Confidence Shipping SA",
+   "role": "registered-owner",
+   "country": "Liberia",
+   "country_iso": "LR",
+   "vessels": [
+    {
+     "vessel": "True Confidence",
+     "imo": "9460784",
+     "date": "2024-03-06"
+    }
+   ],
+   "source_ids": [
+    "true-confidence-imo",
+    "true-confidence-wsc",
+    "true-confidence-reuters"
+   ]
+  },
+  {
+   "company": "Kyra Global Marine Services",
+   "role": "technical-manager",
+   "country": "United Arab Emirates",
+   "country_iso": null,
+   "vessels": [
+    {
+     "vessel": "Lila Norfolk",
+     "imo": null,
+     "date": "2024-01-05"
+    }
+   ],
+   "source_ids": [
+    "magicport-lila-norfolk",
+    "kyramarine-site"
+   ]
+  },
+  {
+   "company": "AVR Shipping LLC",
+   "role": "registered-owner",
+   "country": "United Arab Emirates",
+   "country_iso": null,
+   "vessels": [
+    {
+     "vessel": "Lila Norfolk",
+     "imo": null,
+     "date": "2024-01-05"
+    }
+   ],
+   "source_ids": [
+    "magicport-lila-norfolk"
+   ]
+  },
+  {
+   "company": "GMZ Ship Management Company S.A.",
+   "role": "technical-manager",
+   "country": "Lebanon (registered Honduras)",
+   "country_iso": null,
+   "vessels": [
+    {
+     "vessel": "Rubymar",
+     "imo": null,
+     "date": "2024-02-18"
+    }
+   ],
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  },
+  {
+   "company": "Golden Adventure Shipping S.A.",
+   "role": "beneficial-owner",
+   "country": "Marshall Islands",
+   "country_iso": null,
+   "vessels": [
+    {
+     "vessel": "Rubymar",
+     "imo": null,
+     "date": "2024-02-18"
+    }
+   ],
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  },
+  {
+   "company": "Ma'aden (Saudi Arabian Mining Company)",
+   "role": "charterer",
+   "country": "Saudi Arabia",
+   "country_iso": null,
+   "vessels": [
+    {
+     "vessel": "Rubymar",
+     "imo": null,
+     "date": "2024-02-18"
+    }
+   ],
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  }
+ ],
+ "gaps": [
+  "Honour 25 remains the one attacked vessel researched with no owner, manager or charterer found anywhere, despite being under confirmed naval seizure.",
+  "No contact route is recorded for any company here. The resolution path in ownership-model.json ends at the ISM manager; that step has not been run.",
+  "Fleet sizes for the dry bulk operators come from a secondary listicle, not from a registry. They should be checked against Equasis or Clarksons before use.",
+  "Charterers are almost absent. On time and voyage charters the charterer usually bears the war risk premium, which makes them a buyer, but this library names only Cargill.",
+  "No company here has been confirmed to currently buy any form of armed or escort protection.",
+  "Tanker fleet counts mix owned and managed vessels; several sources do not say which. Not comparable across companies without checking each.",
+  "Headquarters country is missing for Hafnia, Bahri and Stolt Tankers in the fetched sources.",
+  "4 of 10 exposed companies have no verifiable official website: Allseas Marine, Evalend Shipping, Third January Maritime Ltd, SR Shipping. Three of those four are Greek managers.",
+  "Lila Norfolk's chain comes from a vessel-tracking aggregator (MagicPort), not primary shipping press. Confidence is medium, not high, pending Equasis."
+ ],
+ "exposed_note": "One row per company named in a party role on a vessel that was attacked. Compiled 2026-09-03 from contemporaneous reporting. Where a source named only the flag or the vessel type, no company is recorded rather than a guess. Brokers are excluded: they are not a party that buys security.",
+ "vessel_chains": [
+  {
+   "vessel": "Galaxy Leader",
+   "imo": "9237307",
+   "incident_date": "2023-11-19",
+   "parties": [
+    {
+     "company": "Galaxy Maritime Ltd.",
+     "role": "registered-owner",
+     "country": "Isle of Man"
+    },
+    {
+     "company": "Nippon Yusen K.K. (NYK Line)",
+     "role": "commercial-manager",
+     "country": "Japan"
+    }
+   ],
+   "note": "Reuters identifies Galaxy Maritime Ltd as registered owner and NYK as charterer at the time of seizure.",
+   "source_ids": [
+    "galaxy-leader-reuters",
+    "galaxy-leader-lloyds"
+   ]
+  },
+  {
+   "vessel": "Ruen",
+   "imo": "9754903",
+   "incident_date": "2023-12-14",
+   "parties": [
+    {
+     "company": "Navigation Maritime Bulgare (Navibulgar)",
+     "role": "beneficial-owner",
+     "country": "Bulgaria"
+    },
+    {
+     "company": "Navigation Maritime Bulgare (Navibulgar)",
+     "role": "commercial-manager",
+     "country": "Bulgaria"
+    }
+   ],
+   "note": "Reported as Bulgarian-owned and operated by Navibulgar. No registered owner or ISM manager named in the attack-period sources.",
+   "source_ids": [
+    "ruen-lloyds",
+    "ruen-voa",
+    "ruen-guardian"
+   ]
+  },
+  {
+   "vessel": "Lila Norfolk",
+   "imo": "9281700",
+   "incident_date": "2024-01-05",
+   "parties": [],
+   "note": "Attack-period sources state only the flag and vessel type. No owner or manager named.",
+   "source_ids": [
+    "lila-norfolk-pib",
+    "lila-norfolk-lloyds"
+   ]
+  },
+  {
+   "vessel": "Rubymar",
+   "imo": "9138898",
+   "incident_date": "2024-02-18",
+   "parties": [],
+   "note": "Blue Fleet Group is described as the shipping broker, not owner or operator, so it is not recorded as a party.",
+   "source_ids": [
+    "rubymar-cnbc",
+    "rubymar-reuters"
+   ]
+  },
+  {
+   "vessel": "True Confidence",
+   "imo": "9460784",
+   "incident_date": "2024-03-06",
+   "parties": [
+    {
+     "company": "True Confidence Shipping SA",
+     "role": "registered-owner",
+     "country": "Liberia"
+    },
+    {
+     "company": "Third January Maritime Ltd",
+     "role": "commercial-manager",
+     "country": "Greece"
+    }
+   ],
+   "note": "IMO and World Shipping Council releases name the Greek operator; three seafarers were killed.",
+   "source_ids": [
+    "true-confidence-imo",
+    "true-confidence-wsc",
+    "true-confidence-reuters"
+   ]
+  },
+  {
+   "vessel": "Abdullah",
+   "imo": "9745598",
+   "incident_date": "2024-03-12",
+   "parties": [
+    {
+     "company": "KSRM (Kabir Steel Re-Rolling Mills)",
+     "role": "registered-owner",
+     "country": "Bangladesh"
+    },
+    {
+     "company": "SR Shipping",
+     "role": "commercial-manager",
+     "country": "Bangladesh"
+    }
+   ],
+   "note": "Hijacked and later released. Owner and operator are part of the same Bangladeshi group.",
+   "source_ids": [
+    "abdullah-maritrace",
+    "abdullah-eunavfor"
+   ]
+  },
+  {
+   "vessel": "Tutor",
+   "imo": null,
+   "incident_date": "2024-06-12",
+   "parties": [
+    {
+     "company": "Evalend Shipping",
+     "role": "technical-manager",
+     "country": "Greece"
+    }
+   ],
+   "note": "Reported as Greek-owned with an Athens-based manager. No IMO number or registered owner stated in the cited report.",
+   "source_ids": [
+    "tutor-reuters",
+    "tutor-gcaptain"
+   ]
+  },
+  {
+   "vessel": "Sounion",
+   "imo": "9312145",
+   "incident_date": "2024-08-21",
+   "parties": [
+    {
+     "company": "Delta Tankers",
+     "role": "commercial-manager",
+     "country": "Greece"
+    }
+   ],
+   "note": "Operated by Athens-based Delta Tankers.",
+   "source_ids": [
+    "sounion-reuters"
+   ]
+  },
+  {
+   "vessel": "Magic Seas",
+   "imo": "9736169",
+   "incident_date": "2025-07-06",
+   "parties": [
+    {
+     "company": "Allseas Marine",
+     "role": "beneficial-owner",
+     "country": "Greece"
+    }
+   ],
+   "note": "Liberia-flagged, Greek-owned; Allseas Marine identified as shipowner.",
+   "source_ids": [
+    "magic-seas-solace"
+   ]
+  },
+  {
+   "vessel": "Eternity C",
+   "imo": null,
+   "incident_date": "2025-07-07",
+   "parties": [
+    {
+     "company": "Cosmoship Management S.A.",
+     "role": "technical-manager",
+     "country": "Greece"
+    }
+   ],
+   "note": "Manager already held in incidents.json; the 2026 research pass did not surface an owner name.",
+   "source_ids": [
+    "eternity-c-reuters",
+    "eternity-c-riviera"
+   ]
+  },
+  {
+   "vessel": "Hellas Aphrodite",
+   "imo": "9722766",
+   "incident_date": "2025-11-06",
+   "parties": [
+    {
+     "company": "Latsco Marine Management",
+     "role": "commercial-manager",
+     "country": "Greece"
+    }
+   ],
+   "note": "Greek-controlled; Latsco Marine Management issued the response. Its exact role is not established by the source.",
+   "source_ids": [
+    "hellas-aphrodite-lloyds"
+   ]
+  },
+  {
+   "vessel": "Lila Norfolk",
+   "imo": 9281700,
+   "incident_date": "2024-01-05",
+   "parties": [
+    {
+     "company": "AVR Shipping LLC",
+     "role": "registered-owner",
+     "country": "United Arab Emirates"
+    },
+    {
+     "company": "Kyra Global Marine Services",
+     "role": "technical-manager",
+     "country": "United Arab Emirates"
+    }
+   ],
+   "note": "Resolved 2026-09-04 via a vessel-tracking profile site, not a primary shipping-press source. Treat as medium confidence pending Equasis confirmation.",
+   "source_ids": [
+    "magicport-lila-norfolk",
+    "kyramarine-site"
+   ]
+  },
+  {
+   "vessel": "Rubymar",
+   "imo": 9138898,
+   "incident_date": "2024-02-18",
+   "parties": [
+    {
+     "company": "Golden Adventure Shipping S.A.",
+     "role": "beneficial-owner",
+     "country": "Marshall Islands"
+    },
+    {
+     "company": "GMZ Ship Management Company S.A.",
+     "role": "technical-manager",
+     "country": "Lebanon"
+    },
+    {
+     "company": "Ma'aden (Saudi Arabian Mining Company)",
+     "role": "charterer",
+     "country": "Saudi Arabia"
+    }
+   ],
+   "note": "Lloyd's List named the beneficial owner behind the Marshall Islands shell, which is unusually specific. Blue Fleet Group, previously recorded as broker, is not a party.",
+   "source_ids": [
+    "lloydslist-rubymar-insurance"
+   ]
+  },
+  {
+   "vessel": "Honour 25",
+   "imo": null,
+   "incident_date": "2026-04-21",
+   "parties": [],
+   "note": "No owner, manager or charterer found in any source. Seized by EUNAVFOR Operation Atalanta 27 April 2026 and moved into Somali territorial waters; as of 2026-09-04 the vessel shows live AIS at anchor off Hobyo/Garacad with an 'ARM GUARD' destination string, four months after that last confirmed status. Nobody to contact yet.",
+   "source_ids": [
+    "bbc-honour25",
+    "maritimeoptima-honour25",
+    "shipfinder-api"
+   ]
+  }
+ ],
+ "contact_policy": "Corporate and departmental contact points only: published head office address, general enquiry telephone and email. No personal contact details for individual employees are collected or stored in this library.",
+ "contacts": [
+  {
+   "company": "Cosmoship Management S.A.",
+   "url": "http://www.cosmoships.gr",
+   "head_office": "34 Leosthenous str., 185 36 Piraeus, Greece",
+   "phone": "+30 210 45 22 914",
+   "email": null,
+   "founded": null,
+   "fleet_size": null,
+   "note": "Website states it is under construction; address and telephone only.",
+   "source_ids": [
+    "cosmoship-site"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "company": "Delta Tankers",
+   "url": "https://deltatankers.gr",
+   "head_office": null,
+   "phone": null,
+   "email": null,
+   "founded": "2006",
+   "fleet_size": "27 tankers, over 5 million dwt",
+   "note": "Describes itself as ship manager and operator. Aframax, Suezmax, VLCC.",
+   "source_ids": [
+    "delta-tankers-site"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "company": "Latsco Marine Management",
+   "url": "https://www.latsco.com",
+   "head_office": "4 Xenias Str., 145-62 Kifisia-Kefalari, Greece",
+   "phone": null,
+   "email": null,
+   "founded": "",
+   "fleet_size": "33 vessels on the water",
+   "note": "Latsco Group company. Fleet figure is stated for Latsco Shipping Limited. Product tankers, gas carriers, VLCC, LNG, Ultramax, containers.",
+   "source_ids": [
+    "latsco-site"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "company": "Navigation Maritime Bulgare (Navibulgar)",
+   "url": "https://www.navbul.com/",
+   "head_office": "Navibulgar House 1, Primorski Boulevard, 9000 Varna, Bulgaria",
+   "phone": "+359 52 633 100",
+   "email": "office@navbul.com",
+   "founded": "",
+   "fleet_size": null,
+   "note": "Fleet entries listed as bulk carriers. No fleet total or founding year on the fetched page.",
+   "source_ids": [
+    "navibulgar-site"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "company": "KSRM (Kabir Steel Re-Rolling Mills)",
+   "url": "https://ksrm.com.bd/",
+   "head_office": "Kabir Manzil, Sk. Mujib Road, Agrabad, Chattogram, Bangladesh",
+   "phone": "+88 02-333311501-3",
+   "email": "sales@ksrm.com.bd",
+   "founded": "1984",
+   "fleet_size": null,
+   "note": "Steel manufacturer, not a shipping company. It owns the vessel to move its own raw material, which makes it a cargo owner rather than an operator.",
+   "source_ids": [
+    "ksrm-site"
+   ],
+   "retrieved": "2026-09-03"
+  },
+  {
+   "company": "Nippon Yusen K.K. (NYK Line)",
+   "url": "https://www.nyk.com/english/",
+   "head_office": null,
+   "phone": null,
+   "email": null,
+   "founded": "",
+   "fleet_size": null,
+   "note": "Official profile page reached but the requested corporate details were not exposed in the fetched content.",
+   "source_ids": [
+    "nyk-site"
+   ],
+   "retrieved": "2026-09-03"
+  }
+ ],
+ "ship_managers": {
+  "title": "Third-party technical managers",
+  "why_this_matters": "Technical managers buy security under this library's own ownership model. Unlike owners, they are concentrated: five firms account for roughly 3,100 vessels under management between them. Counts are total managed fleet across all vessel types, not tanker-only or bulk-only.",
+  "records": [
+   {
+    "name": "V.Group",
+    "fleet_managed": 900,
+    "basis": "Lloyd's List top-10 shipmanagers ranking, 2025.",
+    "source_ids": [
+     "lloyds-top-shipmanagers-2025"
+    ]
+   },
+   {
+    "name": "Anglo-Eastern",
+    "fleet_managed": 740,
+    "basis": "Stated as more than 740 ships under third-party management.",
+    "source_ids": [
+     "marineinsight-shipmanagers"
+    ]
+   },
+   {
+    "name": "Bernhard Schulte Shipmanagement",
+    "fleet_managed": 680,
+    "basis": "Stated fleet of 680 ships.",
+    "source_ids": [
+     "marineinsight-shipmanagers"
+    ]
+   },
+   {
+    "name": "Wilhelmsen Ship Management",
+    "fleet_managed": 450,
+    "basis": "Stated as a portfolio of over 450 ships.",
+    "source_ids": [
+     "marineinsight-shipmanagers"
+    ]
+   },
+   {
+    "name": "Columbia Shipmanagement",
+    "fleet_managed": 325,
+    "basis": "Company page states 325+ vessels.",
+    "url": "https://columbiagroup.org/ship-management-services/",
+    "source_ids": [
+     "columbia-shipmanagement"
+    ]
+   }
+  ],
+  "gaps": [
+   "No source breaks these managed fleets down by vessel type, so the tanker and bulk share of each is unknown.",
+   "Headquarters country is not stated in the fetched sources for four of the five."
+  ],
+  "retrieved": "2026-09-03"
+ },
+ "conflicts": [
+  {
+   "field": "Frontline plc fleet size",
+   "values": [
+    {
+     "value": "75 vessels (38 VLCC, 19 Suezmax, 18 Aframax/LR2)",
+     "source_id": "frontline-fleet"
+    },
+    {
+     "value": "81 vessels post-transaction (42 VLCC, 21 Suezmax, 18 LR2/Aframax)",
+     "source_id": "frontline-renewal"
+    }
+   ],
+   "resolution": "Unresolved. The fleet page and the fleet-renewal release disagree; the 81 figure is described as post-transaction."
+  }
+ ],
+ "contacts_not_found": [
+  {
+   "company": "Allseas Marine",
+   "note": "No official corporate website or filing with published contact details was verified on 2026-09-03."
+  },
+  {
+   "company": "Evalend Shipping",
+   "note": "No official corporate website or filing with published contact details was verified on 2026-09-03."
+  },
+  {
+   "company": "Third January Maritime Ltd",
+   "note": "No official corporate website or filing with published contact details was verified on 2026-09-03."
+  },
+  {
+   "company": "SR Shipping",
+   "note": "No official corporate website or filing with published contact details was verified on 2026-09-03."
+  }
+ ]
+}

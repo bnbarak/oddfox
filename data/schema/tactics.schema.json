@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/tactics.schema.json",
+  "title": "How ships are attacked",
+  "type": "object",
+  "required": ["dataset", "threat_models", "defence_layers"],
+  "properties": {
+    "dataset": { "const": "tactics" },
+    "threat_models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "intent", "approach", "defeated_by", "source_ids"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "name": { "type": "string" },
+          "intent": { "type": "string", "description": "What the attacker wants. This is the field that separates the models — ransom, damage, theft, or hostages — and it determines the countermeasure." },
+          "status_2026": { "type": "string" },
+          "organisation": { "type": "string" },
+          "platforms": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "detail"],
+              "properties": { "type": { "type": "string" }, "detail": { "type": "string" } }
+            }
+          },
+          "range": { "type": "string" },
+          "approach": { "type": "string" },
+          "timing": { "type": "string" },
+          "weapons": { "type": "array", "items": { "type": "string" } },
+          "weapon_use": { "type": "string" },
+          "boarding_method": { "type": "string" },
+          "targeting_logic": { "type": "string" },
+          "treatment_of_crew": { "type": "string" },
+          "who_they_take": { "type": "string" },
+          "what_they_take": { "type": "string" },
+          "target_profile": { "type": "string" },
+          "severity": { "type": "string" },
+          "reporting_body": { "type": "string" },
+          "vulnerability_factors": { "type": "array", "items": { "type": "string" } },
+          "defeated_by": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "not_defeated_by": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Measures that do NOT work against this model. As important as defeated_by, and the field most often left out of security marketing."
+          },
+          "note": { "type": "string" },
+          "commercial_note": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+    "defence_layers": {
+      "type": "object",
+      "required": ["framework", "layers"],
+      "properties": {
+        "framework": { "type": "string" },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["layer", "measures"],
+            "properties": {
+              "layer": { "enum": ["Primary", "Secondary", "Last"] },
+              "measures": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "detail"],
+                  "properties": { "name": { "type": "string" }, "detail": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
+        "operational_practice": { "type": "array", "items": { "type": "string" } },
+        "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+      }
+    },
+    "transit_corridors": { "type": "array", "items": { "type": "object" } }
+  }
+}

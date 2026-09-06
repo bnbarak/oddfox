@@ -1,0 +1,553 @@
+{
+ "$schema": "../schema/incidents.schema.json",
+ "dataset": "incidents",
+ "title": "Named incidents",
+ "description": "Named incidents where the vessel is on the record. Date, flag, method, outcome and response as reported. The full Houthi campaign timeline is in houthi-timeline.json; complete incident lists are held by IMB, ReCAAP and Lloyd's List.",
+ "updated": "2026-09-04",
+ "records": [
+  {
+   "id": "galaxy-leader-2023",
+   "date": "2023-11-19",
+   "vessel": {
+    "name": "Galaxy Leader",
+    "type": "vehicle carrier",
+    "flag": "Bahamas",
+    "flag_iso": "BS",
+    "imo": "9237307"
+   },
+   "area_id": "red-sea",
+   "actor": "Houthi",
+   "method": "Boarded from a Mil Mi-17 helicopter",
+   "outcome": "captured",
+   "crew_effect": "25 crew taken hostage; vessel taken to the Hodeidah port area",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "galaxy-leader-reuters",
+    "galaxy-leader-lloyds"
+   ],
+   "confidence": "medium",
+   "ownership_chain": {
+    "flag_state": "Bahamas",
+    "registered_owner": "Galaxy Maritime Ltd., Isle of Man",
+    "commercial_manager": "Nippon Yusen K.K. (NYK Line), Japan"
+   }
+  },
+  {
+   "id": "ruen-2023",
+   "date": "2023-12-14",
+   "vessel": {
+    "name": "Ruen",
+    "type": "bulk carrier",
+    "flag": "Malta",
+    "flag_iso": "MT",
+    "imo": "9754903"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirates",
+   "method": "Armed boarding",
+   "outcome": "hijacked, then recovered",
+   "crew_effect": "Vessel subsequently used by pirates as a mothership.",
+   "response": "Indian Navy MARCOS, Operation Sankalp, March 2024. 35 pirates captured and sent to Mumbai for trial.",
+   "source_ids": [
+    "wikipedia-somali-piracy",
+    "ruen-lloyds",
+    "ruen-voa",
+    "ruen-guardian"
+   ],
+   "confidence": "medium",
+   "ownership_chain": {
+    "flag_state": "Malta",
+    "beneficial_owner": "Navigation Maritime Bulgare (Navibulgar), Bulgaria",
+    "commercial_manager": "Navigation Maritime Bulgare (Navibulgar), Bulgaria"
+   }
+  },
+  {
+   "id": "lila-norfolk-2024",
+   "date": "2024-01-05",
+   "vessel": {
+    "name": "Lila Norfolk",
+    "type": "bulk carrier",
+    "flag": "Liberia",
+    "flag_iso": "LR"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirates",
+   "method": "Armed boarding",
+   "outcome": "hijacked, then recovered",
+   "response": "Indian Navy",
+   "source_ids": [
+    "wikipedia-somali-piracy",
+    "magicport-lila-norfolk",
+    "kyramarine-site"
+   ],
+   "confidence": "medium",
+   "ownership_chain": {
+    "flag_state": "Liberia",
+    "registered_owner": "AVR Shipping LLC, United Arab Emirates",
+    "technical_manager": "Kyra Global Marine Services, Dubai, United Arab Emirates",
+    "commercial_manager": "Kyra Global Marine Services, Dubai, United Arab Emirates"
+   }
+  },
+  {
+   "id": "rubymar-2024",
+   "date": "2024-02-18",
+   "vessel": {
+    "name": "Rubymar",
+    "type": "cargo",
+    "flag": "Belize",
+    "flag_iso": "BZ"
+   },
+   "area_id": "bab-el-mandeb",
+   "actor": "Houthi",
+   "method": "Anti-ship missile",
+   "outcome": "sunk",
+   "voyage": "Khor Fakkan, UAE to Varna, Bulgaria",
+   "crew_effect": "Crew evacuated; vessel reported sunk on 2 March 2024, two weeks after the strike",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "lloydslist-rubymar-insurance"
+   ],
+   "confidence": "high",
+   "ownership_chain": {
+    "flag_state": "Belize",
+    "registered_owner": "Golden Adventure Shipping S.A., Marshall Islands (ultimately owned by Captain Wael Chahadah, Lebanese national)",
+    "technical_manager": "GMZ Ship Management Company S.A., registered Honduras, operates from Lebanon",
+    "commercial_manager": "Chartered by Ma'aden (Saudi Arabian Mining Company), Saudi Arabia"
+   },
+   "note": " Blue Fleet Group was the chartering broker, not owner or manager."
+  },
+  {
+   "id": "true-confidence-2024",
+   "date": "2024-03-06",
+   "vessel": {
+    "name": "True Confidence",
+    "type": "bulk carrier",
+    "flag": "Barbados",
+    "flag_iso": "BB",
+    "imo": "9460784"
+   },
+   "area_id": "gulf-of-aden",
+   "actor": "Houthi",
+   "method": "Anti-ship missile",
+   "outcome": "set afire, abandoned",
+   "crew_effect": "Fire aboard, crew abandoned the vessel",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "true-confidence-imo",
+    "true-confidence-wsc",
+    "true-confidence-reuters"
+   ],
+   "confidence": "high",
+   "ownership_chain": {
+    "flag_state": "Barbados",
+    "registered_owner": "True Confidence Shipping SA, Liberia",
+    "commercial_manager": "Third January Maritime Ltd, Greece"
+   }
+  },
+  {
+   "id": "abdullah-2024",
+   "date": "2024-03-12",
+   "vessel": {
+    "name": "Abdullah",
+    "type": "bulk carrier",
+    "flag": "Bangladesh",
+    "flag_iso": "BD",
+    "imo": "9745598"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirates",
+   "method": "Armed boarding",
+   "outcome": "hijacked, then released",
+   "voyage": "Mozambique to the United Arab Emirates, carrying coal",
+   "crew_effect": "23 crew taken hostage; released in April 2024. Terms of the release were not disclosed.",
+   "source_ids": [
+    "wikipedia-somali-piracy",
+    "issafrica-somali-comeback",
+    "abdullah-maritrace",
+    "abdullah-eunavfor"
+   ],
+   "confidence": "medium",
+   "ownership_chain": {
+    "flag_state": "Bangladesh",
+    "registered_owner": "KSRM (Kabir Steel Re-Rolling Mills), Bangladesh",
+    "commercial_manager": "SR Shipping, Bangladesh"
+   }
+  },
+  {
+   "id": "maersk-yorktown-2024",
+   "date": "2024-04-09",
+   "vessel": {
+    "name": "Maersk Yorktown",
+    "type": "container ship",
+    "flag": "United States",
+    "flag_iso": "US",
+    "imo": 9289192,
+    "mmsi": 369248000,
+    "ais_registry": "United States",
+    "identity_source": "shipfinder-api",
+    "identity_retrieved": "2026-09-04"
+   },
+   "area_id": "gulf-of-aden",
+   "actor": "Houthi",
+   "method": "Anti-ship missile",
+   "outcome": "targeted, no reported damage",
+   "escort": "Under escort by USS Mason and USS Laboon at the time of the attack",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "shipfinder-api"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "tutor-2024",
+   "date": "2024-06-12",
+   "vessel": {
+    "name": "Tutor",
+    "type": "bulk carrier",
+    "flag": "Liberia",
+    "flag_iso": "LR",
+    "identity_source": "shipfinder-api",
+    "identity_retrieved": "2026-09-04",
+    "identity_resolution": {
+     "status": "resolved: not the same vessel",
+     "finding": "The MMSI matched by name search (636021179) reported a live position on 2026-06-24 at 51.365397N, 2.469022E — in the North Sea off Zeebrugge, Belgium — making 11.8 knots. That is not consistent with a Liberia-flagged bulk carrier reported sunk in the Red Sea on 2024-06-12.",
+     "conclusion": "Either the MMSI was reassigned to a different vessel after the loss, or the name search matched an unrelated ship that happens to share the name Tutor. This does not cast doubt on the original sinking report — it means our identity match was wrong, not that Reuters was wrong.",
+     "action": "IMO 9942627 and MMSI 636021179 removed as this vessel's confirmed identifiers pending a proper Equasis lookup.",
+     "retrieved": "2026-09-04",
+     "source_ids": [
+      "shipfinder-api"
+     ]
+    }
+   },
+   "area_id": "red-sea",
+   "actor": "Houthi",
+   "method": "Uncrewed surface vessel, ballistic missiles and drones in combination",
+   "outcome": "sunk",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "tutor-reuters",
+    "tutor-gcaptain",
+    "shipfinder-api"
+   ],
+   "confidence": "high",
+   "ownership_chain": {
+    "flag_state": "Liberia",
+    "technical_manager": "Evalend Shipping, Greece"
+   }
+  },
+  {
+   "id": "sounion-2024",
+   "date": "2024-08-21",
+   "vessel": {
+    "name": "Sounion",
+    "type": "crude oil tanker",
+    "flag": "Greece",
+    "flag_iso": "GR",
+    "imo": "9312145"
+   },
+   "area_id": "red-sea",
+   "actor": "Houthi",
+   "method": "Small boats, USV and other weapons",
+   "outcome": "set afire",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "sounion-reuters"
+   ],
+   "confidence": "high",
+   "ownership_chain": {
+    "flag_state": "Greece",
+    "commercial_manager": "Delta Tankers, Greece"
+   }
+  },
+  {
+   "id": "magic-seas-2025",
+   "date": "2025-07-06",
+   "vessel": {
+    "name": "Magic Seas",
+    "type": "bulk carrier",
+    "flag": "Liberia",
+    "flag_iso": "LR",
+    "imo": "9736169"
+   },
+   "area_id": "red-sea",
+   "actor": "Houthi",
+   "method": "Small-arms fire, RPGs and uncrewed surface vessels",
+   "outcome": "sunk",
+   "crew_effect": "All crew rescued before the vessel went down",
+   "source_ids": [
+    "wikipedia-houthi-attacks",
+    "reuters-eternity-c-crew",
+    "magic-seas-solace"
+   ],
+   "confidence": "medium",
+   "ownership_chain": {
+    "flag_state": "Liberia",
+    "beneficial_owner": "Allseas Marine, Greece"
+   }
+  },
+  {
+   "id": "eternity-c-2025",
+   "date": "2025-07-07",
+   "vessel": {
+    "name": "Eternity C",
+    "type": "bulk carrier",
+    "flag": "Liberia",
+    "port_of_registry": "Monrovia",
+    "flag_iso": "LR",
+    "imo": 9588249,
+    "mmsi": 636015837,
+    "ais_registry": "Liberia",
+    "identity_source": "shipfinder-api",
+    "identity_retrieved": "2026-09-04",
+    "identity_resolution": {
+     "status": "consistent with the reported loss",
+     "finding": "A live position query for this MMSI returned no current data, unlike Tutor's MMSI which returned an active, moving vessel elsewhere.",
+     "conclusion": "This is weak positive evidence the hull is no longer transmitting, consistent with the reported sinking. Not proof.",
+     "retrieved": "2026-09-04",
+     "source_ids": [
+      "shipfinder-api"
+     ]
+    }
+   },
+   "area_id": "red-sea",
+   "actor": "Houthi",
+   "method": "UAVs, RPGs and uncrewed surface vessels",
+   "outcome": "sunk",
+   "voyage": "Departed Berbera, Somalia, having delivered aid",
+   "crew_effect": "25 aboard. At least three killed. Survivors taken; nine Filipino seafarers confirmed for release in December 2025, five months after the attack.",
+   "ownership_chain": {
+    "flag_state": "Liberia",
+    "registered_owner": "Registered in Monrovia",
+    "manager": "Cosmoship Management S.A., Piraeus, Greece",
+    "technical_manager": "Cosmoship Management S.A., Greece"
+   },
+   "source_ids": [
+    "reuters-eternity-c-crew",
+    "wikipedia-houthi-attacks",
+    "eternity-c-reuters",
+    "eternity-c-riviera",
+    "shipfinder-api"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "hellas-aphrodite-2025",
+   "date": "2025-11-06",
+   "vessel": {
+    "name": "Hellas Aphrodite",
+    "type": "tanker",
+    "flag": "Malta",
+    "flag_iso": "MT",
+    "imo": "9722766"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirates",
+   "method": "Armed boarding",
+   "outcome": "hijacked, then recovered",
+   "position_note": "Approximately 700 nautical miles off the Somali coast",
+   "crew_effect": "24 crew; freed by EU NAVFOR after roughly 30 hours",
+   "response": "EU NAVFOR Operation ATALANTA",
+   "source_ids": [
+    "gcaptain-hellas-aphrodite",
+    "eunavfor-atalanta",
+    "imb-annual-2025",
+    "hellas-aphrodite-lloyds"
+   ],
+   "confidence": "high",
+   "ownership_chain": {
+    "flag_state": "Malta",
+    "commercial_manager": "Latsco Marine Management, Greece"
+   }
+  },
+  {
+   "id": "palau-tanker-2026",
+   "date": "2026-04",
+   "vessel": {
+    "name": "Not named in source",
+    "type": "combined chemical and oil tanker",
+    "flag": "Palau",
+    "flag_iso": "PW"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirate action group",
+   "method": "Armed boarding",
+   "outcome": "hijacked",
+   "source_ids": [
+    "ambrey-somali-hijackings",
+    "imb-h1-2026"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "stkitts-cargo-2026",
+   "date": "2026-04",
+   "vessel": {
+    "name": "Not named in source",
+    "type": "general cargo",
+    "flag": "Saint Kitts and Nevis",
+    "flag_iso": "KN"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirate action group",
+   "method": "Armed boarding",
+   "outcome": "hijacked",
+   "crew_effect": "Ambrey records this as the first simultaneous hijacking of merchant vessels since March 2024, when Ruen and Abdullah were both under pirate control.",
+   "source_ids": [
+    "ambrey-somali-hijackings",
+    "imb-h1-2026"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "honour-25-2026",
+   "date": "2026-04-21",
+   "vessel": {
+    "name": "Honour 25",
+    "type": "oil tanker",
+    "flag": "Palau",
+    "flag_iso": "PW",
+    "imo": 1099735,
+    "mmsi": 511101862,
+    "ais_registry": "Palau",
+    "identity_source": "shipfinder-api",
+    "identity_retrieved": "2026-09-04",
+    "mmsi_history": [
+     {
+      "mmsi": 629009492,
+      "registry": "Cameroon",
+      "last_ais": "2025-10-01"
+     },
+     {
+      "mmsi": 511101862,
+      "registry": "Palau",
+      "last_ais": "2026-09-04"
+     }
+    ],
+    "note": "Flag changed from Cameroon to Palau. The hull was still transmitting on 2026-09-04, after the reported April 2026 hijack."
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirates",
+   "method": "Boarded by six armed pirates",
+   "outcome": "hijacked",
+   "position_note": "Approximately 30 nautical miles off the Somali coast, off Puntland",
+   "voyage": "Berbera, Somaliland, to Mogadishu",
+   "cargo": "18,500 barrels",
+   "crew_effect": "17 crew aboard.",
+   "date_note": "Reported as 21 April by Ambrey and other outlets; the Wikipedia summary gives 22 April.",
+   "source_ids": [
+    "windward-somali-piracy",
+    "ambrey-somali-hijackings",
+    "bbc-somali-tanker-2026",
+    "shipfinder-api",
+    "bbc-honour25",
+    "maritimeoptima-honour25"
+   ],
+   "confidence": "medium",
+   "post_incident_tracking": {
+    "as_of": "2026-09-04",
+    "finding": "AIS position and a 7-day history track (82 points) show the vessel stationary at 9.2096N, 50.7078E — off the Somali coast, in the Hobyo/Garacad area historically used as a pirate anchorage — with speed under 1 knot throughout and no meaningful movement in a week.",
+    "destination_field": "AIS destination field reads 'MOGADISHO..ARMGAURD..' (as transmitted, likely a garbled 'ARM GUARD')",
+    "interpretation_note": "Not established which of these is true: the vessel remains held at anchor, it is awaiting an armed guard team out of Mogadisho, or it already has one aboard. The destination string is the vessel's own AIS transmission and could be inaccurate or manually miskeyed.",
+    "why_it_matters": "If accurate, this is the most concrete real-time signal in this library of an active hijacking situation.",
+    "retrieved": "2026-09-04",
+    "source_ids": [
+     "shipfinder-api"
+    ]
+   },
+   "ownership_research": {
+    "status": "no owner, manager or charterer identified in any source found",
+    "checked": "BBC and Maritime Optima follow-up coverage through 5 May 2026, plus a fresh search on 2026-09-04.",
+    "new_fact": "Maritime Optima reports the vessel was confirmed seized by EUNAVFOR Operation Atalanta on 27 April 2026 and moved deep into Somali territorial waters. That is the last substantive status found; it predates the vessel's current position by over four months and does not explain why it is showing live AIS off Hobyo/Garacad with an 'ARM GUARD' destination string as of 2026-09-04.",
+    "source_ids": [
+     "bbc-honour25",
+     "maritimeoptima-honour25"
+    ]
+   }
+  },
+  {
+   "id": "shadow-fleet-tanker-2026-08",
+   "date": "2026-08-20",
+   "vessel": {
+    "name": "Not named in source",
+    "type": "tanker, suspected Iranian shadow fleet",
+    "flag": "Unknown",
+    "flag_iso": null
+   },
+   "area_id": "gulf-of-aden",
+   "actor": "Somali pirates",
+   "method": "Armed boarding",
+   "outcome": "hijacked",
+   "position_note": "Off the coast of Yemen",
+   "crew_effect": "Reported as the second hijacking in four days.",
+   "source_ids": [
+    "nyt-somali-piracy-2026"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "cameroon-cargo-2026-08",
+   "date": "2026-08-30",
+   "vessel": {
+    "name": "Not named in source",
+    "type": "cargo",
+    "flag": "Cameroon",
+    "flag_iso": "CM"
+   },
+   "area_id": "somali-basin",
+   "actor": "Somali pirates",
+   "method": "Armed boarding",
+   "outcome": "hijacked, then recovered",
+   "response": "Turkish and Somali forces. Somali authorities reported 14 pirates killed in a 10-day operation.",
+   "source_ids": [
+    "aljazeera-cameroon-vessel-2026"
+   ],
+   "confidence": "medium"
+  }
+ ],
+ "retrieved": "2026-09-02",
+ "identity_note": "IMO and MMSI for Tutor, Eternity C, Maersk Yorktown and Honour 25 resolved via the ShipFinder AIS API on 2026-09-04. Two carry date anomalies, recorded in ais_anomalies rather than smoothed over.",
+ "ais_anomalies": [
+  {
+   "vessel": "Tutor",
+   "imo": 9942627,
+   "recorded_outcome": "sunk",
+   "recorded_date": "2024-06-12",
+   "last_ais": "2026-06-24",
+   "issue": "Recorded as sunk on 2024-06-12, but AIS records run to 2026-06-24.",
+   "checked": "A 7-day history track on the Tutor MMSI returned zero points, consistent with a hull no longer trading.",
+   "possible_explanations": [
+    "Stale or residual AIS record",
+    "MMSI reused or spoofed after the loss",
+    "The IMO match is a different vessel of the same name",
+    "The recorded outcome is wrong"
+   ],
+   "status": "unresolved"
+  },
+  {
+   "vessel": "Eternity C",
+   "imo": 9588249,
+   "recorded_outcome": "sunk",
+   "recorded_date": "2025-07-07",
+   "last_ais": "2025-11-02",
+   "issue": "Recorded as sunk on 2025-07-07, but AIS records run to 2025-11-02.",
+   "checked": "A 7-day history track on the Tutor MMSI returned zero points, consistent with a hull no longer trading.",
+   "possible_explanations": [
+    "Stale or residual AIS record",
+    "MMSI reused or spoofed after the loss",
+    "The IMO match is a different vessel of the same name",
+    "The recorded outcome is wrong"
+   ],
+   "status": "unresolved"
+  }
+ ],
+ "possible_duplicate": [
+  {
+   "records": [
+    "Honour 25, 2026-04-21, flag now confirmed Palau",
+    "Unnamed combined chemical and oil tanker, 2026-04, flag Palau, hijacked"
+   ],
+   "issue": "Both are Palau-flagged tankers hijacked in April 2026. They may be the same incident counted twice.",
+   "status": "unresolved, check before using the incident count externally"
+  }
+ ]
+}

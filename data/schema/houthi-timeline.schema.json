@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Houthi attack timeline",
+  "type": "object",
+  "required": [
+    "dataset",
+    "entries",
+    "source_ids"
+  ],
+  "properties": {
+    "dataset": {
+      "const": "houthi-timeline"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "date_range": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "source_ids": {
+      "$ref": "common.schema.json#/$defs/sourceIds"
+    },
+    "confidence": {
+      "$ref": "common.schema.json#/$defs/confidence"
+    },
+    "monthly": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "month",
+          "count"
+        ],
+        "properties": {
+          "month": {
+            "type": "string",
+            "pattern": "^\\\\d{4}-\\\\d{2}$"
+          },
+          "count": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "n",
+          "date",
+          "vessel",
+          "flag",
+          "method",
+          "outcome"
+        ],
+        "properties": {
+          "n": {
+            "type": "integer"
+          },
+          "date": {
+            "type": "string"
+          },
+          "vessel": {
+            "type": "string"
+          },
+          "flag": {
+            "type": "string"
+          },
+          "flag_iso": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Z]{2}$"
+          },
+          "method": {
+            "type": "string"
+          },
+          "outcome": {
+            "enum": [
+              "sunk",
+              "captured",
+              "set afire",
+              "damaged",
+              "minor damage",
+              "unharmed",
+              "unknown"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://oddfox.ai/data/schema/houthi-timeline.schema.json"
+}

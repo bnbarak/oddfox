@@ -1,0 +1,645 @@
+{
+  "$schema": "../schema/threat-stats.schema.json",
+  "dataset": "threat-stats",
+  "title": "Reported incident counts",
+  "description": "Piracy and armed robbery counts from the three bodies that publish them. The three disagree, on purpose — they count different waters and take reports from different people. Never mix them in one series.",
+  "updated": "2026-09-02",
+  "counting_bodies": [
+    {
+      "id": "IMB",
+      "name": "ICC International Maritime Bureau",
+      "scope": "worldwide",
+      "counts": "actual and attempted piracy and armed robbery reported to its Kuala Lumpur centre by masters and owners",
+      "source_id": "imb-prc"
+    },
+    {
+      "id": "ReCAAP",
+      "name": "ReCAAP Information Sharing Centre",
+      "scope": "Asia only, 21 contracting parties",
+      "counts": "reports routed through member government focal points",
+      "source_id": "recaap-annual-2025"
+    },
+    {
+      "id": "IMO",
+      "name": "International Maritime Organization",
+      "scope": "worldwide",
+      "counts": "reports from member governments plus regional and industry bodies; the widest net and the highest numbers",
+      "source_id": "imo-msc4-270"
+    }
+  ],
+  "series": [
+    {
+      "id": "imb-global-annual",
+      "body": "IMB",
+      "metric": "incidents against ships, worldwide",
+      "unit": "incidents",
+      "period": "calendar year",
+      "points": [
+        {
+          "period": "2023",
+          "value": 120,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2024",
+          "value": 116,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2025",
+          "value": 137,
+          "source_id": "imb-annual-2025",
+          "confidence": "high",
+          "note": "Highest in five years."
+        }
+      ]
+    },
+    {
+      "id": "imo-global-annual",
+      "body": "IMO",
+      "metric": "piracy and armed robbery incidents, worldwide",
+      "unit": "incidents",
+      "period": "calendar year",
+      "points": [
+        {
+          "period": "2025",
+          "value": 171,
+          "source_id": "imo-msc4-270",
+          "confidence": "medium",
+          "note": "Higher than IMB's 137 for the same year because IMO aggregates government reports too. A worked example of why the counting body must always travel with the number."
+        }
+      ]
+    },
+    {
+      "id": "recaap-asia-annual",
+      "body": "ReCAAP",
+      "metric": "piracy and armed robbery incidents, Asia",
+      "unit": "incidents",
+      "period": "calendar year",
+      "points": [
+        {
+          "period": "2024",
+          "value": 107,
+          "source_id": "recaap-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2025",
+          "value": 132,
+          "source_id": "recaap-annual-2025",
+          "confidence": "medium",
+          "note": "+23% year on year. ReCAAP's own website dashboard showed 133 for 2025; the annual report figure of 132 is used here. A one-incident discrepancy of this kind is normal and is why records get revised."
+        }
+      ]
+    },
+    {
+      "id": "recaap-asia-halfyear",
+      "body": "ReCAAP",
+      "metric": "armed robbery against ships, Asia",
+      "unit": "incidents",
+      "period": "January–June",
+      "points": [
+        {
+          "period": "2019-H1",
+          "value": 28,
+          "source_id": "recaap-hy-2026",
+          "confidence": "high"
+        },
+        {
+          "period": "2025-H1",
+          "value": 96,
+          "source_id": "recaap-hy-2026",
+          "confidence": "high"
+        },
+        {
+          "period": "2026-H1",
+          "value": 35,
+          "source_id": "recaap-hy-2026",
+          "confidence": "high",
+          "note": "Down 64%. Lowest January–June total since 2019. Every incident was armed robbery inside a coastal state's jurisdiction — none met the legal definition of piracy. 21 occurred while the ship was underway, 14 at anchor."
+        }
+      ]
+    },
+    {
+      "id": "soms-halfyear",
+      "body": "ReCAAP",
+      "metric": "incidents in the Straits of Malacca and Singapore",
+      "unit": "incidents",
+      "period": "January–June",
+      "points": [
+        {
+          "period": "2025-H1",
+          "value": 80,
+          "source_id": "recaap-hy-2026",
+          "confidence": "high"
+        },
+        {
+          "period": "2026-H1",
+          "value": 21,
+          "source_id": "recaap-hy-2026",
+          "confidence": "high",
+          "note": "Down 74%, but still 60% of everything reported in Asia. Residual cases are petty theft localised to the eastbound lane of the Phillip Channel."
+        }
+      ]
+    },
+    {
+      "id": "singapore-strait-imb-annual",
+      "body": "IMB",
+      "metric": "incidents in the Singapore Straits",
+      "unit": "incidents",
+      "period": "calendar year",
+      "points": [
+        {
+          "period": "2024",
+          "value": 43,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2025",
+          "value": 80,
+          "source_id": "imb-annual-2025",
+          "confidence": "high",
+          "note": "58% of all incidents reported worldwide in 2025. IMB counts the Singapore Straits; ReCAAP counts the wider Malacca-and-Singapore corridor and recorded 108 for the same year — the highest in the 19 years from 2007. Same water, different boundary, different number."
+        }
+      ]
+    },
+    {
+      "id": "gulf-of-guinea-annual",
+      "body": "IMB",
+      "metric": "incidents in the Gulf of Guinea",
+      "unit": "incidents",
+      "period": "calendar year",
+      "points": [
+        {
+          "period": "2023",
+          "value": 22,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2024",
+          "value": 18,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2025",
+          "value": 21,
+          "source_id": "imb-annual-2025",
+          "confidence": "high",
+          "note": "Low count, high severity. 23 of the world's 25 kidnapped crew in 2025 were taken here, in four incidents."
+        }
+      ]
+    },
+    {
+      "id": "indonesia-archipelago-annual",
+      "body": "IMB",
+      "metric": "incidents within the Indonesian archipelago",
+      "unit": "incidents",
+      "period": "calendar year",
+      "points": [
+        {
+          "period": "2023",
+          "value": 18,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2024",
+          "value": 22,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        },
+        {
+          "period": "2025",
+          "value": 12,
+          "source_id": "imb-annual-2025",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "imb-global-halfyear",
+      "body": "IMB",
+      "metric": "incidents against ships worldwide, first half",
+      "unit": "incidents",
+      "period": "January-June",
+      "points": [
+        {
+          "period": "2025-H1",
+          "value": 90,
+          "source_id": "imb-h1-2026",
+          "confidence": "medium"
+        },
+        {
+          "period": "2026-H1",
+          "value": 38,
+          "source_id": "imb-h1-2026",
+          "confidence": "medium",
+          "note": "Lowest first-half figure since 1992 — and the most misleading number in this library. Perpetrators still boarded or hijacked in 84% of those 38 incidents, 67 crew were taken hostage, and Somali groups accounted for 94% of hostages worldwide. Volume fell; consequence did not."
+        }
+      ]
+    },
+    {
+      "id": "singapore-strait-imb-halfyear",
+      "body": "IMB",
+      "metric": "incidents in the Singapore Straits, first half",
+      "unit": "incidents",
+      "period": "January-June",
+      "points": [
+        {
+          "period": "2025-H1",
+          "value": 57,
+          "source_id": "imb-h1-2026",
+          "confidence": "medium"
+        },
+        {
+          "period": "2026-H1",
+          "value": 12,
+          "source_id": "imb-h1-2026",
+          "confidence": "medium",
+          "note": "Attributed to intelligence sharing and coordinated interdictions by the Indonesian Marine Police."
+        }
+      ]
+    },
+    {
+      "id": "imb-global-quarterly",
+      "body": "IMB",
+      "metric": "incidents against ships worldwide, first quarter",
+      "unit": "incidents",
+      "period": "January-March",
+      "points": [
+        {
+          "period": "2026-Q1",
+          "value": 16,
+          "source_id": "imb-q1-2026",
+          "confidence": "high",
+          "note": "14 boarded, one hijacked, one attempted. Two crew taken hostage and one injured."
+        }
+      ]
+    }
+  ],
+  "breakdowns": [
+    {
+      "id": "imb-2025-outcomes",
+      "title": "What happened to the ship, IMB 2025",
+      "period": "2025",
+      "body": "IMB",
+      "source_id": "imb-annual-2025",
+      "total": 137,
+      "items": [
+        {
+          "label": "Boarded",
+          "value": 121
+        },
+        {
+          "label": "Attempted attack",
+          "value": 10
+        },
+        {
+          "label": "Hijacked",
+          "value": 4
+        },
+        {
+          "label": "Fired upon",
+          "value": 2
+        }
+      ],
+      "note": "88% of incidents are boardings. The dominant threat is a small number of men coming over the rail at low speed, not a missile."
+    },
+    {
+      "id": "imb-crew-harm",
+      "title": "What happened to the crew",
+      "body": "IMB",
+      "source_id": "imb-annual-2025",
+      "series": [
+        {
+          "label": "Taken hostage",
+          "2023": 73,
+          "2024": 126,
+          "2025": 46
+        },
+        {
+          "label": "Kidnapped",
+          "2023": 14,
+          "2024": 12,
+          "2025": 25
+        },
+        {
+          "label": "Threatened",
+          "2025": 10
+        },
+        {
+          "label": "Injured",
+          "2025": 4
+        },
+        {
+          "label": "Assaulted",
+          "2025": 3
+        }
+      ]
+    },
+    {
+      "id": "imb-weapons",
+      "title": "Guns and knives reported, IMB",
+      "body": "IMB",
+      "series": [
+        {
+          "label": "Guns",
+          "2024": 26,
+          "2025": 42
+        },
+        {
+          "label": "Knives",
+          "2024": 39,
+          "2025": 33
+        }
+      ],
+      "note": "IMB reported guns in 42 incidents in 2025 against 26 in 2024, and knives in 33 against 39. Rocket-propelled grenades, anti-ship missiles, uncrewed surface vessels and one-way attack UAVs are documented elsewhere in this library — in tactics.json under each threat model, in the named incidents, and in the UKMTO entries in attack-log.json — but they do not appear in this IMB tally. RPGs specifically are recorded by BMP5 as standard Somali pirate equipment, were used against the Hellas Aphrodite in November 2025, and were fired at a tanker in the Gulf of Aden on 15 June 2026.",
+      "scope": "The IMB annual summary breaks out guns and knives only. It is not a full weapons tally.",
+      "source_ids": [
+        "imb-annual-2025",
+        "bmp5",
+        "gcaptain-hellas-aphrodite",
+        "lwj-2026-06-gulf-of-aden"
+      ]
+    },
+    {
+      "id": "imb-2025-by-region",
+      "title": "Where, IMB 2025",
+      "period": "2025",
+      "body": "IMB",
+      "source_id": "imb-annual-2025",
+      "items": [
+        {
+          "label": "Southeast Asia",
+          "value": 95
+        },
+        {
+          "label": "Africa",
+          "value": 29
+        },
+        {
+          "label": "Indian sub-continent",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": "soms-2026h1-ship-types",
+      "title": "Which ships were hit in the Malacca and Singapore Straits, H1 2026",
+      "period": "2026-H1",
+      "body": "ReCAAP",
+      "source_id": "recaap-hy-2026",
+      "unit": "percent of 21 incidents",
+      "items": [
+        {
+          "label": "Bulk carriers",
+          "value": 62
+        },
+        {
+          "label": "Barges under tow",
+          "value": 29
+        },
+        {
+          "label": "Tankers",
+          "value": 9
+        }
+      ],
+      "note": "Slow, low-freeboard, often under tow. Boardability is a naval-architecture property before it is a security one."
+    },
+    {
+      "id": "recaap-2026h1-by-country",
+      "title": "Asia H1 2026 vs H1 2025, by location",
+      "body": "ReCAAP",
+      "source_id": "safety4sea-recaap-hy2026",
+      "items": [
+        {
+          "label": "Straits of Malacca & Singapore",
+          "2025-H1": 80,
+          "2026-H1": 21,
+          "flag_iso": "SG"
+        },
+        {
+          "label": "Philippines",
+          "2025-H1": 0,
+          "2026-H1": 10,
+          "flag_iso": "PH"
+        },
+        {
+          "label": "Bangladesh",
+          "2025-H1": 3,
+          "2026-H1": 2,
+          "flag_iso": "BD"
+        },
+        {
+          "label": "Indonesia (excl. SOMS)",
+          "2025-H1": 6,
+          "2026-H1": 1,
+          "flag_iso": "ID"
+        },
+        {
+          "label": "Malaysia",
+          "2025-H1": 0,
+          "2026-H1": 1,
+          "flag_iso": "MY"
+        },
+        {
+          "label": "India",
+          "2025-H1": 3,
+          "2026-H1": 0,
+          "flag_iso": "IN"
+        },
+        {
+          "label": "South China Sea",
+          "2025-H1": 2,
+          "2026-H1": 0,
+          "flag_iso": null
+        },
+        {
+          "label": "Vietnam",
+          "2025-H1": 2,
+          "2026-H1": 0,
+          "flag_iso": "VN"
+        }
+      ],
+      "note": "The Philippines went from zero to ten while everywhere else fell. Risk moves; it does not evaporate."
+    },
+    {
+      "id": "imb-2026h1-outcomes",
+      "title": "What happened to the ship, IMB H1 2026",
+      "period": "2026-H1",
+      "body": "IMB",
+      "source_id": "imb-h1-2026",
+      "total": 38,
+      "items": [
+        {
+          "label": "Boarded",
+          "value": 27
+        },
+        {
+          "label": "Hijacked",
+          "value": 5
+        },
+        {
+          "label": "Fired upon",
+          "value": 3
+        },
+        {
+          "label": "Attempted",
+          "value": 3
+        }
+      ],
+      "note": "Hijackings rose from 4 across all of 2025 to 5 in six months. The rarest and worst outcome is the one that increased."
+    },
+    {
+      "id": "imb-2026h1-targets",
+      "title": "What was targeted, IMB H1 2026",
+      "period": "2026-H1",
+      "body": "IMB",
+      "source_id": "imb-h1-2026",
+      "items": [
+        {
+          "label": "Dry bulk carriers",
+          "value": 13
+        },
+        {
+          "label": "Container vessels",
+          "value": 10
+        }
+      ],
+      "note": "Together 60% of targeted tonnage. Bulk carriers lead in every region and every dataset here — slow, low freeboard, small crews."
+    },
+    {
+      "id": "imb-2026q1-status",
+      "title": "Outcome by vessel status when attacked, IMB Q1 2026",
+      "period": "2026-Q1",
+      "body": "IMB",
+      "source_ids": [
+        "imb-q1-2026"
+      ],
+      "total": 16,
+      "items": [
+        {
+          "label": "Steaming",
+          "value": 10
+        },
+        {
+          "label": "Anchored",
+          "value": 6
+        }
+      ],
+      "note": "Of the 10 while steaming: one attempted, eight boarded, one hijacked. All six anchored incidents were boardings. IMB notes most successful incidents were reported while vessels were steaming — the reverse of the H1 2026 picture, where 15 of 32 successful attacks were at anchor."
+    },
+    {
+      "id": "imb-2026q1-region",
+      "title": "Incidents by region, IMB Q1 2026",
+      "period": "2026-Q1",
+      "body": "IMB",
+      "source_ids": [
+        "imb-q1-2026"
+      ],
+      "total": 16,
+      "items": [
+        {
+          "label": "Southeast Asia",
+          "value": 12
+        },
+        {
+          "label": "Africa (Somalia)",
+          "value": 2
+        },
+        {
+          "label": "Africa (Gulf of Guinea)",
+          "value": 1
+        },
+        {
+          "label": "Rest of the world",
+          "value": 1
+        }
+      ],
+      "note": "Southeast Asia was 12 of 16, all boardings. The two Somali incidents were one attempted attack and one hijacking of a dhow, which IMB notes could be used as a mother vessel."
+    }
+  ],
+  "findings": [
+    {
+      "id": "enforcement-works-and-that-is-the-problem",
+      "claim": "Incident counts respond to enforcement within a single quarter.",
+      "evidence": "Indonesian Marine Police apprehended two gangs in July 2025. IMB records a significant decline in Singapore Straits incidents across the second half of 2025, and ReCAAP records SOMS incidents falling 74% year on year in H1 2026.",
+      "source_ids": [
+        "imb-annual-2025",
+        "recaap-hy-2026"
+      ]
+    },
+    {
+      "id": "somali-capability-persists",
+      "claim": "Somali piracy is suppressed by naval presence, not eliminated.",
+      "evidence": "Only a small number of incidents off Somalia in 2025, but two in November occurred far from shore, demonstrating the ability to still operate at range. IMB attributes the absence of a resurgence to sustained naval presence, vessel hardening and best management practices.",
+      "source_ids": [
+        "imb-annual-2025"
+      ]
+    },
+    {
+      "id": "severity-not-frequency",
+      "claim": "The frequency trend and the severity trend point in opposite directions.",
+      "evidence": "Global incidents rose to a five-year high in 2025 while hostage-taking fell from 126 to 46; meanwhile kidnapping doubled to 25 and gun reports rose from 26 to 42.",
+      "source_ids": [
+        "imb-annual-2025"
+      ]
+    },
+    {
+      "id": "reporting-lag",
+      "claim": "The dataset itself is late.",
+      "evidence": "The IMB Piracy Reporting Centre publicly raised concern about late reporting in its 2025 annual report, noting timely reporting supports preventive action.",
+      "source_ids": [
+        "imb-annual-2025"
+      ]
+    },
+    {
+      "id": "somali-resurgence-2026",
+      "claim": "Somali piracy is no longer suppressed. It is resurgent, and this supersedes the 2025 reading.",
+      "evidence": "Since late April 2026, Somali pirates have been attacking and seizing vessels at a rate not seen since 2011. UKMTO issued four warnings in the Somali Basin in April and eight in the Gulf of Aden across May and June. Three hijacked vessels were being held simultaneously as of 16 June 2026. In H1 2026 Somali groups accounted for 94% of all crew taken hostage worldwide, and hijack victims included a Palau-flagged product tanker, a St Kitts and Nevis general cargo ship and multiple dhows taken for use as motherships.",
+      "source_ids": [
+        "lwj-2026-06-gulf-of-aden",
+        "imb-h1-2026"
+      ]
+    },
+    {
+      "id": "low-counts-hide-high-success",
+      "claim": "Falling incident counts do not mean falling risk, because the success rate is rising.",
+      "evidence": "H1 2026 produced the lowest half-year count since 1992 at 38 incidents, yet perpetrators successfully boarded or hijacked in 32 of them — 84%. 67 crew were taken hostage from those 38 incidents, against 46 across all 137 incidents of 2025.",
+      "source_ids": [
+        "imb-h1-2026",
+        "imb-annual-2025"
+      ]
+    },
+    {
+      "id": "anchorages-are-the-exposure",
+      "claim": "Ships are being lost at anchor, not only under way.",
+      "evidence": "15 of the 32 successful attacks in H1 2026 happened while the vessel was anchored. A Togo-flagged product tanker was boarded by nine armed men at anchor off Yemen and sailed with its 12 crew to the Somali coast. Manila anchorage went from zero incidents in H1 2025 to eight.",
+      "source_ids": [
+        "imb-h1-2026"
+      ]
+    },
+    {
+      "id": "singapore-straits-q1-collapse",
+      "claim": "The Singapore Straits remain the world's largest single concentration of incidents while falling sharply.",
+      "evidence": "IMB recorded eight incidents in the Singapore Straits in Q1 2026 against 31 in the same quarter of 2025. It still accounted for the largest share reported globally.",
+      "source_ids": [
+        "imb-q1-2026"
+      ]
+    },
+    {
+      "id": "philippines-anchorages-q1",
+      "claim": "Philippine anchorages went from zero to four incidents in one year.",
+      "evidence": "Four incidents in Q1 2026 — two at Manila anchorage and two at Bauan anchorage in Batangas Bay — against none in Q1 2025. One crew member was taken hostage.",
+      "source_ids": [
+        "imb-q1-2026"
+      ]
+    }
+  ],
+  "retrieved": "2026-09-02"
+}

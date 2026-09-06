@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/sources.schema.json",
+  "title": "Source register",
+  "type": "object",
+  "required": ["dataset", "records"],
+  "properties": {
+    "dataset": { "const": "sources" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "updated": { "type": "string", "format": "date" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "publisher", "url", "type"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "name": { "type": "string" },
+          "publisher": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "type": {
+            "enum": ["primary", "primary-registry", "secondary", "tertiary", "aggregator", "reference"],
+            "description": "primary — the body that produced the data. primary-registry — an authoritative lookup. secondary — credible reporting on a primary. tertiary/aggregator — use as an index, verify before quoting."
+          },
+          "access": { "type": "string" },
+          "cadence": { "type": "string" },
+          "published": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

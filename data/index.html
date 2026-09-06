@@ -1,0 +1,1307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Odd Fox — Business Context Library</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#04070a">
+<link rel="stylesheet" href="lib/oddfox.css?v=1788475997171">
+</head>
+<body>
+
+<header class="of-head">
+  <div class="of-head-in">
+    <div class="of-mark">Odd Fox <span>/ business context</span></div>
+    <div class="of-head-meta" id="meta">loading…</div>
+  </div>
+  <nav class="of-nav" id="nav" role="tablist"></nav>
+</header>
+
+<main class="of-main">
+  <div class="of-wrap" id="app"><p class="of-note">Loading datasets…</p></div>
+</main>
+
+<!-- Offline fallback so the page also works opened from disk, where fetch() on
+     file:// is blocked. Regenerate with tools/build-data-bundle.mjs -->
+<script src="json/bundle.js?v=1788475997171" onerror="void 0"></script>
+<script src="lib/oddfox.js?v=1788475997171"></script>
+<script>
+(function () {
+  var U = OF.ui, D = OF.data;
+  var SETS = ['manifest','sources','ownership-model','threat-stats','incidents',
+              'chokepoints','flag-states','operators','risk-economics',
+              'tactics','attack-log','registries','route-economics',
+              'geo-incidents','houthi-timeline','world-land','piracy-history','market-players','platforms'];
+
+  var TABS = [
+    { id:'overview',  label:'Overview',   render:overview },
+    { id:'map',       label:'Map',        render:mapPanel },
+    { id:'threat',    label:'Threat',     render:threat },
+    { id:'history',   label:'1993–2020',  render:history },
+    { id:'tactics',   label:'How',        render:tactics },
+    { id:'log',       label:'Attack log', render:attacklog },
+    { id:'incidents', label:'Incidents',  render:incidents },
+    { id:'passages',  label:'Passages',   render:passages },
+    { id:'owners',    label:'Owners',     render:owners },
+    { id:'players',   label:'Players',    render:players },
+    { id:'distance',  label:'Distance',   render:distance },
+    { id:'matrix',    label:'Matrix',     render:matrixPanel },
+    { id:'platforms', label:'Platforms',  render:platformsPanel },
+    { id:'registries',label:'Registries', render:registries },
+    { id:'economics', label:'Economics',  render:economics },
+    { id:'sources',   label:'Sources',    render:sources }
+  ];
+
+  /* state for in-panel toggles */
+  var state = { geoSeries:'recaap-2026-h1', playerCat:'all', matrixMarket:'all', proxComp:'category' };
+
+  function toggle(name, options, current) {
+    return '<div class="of-toggle" data-toggle="' + name + '">' + options.map(function (o) {
+      return '<button class="of-opt" data-val="' + U.esc(o.id) + '" aria-pressed="' +
+        (o.id === current) + '">' + U.esc(o.label) + '</button>';
+    }).join('') + '</div>';
+  }
+
+  /* ---------- overview ---------- */
+  function overview() {
+    var m = D.get('manifest'), ht = D.get('houthi-timeline');
+    var imb = D.pointAt('imb-global-annual','2025');
+    var h1 = D.pointAt('imb-global-halfyear','2026-H1');
+    var soms = D.pointAt('soms-halfyear','2026-H1');
+    var hormuz = D.get('risk-economics').premiums.filter(function(p){return p.id==='hormuz-2026-07'})[0];
+
+    var h = '<h1 class="of-h1">Business context</h1>';
+
+    h += U.section('Headline counts', U.grid([
+      U.stat(imb.value, 'IMB incidents worldwide, 2025', 'IMB annual',
+             D.pctChange(D.pointAt('imb-global-annual','2024').value, imb.value)),
+      U.stat(h1.value, 'IMB incidents worldwide, H1 2026', 'lowest H1 since 1992',
+             D.pctChange(D.pointAt('imb-global-halfyear','2025-H1').value, h1.value)),
+      U.stat(soms.value, 'Malacca & Singapore, H1 2026', 'ReCAAP',
+             D.pctChange(D.pointAt('soms-halfyear','2025-H1').value, soms.value)),
+      U.stat(hormuz.label, 'Hormuz war risk, July 2026', '% of hull value')
+    ], 4));
+
+    var series = D.get('geo-incidents').series.filter(function(s){return s.id===state.geoSeries})[0];
+    h += U.section('Incidents by location — ' + series.label,
+      U.map(series.points, { reference: D.get('geo-incidents').reference_points, label: series.label }) +
+      '<div style="margin-top:16px">' + U.cite(series.source_ids) + '</div>');
+
+    h += U.section('Houthi attacks per month, Nov 2023 – Aug 2026',
+      U.columns(ht.monthly.map(function (m) {
+        return { label: m.month, value: m.count, tone: m.count >= 10 ? 'hot' : '' };
+      }), { height: 240, showValues: false, label: 'Houthi attacks per month' }) +
+      '<div style="margin-top:14px">' + U.cite(ht.source_ids) + '</div>');
+
+    h += U.section('Datasets', U.table(m.datasets, [
+      { key:'title', label:'Dataset', render:function(r){
+          return '<strong>'+U.esc(r.title)+'</strong><span class="sub">'+U.esc(r.blurb)+'</span>'; } },
+      { key:'kind', label:'Kind' },
+      { key:'file', label:'File', render:function(r){ return '<span class="of-num">json/'+U.esc(r.file)+'</span>'; } }
+    ]));
+
+    h += U.section('Open items', '<ul>' + m.roadmap.map(function (r) {
+      return '<li class="of-note" style="padding:9px 0;border-bottom:1px solid var(--line-soft)">'+U.esc(r)+'</li>';
+    }).join('') + '</ul>');
+    return h;
+  }
+
+  /* ---------- map ---------- */
+  function mapPanel() {
+    var g = D.get('geo-incidents');
+    var series = g.series.filter(function(s){return s.id===state.geoSeries})[0] || g.series[0];
+    var h = '<h1 class="of-h1">Incidents by location</h1><p class="of-lede">'+U.esc(g.description)+'</p>';
+
+    h += U.section('Series',
+      toggle('geoSeries', g.series.map(function(s){return {id:s.id,label:s.label}}), state.geoSeries) +
+      '<div class="of-grid cols-3" style="margin-bottom:22px">' +
+        '<div class="of-cell">'+U.stat(series.total,'reported total for the period', series.body+' · '+series.period)+'</div>' +
+        '<div class="of-cell">'+U.stat(series.points.length,'locations plotted', series.complete?'points sum to the published total':'points do not sum to the total')+'</div>' +
+        '<div class="of-cell">'+U.stat(U.sum(series.points,'count'),'accounted for by these points','')+'</div>' +
+      '</div>' +
+      U.map(series.points, { reference: g.reference_points, label: series.label }) +
+      (series.note ? '<p class="of-note" style="margin-top:16px">'+U.esc(series.note)+'</p>' : '') +
+      '<div style="margin-top:12px">'+U.confChip(series.confidence)+'</div>' +
+      '<div style="margin-top:12px">'+U.cite(series.source_ids)+'</div>');
+
+    h += U.section('Points', U.table(series.points, [
+      { key:'name', label:'Location', render:function(r){ return '<strong>'+U.esc(r.name)+'</strong>'; } },
+      { key:'coords', label:'Lat, lon', render:function(r){
+          return '<span class="of-num">'+r.coords[0].toFixed(2)+', '+r.coords[1].toFixed(2)+'</span>'; } },
+      { key:'count', label:'Count', num:true, render:function(r){
+          return r.count != null ? '<strong>'+r.count+'</strong>' : U.esc(r.unquantified||'—'); } },
+      { key:'note', label:'Note', render:function(r){ return '<span class="of-note">'+U.esc(r.note||'')+'</span>'; } }
+    ]));
+
+    h += U.section('Comparison across series', U.bars(g.series.map(function (s) {
+      return { label: s.label, value: s.total, tone: s.body==='ReCAAP'?'cool':s.body==='IMB'?'hot':'warm' };
+    })) + '<p class="of-note" style="margin-top:16px">Series are not comparable with each other: different counting bodies, areas and periods.</p>');
+    return h;
+  }
+
+  /* ---------- threat ---------- */
+  function threat() {
+    var d = D.get('threat-stats'), g = D.get('geo-incidents'), ht = D.get('houthi-timeline');
+    var h = '<h1 class="of-h1">Incident counts</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    var annual = ['imb-global-annual','recaap-asia-annual','imo-global-annual'].map(function(id){return D.series(id)}).filter(Boolean);
+    h += U.section('Worldwide and regional annual totals',
+      U.bars([].concat.apply([], annual.map(function (s) {
+        return s.points.map(function (p) {
+          return { label: s.body+' '+p.period, value: p.value,
+                   tone: s.body==='IMB'?'hot':s.body==='ReCAAP'?'cool':'warm' };
+        });
+      }))) +
+      '<p class="of-note" style="margin-top:18px">IMB and IMO both count worldwide; ReCAAP counts Asia only. IMO recorded 171 for 2025 against IMB’s 137 for the same year.</p>');
+
+    var HY = [
+      { id:'imb-global-halfyear',            label:'Worldwide',                        body:'IMB' },
+      { id:'recaap-asia-halfyear',           label:'Asia',                             body:'ReCAAP' },
+      { id:'soms-halfyear',                  label:'Malacca & Singapore',              body:'ReCAAP' },
+      { id:'singapore-strait-imb-halfyear',  label:'Singapore Straits',                body:'IMB' }
+    ].map(function (x) {
+      var s = D.series(x.id); if (!s) return null;
+      var a = s.points.filter(function(p){return p.period==='2025-H1'})[0];
+      var b = s.points.filter(function(p){return p.period==='2026-H1'})[0];
+      return (a && b) ? { label:x.label, body:x.body, from:a.value, to:b.value } : null;
+    }).filter(Boolean);
+
+    h += U.section('First half 2025 against first half 2026',
+      U.slope(HY, { height: 320, fromLabel:'JAN–JUN 2025', toLabel:'JAN–JUN 2026',
+                    label:'half-year comparison' }) +
+      '<div style="margin-top:20px">' + U.cite(['imb-h1-2026','recaap-hy-2026']) + '</div>');
+
+    var s25 = g.series.filter(function(s){return s.id==='recaap-2025-h1'})[0];
+    var s26 = g.series.filter(function(s){return s.id==='recaap-2026-h1'})[0];
+    if (s25 && s26) {
+      var shared = [0.5, 24.5];   // hold both maps to the same frame so the areas compare
+      h += U.section('Same water, twelve months apart',
+        '<div class="of-twin">' +
+          '<div><div class="of-h3">' + U.esc(s25.label) + '</div>' +
+            '<div class="of-src" style="margin-top:4px">' + s25.total + ' incidents</div>' +
+            U.map(s25.points, { label:s25.label, maxRef: s25.total }) + '</div>' +
+          '<div><div class="of-h3">' + U.esc(s26.label) + '</div>' +
+            '<div class="of-src" style="margin-top:4px">' + s26.total + ' incidents</div>' +
+            U.map(s26.points, { label:s26.label, maxRef: s25.total }) + '</div>' +
+        '</div>' +
+        '<p class="of-note" style="margin-top:16px">Both maps are drawn to the same circle scale, so areas are directly comparable between them.</p>' +
+        '<div style="margin-top:12px">' + U.cite(s26.source_ids) + '</div>');
+    }
+
+    var byCountry = d.breakdowns.filter(function(b){return b.id==='recaap-2026h1-by-country'})[0];
+    if (byCountry) {
+      h += U.section('By location, ReCAAP', U.table(byCountry.items, [
+        { key:'label', label:'Location', render:function(r){
+            return U.flag(r.flag_iso,{name:r.label}) + ' <strong style="margin-left:8px">' + U.esc(r.label) + '</strong>'; } },
+        { key:'2025-H1', label:'H1 2025', num:true },
+        { key:'2026-H1', label:'H1 2026', num:true },
+        { key:'delta', label:'Change', num:true, render:function(r){
+            var a=r['2025-H1'], b=r['2026-H1'];
+            if (a===b) return '<span class="of-src">no change</span>';
+            var d2=b-a;
+            return '<span class="of-delta ' + (d2>0?'up':'down') + '">' + (d2>0?'+':'') + d2 + '</span>'; } }
+      ]) + '<div style="margin-top:16px">' + U.cite(byCountry.source_ids||[byCountry.source_id]) + '</div>');
+    }
+
+    var series = g.series.filter(function(s){return s.id===state.geoSeries})[0] || g.series[0];
+    h += U.section('Where — ' + series.label,
+      toggle('geoSeries', g.series.map(function(s){return {id:s.id,label:s.label}}), state.geoSeries) +
+      U.map(series.points, { reference: g.reference_points, label: series.label }) +
+      '<div style="margin-top:14px">'+U.cite(series.source_ids)+'</div>');
+
+    h += U.section('Houthi campaign, monthly',
+      U.line(ht.monthly.map(function(m){return {label:m.month,value:m.count}}),
+             {height:230, labelEvery:3, label:'Houthi attacks per month'}) +
+      '<div class="of-grid cols-2" style="margin-top:26px">' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Outcome</div>' +
+          U.bars(ht.outcomes.map(function(o){return {label:o.label,value:o.value,
+            tone:o.label==='sunk'?'hot':o.label==='captured'?'warm':''}})) + '</div>' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Flag of vessel attacked</div>' +
+          '<div class="of-bars">' + ht.flags.slice(0,10).map(function (f) {
+            var max = ht.flags[0].value;
+            return '<div class="of-bar-row"><div class="of-bar-lab">' + U.flag(f.flag_iso,{name:f.flag}) +
+              ' ' + U.esc(f.flag) + '</div>' +
+              '<div class="of-bar-track"><div class="of-bar-fill" style="width:'+(f.value/max*100).toFixed(1)+'%"></div></div>' +
+              '<div class="of-bar-v">'+f.value+'</div></div>';
+          }).join('') + '</div></div>' +
+      '</div>' +
+      '<div style="margin-top:16px">'+U.confChip(ht.confidence)+' '+U.cite(ht.source_ids)+'</div>');
+
+    h += U.section('Breakdowns', d.breakdowns.map(function (b) {
+      var body;
+      if (b.items && b.items.length && b.items[0].value != null) {
+        body = U.bars(b.items.map(function(i){return {label:i.label,value:i.value}}),
+                      { suffix: /percent/.test(b.unit||'') ? '%' : '' });
+      } else {
+        var src = b.items || b.series;
+        var years = Object.keys(src[0]).filter(function(k){return k!=='label'});
+        body = U.table(src, [{key:'label',label:''}].concat(years.map(function(y){return {key:y,label:y,num:true}})));
+      }
+      return '<div class="of-card" style="margin-bottom:16px"><div class="of-h3">'+U.esc(b.title)+'</div>' +
+        '<div style="margin:16px 0">'+body+'</div>' +
+        (b.note?'<p class="of-note">'+U.esc(b.note)+'</p>':'') +
+        (b.scope?'<p class="of-note" style="margin-top:8px"><strong>Scope.</strong> '+U.esc(b.scope)+'</p>':'')+
+        '<div style="margin-top:12px">'+U.cite(b.source_ids||[b.source_id])+'</div></div>';
+    }).join(''));
+
+    h += U.section('Counting bodies', U.table(d.counting_bodies, [
+      { key:'id', label:'Body', render:function(r){
+          return '<strong>'+U.esc(r.id)+'</strong><span class="sub">'+U.esc(r.name)+'</span>'; } },
+      { key:'scope', label:'Scope' },
+      { key:'counts', label:'What it counts' }
+    ]));
+
+    h += U.section('Findings', d.findings.map(function (f) {
+      return '<div class="of-card" style="margin-bottom:16px">' +
+        '<div class="of-h3">'+U.esc(f.claim)+'</div>' +
+        '<p class="of-note" style="margin-top:12px">'+U.esc(f.evidence)+'</p>' +
+        '<div style="margin-top:14px">'+U.cite(f.source_ids)+'</div></div>';
+    }).join(''));
+    return h;
+  }
+
+
+  /* ---------- history: 7,511 geocoded attacks 1993-2020 ---------- */
+  function history() {
+    var d = D.get('piracy-history'), ds = d.distance_from_shore_km;
+    var h = '<h1 class="of-h1">Reported attacks, 1993–2020</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    var peak = d.by_year.slice().sort(function(a,b){return b.value-a.value})[0];
+    h += U.section('Scale', U.grid([
+      U.stat(d.count.toLocaleString(),'geocoded attacks','1993 to 2020'),
+      U.stat(peak.value,'attacks in the peak year',peak.label),
+      U.stat(ds.median+' km','median distance from shore','half of all attacks were closer in'),
+      U.stat(d.grid.cells.length,'occupied grid cells','2° bins')
+    ],4));
+
+    h += U.section('Where, 28 years of attacks',
+      U.map(d.grid.cells.map(function(c){return {name:'', coords:c.coords, count:c.count}}),
+            {world:true, heat:true, label:'attack density, 2 degree bins'}) +
+      '<p class="of-note" style="margin-top:14px">'+U.esc(d.grid.note)+' Circle area is proportional to the number of attacks in the cell.</p>' +
+      '<div style="margin-top:12px">'+U.cite(d.source_ids)+'</div>');
+
+    h += U.section('Attacks per year',
+      U.columns(d.by_year.map(function(y){
+        return {label:y.label, value:y.value, tone: y.value>=350?'hot':y.value>=200?'warm':''};
+      }), {height:260, labelEvery:2, label:'attacks per year'}));
+
+    h += U.section('By region, per year',
+      U.multiline(d.by_region_year.map(function(r,i){
+        return {area:r.region, tone:['hot','warm','cool','calm',''][i],
+                points:r.points.map(function(p){
+                  return {date:p.label+'-07-01', low:p.value, high:p.value, label:String(p.value)};
+                })};
+      }), {height:320, logY:false, label:'attacks per year by region'}));
+
+    h += U.section('How far from shore',
+      '<div class="of-grid cols-2">' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Distance bands</div>'+
+          U.pie(ds.bands,{centreLabel:'ATTACKS'})+'</div>' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Percentiles, km from shore</div>'+
+          U.bars([{label:'median',value:ds.median},{label:'75th percentile',value:ds.p75},
+                  {label:'90th percentile',value:ds.p90},{label:'95th percentile',value:ds.p95}],
+                 {suffix:' km'})+
+          '<p class="of-note" style="margin-top:16px">Furthest recorded: '+ds.max+' km.</p>'+
+          '<p class="of-note" style="margin-top:8px">'+U.esc(ds.note)+'</p></div>' +
+      '</div>');
+
+    h += U.section('Composition', '<div class="of-grid cols-3">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Attack type</div>'+
+        U.pie(d.by_attack_type,{centreLabel:'ATTACKS'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Vessel status</div>'+
+        U.pie(d.by_vessel_status,{centreLabel:'ATTACKS'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Vessel type</div>'+
+        U.pie(d.by_vessel_type.slice(0,7),{centreLabel:'ATTACKS'})+'</div>' +
+      '</div>');
+
+    var maxc = d.by_country[0].value;
+    h += U.section('Nearest country', '<div class="of-bars">'+
+      d.by_country.map(function(c){
+        return '<div class="of-bar-row"><div class="of-bar-lab">'+U.flag(c.flag_iso,{name:c.label})+
+          ' '+U.esc(c.label)+'</div>'+
+          '<div class="of-bar-track"><div class="of-bar-fill" style="width:'+(c.value/maxc*100).toFixed(1)+'%"></div></div>'+
+          '<div class="of-bar-v">'+c.value+'</div></div>';
+      }).join('')+'</div>'+
+      '<p class="of-note" style="margin-top:16px">Nearest coastal state to the attack position, not the flag of the ship attacked.</p>'+
+      '<div style="margin-top:12px">'+U.confChip(d.confidence)+' '+U.cite(d.source_ids)+'</div>');
+    return h;
+  }
+
+  /* ---------- tactics ---------- */
+  function tactics() {
+    var d = D.get('tactics'), ht = D.get('houthi-timeline'), inc = D.get('incidents');
+    var h = '<h1 class="of-h1">How ships are attacked</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('Proportions', '<div class="of-grid cols-4">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Houthi campaign outcome</div>' +
+        U.pie(ht.outcomes.map(function(o){return {label:o.label,value:o.value}}), {centreLabel:'ATTACKS'}) + '</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Threat model by platform count</div>' +
+        U.pie(d.threat_models.map(function(m){return {label:m.name,value:(m.platforms||[]).length}}), {centreLabel:'PLATFORMS'}) + '</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Named incidents by outcome</div>' +
+        U.pie(U.tally(inc.records,'outcome'), {centreLabel:'INCIDENTS'}) + '</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Named incidents by actor</div>' +
+        U.pie(U.tally(inc.records,'actor'), {centreLabel:'INCIDENTS'}) + '</div>' +
+      '</div>');
+
+    var alog = D.get('attack-log'), p = alog.patterns_2026_h1;
+    h += U.section('IMB H1 2026', '<div class="of-grid cols-3">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Outcome</div>' +
+        U.pie(p.outcomes, {centreLabel:'INCIDENTS'}) + '</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Crew affected</div>' +
+        U.pie(p.crew_breakdown, {centreLabel:'CREW'}) + '</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Vessel type targeted</div>' +
+        U.pie(p.target_types, {centreLabel:'VESSELS'}) + '<p class="of-note" style="margin-top:12px">'+U.esc(p.target_note)+'</p></div>' +
+      '</div><div style="margin-top:16px">'+U.cite(p.source_ids)+'</div>');
+
+    h += U.section('Threat models', d.threat_models.map(function (m) {
+      var rows = [['Intent',m.intent],['Status 2026',m.status_2026],['Organisation',m.organisation],
+        ['Range',m.range],['Approach',m.approach],['Timing',m.timing],['Weapon use',m.weapon_use],
+        ['Boarding',m.boarding_method],['Targeting',m.targeting_logic],['Who they take',m.who_they_take],
+        ['What they take',m.what_they_take],['Target profile',m.target_profile],
+        ['Crew treatment',m.treatment_of_crew],['Severity',m.severity],['Reporting',m.reporting_body]
+      ].filter(function(x){return x[1]});
+      var plats=(m.platforms||[]).map(function(pl){
+        return '<div style="padding:9px 0;border-bottom:1px solid var(--line-soft)">'+
+          '<strong style="font-size:13.5px">'+U.esc(pl.type)+'</strong>'+
+          '<div class="of-note" style="margin-top:4px">'+U.esc(pl.detail)+'</div></div>';}).join('');
+      return '<div class="of-card" style="margin-bottom:20px">'+
+        '<div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">'+
+          '<div class="of-h2">'+U.esc(m.name)+'</div>'+U.confChip(m.confidence)+'</div>'+
+        '<div style="margin-top:16px">'+rows.map(function(x){
+          return '<div style="display:flex;gap:16px;padding:6px 0;font-size:13.5px;line-height:1.5">'+
+            '<div class="of-src" style="min-width:112px;flex-shrink:0">'+U.esc(x[0])+'</div><div>'+U.esc(x[1])+'</div></div>';
+        }).join('')+'</div>'+
+        (plats?'<div style="margin-top:18px"><div class="of-kicker" style="margin-bottom:8px">Platforms</div>'+plats+'</div>':'')+
+        (m.weapons?'<div style="margin-top:18px"><div class="of-kicker" style="margin-bottom:8px">Weapons</div>'+U.chips(m.weapons,'hot')+'</div>':'')+
+        (m.vulnerability_factors?'<div style="margin-top:16px"><div class="of-kicker" style="margin-bottom:8px">Vulnerability factors</div>'+U.chips(m.vulnerability_factors,'warm')+'</div>':'')+
+        (m.defeated_by?'<div style="margin-top:16px"><div class="of-kicker" style="margin-bottom:8px">Defeated by</div>'+U.chips(m.defeated_by,'calm')+'</div>':'')+
+        (m.not_defeated_by?'<div style="margin-top:16px"><div class="of-kicker" style="margin-bottom:8px">Not defeated by</div>'+U.chips(m.not_defeated_by,'hot')+'</div>':'')+
+        (m.note?'<p class="of-note" style="margin-top:16px">'+U.esc(m.note)+'</p>':'')+
+        '<div style="margin-top:14px">'+U.cite(m.source_ids)+'</div></div>';
+    }).join(''));
+
+    var dl=d.defence_layers;
+    h += U.section('Defence layers',
+      '<div class="of-grid cols-3" style="margin-bottom:24px">' + dl.layers.map(function(L){
+        return '<div class="of-cell"><div class="of-kicker" style="margin-bottom:12px">'+U.esc(L.layer)+'</div>'+
+          U.pie(L.measures.map(function(mm){return {label:mm.name,value:1}}),{donut:false,label:L.layer+' measures'})+'</div>';
+      }).join('') + '</div>' +
+      '<p class="of-note" style="margin-bottom:22px">'+U.esc(dl.framework)+'</p>' +
+      dl.layers.map(function(L){
+        return '<div class="of-card" style="margin-bottom:16px"><div class="of-h3">'+U.esc(L.layer)+' layer</div>'+
+          '<div style="margin-top:14px">'+L.measures.map(function(mm){
+            return '<div style="padding:11px 0;border-bottom:1px solid var(--line-soft)">'+
+              '<strong style="font-size:13.5px">'+U.esc(mm.name)+'</strong>'+
+              '<div class="of-note" style="margin-top:5px">'+U.esc(mm.detail)+'</div></div>';}).join('')+'</div></div>';
+      }).join('') +
+      '<div class="of-card"><div class="of-h3">Operational practice</div><div style="margin-top:12px">'+
+      dl.operational_practice.map(function(o){
+        return '<div class="of-note" style="padding:9px 0;border-bottom:1px solid var(--line-soft)">'+U.esc(o)+'</div>';
+      }).join('')+'</div><div style="margin-top:14px">'+U.cite(dl.source_ids)+'</div></div>');
+
+    h += U.section('Transit corridors', U.table(d.transit_corridors, [
+      {key:'name',label:'Corridor',render:function(r){return '<strong>'+U.esc(r.name)+'</strong>'}},
+      {key:'detail',label:'What it is',render:function(r){return '<span class="of-note">'+U.esc(r.detail)+'</span>'}}
+    ]));
+    return h;
+  }
+
+  /* ---------- attack log ---------- */
+  function attacklog() {
+    var d = D.get('attack-log'), ht = D.get('houthi-timeline'), p = d.patterns_2026_h1;
+    var h = '<h1 class="of-h1">Attack log</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('Houthi campaign, '+ht.date_range[0]+' to '+ht.date_range[1],
+      '<div class="of-grid cols-4" style="margin-bottom:24px">' +
+        '<div class="of-cell">'+U.stat(ht.count,'attacks recorded','')+'</div>' +
+        '<div class="of-cell">'+U.stat(ht.outcomes.filter(function(o){return o.label==='sunk'})[0].value,'vessels sunk','')+'</div>' +
+        '<div class="of-cell">'+U.stat(ht.flags.length,'distinct flags attacked','')+'</div>' +
+        '<div class="of-cell">'+U.stat(ht.flags[0].value,'attacks on '+ht.flags[0].flag+'-flagged ships','most-hit flag')+'</div>' +
+      '</div>' +
+      U.line(ht.monthly.map(function(m){return {label:m.month,value:m.count}}),{height:240,labelEvery:3}) +
+      '<div class="of-grid cols-2" style="margin-top:26px">' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Outcome</div>'+
+          U.pie(ht.outcomes,{centreLabel:'ATTACKS'})+'</div>' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Flags most attacked</div>' +
+          '<div class="of-bars">'+ht.flags.slice(0,10).map(function(f){
+            var max=ht.flags[0].value;
+            return '<div class="of-bar-row"><div class="of-bar-lab">'+U.flag(f.flag_iso,{name:f.flag})+' '+U.esc(f.flag)+'</div>'+
+              '<div class="of-bar-track"><div class="of-bar-fill" style="width:'+(f.value/max*100).toFixed(1)+'%"></div></div>'+
+              '<div class="of-bar-v">'+f.value+'</div></div>';}).join('')+'</div></div>' +
+      '</div>' +
+      '<div style="margin-top:16px">'+U.confChip(ht.confidence)+' '+U.cite(ht.source_ids)+'</div>');
+
+    h += U.section('Full Houthi timeline', U.table(ht.entries, [
+      {key:'date',label:'Date',render:function(r){return '<span class="of-num">'+U.esc(r.date)+'</span>'}},
+      {key:'vessel',label:'Vessel',render:function(r){return '<strong>'+U.esc(r.vessel)+'</strong>'}},
+      {key:'flag',label:'Flag',render:function(r){
+        return U.flag(r.flag_iso,{name:r.flag})+' <span style="margin-left:6px">'+U.esc(r.flag)+'</span>'}},
+      {key:'method',label:'Method',render:function(r){return '<span class="of-note">'+U.esc(r.method)+'</span>'}},
+      {key:'outcome',label:'Outcome',render:function(r){
+        var t=r.outcome==='sunk'?'hot':r.outcome==='captured'?'warm':
+              /unharmed/.test(r.outcome)?'calm':r.outcome==='unknown'?'':'warm';
+        return U.chip(r.outcome,t)}}
+    ]));
+
+    h += U.section('IMB H1 2026 pattern',
+      U.grid([
+        U.stat(p.total_incidents,'incidents worldwide','lowest H1 since 1992'),
+        U.stat(p.success_rate_pct+'%','boarded or hijacked',p.attacks_at_anchor),
+        U.stat(p.crew_affected,'seafarers affected',p.crew_breakdown[0].value+' taken hostage'),
+        U.stat(p.somali_share_of_hostages_pct+'%','of hostages, Somali groups','')
+      ],4) +
+      '<div class="of-grid cols-3" style="margin-top:26px">' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Outcome</div>'+U.pie(p.outcomes,{centreLabel:'INCIDENTS'})+'</div>' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Crew</div>'+U.pie(p.crew_breakdown,{centreLabel:'CREW'})+'</div>' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Vessel type</div>'+U.pie(p.target_types,{centreLabel:'VESSELS'})+'</div>' +
+      '</div>' +
+      '<p class="of-note" style="margin-top:18px">'+U.esc(p.success_rate_note)+'</p>' +
+      '<div style="margin-top:14px">'+U.cite(p.source_ids)+'</div>');
+
+    h += U.section('Reported entries', d.entries.map(function (e) {
+      var tone=/hijack/.test(e.outcome)?'hot':/repelled|failed|not boarded/.test(e.outcome)?'calm':
+               e.outcome==='nil return'?'cool':'warm';
+      var rows=[['Position',e.position],['Vessel',e.vessel],['Attackers',e.attackers],['Event',e.event]]
+        .filter(function(x){return x[1]});
+      if (e.closest_approach_m!=null) rows.push(['Closest',e.closest_approach_m+' metres']);
+      return '<div class="of-card" style="margin-bottom:16px">'+
+        '<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">'+
+          '<span class="of-num of-src">'+U.esc(e.date)+'</span>'+
+          '<span class="of-chip solid">'+U.esc(e.reported_by)+'</span>'+
+          (e.ref?'<span class="of-src">'+U.esc(e.ref)+'</span>':'')+U.chip(e.outcome,tone)+
+          (e.armed_team_aboard?U.chip('armed team aboard','calm'):'')+'</div>'+
+        '<div style="margin-top:14px">'+rows.map(function(x){
+          return '<div style="display:flex;gap:16px;padding:5px 0;font-size:13.5px;line-height:1.5">'+
+            '<div class="of-src" style="min-width:82px;flex-shrink:0">'+U.esc(x[0])+'</div><div>'+U.esc(x[1])+'</div></div>';
+        }).join('')+'</div>'+
+        '<div style="margin-top:12px">'+U.cite(e.source_ids)+'</div></div>';
+    }).join(''));
+
+    h += U.section('Live feeds', U.table(d.feeds, [
+      {key:'name',label:'Feed',render:function(r){
+        return '<a class="of-link" href="'+U.esc(r.url)+'" target="_blank" rel="noopener"><strong>'+U.esc(r.name)+'</strong></a><span class="sub">'+U.esc(r.area)+'</span>'}},
+      {key:'cadence',label:'Cadence'},
+      {key:'format',label:'Format'},
+      {key:'machine_readable',label:'Machine readable',render:function(r){
+        return r.machine_readable?U.chip('yes','calm'):U.chip('no','warm')}},
+      {key:'note',label:'Note',render:function(r){return '<span class="of-note">'+U.esc(r.note||r.access||'')+'</span>'}}
+    ]));
+    return h;
+  }
+
+  /* ---------- incidents ---------- */
+  function incidents() {
+    var d = D.get('incidents');
+    var h = '<h1 class="of-h1">Named incidents</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('Summary', '<div class="of-grid cols-3">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Outcome</div>'+
+        U.pie(U.tally(d.records,'outcome'),{centreLabel:'INCIDENTS'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Actor</div>'+
+        U.pie(U.tally(d.records,'actor'),{centreLabel:'INCIDENTS'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Flag</div>'+
+        U.pie(U.tally(d.records,function(r){return r.vessel.flag}),{centreLabel:'INCIDENTS'})+'</div>' +
+      '</div>' +
+      '<div style="margin-top:26px">' + U.columns(
+        U.tally(d.records,function(r){return r.date.slice(0,4)}).sort(function(a,b){return a.label<b.label?-1:1})
+          .map(function(x){return {label:x.label,value:x.value,tone:'cool'}}),
+        {height:180,showValues:true,labelEvery:1,label:'named incidents by year'}) + '</div>');
+
+    h += U.section('Table', U.table(d.records, [
+      {key:'date',label:'Date',render:function(r){return '<span class="of-num">'+U.esc(r.date)+'</span>'}},
+      {key:'vessel',label:'Vessel',render:function(r){
+        return '<strong>'+U.esc(r.vessel.name)+'</strong><span class="sub">'+U.esc(r.vessel.type||'')+'</span>'}},
+      {key:'flag',label:'Flag',render:function(r){
+        return U.flag(r.vessel.flag_iso,{name:r.vessel.flag})+' <span style="margin-left:6px">'+U.esc(r.vessel.flag)+'</span>'}},
+      {key:'actor',label:'Actor'},
+      {key:'outcome',label:'Outcome',render:function(r){
+        var t=/sunk/.test(r.outcome)?'hot':/recovered|released/.test(r.outcome)?'calm':'warm';
+        return U.chip(r.outcome,t)}}
+    ]));
+
+    h += U.section('Detail', d.records.slice().reverse().map(function (r) {
+      var tone=/sunk/.test(r.outcome)?'hot':/recovered|released/.test(r.outcome)?'calm':'warm';
+      var rows=[['Type',r.vessel.type],['Actor',r.actor],['Method',r.method],['Voyage',r.voyage],
+        ['Cargo',r.cargo],['Position',r.position_note],['Crew',r.crew_effect],['Escort',r.escort],
+        ['Response',r.response],['Date note',r.date_note]].filter(function(x){return x[1]});
+      var chain='';
+      if (r.ownership_chain){
+        chain='<div style="margin-top:16px" class="of-card"><div class="of-kicker" style="margin-bottom:12px">Ownership chain</div>'+
+          Object.keys(r.ownership_chain).map(function(k){
+            return '<div style="display:flex;gap:14px;padding:6px 0;font-size:13.5px">'+
+              '<div class="of-src" style="min-width:130px">'+U.esc(k.replace(/_/g,' '))+'</div>'+
+              '<div>'+U.esc(r.ownership_chain[k])+'</div></div>';}).join('')+'</div>';
+      }
+      return '<div class="of-card" style="margin-bottom:18px">'+
+        '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">'+
+          '<span class="of-num of-src">'+U.esc(r.date)+'</span>'+
+          U.flag(r.vessel.flag_iso,{name:r.vessel.flag,large:true,size:32})+
+          '<div class="of-h2">'+U.esc(r.vessel.name)+'</div>'+
+          U.chip(r.outcome,tone)+U.confChip(r.confidence)+'</div>'+
+        '<div style="margin-top:16px">'+rows.map(function(x){
+          return '<div style="display:flex;gap:14px;padding:5px 0;font-size:13.5px;line-height:1.5">'+
+            '<div class="of-src" style="min-width:82px;flex-shrink:0">'+U.esc(x[0])+'</div><div>'+U.esc(x[1])+'</div></div>';
+        }).join('')+'</div>'+chain+
+        '<div style="margin-top:14px">'+U.cite(r.source_ids)+'</div></div>';
+    }).join(''));
+    return h;
+  }
+
+  /* ---------- passages ---------- */
+  function passages() {
+    var d = D.get('chokepoints'), g = D.get('geo-incidents');
+    var h = '<h1 class="of-h1">High-risk passages</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('Locations', U.map(
+      d.records.filter(function(r){return r.coords}).map(function(r){
+        return {name:r.name, coords:r.coords, count:(r.incident_ids||[]).length || null,
+                unquantified:(r.incident_ids||[]).length?null:'no named incidents in this library'};
+      }), {world:true, label:'passages, sized by named incidents held in this library'}) +
+      '<p class="of-note" style="margin-top:16px">Circles are sized by the number of named incidents held in incidents.json, not by total reported incidents. For reported counts use the Map tab.</p>');
+
+    h += U.section('Summary', '<div class="of-grid cols-2">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Status</div>'+
+        U.pie(U.tally(d.records,'status'),{centreLabel:'PASSAGES'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Named on oddfox.ai</div>'+
+        U.pie([{label:'named on site',value:d.records.filter(function(r){return r.on_oddfox_site}).length},
+               {label:'not named',value:d.records.filter(function(r){return !r.on_oddfox_site}).length}],
+              {centreLabel:'PASSAGES'})+'</div>' +
+      '</div>');
+
+    h += U.section('All passages', U.table(d.records, [
+      {key:'name',label:'Passage',render:function(r){
+        return '<strong>'+U.esc(r.name)+'</strong><span class="sub">'+U.esc(r.region)+'</span>'}},
+      {key:'on_oddfox_site',label:'On site',render:function(r){
+        return r.on_oddfox_site?U.chip('named','solid'):'<span class="of-src">—</span>'}},
+      {key:'status',label:'Status',render:function(r){
+        var t=/active|acute|resurgent|deteriorating/.test(r.status)?'hot':
+              /suppressed|elevated|contained|emerging/.test(r.status)?'warm':
+              /declining|recovered/.test(r.status)?'cool':'calm';
+        return U.chip(r.status,t)}},
+      {key:'threat_types',label:'Threat',render:function(r){
+        return '<span class="of-note">'+U.esc((r.threat_types||[]).join(', '))+'</span>'}}
+    ]));
+
+    h += U.section('Detail', d.records.map(function (r) {
+      return '<div class="of-card" style="margin-bottom:16px">'+
+        '<div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">'+
+          '<div class="of-h2">'+U.esc(r.name)+'</div>'+
+          (r.on_oddfox_site?U.chip('named on oddfox.ai','solid'):'')+
+          (r.coords?'<span class="of-src of-num">'+r.coords[0].toFixed(2)+', '+r.coords[1].toFixed(2)+'</span>':'')+'</div>'+
+        '<div style="margin-top:12px">'+U.chips(r.threat_types||[])+'</div>'+
+        (r.status_note?'<p class="of-note" style="margin-top:14px">'+U.esc(r.status_note)+'</p>':'')+
+        (r.reporting_body?'<div class="of-src" style="margin-top:12px">Report to: '+U.esc(r.reporting_body)+'</div>':'')+
+        (r.source_ids?'<div style="margin-top:10px">'+U.cite(r.source_ids)+'</div>':'')+'</div>';
+    }).join(''));
+    return h;
+  }
+
+  /* ---------- owners (ownership model + companies merged) ---------- */
+  function owners() {
+    var d = D.get('ownership-model'), o = D.get('operators'), f = D.get('flag-states');
+    var h = '<h1 class="of-h1">Owners and ownership</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('Shape of it', '<div class="of-grid cols-3">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Parties by layer</div>'+
+        U.pie(U.tally(d.records,'layer'),{centreLabel:'PARTIES'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Can sign a contract</div>'+
+        U.pie([{label:'buys',value:d.records.filter(function(r){return r.buys_security}).length},
+               {label:'influences',value:d.records.filter(function(r){return r.influences_purchase}).length},
+               {label:'neither',value:d.records.filter(function(r){return !r.buys_security&&!r.influences_purchase}).length}],
+              {centreLabel:'PARTIES'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Companies by segment</div>'+
+        U.pie(U.tally(o.records,'segment'),{centreLabel:'COMPANIES'})+'</div>' +
+      '</div>');
+
+    h += U.section('The stack', U.table(d.records, [
+      {key:'role',label:'Party',render:function(r){
+        return '<strong>'+U.esc(r.role)+'</strong><span class="sub">'+U.esc(r.definition)+'</span>'}},
+      {key:'layer',label:'Layer',render:function(r){return U.chip(r.layer,'cool')}},
+      {key:'who_it_usually_is',label:'In practice',render:function(r){
+        return '<span class="of-note">'+U.esc(r.who_it_usually_is||'')+'</span>'}},
+      {key:'buys_security',label:'Buyer',render:function(r){
+        if(r.buys_security) return U.chip('buys','calm');
+        if(r.influences_purchase) return U.chip('influences','cool');
+        return '<span class="of-src">no</span>'}},
+      {key:'found_in',label:'Where to look',render:function(r){
+        return '<span class="of-note">'+U.esc((r.found_in||['—']).join(', '))+'</span>'}}
+    ]));
+
+    h += U.section('Charter types', U.table(d.charter_types, [
+      {key:'name',label:'Type',render:function(r){
+        return '<strong>'+U.esc(r.name)+'</strong><span class="sub">'+U.esc(r.what_is_rented)+'</span>'}},
+      {key:'who_crews',label:'Crews'},
+      {key:'who_pays_bunkers',label:'Bunkers'},
+      {key:'who_picks_the_route',label:'Picks the route'},
+      {key:'war_risk_premium_usually_borne_by',label:'Pays war risk'}
+    ]));
+
+    h += U.section('Resolving a ship to a named party',
+      '<p class="of-note" style="margin-bottom:20px">'+U.esc(d.resolution_path.description)+'</p>' +
+      U.table(d.resolution_path.steps, [
+        {key:'step',label:'#',num:true},
+        {key:'input',label:'Start with'},
+        {key:'action',label:'Do',render:function(r){return '<strong>'+U.esc(r.action)+'</strong>'}},
+        {key:'tool',label:'Where'},
+        {key:'cost',label:'Cost',render:function(r){return U.chip(r.cost,/free/.test(r.cost)?'calm':'warm')}}
+      ]));
+
+    h += U.section('Companies', U.table(o.records, [
+      {key:'name',label:'Company',render:function(r){
+        return '<strong>'+U.esc(r.name)+'</strong><span class="sub">'+U.esc(r.hq||r.segment)+'</span>'}},
+      {key:'segment',label:'Segment'},
+      {key:'ownership',label:'Ownership',render:function(r){return '<span class="of-note">'+U.esc(r.ownership||'—')+'</span>'}},
+      {key:'market_share_pct',label:'Share',num:true,render:function(r){
+        return r.market_share_pct?r.market_share_pct+'%':'—'}},
+      {key:'fleet_vessels',label:'Vessels',num:true},
+      {key:'roles',label:'Roles',render:function(r){
+        return U.chips((r.roles||[]).map(function(x){return x.replace(/-/g,' ')}))}}
+    ]));
+
+    var shares = o.records.filter(function(r){return r.market_share_pct});
+    h += U.section('Container market share',
+      '<div class="of-grid cols-2">' +
+      '<div class="of-cell">'+U.pie(shares.map(function(r){return {label:r.name,value:r.market_share_pct}})
+        .concat([{label:'all others',value:Math.max(0, Math.round((100-U.sum(shares,'market_share_pct'))*10)/10)}]),
+        {centreLabel:'PERCENT'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Fleet size, vessels</div>'+
+        U.bars(o.records.filter(function(r){return r.fleet_vessels})
+          .map(function(r){return {label:r.name,value:r.fleet_vessels}}))+'</div>' +
+      '</div><div style="margin-top:16px">'+U.cite(['freightender-carriers-2025'])+'</div>');
+
+    h += U.section('Flags and registries',
+      '<div class="of-grid cols-2" style="margin-bottom:24px">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Capacity, million dwt</div>'+
+        '<div class="of-bars">'+f.records.filter(function(r){return r.dwt_million}).map(function(r){
+          var max=447;
+          return '<div class="of-bar-row"><div class="of-bar-lab">'+U.flag(r.id,{name:r.name})+' '+U.esc(r.name)+'</div>'+
+            '<div class="of-bar-track"><div class="of-bar-fill" style="width:'+(r.dwt_million/max*100).toFixed(1)+'%"></div></div>'+
+            '<div class="of-bar-v">'+r.dwt_million+'M</div></div>';}).join('')+'</div></div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Top three share of world dwt</div>'+
+        U.pie([{label:'Liberia, Panama, Marshall Islands',value:f.concentration.share_world_dwt_pct},
+               {label:'all other registries',value:Math.round((100-f.concentration.share_world_dwt_pct)*10)/10}],
+              {centreLabel:'PERCENT'})+'</div>' +
+      '</div>' +
+      U.table(f.records, [
+        {key:'name',label:'Flag',render:function(r){
+          return U.flag(r.id,{name:r.name})+' <strong style="margin-left:8px">'+U.esc(r.name)+'</strong>'}},
+        {key:'type',label:'Type'},
+        {key:'dwt_million',label:'M dwt',num:true,render:function(r){return r.dwt_million||'—'}},
+        {key:'share_world_dwt_pct_2025',label:'% world',num:true,render:function(r){
+          return r.share_world_dwt_pct_2025?r.share_world_dwt_pct_2025+'%':'—'}},
+        {key:'note',label:'Note',render:function(r){return '<span class="of-note">'+U.esc(r.note||'')+'</span>'}}
+      ]) + '<div style="margin-top:16px">'+U.cite(f.concentration.source_ids)+'</div>');
+
+    h += U.section('Gaps', o.gaps.map(function(g){return U.gap(U.esc(g))}).join('<div style="height:14px"></div>'));
+    return h;
+  }
+
+
+  /* ---------- players: marine security companies ---------- */
+  function players() {
+    var d = D.get('market-players');
+    var catName = {}; d.categories.forEach(function(c){ catName[c.id]=c.name; });
+    var all = d.records;
+    var sel = state.playerCat;
+    var rows = sel==='all' ? all : all.filter(function(r){ return r.categories.indexOf(sel)>=0; });
+
+    var h = '<h1 class="of-h1">Marine security companies</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    var byCat = d.categories.map(function(c){
+      return {label:c.name, value:all.filter(function(r){return r.categories.indexOf(c.id)>=0}).length};
+    }).filter(function(x){return x.value>0});
+
+
+    var byCountry = U.tally(all,'country');
+    var isoOf = {}; all.forEach(function(r){ if(r.country_iso) isoOf[r.country]=r.country_iso; });
+    var maxc = byCountry[0].value;
+    h += U.section('By country', '<div class="of-bars">'+byCountry.map(function(c){
+        return '<div class="of-bar-row"><div class="of-bar-lab">'+U.flag(isoOf[c.label],{name:c.label})+
+          ' '+U.esc(c.label)+'</div>'+
+          '<div class="of-bar-track"><div class="of-bar-fill" style="width:'+(c.value/maxc*100).toFixed(1)+'%"></div></div>'+
+          '<div class="of-bar-v">'+c.value+'</div></div>';
+      }).join('')+'</div>');
+
+    h += U.section('Directory',
+      toggle('playerCat',[{id:'all',label:'All ('+all.length+')'}].concat(d.categories.map(function(c){
+        var n=all.filter(function(r){return r.categories.indexOf(c.id)>=0}).length;
+        return {id:c.id,label:c.name+' ('+n+')'};
+      })), sel) +
+      (sel!=='all' ? '<p class="of-note" style="margin-bottom:18px">'+
+        U.esc((d.categories.filter(function(c){return c.id===sel})[0]||{}).note||'')+'</p>' : '') +
+      U.table(rows, [
+        {key:'name',label:'Company',render:function(r){
+          return (r.url?'<a class="of-link" href="'+U.esc(r.url)+'" target="_blank" rel="noopener"><strong>'+U.esc(r.name)+'</strong></a>'
+                       :'<strong>'+U.esc(r.name)+'</strong>')+
+                 (r.founded?'<span class="sub">founded '+r.founded+'</span>':'')}},
+        {key:'country',label:'Country',render:function(r){
+          return U.flag(r.country_iso,{name:r.country})+' <span style="margin-left:8px">'+U.esc(r.country)+'</span>'}},
+        {key:'categories',label:'Sells',render:function(r){
+          return U.chips(r.categories.map(function(c){return catName[c]||c}))}},
+        {key:'relation',label:'Relation',render:function(r){
+          var t=r.relation==='direct competitor'?'hot':
+                /platform builder/.test(r.relation)?'warm':
+                r.relation==='supplier'?'cool':'';
+          return U.chip(r.relation,t)}},
+        {key:'confidence',label:'Conf.',render:function(r){return U.confChip(r.confidence)}}
+      ]));
+
+    h += U.section('Detail', rows.map(function (r) {
+      var t=r.relation==='direct competitor'?'hot':/platform builder/.test(r.relation)?'warm':
+            r.relation==='supplier'?'cool':'';
+      return '<div class="of-card" style="margin-bottom:16px">'+
+        '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">'+
+          U.flag(r.country_iso,{name:r.country,large:true,size:32})+
+          (r.url?'<a class="of-link" href="'+U.esc(r.url)+'" target="_blank" rel="noopener"><span class="of-h2">'+U.esc(r.name)+'</span></a>'
+                :'<span class="of-h2">'+U.esc(r.name)+'</span>')+
+          U.chip(r.relation,t)+U.confChip(r.confidence)+'</div>'+
+        '<div class="of-src" style="margin-top:8px">'+U.esc(r.country)+' · '+
+          U.esc(r.categories.map(function(c){return catName[c]||c}).join(', '))+'</div>'+
+        '<p class="of-note" style="margin-top:14px">'+U.esc(r.what)+'</p>'+
+        (r.note?'<div class="of-callout" style="margin-top:14px">'+U.esc(r.note)+'</div>':'')+
+        (r.source_ids && r.source_ids.length
+          ? '<div style="margin-top:12px">'+U.cite(r.source_ids)+'</div>'
+          : '<div class="of-gap" style="margin-top:12px">No source recorded — unverified.</div>')+
+        '</div>';
+    }).join(''));
+
+    h += U.section('Gaps', d.gaps.map(function(g){return U.gap(U.esc(g))}).join('<div style="height:14px"></div>'));
+    return h;
+  }
+
+
+  /* ---------- distance: how close the field is ---------- */
+  function distance() {
+    var d = D.get('market-players');
+    var all = d.records;
+    var catName = {}; d.categories.forEach(function(c){ catName[c.id]=c.name; });
+    var h = '<h1 class="of-h1">Distance from what we do</h1><p class="of-lede">' +
+      U.esc(d.proximity_model.question) + '</p>';
+
+    var byCat = d.categories.map(function(c){
+      return {label:c.name, value:all.filter(function(r){return r.categories.indexOf(c.id)>=0}).length};
+    }).filter(function(x){return x.value>0});
+
+    h += U.section('Shape of the field', U.grid([
+      U.stat(all.length,'companies catalogued',''),
+      U.stat(d.categories.length,'categories',''),
+      U.stat(U.tally(all,'country').length,'countries',''),
+      U.stat(all.filter(function(r){return r.relation==='direct competitor'}).length,'selling escort vessels today','')
+    ],4));
+
+    h += U.section('Composition', '<div class="of-grid cols-3">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">By category</div>'+
+        U.pie(byCat,{centreLabel:'ENTRIES'})+
+        '<p class="of-note" style="margin-top:12px">Companies can sit in more than one category, so this sums above the company count.</p></div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">By relation</div>'+
+        U.pie(U.tally(all,'relation'),{centreLabel:'COMPANIES'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">By confidence</div>'+
+        U.pie(U.tally(all,'confidence'),{centreLabel:'COMPANIES'})+
+        '<p class="of-note" style="margin-top:12px">Low means carried from a listing or general knowledge and still to be checked.</p></div>' +
+      '</div>');
+
+    // --- proximity: how close is each company, and what is missing ---
+    var pm = d.proximity_model;
+    var bands = [3,2,1,0];
+    var bandLabel = function(n){ return n+'/4 · '+pm.scale[n]; };
+    var three = all.filter(function(r){return r.proximity===3});
+    var missing = U.tally(three, function(r){
+      var m = Object.keys(r.proximity_axes).filter(function(k){return !r.proximity_axes[k]});
+      return m[0] || 'none';
+    });
+
+    h += U.section('Distance from what Odd Fox does',
+      '<p class="of-note" style="margin-bottom:20px"><strong>'+U.esc(pm.question)+'</strong> '+U.esc(pm.note)+'</p>' +
+      U.grid([
+        U.stat(all.filter(function(r){return r.proximity===4}).length,'score 4 of 4','same business'),
+        U.stat(three.length,'score 3 of 4','one step away'),
+        U.stat(missing.length===1 ? missing[0].label : '—',
+               missing.length===1 ? 'is the axis every one of them misses' : 'axes missed', ''),
+        U.stat(all.filter(function(r){return r.proximity<=1}).length,'score 1 or 0','peripheral or supplier')
+      ],4) +
+      '<div class="of-grid cols-2" style="margin-top:26px">' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Companies by distance</div>'+
+          U.bars(bands.map(function(n){
+            return {label:bandLabel(n), value:all.filter(function(r){return r.proximity===n}).length,
+                    tone:n===3?'hot':n===2?'warm':n===1?'cool':''};
+          }))+'</div>' +
+        '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Which axis the closest 21 are missing</div>'+
+          U.pie(missing.map(function(x){return {label:x.label,value:x.value}}),{centreLabel:'AT 3/4'})+
+          '<p class="of-note" style="margin-top:12px">Every company that comes closest fails on the same axis.</p></div>' +
+      '</div>');
+
+    // --- composition across the distance scale ---
+    var xs = bands.slice().reverse().map(bandLabel);
+    var compBy = state.proxComp;
+    var groups = compBy==='market'
+      ? [{k:'commercial',tone:'calm'},{k:'both',tone:'cool'},{k:'military',tone:'hot'}]
+          .map(function(g){ return {label:g.k, tone:g.tone,
+            values: bands.slice().reverse().map(function(n){
+              return all.filter(function(r){return r.proximity===n && r.market===g.k}).length; })}; })
+      : d.categories.map(function(c,i){
+          return {label:c.name, tone:['calm','cool','warm','hot','paper','cool','warm','calm','hot'][i%9],
+            values: bands.slice().reverse().map(function(n){
+              return all.filter(function(r){return r.proximity===n && r.categories.indexOf(c.id)>=0}).length; })};
+        }).filter(function(s){ return s.values.some(function(v){return v>0}); });
+
+    h += U.section('Composition across the distance scale',
+      toggle('proxComp',[{id:'category',label:'By what they sell'},{id:'market',label:'By market'}], compBy) +
+      U.stackedArea(xs, groups, {height:340, label:'composition by distance'}) +
+      '<p class="of-note" style="margin-top:16px">Bands stack bottom-up. Numbers above each point are the column total. '+
+      (compBy==='category'
+        ? 'A company in several categories counts in each, so the stack can exceed the company count at that distance.'
+        : 'Each company has one market, so these totals equal the company count at that distance.')+'</p>');
+
+    h += U.section('The closest 21', U.table(three.slice().sort(function(a,b){return a.name.localeCompare(b.name)}), [
+      {key:'name',label:'Company',render:function(r){
+        return U.flag(r.country_iso,{name:r.country})+' <strong style="margin-left:8px">'+U.esc(r.name)+'</strong>'}},
+      {key:'country',label:'Country'},
+      {key:'mission',label:'Mission',render:function(r){return '<span class="of-note">'+U.esc(r.mission)+'</span>'}},
+      {key:'axes',label:'Has',render:function(r){
+        return U.chips(Object.keys(r.proximity_axes).filter(function(k){return r.proximity_axes[k]}),'calm')}},
+      {key:'miss',label:'Missing',render:function(r){
+        return U.chips(Object.keys(r.proximity_axes).filter(function(k){return !r.proximity_axes[k]}),'hot')}}
+    ]));
+
+    return h;
+  }
+
+  /* ---------- matrix: what they build, and who for ---------- */
+  function matrixPanel() {
+    var d = D.get('market-players');
+    var bt = d.builds_taxonomy;
+    var all = d.records;
+    var mk = state.matrixMarket;
+    var rows = mk==='all' ? all : all.filter(function(r){ return r.market===mk; });
+
+    var MTONE = {military:'hot', commercial:'calm', both:'cool'};
+    var h = '<h1 class="of-h1">What they build</h1><p class="of-lede">'+
+      U.esc(d.market_axis.note)+'</p>';
+
+    // --- the whitespace read, straight from the data ---
+    var usv = all.filter(function(r){ return (r.builds||[]).indexOf('usv')>=0 });
+    var sev = all.filter(function(r){ return (r.builds||[]).indexOf('crewed-vessel')>=0 });
+    var usvCom = usv.filter(function(r){return r.market==='commercial'});
+    h += U.section('Escort platforms by market', U.grid([
+      U.stat(usv.length,'build uncrewed surface vessels', usv.filter(function(r){return r.market==='military'}).length+' military, '+usv.filter(function(r){return r.market==='both'}).length+' dual-market'),
+      U.stat(usvCom.length,'build USVs for commercial customers only','of '+usv.length+' USV builders'),
+      U.stat(sev.length,'operate crewed escort vessels', sev.filter(function(r){return r.market==='commercial'}).length+' of them commercial'),
+      U.stat(sev.filter(function(r){return (r.builds||[]).indexOf('usv')>=0}).length,'do both crewed escort and USVs','')
+    ],4) +
+    '<div class="of-grid cols-2" style="margin-top:26px">'+
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">All companies by market</div>'+
+        U.pie(U.tally(all,'market').map(function(x){return {label:x.label,value:x.value,
+          tone:x.label==='military'?'var(--hot)':x.label==='commercial'?'var(--calm)':'var(--cool)'}}),
+          {centreLabel:'COMPANIES'})+'</div>'+
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">USV builders by market</div>'+
+        U.pie(U.tally(usv,'market').map(function(x){return {label:x.label,value:x.value,
+          tone:x.label==='military'?'var(--hot)':x.label==='commercial'?'var(--calm)':'var(--cool)'}}),
+          {centreLabel:'BUILDERS'})+'</div>'+
+    '</div>');
+
+    h += U.section('What gets built, by capability',
+      U.bars(bt.map(function(c){
+        return {label:c.name, value:all.filter(function(r){return (r.builds||[]).indexOf(c.id)>=0}).length};
+      }).sort(function(a,b){return b.value-a.value})));
+
+    // --- the matrix ---
+    var cols = bt.map(function(c){ return {label:c.name}; })
+      .concat([{label:'Market'},{label:'Founded'},{label:'Funding / listing'},{label:'Leadership'}]);
+
+    var mrows = rows.slice().sort(function(a,b){
+      var o={ 'direct competitor':0,'adjacent platform builder':1,'supplier':2,'adjacent':3,'reference':4 };
+      return (o[a.relation]-o[b.relation]) || a.name.localeCompare(b.name);
+    }).map(function (r) {
+      var cells = bt.map(function(c){
+        var on=(r.builds||[]).indexOf(c.id)>=0;
+        return {on:on, tone: on ? (MTONE[r.market]||'') : '', title:c.name};
+      });
+      cells.push({text:r.market||'', });
+      cells.push({text:r.founded?String(r.founded):'', num:true});
+      cells.push({text:r.funding || r.public_listing || '', });
+      cells.push({text:(r.leadership||[]).map(function(l){return l.person}).join(', ')});
+      return {label:r.name, sub:(r.hq_city?r.hq_city+', ':'')+r.country, cells:cells};
+    });
+
+    h += U.section('Comparison matrix',
+      toggle('matrixMarket',[{id:'all',label:'All ('+all.length+')'},
+        {id:'commercial',label:'Commercial ('+all.filter(function(r){return r.market==='commercial'}).length+')'},
+        {id:'military',label:'Military ('+all.filter(function(r){return r.market==='military'}).length+')'},
+        {id:'both',label:'Both ('+all.filter(function(r){return r.market==='both'}).length+')'}], mk) +
+      U.matrix(mrows, cols, {corner:'Company'}) +
+      '<div class="of-maplegend" style="margin-top:16px">'+
+        '<span class="k"><span class="of-dot calm"></span>commercial</span>'+
+        '<span class="k"><span class="of-dot hot"></span>military</span>'+
+        '<span class="k"><span class="of-dot cool"></span>both</span>'+
+        '<span class="k"><span class="of-dot-off"></span>does not build this</span>'+
+      '</div>'+
+      '<p class="of-note" style="margin-top:16px">Rows ordered by relation: direct competitors first, then platform builders, then suppliers. Scroll the matrix horizontally; the company column stays fixed.</p>');
+
+    h += U.section('Capability definitions', U.table(bt, [
+      {key:'name',label:'Builds',render:function(r){return '<strong>'+U.esc(r.name)+'</strong>'}},
+      {key:'note',label:'Means',render:function(r){return '<span class="of-note">'+U.esc(r.note)+'</span>'}},
+      {key:'n',label:'Companies',num:true,render:function(r){
+        return all.filter(function(x){return (x.builds||[]).indexOf(r.id)>=0}).length}}
+    ]));
+
+    h += U.section('Products named by each company',
+      U.table(all.filter(function(r){return r.products && r.products.length}), [
+        {key:'name',label:'Company',render:function(r){
+          return U.flag(r.country_iso,{name:r.country})+' <strong style="margin-left:8px">'+U.esc(r.name)+'</strong>'}},
+        {key:'market',label:'Market',render:function(r){
+          return U.chip(r.market||'—', MTONE[r.market]||'')}},
+        {key:'products',label:'Named products',render:function(r){
+          return U.chips(r.products)}}
+      ]) +
+      '<p class="of-note" style="margin-top:16px">Products as the company names them. '+
+      U.esc(d.enrichment.companies_enriched)+' of '+all.length+' companies have been through the structured enrichment pass; the rest carry only what the original source stated.</p>');
+
+    h += U.section('Leadership on record',
+      U.table(all.filter(function(r){return r.leadership && r.leadership.length}), [
+        {key:'name',label:'Company',render:function(r){
+          return U.flag(r.country_iso,{name:r.country})+' <strong style="margin-left:8px">'+U.esc(r.name)+'</strong>'}},
+        {key:'market',label:'Market',render:function(r){return U.chip(r.market||'—',MTONE[r.market]||'')}},
+        {key:'leadership',label:'Named',render:function(r){
+          return r.leadership.map(function(l){
+            return '<div style="padding:3px 0"><strong>'+U.esc(l.person)+'</strong><span class="sub">'+U.esc(l.title)+'</span></div>';
+          }).join('')}}
+      ]) +
+      U.gap(U.esc(d.enrichment.leadership_pass.note)));
+    return h;
+  }
+
+
+  /* ---------- platforms: published specifications ---------- */
+  function platformsPanel() {
+    var d = D.get('platforms'), cov = d.spec_coverage;
+    var R = d.records;
+    var MT = {military:'hot', commercial:'calm', both:'cool'};
+    var h = '<h1 class="of-h1">Platform specifications</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('Coverage', U.grid([
+      U.stat(cov.platforms,'platforms with specifications','of '+cov.named_platforms_in_company_data+' named in the company data'),
+      U.stat(cov.length_m,'publish a length',''),
+      U.stat(cov.range_nm,'publish a range','the field most often withheld'),
+      U.stat(cov.sea_state,'publish a sea state','')
+    ],4) +
+    '<div style="margin-top:26px">'+U.bars([
+      {label:'Length',value:cov.length_m},{label:'Max speed',value:cov.max_speed_kn},
+      {label:'Armament stated',value:cov.armed},{label:'Propulsion',value:cov.propulsion},
+      {label:'Payload',value:cov.payload},{label:'Endurance',value:cov.endurance},
+      {label:'Sea state',value:cov.sea_state},{label:'Range',value:cov.range_nm},
+      {label:'Cruise speed',value:cov.cruise_speed_kn}
+    ].map(function(x){return {label:x.label,value:x.value,tone:x.value<20?'hot':x.value<30?'warm':'calm'}}),
+      {max:cov.platforms})+
+    '<p class="of-note" style="margin-top:16px">Bars are out of '+cov.platforms+'. Red fields are published by fewer than half the makers, which is why a single capability ranking is not possible.</p></div>');
+
+    // size vs speed scatter, only where both are published
+    var pts = R.filter(function(r){return r.length_m && r.max_speed_kn});
+    h += U.section('Size against speed, where both are published',
+      (function(){
+        var W=1000,H=380,padL=52,padB=48,padT=18;
+        var maxL=Math.max.apply(null,pts.map(function(r){return r.length_m}));
+        var maxS=Math.max.apply(null,pts.map(function(r){return r.max_speed_kn}));
+        var plotW=W-padL-16, plotH=H-padB-padT;
+        var xa=function(v){return padL+Math.sqrt(v/maxL)*plotW};
+        var ya=function(v){return padT+plotH-(v/maxS)*plotH};
+        var g='';
+        [1,5,10,20,40,80].forEach(function(v){ if(v>maxL)return;
+          g+='<line class="gridline" x1="'+xa(v).toFixed(1)+'" y1="'+padT+'" x2="'+xa(v).toFixed(1)+'" y2="'+(padT+plotH)+'"/>'+
+             '<text class="lbl" x="'+xa(v).toFixed(1)+'" y="'+(H-padB+16)+'" text-anchor="middle">'+v+'m</text>';});
+        [0,15,30,45,60].forEach(function(v){ if(v>maxS)return;
+          g+='<line class="gridline" x1="'+padL+'" y1="'+ya(v).toFixed(1)+'" x2="'+W+'" y2="'+ya(v).toFixed(1)+'"/>'+
+             '<text class="lbl" x="'+(padL-6)+'" y="'+(ya(v)+3).toFixed(1)+'" text-anchor="end">'+v+'kn</text>';});
+        var TONE={military:'var(--hot)',commercial:'var(--calm)',both:'var(--cool)'};
+        var dots=pts.map(function(r){
+          var c=TONE[r.market]||'var(--paper)';
+          return '<g><title>'+U.esc(r.maker+' '+r.platform)+' — '+r.length_m+' m, '+r.max_speed_kn+' kn'+
+            (r.range_nm?', '+r.range_nm+' nm':'')+'</title>'+
+            '<circle cx="'+xa(r.length_m).toFixed(1)+'" cy="'+ya(r.max_speed_kn).toFixed(1)+
+            '" r="6" fill="'+c+'" fill-opacity=".55" stroke="'+c+'" stroke-width="1.5"/>'+
+            '<text x="'+(xa(r.length_m)+9).toFixed(1)+'" y="'+(ya(r.max_speed_kn)+4).toFixed(1)+
+            '" fill="var(--paper)" font-family="var(--mono)" font-size="10" paint-order="stroke" stroke="#04070a" stroke-width="3">'+
+            U.esc(r.platform)+'</text></g>';}).join('');
+        return '<svg class="of-chart" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" style="height:'+H+'px" '+
+          'role="img" aria-label="platform length against max speed">'+g+dots+
+          '<line class="axis" x1="'+padL+'" y1="'+(padT+plotH)+'" x2="'+W+'" y2="'+(padT+plotH)+'"/></svg>'+
+          '<div class="of-maplegend"><span class="k"><span class="of-dot calm"></span>commercial</span>'+
+          '<span class="k"><span class="of-dot hot"></span>military</span>'+
+          '<span class="k"><span class="of-dot cool"></span>both</span></div>'+
+          '<p class="of-note" style="margin-top:12px">'+pts.length+' of '+R.length+' platforms publish both figures. Horizontal axis is square-root scaled so the small craft stay readable next to the 78 m Armada.</p>';
+      })());
+
+    var cols=[{label:'Market'},{label:'Length m'},{label:'Max kn'},{label:'Range nm'},
+              {label:'Endurance'},{label:'Sea state'},{label:'Payload'},{label:'Propulsion'},{label:'Armed'}];
+    var rows=R.slice().sort(function(a,b){return (b.length_m||0)-(a.length_m||0)}).map(function(r){
+      return {label:r.platform, sub:r.maker,
+        cells:[{text:r.market||''},
+               {text:r.length_m!=null?String(r.length_m):'',num:true},
+               {text:r.max_speed_kn!=null?String(r.max_speed_kn):'',num:true},
+               {text:r.range_nm!=null?String(r.range_nm):'',num:true},
+               {text:r.endurance||''},{text:r.sea_state||''},{text:r.payload||''},
+               {text:r.propulsion||''},{text:r.armed||''}]};
+    });
+    h += U.section('Specification matrix',
+      U.matrix(rows,cols,{corner:'Platform'})+
+      '<p class="of-note" style="margin-top:16px">Empty circles are fields the maker does not publish, not zeros. Sorted longest first. Scroll horizontally; the platform column stays fixed.</p>');
+
+    h += U.section('Detail', R.slice().sort(function(a,b){return a.maker.localeCompare(b.maker)}).map(function(r){
+      var rows=[['Role',r.role],['Length',r.length_m?r.length_m+' m':null],['Length note',r.length_note],
+        ['Max speed',r.max_speed_kn?r.max_speed_kn+' kn':null],['Cruise',r.cruise_speed_kn?r.cruise_speed_kn+' kn':null],
+        ['Range',r.range_nm?r.range_nm+' nm':null],['Endurance',r.endurance],['Payload',r.payload],
+        ['Sea state',r.sea_state],['Propulsion',r.propulsion],['Armed',r.armed]].filter(function(x){return x[1]});
+      return '<div class="of-card" style="margin-bottom:16px">'+
+        '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">'+
+          U.flag(r.country_iso,{name:r.country_iso,large:true,size:32})+
+          '<div class="of-h2">'+U.esc(r.platform)+'</div>'+
+          '<span class="of-src">'+U.esc(r.maker)+'</span>'+
+          U.chip(r.market,MT[r.market]||'')+U.confChip(r.confidence)+'</div>'+
+        '<div style="margin-top:14px">'+rows.map(function(x){
+          return '<div style="display:flex;gap:16px;padding:5px 0;font-size:13.5px;line-height:1.5">'+
+            '<div class="of-src" style="min-width:96px;flex-shrink:0">'+U.esc(x[0])+'</div><div>'+U.esc(x[1])+'</div></div>';
+        }).join('')+'</div>'+
+        (r.note?'<div class="of-callout" style="margin-top:14px">'+U.esc(r.note)+'</div>':'')+
+        '<div class="of-src" style="margin-top:12px">Retrieved '+U.esc(r.retrieved)+'</div>'+
+        '<div style="margin-top:8px">'+U.cite(r.source_ids)+'</div></div>';
+    }).join(''));
+
+    h += U.section('Gaps', d.gaps.map(function(g){return U.gap(U.esc(g))}).join('<div style="height:14px"></div>'));
+    return h;
+  }
+
+  /* ---------- registries ---------- */
+  function registries() {
+    var d = D.get('registries');
+    var h = '<h1 class="of-h1">Registries</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('By kind', '<div class="of-grid cols-2">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Registries by kind</div>'+
+        U.pie(U.tally(d.records,'kind'),{centreLabel:'REGISTRIES'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Machine readable</div>'+
+        U.pie([{label:'machine readable',value:d.records.filter(function(r){return r.machine_readable}).length},
+               {label:'not, or unknown',value:d.records.filter(function(r){return !r.machine_readable}).length}],
+              {centreLabel:'REGISTRIES'})+'</div>' +
+      '</div>');
+
+    ['identity','reporting','risk'].forEach(function (kind) {
+      var rs = d.records.filter(function(r){return r.kind===kind});
+      if (!rs.length) return;
+      h += U.section(kind==='identity'?'Identity':kind==='reporting'?'Reporting':'Risk',
+        rs.map(function (r) {
+          return '<div class="of-card" style="margin-bottom:16px">'+
+            '<div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">'+
+              (r.url?'<a class="of-link" href="'+U.esc(r.url)+'" target="_blank" rel="noopener"><span class="of-h2">'+U.esc(r.name)+'</span></a>'
+                    :'<span class="of-h2">'+U.esc(r.name)+'</span>')+
+              (r.access?U.chip(r.access,/free|public/.test(r.access)?'calm':'warm'):'')+
+              (r.machine_readable?U.chip('machine readable','cool'):'')+'</div>'+
+            (r.operator?'<div class="of-src" style="margin-top:8px">'+U.esc(r.operator)+(r.area?' · '+U.esc(r.area):'')+'</div>':'')+
+            (r.answers?'<p style="margin-top:14px;font-size:14.5px">'+U.esc(r.answers)+'</p>':'')+
+            (r.role?'<p class="of-note" style="margin-top:10px">'+U.esc(r.role)+'</p>':'')+
+            (r.holds?'<div style="margin-top:14px">'+U.chips(r.holds)+'</div>':'')+
+            (r.listed_regions?'<div style="margin-top:14px">'+U.chips(r.listed_regions,'hot')+'</div>':'')+
+            (r.current_circular?'<p class="of-note" style="margin-top:12px">'+U.esc(r.current_circular)+'</p>':'')+
+            (r.caveat?'<div class="of-gap" style="margin-top:14px">'+U.esc(r.caveat)+'</div>':'')+
+            (r.source_ids?'<div style="margin-top:12px">'+U.cite(r.source_ids)+'</div>':'')+'</div>';
+        }).join(''));
+    });
+    return h;
+  }
+
+  /* ---------- economics (risk cost + route economics merged) ---------- */
+  function economics() {
+    var d = D.get('risk-economics'), re = D.get('route-economics');
+    var w = d.how_it_works, ps = d.premium_series;
+    var h = '<h1 class="of-h1">Economics</h1><p class="of-lede">'+U.esc(d.description)+'</p>';
+
+    h += U.section('War risk premium over time, by area',
+      U.multiline(ps.series, {height:340, logY:true, label:'war risk premium by area over time'}) +
+      '<p class="of-note" style="margin-top:16px">'+U.esc(ps.note)+'</p>' +
+      '<div style="margin-top:20px">' + U.table(ps.undated_reference, [
+        {key:'area',label:'Undated reference'},
+        {key:'period',label:'Period'},
+        {key:'label',label:'% of hull',num:true,render:function(r){return '<strong>'+U.esc(r.label)+'</strong>'}},
+        {key:'confidence',label:'Confidence',render:function(r){return U.confChip(r.confidence)}}
+      ]) + '</div>');
+
+    h += U.section('How it is priced', U.grid([
+      '<div class="of-kicker">Basis</div><p class="of-note" style="margin-top:10px">'+U.esc(w.basis)+'</p>',
+      '<div class="of-kicker">Quoting</div><p class="of-note" style="margin-top:10px">'+U.esc(w.quoting)+'</p>',
+      '<div class="of-kicker">Trigger</div><p class="of-note" style="margin-top:10px">'+U.esc(w.trigger)+'</p>',
+      '<div class="of-kicker">Who pays</div><p class="of-note" style="margin-top:10px">'+U.esc(w.who_pays)+'</p>'
+    ],4));
+
+    h += U.section('All premium points', U.table(d.premiums, [
+      {key:'area',label:'Area'},{key:'period',label:'Period'},
+      {key:'label',label:'% of hull',num:true,render:function(r){return '<strong>'+U.esc(r.label)+'</strong>'}},
+      {key:'confidence',label:'Confidence',render:function(r){return U.confChip(r.confidence)}},
+      {key:'note',label:'Note',render:function(r){return '<span class="of-note">'+U.esc(r.note||'')+'</span>'}}
+    ]));
+
+    h += U.section('Traffic response', d.traffic_effects.map(function (t) {
+      return '<div class="of-card" style="margin-bottom:16px">'+
+        '<div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">'+
+          '<div class="of-h2">'+U.esc(t.area)+'</div>'+
+          '<span class="of-src of-num">'+U.esc(t.date)+'</span>'+U.confChip(t.confidence)+'</div>'+
+        '<div style="margin-top:16px">'+U.stat(t.from+' → '+t.to,t.metric,null,t.change_pct)+'</div>'+
+        (t.consequence?'<p class="of-note" style="margin-top:14px">'+U.esc(t.consequence)+'</p>':'')+
+        (t.note?'<p class="of-note" style="margin-top:8px">'+U.esc(t.note)+'</p>':'')+
+        '<div style="margin-top:12px">'+U.cite(t.source_ids)+'</div></div>';
+    }).join(''));
+
+    var alt = re.the_alternative, sub = re.the_substitute, ep = re.escort_precedent;
+    h += U.section('Routing around the risk — Cape of Good Hope',
+      U.table(alt.penalties.concat(alt.what_it_avoids||[]), [
+        {key:'metric',label:'Metric'},
+        {key:'value',label:'Value',render:function(r){return '<strong>'+U.esc(r.value)+'</strong>'}},
+        {key:'confidence',label:'Confidence',render:function(r){return U.confChip(r.confidence)}},
+        {key:'note',label:'Note',render:function(r){return '<span class="of-note">'+U.esc(r.note||'')+'</span>'}}
+      ]));
+
+    h += U.section('Armed guards, published pricing',
+      '<div class="of-gap" style="margin-bottom:22px">'+U.esc(sub.vintage_warning)+'</div>' +
+      U.table(sub.prices, [
+        {key:'item',label:'What'},
+        {key:'value',label:'Price',render:function(r){return '<strong>'+U.esc(r.value)+'</strong>'}},
+        {key:'period',label:'Period'},
+        {key:'note',label:'Note',render:function(r){return '<span class="of-note">'+U.esc(r.note||'')+'</span>'}}
+      ]) +
+      '<div class="of-card" style="margin-top:20px"><div class="of-h3">Legal and operational friction</div><div style="margin-top:12px">'+
+      sub.friction.map(function(x){
+        return '<div class="of-note" style="padding:10px 0;border-bottom:1px solid var(--line-soft)">'+U.esc(x)+'</div>';
+      }).join('')+'</div></div>' +
+      '<div style="margin-top:14px">'+U.cite(sub.source_ids)+'</div>');
+
+    if (ep) h += U.section('Convoy escort precedent',
+      '<div class="of-card">'+
+      '<div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">'+
+        '<div class="of-h2">'+U.esc(ep.name)+'</div>'+U.chip(ep.period,'warm')+U.confChip(ep.confidence)+'</div>'+
+      '<div style="margin-top:16px">'+[['HQ',ep.hq],['Model',ep.model],['Price',ep.price]].map(function(x){
+        return '<div style="display:flex;gap:16px;padding:6px 0;font-size:13.5px;line-height:1.5">'+
+          '<div class="of-src" style="min-width:70px;flex-shrink:0">'+U.esc(x[0])+'</div><div>'+U.esc(x[1])+'</div></div>';
+      }).join('')+'</div>'+
+      '<div style="margin-top:22px" class="of-grid cols-3">'+
+        '<div class="of-cell">'+U.stat('$'+ep.derived.cost_per_vessel_per_transit_usd.toLocaleString(),'per protected vessel per transit',ep.derived.how)+'</div>'+
+        '<div class="of-cell">'+U.stat('$50-60k','per transit, embarked armed team','2012 figures')+'</div>'+
+        '<div class="of-cell">'+U.stat(ep.derived.ratio,'ratio','derived, not published')+'</div>'+
+      '</div>'+
+      '<div class="of-gap" style="margin-top:18px">'+U.esc(ep.derived.caveat)+'</div>'+
+      '<div style="margin-top:14px">'+U.cite(ep.source_ids)+'</div></div>');
+
+    var st = re.suez_traffic, rec = st.recovery_2026;
+    h += U.section('Suez Canal revenue',
+      U.columns(st.points.filter(function(p){return p.value_usd_bn && p.metric==='Suez toll revenue'})
+        .map(function(p){return {label:p.period,value:p.value_usd_bn,tone:'cool'}})
+        .concat(st.imf_projection.points.map(function(p){return {label:p.period+' (proj)',value:p.value_usd_bn,tone:'warm'}})),
+        {height:230,showValues:true,labelEvery:1,label:'Suez revenue USD bn'}) +
+      '<p class="of-note" style="margin-top:14px">Blue is reported. Amber is the IMF projection carried by the Egyptian State Information Service.</p>' +
+      '<div class="of-grid cols-3" style="margin-top:24px">'+
+        '<div class="of-cell">'+U.stat(rec.vessels_ytd.toLocaleString(),'vessels year to date','was '+rec.vessels_ytd_prior.toLocaleString(),D.pctChange(rec.vessels_ytd_prior,rec.vessels_ytd))+'</div>'+
+        '<div class="of-cell">'+U.stat(rec.net_tonnage_ytd_m+'M','net tons year to date','was '+rec.net_tonnage_ytd_prior_m+'M',D.pctChange(rec.net_tonnage_ytd_prior_m,rec.net_tonnage_ytd_m))+'</div>'+
+        '<div class="of-cell">'+U.stat('$'+rec.revenue_ytd_usd_m+'M','revenue year to date','was $'+rec.revenue_ytd_prior_usd_m+'M',D.pctChange(rec.revenue_ytd_prior_usd_m,rec.revenue_ytd_usd_m))+'</div>'+
+      '</div>'+
+      '<p class="of-note" style="margin-top:16px">'+U.esc(rec.trigger)+'</p>'+
+      '<div style="margin-top:14px">'+U.cite(rec.source_ids)+'</div>');
+
+    h += U.section('Open questions',
+      (d.open_questions||[]).concat(re.open_questions||[]).map(function(q){
+        return U.gap(U.esc(q));
+      }).join('<div style="height:14px"></div>'));
+    return h;
+  }
+
+  /* ---------- sources ---------- */
+  function sources() {
+    var s = D.get('sources');
+    var h = '<h1 class="of-h1">Sources</h1><p class="of-lede">'+U.esc(s.description)+'</p>';
+
+    h += U.section('Composition', '<div class="of-grid cols-2">' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">By type</div>'+
+        U.pie(U.tally(s.records,'type'),{centreLabel:'SOURCES'})+'</div>' +
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">By publisher, top 10</div>'+
+        U.bars(U.tally(s.records,'publisher').slice(0,10))+'</div>' +
+      '</div>');
+
+    h += U.section('Register', U.table(s.records, [
+      {key:'name',label:'Source',render:function(r){
+        return '<a class="of-link" href="'+U.esc(r.url)+'" target="_blank" rel="noopener"><strong>'+U.esc(r.name)+'</strong></a><span class="sub">'+U.esc(r.publisher)+'</span>'}},
+      {key:'type',label:'Type',render:function(r){
+        var t=/^primary/.test(r.type)?'calm':r.type==='secondary'?'cool':'warm';
+        return U.chip(r.type,t)}},
+      {key:'access',label:'Access'},
+      {key:'published',label:'Published'},
+      {key:'notes',label:'Notes',render:function(r){return '<span class="of-note">'+U.esc(r.notes||'')+'</span>'}}
+    ]));
+    return h;
+  }
+
+  /* ---------- shell ---------- */
+  // keepScroll: in-panel toggles re-render the same tab, so the reader should
+  // stay where they were rather than being thrown back to the top.
+  function show(id, keepScroll) {
+    var tab = TABS.filter(function(t){return t.id===id})[0] || TABS[0];
+    var y = window.scrollY;
+    U.mount('#app', tab.render());
+    Array.prototype.forEach.call(document.querySelectorAll('.of-tab'), function (b) {
+      b.setAttribute('aria-selected', String(b.dataset.tab === tab.id));
+    });
+    if (keepScroll && tab.id === current) window.scrollTo(0, y); else window.scrollTo(0, 0);
+    current = tab.id;
+  }
+
+  // User intent: change the hash and let hashchange do the rendering, so the URL
+  // is always authoritative and the back button steps through tabs.
+  function go(id) {
+    if (location.hash.slice(1) === id) { show(id); return; }
+    location.hash = id;
+  }
+  var current = null;
+
+  D.loadAll(SETS).then(function (all) {
+    var m = all.manifest;
+    document.getElementById('meta').textContent =
+      'v'+m.version+' · '+m.datasets.length+' datasets · updated '+m.updated;
+    document.getElementById('nav').innerHTML = TABS.map(function (t) {
+      return '<button class="of-tab" role="tab" data-tab="'+t.id+'">'+t.label+'</button>';
+    }).join('');
+    document.getElementById('nav').addEventListener('click', function (e) {
+      var b = e.target.closest('.of-tab'); if (b) go(b.dataset.tab);
+    });
+    // in-panel toggles re-render the current tab
+    document.getElementById('app').addEventListener('click', function (e) {
+      var o = e.target.closest('.of-opt'); if (!o) return;
+      var group = o.closest('[data-toggle]'); if (!group) return;
+      state[group.dataset.toggle] = o.dataset.val;
+      show(current, true);
+    });
+    window.addEventListener('hashchange', function () {
+      show(location.hash.slice(1) || 'overview');
+    });
+    // Render first, then fix the URL. history.replaceState is missing in some
+    // embedded browsers, so it must never sit between load and first paint.
+    var start = location.hash.slice(1) || 'overview';
+    show(start);
+    if (!location.hash) {
+      try { history.replaceState(null, '', '#' + start); }
+      catch (e) { location.hash = start; }
+    }
+  }).catch(function (err) {
+    U.mount('#app','<div class="of-err"><strong>Could not load the datasets.</strong>'+
+      '<p style="margin-top:12px">'+U.esc(err.message)+'</p>'+
+      '<p style="margin-top:12px">Opened from disk? Browsers block <code>fetch()</code> on <code>file://</code>. '+
+      'Run <code>node tools/build-data-bundle.mjs</code> for the offline fallback, or serve it:</p>'+
+      '<p style="margin-top:12px"><code>python3 -m http.server -d data 8080</code></p></div>');
+  });
+
+})();
+</script>
+
+<footer class="of-foot">
+  <div class="of-wrap" style="display:flex;gap:18px;flex-wrap:wrap;width:100%">
+    <span>Internal. Not deployed.</span>
+    <span style="margin-left:auto">Every figure carries a source and a confidence level.</span>
+  </div>
+</footer>
+
+</body>
+</html>

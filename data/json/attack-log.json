@@ -1,0 +1,279 @@
+{
+  "$schema": "../schema/attack-log.schema.json",
+  "dataset": "attack-log",
+  "title": "Attack log",
+  "description": "Incident-level entries at the granularity operators actually receive them — a UKMTO warning, a ReCAAP weekly, an IMB PRC broadcast. This is a sample showing the shape of the real feeds, not a complete log. The complete logs are live at the sources named on each entry; see feeds below for how to pull them continuously.",
+  "updated": "2026-09-02",
+  "coverage_note": "Entries concentrated on 2026 because that is where the operational picture changed. Earlier named incidents with full ownership chains are in incidents.json.",
+  "entries": [
+    {
+      "id": "ukmto-071-26",
+      "date": "2026-06-17",
+      "reported_by": "UKMTO",
+      "ref": "Warning 071-26",
+      "area_id": "gulf-of-aden",
+      "position": "Approximately 105 nautical miles northeast of Aden",
+      "vessel": "not disclosed",
+      "attackers": "2 skiffs, unknown number of armed persons",
+      "closest_approach_m": 4,
+      "event": "Vessel approached to within 4 metres and fired upon. Vessel deployed its security team and returned fire.",
+      "outcome": "repelled",
+      "armed_team_aboard": true,
+      "url": "https://www.ukmto.org/-/media/ukmto/products/20260617-ukmto_warning_attack-071-26-1.pdf",
+      "source_ids": [
+        "ukmto",
+        "lwj-2026-06-gulf-of-aden"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ukmto-070-26",
+      "date": "2026-06-15",
+      "reported_by": "UKMTO",
+      "ref": "Warning 070-26",
+      "area_id": "gulf-of-aden",
+      "position": "Gulf of Aden, roughly midway between the Horn of Africa and Yemen",
+      "vessel": "tanker",
+      "attackers": "1 small skiff, 4 armed crew",
+      "event": "Skiff approached and opened fire on the vessel with a rocket-propelled grenade.",
+      "outcome": "not boarded",
+      "source_ids": [
+        "ukmto",
+        "lwj-2026-06-gulf-of-aden"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ukmto-069-26",
+      "date": "2026-06-15",
+      "reported_by": "UKMTO",
+      "ref": "Warning 069-26",
+      "area_id": "gulf-of-aden",
+      "position": "14 nautical miles off the coast of Yemen",
+      "vessel": "container vessel",
+      "attackers": "1 small skiff",
+      "event": "Skiff approached, opened fire and attempted to board.",
+      "outcome": "boarding attempt failed",
+      "source_ids": [
+        "ukmto",
+        "lwj-2026-06-gulf-of-aden"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ukmto-065-26",
+      "date": "2026-06-10",
+      "reported_by": "UKMTO",
+      "ref": "Warning 065-26",
+      "area_id": "gulf-of-aden",
+      "position": "Roughly midway between Yemen and the Horn of Africa",
+      "vessel": "cargo vessel",
+      "attackers": "1 craft, 6 armed persons",
+      "event": "Exchange of fire between the small craft and the vessel's armed security team, resulting in the craft turning away.",
+      "outcome": "repelled",
+      "armed_team_aboard": true,
+      "source_ids": [
+        "ukmto",
+        "lwj-2026-06-gulf-of-aden"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "somali-held-2026-05-02",
+      "date": "2026-05-02",
+      "reported_by": "UKMTO / JMIC",
+      "area_id": "somali-basin",
+      "event": "Vessel seized by Somali pirates. Still held as of the Joint Maritime Information Center advisory note of 16 June 2026, alongside vessels taken on 21 and 26 April 2026 — three held simultaneously.",
+      "outcome": "hijacked, held",
+      "source_ids": [
+        "ukmto",
+        "lwj-2026-06-gulf-of-aden"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "togo-tanker-hijack-2026-h1",
+      "date": "2026-H1",
+      "reported_by": "IMB PRC",
+      "area_id": "gulf-of-aden",
+      "position": "At anchor off Yemen",
+      "vessel": "Togo-flagged product tanker",
+      "attackers": "9 armed perpetrators",
+      "event": "Boarded and hijacked at anchor, then sailed with its 12 crew to the Somali coast.",
+      "outcome": "hijacked",
+      "source_ids": [
+        "imb-h1-2026"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "orange-frost-2025",
+      "date": "2025-05-30",
+      "reported_by": "MARAD",
+      "area_id": "gulf-of-guinea",
+      "vessel": "ORANGE FROST, Curaçao-flagged",
+      "event": "Second engineer abducted.",
+      "outcome": "crew kidnapped",
+      "source_ids": [
+        "marad-2026-009-gog"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ghana-fishing-2025-03",
+      "date": "2025-03-27",
+      "reported_by": "MARAD",
+      "area_id": "gulf-of-guinea",
+      "vessel": "Three Ghana-flagged fishing vessels",
+      "event": "Seven crew abducted.",
+      "outcome": "crew kidnapped",
+      "source_ids": [
+        "marad-2026-009-gog"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "recaap-weekly-2026-08-18",
+      "date": "2026-08-18",
+      "reported_by": "ReCAAP ISC",
+      "ref": "Weekly Report 18-24 Aug 2026",
+      "area_id": "strait-of-malacca",
+      "event": "No incident of piracy or armed robbery against ships in Asia reported over the week.",
+      "outcome": "nil return",
+      "source_ids": [
+        "recaap-weekly-2026-08-18"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "patterns_2026_h1": {
+    "source_ids": [
+      "imb-h1-2026"
+    ],
+    "confidence": "medium",
+    "total_incidents": 38,
+    "note": "38 reported incidents worldwide, the lowest first-half figure since 1992 — and the most misleading headline in this library. The breakdown below is why.",
+    "outcomes": [
+      {
+        "label": "Boarded",
+        "value": 27
+      },
+      {
+        "label": "Hijacked",
+        "value": 5
+      },
+      {
+        "label": "Fired upon",
+        "value": 3
+      },
+      {
+        "label": "Attempted",
+        "value": 3
+      }
+    ],
+    "success_rate_pct": 84,
+    "success_rate_note": "Perpetrators boarded or hijacked in 32 of 38 incidents. When an approach is launched, shipboard barriers and detection routines are breached five times out of six.",
+    "crew_affected": 70,
+    "crew_breakdown": [
+      {
+        "label": "Taken hostage",
+        "value": 67
+      },
+      {
+        "label": "Threatened",
+        "value": 2
+      },
+      {
+        "label": "Injured",
+        "value": 1
+      }
+    ],
+    "somali_share_of_hostages_pct": 94,
+    "attacks_at_anchor": "15 of the 32 successful attacks occurred while the vessel was anchored",
+    "target_types": [
+      {
+        "label": "Dry bulk carriers",
+        "value": 13
+      },
+      {
+        "label": "Container vessels",
+        "value": 10
+      }
+    ],
+    "target_note": "Dry bulk and container together were 60% of targeted tonnage."
+  },
+  "feeds": [
+    {
+      "name": "UKMTO warnings and advisories",
+      "url": "https://www.ukmto.org/",
+      "format": "PDF warnings, numbered per year (e.g. 071-26), plus JMIC advisory notes",
+      "cadence": "per incident",
+      "area": "Red Sea, Gulf of Aden, Indian Ocean, Arabian Sea",
+      "machine_readable": false,
+      "note": "Also posts warnings to X as @UK_MTO, which is the fastest public channel."
+    },
+    {
+      "name": "IMB Piracy Reporting Centre live map",
+      "url": "https://icc-ccs.org/map/",
+      "format": "Web map with per-incident detail",
+      "cadence": "continuous",
+      "area": "worldwide",
+      "machine_readable": false,
+      "note": "IMB PRC also broadcasts to shipping via GMDSS Safety Net and emails CSOs free of charge."
+    },
+    {
+      "name": "ReCAAP ISC weekly reports",
+      "url": "https://www.recaap.org/reports",
+      "format": "PDF, one per week, plus quarterly, half-yearly and annual",
+      "cadence": "weekly",
+      "area": "Asia",
+      "machine_readable": false,
+      "note": "Filenames follow a stable pattern, so the series is straightforward to fetch on a schedule. Includes nil-return weeks."
+    },
+    {
+      "name": "ReCAAP Re-VAMP dashboard",
+      "url": "https://dashboard.recaap.org/",
+      "format": "Interactive dashboard",
+      "cadence": "continuous",
+      "area": "Asia",
+      "machine_readable": true,
+      "access": "free registration"
+    },
+    {
+      "name": "IMO GISIS piracy module",
+      "url": "https://gisis.imo.org/Public/Default.aspx",
+      "format": "Database",
+      "cadence": "continuous",
+      "area": "worldwide",
+      "machine_readable": true,
+      "access": "free registration",
+      "note": "Incidents are promulgated here as soon as the Secretariat receives them from member states and reporting bodies."
+    },
+    {
+      "name": "MDAT-GoG",
+      "url": "https://gog-mdat.org/",
+      "format": "Advisories and weekly reports",
+      "cadence": "continuous",
+      "area": "Gulf of Guinea",
+      "machine_readable": false,
+      "note": "Operated by the French and UK navies. Registration required before entering the Voluntary Reporting Area. Does not coordinate responses to vessels under attack."
+    },
+    {
+      "name": "US MARAD maritime advisories",
+      "url": "https://www.maritime.dot.gov/msci",
+      "format": "Numbered advisories (e.g. 2026-009)",
+      "cadence": "as issued",
+      "area": "worldwide",
+      "machine_readable": false
+    },
+    {
+      "name": "IMO MSC.4 annual circulars",
+      "url": "https://www.imo.org/en/ourwork/security/pages/piracy-reports-default.aspx",
+      "format": "PDF",
+      "cadence": "annual plus monthly reference reports",
+      "area": "worldwide",
+      "machine_readable": false
+    }
+  ],
+  "retrieved": "2026-09-02"
+}

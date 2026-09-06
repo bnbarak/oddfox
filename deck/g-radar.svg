@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400" fill="none">
+  <rect width="560" height="400" fill="#05070a"/>
+<path d="M0 24 H560" stroke="#fff" stroke-opacity=".45" stroke-width="1"/>
+  <defs>
+    <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity=".28"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(280,205)">
+    <path d="M0 0 L168 -58 A178 178 0 0 0 168 58 Z" fill="url(#sweep)"/>
+    <circle r="178" stroke="#fff" stroke-opacity=".30" stroke-dasharray="3 5"/><path d="M62 -22 A66 66 0 0 1 62 22" stroke="#fff" stroke-opacity=".45"/><path d="M118 -42 A126 126 0 0 1 118 42" stroke="#fff" stroke-opacity=".3"/><path d="M172 -60 A182 182 0 0 1 172 60" stroke="#fff" stroke-opacity=".2"/>
+    <circle r="118" stroke="#fff" stroke-opacity=".55"/>
+    <circle r="62"  stroke="#fff" stroke-opacity=".9"/>
+    <g stroke="#fff" stroke-opacity=".22">
+      <path d="M-178 0 H178 M0 -178 V178"/>
+      <path d="M-126 -126 L126 126 M-126 126 L126 -126" stroke-opacity=".12"/>
+    </g>
+    <!-- protected vessel, top-down, heading right -->
+    <g fill="#fff">
+      <path d="M-37 -11 L14 -11 C26 -11 36 -6 42 0 C36 6 26 11 14 11 L-37 11 C-40 11 -41 10 -41 8 V-8 C-41 -10 -40 -11 -37 -11 Z"/>
+    </g>
+    <!-- escort, ahead and off the beam -->
+    <path d="M7 -40 L27 -40 C33 -40 38 -37.5 41 -34 C38 -30.5 33 -28 27 -28 L7 -28 C5 -28 4 -28.8 4 -30.2 V-37.8 C4 -39.2 5 -40 7 -40 Z" fill="#fff" fill-opacity=".85"/><path d="M18 -40 V-52 M11 -52 H25" stroke="#fff" stroke-opacity=".7" stroke-width="1" fill="none"/>
+    <!-- hostile contacts + inbound vectors -->
+    <g stroke="#e03c22" stroke-width="1.4">
+      <path d="M150 -105 L104 -74" stroke-dasharray="4 4"/>
+      <path d="M-140 96 L-98 68" stroke-dasharray="4 4"/>
+    </g>
+    <circle cx="158" cy="-111" r="4.5" fill="#e03c22"/>
+    <circle cx="-148" cy="102" r="4.5" fill="#e03c22"/>
+    <!-- intercept mark on the middle ring -->
+    <g stroke="#e03c22" stroke-width="1.6">
+      <path d="M92 -66 l10 10 M102 -66 l-10 10"/>
+    </g>
+  </g>
+  <g font-family="Helvetica,Arial" font-size="9" letter-spacing="1.6" fill="#fff">
+    <text x="24" y="18" fill-opacity=".5">DETECTION — PLAN VIEW</text><text x="280" y="48" text-anchor="middle" fill-opacity=".55">RADAR HORIZON</text>
+    <text x="280" y="99" text-anchor="middle" fill-opacity=".75">INTERCEPT ENVELOPE</text>
+    <text x="262" y="146" text-anchor="middle">ESCORTED VESSEL</text>
+    <text x="452" y="86" fill="#e03c22">CONTACT</text>
+    <text x="42" y="330" fill="#e03c22">CONTACT</text>
+  </g>
+</svg>

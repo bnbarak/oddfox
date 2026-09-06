@@ -1,0 +1,512 @@
+{
+  "$schema": "../schema/geo-incidents.schema.json",
+  "dataset": "geo-incidents",
+  "title": "Incidents by location",
+  "description": "Incident counts placed on coordinates, for the map. Each series is a single counting body over a single period. Series are never merged: IMB and ReCAAP count overlapping water with different boundaries, so summing them double-counts.",
+  "updated": "2026-09-02",
+  "series": [
+    {
+      "id": "imb-2026-q1",
+      "label": "IMB · worldwide · Jan-Mar 2026",
+      "body": "IMB",
+      "period": "2026-Q1",
+      "total": 16,
+      "complete": true,
+      "source_ids": [
+        "imb-q1-2026"
+      ],
+      "confidence": "high",
+      "note": "Complete: the named locations sum to the published total of 16.",
+      "points": [
+        {
+          "id": "singapore-straits",
+          "name": "Singapore Straits",
+          "coords": [
+            1.23,
+            103.83
+          ],
+          "count": 8,
+          "note": "Largest share reported globally, down from 31 in Q1 2025."
+        },
+        {
+          "id": "philippines",
+          "name": "Philippines anchorages",
+          "coords": [
+            14.55,
+            120.9
+          ],
+          "count": 4,
+          "note": "Two at Manila anchorage, two at Bauan anchorage, Batangas Bay. Up from zero in Q1 2025. One crew taken hostage."
+        },
+        {
+          "id": "somalia",
+          "name": "Somalia",
+          "coords": [
+            5.0,
+            52.0
+          ],
+          "count": 2,
+          "note": "One attempted attack and one hijacking of a dhow, which could be used as a mother vessel."
+        },
+        {
+          "id": "gulf-of-guinea",
+          "name": "Gulf of Guinea",
+          "coords": [
+            3.0,
+            5.0
+          ],
+          "count": 1,
+          "note": "Low-level theft at Takoradi anchorage, Ghana."
+        },
+        {
+          "id": "se-asia-other",
+          "name": "Southeast Asia, other",
+          "coords": [
+            -2.5,
+            110.0
+          ],
+          "count": 4,
+          "note": "Balance of the 12 Southeast Asia incidents not in the Singapore Straits."
+        },
+        {
+          "id": "rest-of-world",
+          "name": "Rest of the world",
+          "coords": [
+            -10.0,
+            -40.0
+          ],
+          "count": 1
+        }
+      ]
+    },
+    {
+      "id": "recaap-2026-h1",
+      "label": "ReCAAP · Asia · Jan-Jun 2026",
+      "body": "ReCAAP",
+      "period": "2026-H1",
+      "total": 35,
+      "complete": true,
+      "source_ids": [
+        "recaap-hy-2026",
+        "safety4sea-recaap-hy2026"
+      ],
+      "confidence": "high",
+      "note": "Complete and internally consistent: the points below sum to the published regional total of 35.",
+      "points": [
+        {
+          "id": "soms",
+          "name": "Straits of Malacca & Singapore",
+          "coords": [
+            1.23,
+            103.83
+          ],
+          "count": 21,
+          "note": "60% of all incidents reported in Asia. Residual cases localised to the eastbound lane of the Phillip Channel."
+        },
+        {
+          "id": "philippines",
+          "name": "Philippines",
+          "coords": [
+            14.55,
+            120.9
+          ],
+          "count": 10,
+          "note": "Up from zero in H1 2025. Philippine Coast Guard made arrests between January and April 2026."
+        },
+        {
+          "id": "bangladesh",
+          "name": "Bangladesh",
+          "coords": [
+            22.24,
+            91.75
+          ],
+          "count": 2
+        },
+        {
+          "id": "indonesia",
+          "name": "Indonesia, excluding SOMS",
+          "coords": [
+            -5.5,
+            106.5
+          ],
+          "count": 1
+        },
+        {
+          "id": "malaysia",
+          "name": "Malaysia",
+          "coords": [
+            3.0,
+            101.4
+          ],
+          "count": 1
+        },
+        {
+          "id": "india",
+          "name": "India",
+          "coords": [
+            20.0,
+            79.0
+          ],
+          "count": 0
+        },
+        {
+          "id": "scs",
+          "name": "South China Sea",
+          "coords": [
+            12.0,
+            113.0
+          ],
+          "count": 0
+        },
+        {
+          "id": "vietnam",
+          "name": "Vietnam",
+          "coords": [
+            10.3,
+            107.1
+          ],
+          "count": 0
+        },
+        {
+          "id": "sulu-celebes",
+          "name": "Sulu-Celebes Seas",
+          "coords": [
+            5.0,
+            120.0
+          ],
+          "count": 0,
+          "note": "Sixth consecutive year with no crew abduction. Last incident 17 January 2020. Threat level LOW."
+        }
+      ]
+    },
+    {
+      "id": "recaap-2025-h1",
+      "label": "ReCAAP · Asia · Jan-Jun 2025",
+      "body": "ReCAAP",
+      "period": "2025-H1",
+      "total": 96,
+      "complete": true,
+      "source_ids": [
+        "recaap-hy-2026",
+        "safety4sea-recaap-hy2026"
+      ],
+      "confidence": "high",
+      "note": "The comparison year. Same points, same body, same six months.",
+      "points": [
+        {
+          "id": "soms",
+          "name": "Straits of Malacca & Singapore",
+          "coords": [
+            1.23,
+            103.83
+          ],
+          "count": 80
+        },
+        {
+          "id": "philippines",
+          "name": "Philippines",
+          "coords": [
+            14.55,
+            120.9
+          ],
+          "count": 0
+        },
+        {
+          "id": "bangladesh",
+          "name": "Bangladesh",
+          "coords": [
+            22.24,
+            91.75
+          ],
+          "count": 3
+        },
+        {
+          "id": "indonesia",
+          "name": "Indonesia, excluding SOMS",
+          "coords": [
+            -5.5,
+            106.5
+          ],
+          "count": 6
+        },
+        {
+          "id": "malaysia",
+          "name": "Malaysia",
+          "coords": [
+            3.0,
+            101.4
+          ],
+          "count": 0
+        },
+        {
+          "id": "india",
+          "name": "India",
+          "coords": [
+            20.0,
+            79.0
+          ],
+          "count": 3
+        },
+        {
+          "id": "scs",
+          "name": "South China Sea",
+          "coords": [
+            12.0,
+            113.0
+          ],
+          "count": 2
+        },
+        {
+          "id": "vietnam",
+          "name": "Vietnam",
+          "coords": [
+            10.3,
+            107.1
+          ],
+          "count": 2
+        },
+        {
+          "id": "sulu-celebes",
+          "name": "Sulu-Celebes Seas",
+          "coords": [
+            5.0,
+            120.0
+          ],
+          "count": 0
+        }
+      ]
+    },
+    {
+      "id": "imb-2025",
+      "label": "IMB · worldwide · 2025",
+      "body": "IMB",
+      "period": "2025",
+      "total": 137,
+      "complete": false,
+      "source_ids": [
+        "imb-annual-2025"
+      ],
+      "confidence": "high",
+      "note": "Points do not sum to 137. IMB publishes named hotspots and broad regions, not a full geographic breakdown. Regional totals were Southeast Asia 95, Africa 29, Indian sub-continent 8.",
+      "points": [
+        {
+          "id": "singapore-straits",
+          "name": "Singapore Straits",
+          "coords": [
+            1.23,
+            103.83
+          ],
+          "count": 80,
+          "note": "58% of all incidents reported worldwide. Gun reports rose from 8 to 27 year on year."
+        },
+        {
+          "id": "gulf-of-guinea",
+          "name": "Gulf of Guinea",
+          "coords": [
+            3.0,
+            5.0
+          ],
+          "count": 21,
+          "note": "23 of the world's 25 kidnapped crew, across four incidents."
+        },
+        {
+          "id": "indonesia-arch",
+          "name": "Indonesian archipelago",
+          "coords": [
+            -2.5,
+            117.0
+          ],
+          "count": 12
+        },
+        {
+          "id": "somali-basin",
+          "name": "Somali Basin / Horn of Africa",
+          "coords": [
+            5.0,
+            52.0
+          ],
+          "count": null,
+          "unquantified": "a small number",
+          "note": "IMB reports only a small number for 2025, but two incidents in November occurred far from shore, showing capability at range."
+        }
+      ]
+    },
+    {
+      "id": "imb-2026-h1",
+      "label": "IMB · worldwide · Jan-Jun 2026",
+      "body": "IMB",
+      "period": "2026-H1",
+      "total": 38,
+      "complete": false,
+      "source_ids": [
+        "imb-h1-2026"
+      ],
+      "confidence": "medium",
+      "note": "Lowest first-half total since 1992, and the points below do not sum to it — IMB names hotspots, not every location. Perpetrators still boarded or hijacked in 32 of the 38, and 67 crew were taken hostage.",
+      "points": [
+        {
+          "id": "southeast-asia",
+          "name": "Southeast Asia, all",
+          "coords": [
+            3.0,
+            108.0
+          ],
+          "count": 24,
+          "note": "Highest-volume region. Lowest severity."
+        },
+        {
+          "id": "singapore-straits",
+          "name": "Singapore Straits",
+          "coords": [
+            1.23,
+            103.83
+          ],
+          "count": 12,
+          "note": "Down from 57 in H1 2025 after Indonesian Marine Police interdictions."
+        },
+        {
+          "id": "manila",
+          "name": "Manila anchorage",
+          "coords": [
+            14.55,
+            120.9
+          ],
+          "count": 8,
+          "note": "Up from zero. Violent armed robbery at anchor, knives and firearms used against watchmen."
+        },
+        {
+          "id": "gulf-of-guinea",
+          "name": "Gulf of Guinea",
+          "coords": [
+            3.0,
+            5.0
+          ],
+          "count": 2,
+          "note": "Down from 21 in 2025. Attributed to Nigeria's Deep Blue Project and naval presence."
+        },
+        {
+          "id": "horn-of-africa",
+          "name": "Horn of Africa / Somali Basin",
+          "coords": [
+            5.0,
+            52.0
+          ],
+          "count": null,
+          "unquantified": "count not published; 5 hijackings worldwide, most attributed here",
+          "note": "Somali groups accounted for 94% of all crew taken hostage worldwide. Hijack victims included a Palau-flagged product tanker, a St Kitts and Nevis general cargo ship, and dhows taken for use as motherships."
+        }
+      ]
+    },
+    {
+      "id": "ukmto-2026-warnings",
+      "label": "UKMTO · warnings issued · Apr-Jun 2026",
+      "body": "UKMTO",
+      "period": "2026-Q2",
+      "total": 12,
+      "complete": true,
+      "source_ids": [
+        "lwj-2026-06-gulf-of-aden",
+        "ukmto"
+      ],
+      "confidence": "high",
+      "note": "Warnings issued, not incidents confirmed. Included because it is the only near-real-time geographic signal available, and it registered the Somali resurgence months before the half-year reports did.",
+      "points": [
+        {
+          "id": "gulf-of-aden",
+          "name": "Gulf of Aden",
+          "coords": [
+            12.5,
+            47.5
+          ],
+          "count": 8,
+          "period_detail": "May-June 2026"
+        },
+        {
+          "id": "somali-basin",
+          "name": "Somali Basin",
+          "coords": [
+            5.0,
+            52.0
+          ],
+          "count": 4,
+          "period_detail": "April 2026"
+        }
+      ]
+    }
+  ],
+  "reference_points": [
+    {
+      "id": "bab-el-mandeb",
+      "name": "Bab el-Mandeb",
+      "coords": [
+        12.58,
+        43.33
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "suez",
+      "name": "Suez Canal",
+      "coords": [
+        30.03,
+        32.55
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "hormuz",
+      "name": "Strait of Hormuz",
+      "coords": [
+        26.57,
+        56.25
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "malacca",
+      "name": "Strait of Malacca",
+      "coords": [
+        2.5,
+        101.5
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "panama",
+      "name": "Panama Canal",
+      "coords": [
+        9.08,
+        -79.68
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "gibraltar",
+      "name": "Strait of Gibraltar",
+      "coords": [
+        35.97,
+        -5.5
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "bosporus",
+      "name": "Bosporus",
+      "coords": [
+        41.12,
+        29.07
+      ],
+      "kind": "chokepoint"
+    },
+    {
+      "id": "good-hope",
+      "name": "Cape of Good Hope",
+      "coords": [
+        -34.35,
+        18.47
+      ],
+      "kind": "chokepoint"
+    }
+  ],
+  "retrieved": "2026-09-02"
+}

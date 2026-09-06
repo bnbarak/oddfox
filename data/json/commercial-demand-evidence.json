@@ -1,0 +1,62 @@
+{
+ "dataset": "commercial-demand-evidence",
+ "title": "Has any commercial operator ever bought this?",
+ "description": "A deliberate search for commercial, non-defence purchases of maritime security, escort, counter-drone or autonomous protection. The result is the finding: we could not locate one.",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "searched_for": [
+  "A named commercial shipowner, manager, operator, charterer or cargo owner buying maritime security or escort",
+  "An uncrewed surface vessel sold to or trialled by a commercial maritime customer for security",
+  "A counter-drone or counter-USV system bought by a commercial shipping company",
+  "An insurer, P&I club or war risk underwriter funding, subsidising, discounting or requiring escort"
+ ],
+ "result": {
+  "named_commercial_security_deals": 0,
+  "insurer_funded_security_arrangements": 0,
+  "commercial_usv_adoption_found": 3,
+  "note": "Every commercial USV engagement located is survey or ocean data, not security."
+ },
+ "commercial_usv_adoption": [
+  {
+   "customer": "Sulmara Subsea",
+   "vendor": "Saildrone",
+   "use_case": "Offshore survey and ocean data for offshore energy and subsea projects",
+   "security": false,
+   "date": "2025",
+   "source_ids": [
+    "saildrone-sulmara"
+   ]
+  },
+  {
+   "customer": "Seasats (own trial)",
+   "vendor": "Seasats",
+   "use_case": "Eight-day continuous Quickfish trial, ocean data and remote sensing",
+   "security": false,
+   "date": "2025",
+   "source_ids": [
+    "seasats-quickfish-trial-pr"
+   ]
+  },
+  {
+   "customer": "Unnamed commercial survey-vessel operator",
+   "vendor": "Voyager Technologies",
+   "use_case": "Autonomy fitted to a USV for commercial survey",
+   "security": false,
+   "date": "2025-07-09",
+   "source_ids": [
+    "voyager-autonomy"
+   ]
+  }
+ ],
+ "what_this_means": [
+  "The commercial market for autonomous maritime security has no visible transaction history. We would be creating the category, not entering it.",
+  "There is no comparable deal to point a buyer at. Every reference sale in this space is defence.",
+  "The insurance channel is a route to the buyer, but no insurer has been found funding or requiring escort, so it is not yet a demand driver.",
+  "Commercial USV demand is real but it is survey and data. The commercial appetite for an uncrewed platform exists; the appetite for an uncrewed security platform is unproven."
+ ],
+ "caveat": "Absence of evidence in public sources is not proof of absence. Private security contracts are routinely unpublished, and the incumbent sweep showed nine of ten providers name no client at all. This says the market is invisible, not necessarily that it is empty.",
+ "gaps": [
+  "No primary check with a broker, P&I club or underwriter has been made. That is the fastest way to test whether private deals exist.",
+  "No trade body (BIMCO, INTERTANKO, INTERCARGO) has been approached for guidance on escort procurement."
+ ]
+}

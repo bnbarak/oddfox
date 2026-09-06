@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/incidents.schema.json",
+  "title": "Named incidents",
+  "type": "object",
+  "required": ["dataset", "records"],
+  "properties": {
+    "dataset": { "const": "incidents" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "date", "vessel", "actor", "outcome", "why_it_matters", "source_ids"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "date": { "type": "string", "format": "date" },
+          "vessel": {
+            "type": "object",
+            "required": ["name", "flag"],
+            "properties": {
+              "name": { "type": "string" },
+              "imo": { "$ref": "common.schema.json#/$defs/imo" },
+              "type": { "type": "string" },
+              "flag": { "type": "string" },
+              "port_of_registry": { "type": "string" }
+            }
+          },
+          "area_id": { "$ref": "common.schema.json#/$defs/id", "description": "References chokepoints.json" },
+          "actor": { "type": "string" },
+          "method": { "type": "string" },
+          "outcome": { "enum": ["sunk", "captured", "hijacked, then recovered", "set afire", "set afire, abandoned", "damaged", "targeted, no reported damage", "attempted"] },
+          "voyage": { "type": "string" },
+          "position_note": { "type": "string" },
+          "crew_effect": { "type": "string" },
+          "escort": { "type": "string" },
+          "response": { "type": "string" },
+          "ownership_note": { "type": "string" },
+          "ownership_chain": {
+            "type": "object",
+            "properties": {
+              "flag_state": { "type": "string" },
+              "registered_owner": { "type": "string" },
+              "beneficial_owner": { "type": "string" },
+              "manager": { "type": "string" },
+              "charterer": { "type": "string" },
+              "note": { "type": "string" }
+            }
+          },
+          "why_it_matters": { "type": "string", "description": "Required. If an incident does not teach us something, it does not belong in this file — the complete lists live at IMB and Lloyd's List." },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    }
+  }
+}

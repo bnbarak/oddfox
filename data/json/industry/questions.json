@@ -1,0 +1,322 @@
+{
+ "dataset": "question-bank",
+ "title": "What we need to know",
+ "updated": "2026-09-04",
+ "description": "Every open question about this industry, grouped by domain, with what we already hold and what would close it. Status is answered, partial or open. This is the research agenda.",
+ "status_counts": {
+  "total": 32,
+  "answered": 7,
+  "partial": 7,
+  "open": 14,
+  "parked": 4
+ },
+ "domains": [
+  {
+   "domain": "Market size and structure",
+   "questions": [
+    {
+     "question": "How many merchant ships are there?",
+     "status": "answered",
+     "what_we_know": "112,501 at 100 GT and above, 2.44bn DWT, UNCTAD 1 Jan 2025.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "Denominator for everything."
+    },
+    {
+     "question": "How many ships of each type, by COUNT not tonnage?",
+     "status": "open",
+     "what_we_know": "UNCTAD publishes the split by DWT only. We cannot say how many bulk carriers exist.",
+     "how_to_answer": "Clarksons, Equasis annual report, or IHS.",
+     "cost": "paid or free with account",
+     "why_it_matters": "Sizes the addressable fleet in hulls, which is how escort is sold."
+    },
+    {
+     "question": "How many containers move per year?",
+     "status": "partial",
+     "what_we_know": "920m TEU port throughput 2024. Port moves double-count transhipment, so this is not unique containers.",
+     "how_to_answer": "UNCTAD plus a transhipment share figure.",
+     "cost": "free",
+     "why_it_matters": "Direct answer to how much cargo is at risk."
+    },
+    {
+     "question": "What is the average container ship size?",
+     "status": "open",
+     "what_we_know": "30.3m TEU total cellular capacity, April 2025. No ship count, so no average.",
+     "how_to_answer": "Divide capacity by ship count once we have the count.",
+     "cost": "free",
+     "why_it_matters": "Tells us how much value sits on one hull."
+    },
+    {
+     "question": "How much does each container pay?",
+     "status": "partial",
+     "what_we_know": "FBX global composite $3,532 per FEU on 2026-09-04; Asia-N Europe $4,641; Asia-USEC $9,791.",
+     "how_to_answer": "Annual averages for the trend.",
+     "cost": "free",
+     "why_it_matters": "Revenue per hull, and the size of the cargo interest."
+    }
+   ]
+  },
+  {
+   "domain": "Money",
+   "questions": [
+    {
+     "question": "What does it cost to run a ship for a day?",
+     "status": "open",
+     "what_we_know": "Nothing. Bunkers only.",
+     "how_to_answer": "Moore OpCost, or listed owners' disclosed daily opex in quarterly reports.",
+     "cost": "paid or free",
+     "why_it_matters": "Escort price only means something as a share of daily cost."
+    },
+    {
+     "question": "What are charter rates?",
+     "status": "open",
+     "what_we_know": "Nothing retrieved.",
+     "how_to_answer": "Baltic Exchange, Clarksons, or listed owner TCE disclosures.",
+     "cost": "paid or free",
+     "why_it_matters": "The opportunity cost of a delayed or rerouted voyage."
+    },
+    {
+     "question": "What does war risk cost?",
+     "status": "answered",
+     "what_we_know": "Full Reuters series 0.03% pre-campaign to over 1% in July 2026, quoted per seven-day cover.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "The budget we compete with."
+    },
+    {
+     "question": "What does maritime security cost today?",
+     "status": "open",
+     "what_we_know": "Only 2012: $5,000 a day for a four-man team, up to $60,000 a transit.",
+     "how_to_answer": "One broker or provider call.",
+     "cost": "free",
+     "why_it_matters": "Our entire price anchor is fourteen years old."
+    },
+    {
+     "question": "What does an escort service cost?",
+     "status": "open",
+     "what_we_know": "Nothing published by anyone, ever.",
+     "how_to_answer": "Convoy Escort Programme filings, or ask a provider.",
+     "cost": "free",
+     "why_it_matters": "There is no market price to anchor against."
+    },
+    {
+     "question": "What does rerouting cost?",
+     "status": "answered",
+     "what_we_know": "+3,500 nm, +10 days, +40% fuel, about $1m a day for the largest boxships.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "The real competitor is the Cape, not a rival vendor."
+    },
+    {
+     "question": "What are P&I costs?",
+     "status": "partial",
+     "what_we_know": "General increases: Steamship 5% then 8%, NorthStandard 5%, Gard about 5%.",
+     "how_to_answer": "Cost per gross tonne.",
+     "cost": "free",
+     "why_it_matters": "Shows the direction of the whole risk cost stack."
+    }
+   ]
+  },
+  {
+   "domain": "Threat",
+   "questions": [
+    {
+     "question": "How many attacks per year?",
+     "status": "answered",
+     "what_we_know": "IMB series 2010-2024: 445 down to 116. Plus 137 in 2025 and 38 in H1 2026.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "The demand signal."
+    },
+    {
+     "question": "How long is a ship exposed?",
+     "status": "partial",
+     "what_we_know": "Gulf of Aden IRTC is 490 nm, 33-49 hours depending on speed. No equivalent for Bab el-Mandeb.",
+     "how_to_answer": "Chart measurement plus a corridor definition.",
+     "cost": "free",
+     "why_it_matters": "This is the mission length. It defines the product."
+    },
+    {
+     "question": "What is the attack probability per transit?",
+     "status": "partial",
+     "what_we_know": "About 0.55% per transit, Red Sea 2024. And only 40.4% of all recorded attacks happen to a ship under way, so the escort-addressable share is smaller again.",
+     "how_to_answer": "Divide incidents by transits per corridor once we have both.",
+     "cost": "free",
+     "why_it_matters": "If the per-voyage risk is tiny, no premium argument works."
+    },
+    {
+     "question": "Are ships getting safer or more dangerous?",
+     "status": "answered",
+     "what_we_know": "Safer, and because of protection. Losses fell 79% and piracy 74% since 2010. NATO, IMB and the World Bank attribute the piracy fall to naval presence, corridors, hardening and armed guards.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "Cuts against our own story and we should know it."
+    }
+   ]
+  },
+  {
+   "domain": "The buyer",
+   "questions": [
+    {
+     "question": "Who actually decides?",
+     "status": "partial",
+     "what_we_know": "Inferred from ISM and ISPS: DPA, CSO, fleet director, charterer. Never confirmed with a practitioner.",
+     "how_to_answer": "Ask one DPA. We now know one.",
+     "cost": "free",
+     "why_it_matters": "The whole target list rests on this assumption."
+    },
+    {
+     "question": "How is armed guarding procured today?",
+     "status": "open",
+     "what_we_know": "Unknown. Through the manager, charterer, broker or direct?",
+     "how_to_answer": "One practitioner conversation.",
+     "cost": "free",
+     "why_it_matters": "The purchase path for the substitute is ours."
+    },
+    {
+     "question": "Would an insurer discount for escort?",
+     "status": "open",
+     "what_we_know": "No evidence either way.",
+     "how_to_answer": "Ask a war risk underwriter or P&I club.",
+     "cost": "free",
+     "why_it_matters": "If yes, the product sells on the insurance line."
+    },
+    {
+     "question": "Has any commercial operator bought autonomous escort?",
+     "status": "answered",
+     "what_we_know": "No. A deliberate search found zero transactions.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "We are creating the category, not entering it."
+    },
+    {
+     "question": "Who are the charterers?",
+     "status": "open",
+     "what_we_know": "One named: Cargill. They bear the premium on most charter types.",
+     "how_to_answer": "Fixture reports, trade press.",
+     "cost": "free",
+     "why_it_matters": "Structurally the best-motivated buyer."
+    },
+    {
+     "question": "Who are the offshore energy operators?",
+     "status": "open",
+     "what_we_know": "Zero catalogued. Six of ten incumbents serve them.",
+     "how_to_answer": "Research pass.",
+     "cost": "free",
+     "why_it_matters": "Second most-served buyer type, entirely missing."
+    }
+   ]
+  },
+  {
+   "domain": "Competition",
+   "questions": [
+    {
+     "question": "Who else builds this?",
+     "status": "answered",
+     "what_we_know": "123 companies catalogued. Seasats at 4/4, BlackSea at 3/4.",
+     "how_to_answer": "—",
+     "cost": "—",
+     "why_it_matters": "—"
+    },
+    {
+     "question": "Who buys from the incumbents?",
+     "status": "partial",
+     "what_we_know": "Buyer types for ten providers. Only one hard-named end client, a government mission.",
+     "how_to_answer": "Broker conversation.",
+     "cost": "free",
+     "why_it_matters": "Nine of ten publish no client. The industry hides its customer list."
+    },
+    {
+     "question": "What happened to the Convoy Escort Programme?",
+     "status": "open",
+     "what_we_know": "Operated 2012, seven armoured patrol boats. Fate unknown.",
+     "how_to_answer": "Companies House, trade archive.",
+     "cost": "free",
+     "why_it_matters": "The only precedent. Its failure mode is what repeats."
+    }
+   ]
+  },
+  {
+   "domain": "Legal and regulatory",
+   "questions": [
+    {
+     "question": "Can an uncrewed vessel legally escort a crewed one?",
+     "status": "parked",
+     "what_we_know": "Nothing. Not researched at all.",
+     "how_to_answer": "IMO MASS Code work, flag state guidance, a maritime lawyer.",
+     "cost": "free to start",
+     "why_it_matters": "This may be the binding constraint, not price or technology."
+    },
+    {
+     "question": "Who is the master of an uncrewed escort, and which COLREGs apply?",
+     "status": "parked",
+     "what_we_know": "Nothing.",
+     "how_to_answer": "Same.",
+     "cost": "free to start",
+     "why_it_matters": "Determines whether the product is deployable at all."
+    },
+    {
+     "question": "Does BMP recognise escort?",
+     "status": "parked",
+     "what_we_know": "Not checked.",
+     "how_to_answer": "Read BMP Maritime Security.",
+     "cost": "free",
+     "why_it_matters": "If escort is absent from BMP, a manager has no framework to justify it."
+    },
+    {
+     "question": "What are the rules on armed uncrewed platforms in territorial waters?",
+     "status": "parked",
+     "what_we_know": "Nothing.",
+     "how_to_answer": "Flag and coastal state law.",
+     "cost": "free to start",
+     "why_it_matters": "Determines where we can operate."
+    }
+   ],
+   "status": "parked",
+   "parked_note": "Parked on 2026-09-04 at the founder's direction. The questions stay on the list because they do not stop being true; they are simply not the current priority."
+  },
+  {
+   "domain": "Our own product",
+   "questions": [
+    {
+     "question": "What can we actually commit to today?",
+     "status": "open",
+     "what_we_know": "Unknown to me. The outreach says 'we can escort them', which nothing in this library supports.",
+     "how_to_answer": "Ask the founder.",
+     "cost": "free",
+     "why_it_matters": "Blocks every email in the sequence."
+    },
+    {
+     "question": "What does our platform cost to build and operate per day?",
+     "status": "open",
+     "what_we_know": "Nothing recorded.",
+     "how_to_answer": "Internal.",
+     "cost": "free",
+     "why_it_matters": "Without it there is no margin model."
+    },
+    {
+     "question": "Can our platform hold merchant speed for 33 to 49 hours?",
+     "status": "open",
+     "what_we_know": "Not recorded. The corridor demands it.",
+     "how_to_answer": "Internal.",
+     "cost": "free",
+     "why_it_matters": "This is the engineering requirement the route data implies."
+    }
+   ]
+  }
+ ],
+ "priority_free_and_open": [
+  "What is the average container ship size?",
+  "What does maritime security cost today?",
+  "What does an escort service cost?",
+  "What is the attack probability per transit?",
+  "How is armed guarding procured today?",
+  "Would an insurer discount for escort?",
+  "Who are the charterers?",
+  "Who are the offshore energy operators?",
+  "What happened to the Convoy Escort Programme?",
+  "What can we actually commit to today?",
+  "What does our platform cost to build and operate per day?",
+  "Can our platform hold merchant speed for 33 to 49 hours?"
+ ]
+}

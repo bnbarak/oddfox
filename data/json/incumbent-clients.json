@@ -1,0 +1,197 @@
+{
+ "dataset": "incumbent-clients",
+ "title": "Who buys from the incumbents",
+ "description": "Reverse-engineered from the websites and press of ten traditional maritime security providers. These firms already hold the customer relationships we would be selling into. Only explicitly stated clients, customer types and partnerships are recorded; a logo we could not verify is not a client.",
+ "updated": "2026-09-04",
+ "retrieved": "2026-09-04",
+ "named_relationships": [
+  {
+   "provider": "Ambrey",
+   "country": "United Kingdom",
+   "party": "Inchcape Shipping Services",
+   "party_type": "maritime services provider",
+   "relationship": "strategic partnership",
+   "source_ids": [
+    "ambrey-partners"
+   ]
+  },
+  {
+   "provider": "Ambrey",
+   "country": "United Kingdom",
+   "party": "Insurwave",
+   "party_type": "marine insurance and risk technology",
+   "relationship": "partnership to advance marine insurance and risk management",
+   "source_ids": [
+    "ambrey-insurwave"
+   ]
+  },
+  {
+   "provider": "Ambrey",
+   "country": "United Kingdom",
+   "party": "Ground Control",
+   "party_type": "satellite communications",
+   "relationship": "partnership",
+   "source_ids": [
+    "ambrey-partners"
+   ]
+  },
+  {
+   "provider": "MAST",
+   "country": "United Kingdom",
+   "party": "Beazley Group",
+   "party_type": "specialist insurer",
+   "relationship": "partnership covering threat and risk assessment, Gulf of Guinea guidance and optional 24-hour vessel tracking",
+   "source_ids": [
+    "mast-beazley"
+   ]
+  },
+  {
+   "provider": "Castor Vali",
+   "country": "United Kingdom",
+   "party": "European Union Capacity Building Mission (EUCAP)",
+   "party_type": "government mission",
+   "relationship": "named client, service contract 2019 to present",
+   "source_ids": [
+    "castorvali-eucap"
+   ]
+  },
+  {
+   "provider": "Diaplous Group",
+   "country": "Greece",
+   "party": "BigOceanData",
+   "party_type": "vessel tracking and maritime data",
+   "relationship": "renewed services agreement",
+   "source_ids": [
+    "diaplous-bigoceandata"
+   ]
+  }
+ ],
+ "buyer_types": [
+  {
+   "buyer_type": "Shipowners, operators and ship managers",
+   "providers_serving": 8,
+   "note": "Named or described by eight of the ten providers researched.",
+   "in_scope_for_us": true
+  },
+  {
+   "buyer_type": "Offshore, oil and gas, and subsea operators",
+   "providers_serving": 6,
+   "note": "Ambrey, Britannia, Castor Vali, Praesidium, ESC and Solace all state it. This segment is absent from our customer list.",
+   "in_scope_for_us": true
+  },
+  {
+   "buyer_type": "Insurers, insurance and risk businesses, P&I stakeholders",
+   "providers_serving": 5,
+   "note": "Explicit partnerships or stated customer type, not an inference that the insurer bought guarding.",
+   "in_scope_for_us": true
+  },
+  {
+   "buyer_type": "Governments, defence organisations and missions",
+   "providers_serving": 5,
+   "note": "Includes the one hard-named client in the whole sweep, EUCAP.",
+   "in_scope_for_us": false
+  },
+  {
+   "buyer_type": "NGOs, charities and humanitarian organisations",
+   "providers_serving": 2,
+   "in_scope_for_us": false
+  },
+  {
+   "buyer_type": "Superyacht operators",
+   "providers_serving": 1,
+   "note": "Britannia Risks Group.",
+   "in_scope_for_us": true
+  },
+  {
+   "buyer_type": "Mining companies",
+   "providers_serving": 1,
+   "note": "Castor Vali.",
+   "in_scope_for_us": true
+  },
+  {
+   "buyer_type": "Logistics and transport companies",
+   "providers_serving": 1,
+   "note": "Castor Vali.",
+   "in_scope_for_us": true
+  },
+  {
+   "buyer_type": "Fortune 500 and FTSE 100 corporates",
+   "providers_serving": 1,
+   "note": "Solace Global.",
+   "in_scope_for_us": true
+  }
+ ],
+ "scale_benchmarks": [
+  {
+   "provider": "ESC Global Security",
+   "claim": "protects 25 to 35 vessels per month",
+   "note": "Two figures published: 35 average, and 25-30 for the Indian Ocean Region and West Africa.",
+   "source_ids": [
+    "esc-site",
+    "esc-shiptech"
+   ]
+  },
+  {
+   "provider": "ESC Global Security",
+   "claim": "more than 120 guards employed",
+   "source_ids": [
+    "esc-site"
+   ]
+  },
+  {
+   "provider": "ESC Global Security",
+   "claim": "approved to provide armed security on more than 40 flag states' vessels",
+   "source_ids": [
+    "esc-site"
+   ]
+  },
+  {
+   "provider": "ESC Global Security",
+   "claim": "client fleet sizes surpass 1,000 vessels",
+   "note": "The clearest statement anywhere in this sweep that the largest ship managers buy this service.",
+   "source_ids": [
+    "esc-site"
+   ]
+  },
+  {
+   "provider": "Britannia Risks Group",
+   "claim": "over 4,000 successful transits",
+   "source_ids": [
+    "britannia-site"
+   ]
+  },
+  {
+   "provider": "Britannia Risks Group",
+   "claim": "one fleet contract maintained for four years",
+   "note": "From a testimonial; the client is not named.",
+   "source_ids": [
+    "britannia-site"
+   ]
+  },
+  {
+   "provider": "Castor Vali",
+   "claim": "15 years in business",
+   "source_ids": [
+    "castorvali-clients"
+   ]
+  }
+ ],
+ "gatekeepers": {
+  "finding": "The incumbents route through insurance. Ambrey partners with Insurwave, MAST with Beazley, Praesidium carries Lloyd's policies, and ESC states it is vetted by flag states, ship managers and P&I clubs. Vetting by a P&I club appears to be a precondition of selling, not a nice-to-have.",
+  "implication_for_us": "P&I clubs and war risk underwriters are not buyers, but they are the gate. Our gtm.json listed them only under do-not-target; on this evidence they belong in the plan as a channel and an accreditation step.",
+  "source_ids": [
+   "ambrey-insurwave",
+   "mast-beazley",
+   "praesidium-group",
+   "esc-site"
+  ]
+ },
+ "gaps": [
+  "Almost no end customer is named anywhere. Nine of ten providers name no shipowner client at all. The industry does not publish its customer list.",
+  "The only hard-named client in the sweep is a government mission, EUCAP, not a commercial shipowner.",
+  "Neptune P2P Group returned nothing; no usable source was located.",
+  "Offshore energy appears in six of ten provider client lists and is completely absent from our customer research.",
+  "No pricing is published by any provider."
+ ],
+ "scope_note": "Five of ten incumbents serve governments and defence, and two serve NGOs. Those buyer types are out of scope for us and are recorded only to explain the incumbents' revenue mix, not as targets."
+}

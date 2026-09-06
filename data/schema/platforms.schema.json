@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oddfox.ai/data/schema/platforms.schema.json",
+  "title": "Vessel platforms and their specifications",
+  "description": "One record per named platform, not per company. Exists because the company dataset holds platform names but no comparable specifications, which makes capability claims unfalsifiable.",
+  "type": "object",
+  "required": ["dataset", "records", "gaps"],
+  "properties": {
+    "dataset": { "const": "platforms" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "platform", "maker_id", "source_ids", "confidence"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "platform": { "type": "string" },
+          "maker_id": { "$ref": "common.schema.json#/$defs/id", "description": "Joins to market-players.json records[].id" },
+          "maker": { "type": "string" },
+          "country_iso": { "type": ["string", "null"], "pattern": "^[A-Z]{2}$" },
+          "market": { "enum": ["military", "commercial", "both"] },
+          "role": { "type": "string", "description": "What the platform is built to do, as the maker states it." },
+          "length_m": { "type": ["number", "null"] },
+          "length_note": { "type": ["string", "null"], "description": "Where sources disagree or give feet, the raw wording." },
+          "max_speed_kn": { "type": ["number", "null"] },
+          "cruise_speed_kn": { "type": ["number", "null"] },
+          "range_nm": { "type": ["number", "null"] },
+          "endurance": { "type": ["string", "null"] },
+          "payload": { "type": ["string", "null"] },
+          "sea_state": { "type": ["string", "null"] },
+          "propulsion": { "type": ["string", "null"] },
+          "armed": { "type": ["string", "null"], "description": "Whether the maker states it carries weapons or effectors, and which." },
+          "note": { "type": "string" },
+          "source_ids": { "type": "array", "items": { "$ref": "common.schema.json#/$defs/id" } },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+    "spec_coverage": {
+      "type": "object",
+      "description": "How many platforms carry each field. Published so the holes are visible rather than inferred from blank cells."
+    },
+    "gaps": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+  }
+}

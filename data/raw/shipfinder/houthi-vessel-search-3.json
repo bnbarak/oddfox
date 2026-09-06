@@ -1,0 +1,22 @@
+{
+ "United States": {
+  "status": 38,
+  "msg": "The number of queries exceeded"
+ },
+ "Verbena": {
+  "status": 38,
+  "msg": "The number of queries exceeded"
+ },
+ "Wind": {
+  "status": 38,
+  "msg": "The number of queries exceeded"
+ },
+ "Yannis": {
+  "status": 38,
+  "msg": "The number of queries exceeded"
+ },
+ "Zografia": {
+  "status": 38,
+  "msg": "The number of queries exceeded"
+ }
+}
