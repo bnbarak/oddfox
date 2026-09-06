@@ -10,7 +10,6 @@ import { GTM } from "./panels/GTM";
 import { CrmAccounts } from "./panels/crm/Accounts";
 import { CrmPeople } from "./panels/crm/People";
 import { CrmSequences } from "./panels/crm/Sequences";
-import { CrmGate } from "./panels/crm/CrmGate";
 import { Players } from "./panels/Players";
 import { Dossier } from "./panels/Dossier";
 import { Distance } from "./panels/Distance";
@@ -87,9 +86,9 @@ export function Library({ tab, v, set }: {
     owners:     <Owners />,
     gtm:        <GTM />,
     vc:         <VC />,
-    "crm":           <CrmGate><CrmAccounts /></CrmGate>,
-    "crm-people":    <CrmGate><CrmPeople /></CrmGate>,
-    "crm-sequences": <CrmGate><CrmSequences /></CrmGate>,
+    "crm":           <CrmAccounts />,
+    "crm-people":    <CrmPeople />,
+    "crm-sequences": <CrmSequences />,
     exposed:    <Exposed />,
     segments:   <Segments />,
     players:    <Players playerCat={v.playerCat} setPlayerCat={set("playerCat")} />,

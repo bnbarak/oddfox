@@ -11,7 +11,7 @@ const GOOGLE_CLIENT_ID = "209354378060-solba4bugfutcog1sao3856tg86l09qa.apps.goo
 
 /** The whole allow-list. Deliberately a short, hardcoded array, not just an
     env var default — extend it here on purpose, not by accident. */
-const ALLOWED_EMAILS = new Set<string>(["bn.barak@gmail.com"]);
+const ALLOWED_EMAILS = new Set<string>(["bn.barak@gmail.com", "ofer.rogers@gmail.com"]);
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 

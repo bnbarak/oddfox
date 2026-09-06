@@ -7,6 +7,7 @@ import { SlideDeck } from "./presentation/SlideDeck";
 import { presentations } from "./presentations";
 import { Library, TABS, GROUPS, groupOf, tabsIn, type TabId, type ViewState } from "./library/Library";
 import { DB } from "./data";
+import { AuthGate } from "./AuthGate";
 
 /* Browser routing gives clean paths (/library/overview). It needs the host to
    serve index.html for unknown paths — Vite's dev server does this by default.
@@ -124,5 +125,9 @@ export const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthGate>
+      <RouterProvider router={router} />
+    </AuthGate>
+  );
 }
