@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getIdToken } from "./googleAuth";
 
-/** CRM pipeline state now lives in data/json/crm/*.json on disk, owned by
-    ../../../server (server/src/index.ts). This module is a thin typed
-    client over its /api/crm/* endpoints — no more localStorage, no more
-    manual export/paste. Vite proxies /api to that server in dev. */
+/** CRM pipeline state now lives in Firestore, owned by ../../../server
+    (server/src/index.ts). This module is a thin typed client over its
+    /api/crm/* endpoints. Every request carries the signed-in user's Google
+    ID token — the server is the one place that actually checks it. */
 
 export type PipelineStatus =
   | "not started"
@@ -79,8 +80,13 @@ export type ContactPatch = Partial<
   Pick<ContactRecord, "linkedin_url" | "email" | "email_status" | "status" | "sequence" | "replied" | "notes">
 >;
 
+function authHeaders(): HeadersInit {
+  const token = getIdToken();
+  return token ? { authorization: `Bearer ${token}` } : {};
+}
+
 async function getJson<T>(url: string): Promise<T> {
-  const res = await fetch(url);
+  const res = await fetch(url, { headers: authHeaders() });
   if (!res.ok) throw new Error(`GET ${url} → ${res.status}`);
   return res.json() as Promise<T>;
 }
@@ -88,7 +94,7 @@ async function getJson<T>(url: string): Promise<T> {
 async function patchJson<T>(url: string, body: unknown): Promise<T> {
   const res = await fetch(url, {
     method: "PATCH",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...authHeaders() },
     body: JSON.stringify(body),
   });
   if (!res.ok) {

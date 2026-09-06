@@ -19,6 +19,11 @@ export default defineConfig({
     // which owns data/json/crm/*.json. Proxied so the app calls same-origin
     // /api and never needs CORS.
     proxy: { '/api': 'http://127.0.0.1:8787' },
+    // Must match an Authorized JavaScript origin on the "Seaworth Office"
+    // OAuth client (see src/lib/googleAuth.ts) or Google Sign-In rejects
+    // the request outright.
+    port: 5790,
+    strictPort: true,
   },
   build: {
     rollupOptions: {

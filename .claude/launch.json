@@ -4,9 +4,21 @@
   "configurations": [
     {
       "name": "office",
-      "runtimeExecutable": "npm",
+      "runtimeExecutable": "/opt/homebrew/bin/npm",
       "runtimeArgs": ["run", "dev", "--prefix", "OddFoxOffice"],
-      "port": 5173
+      "port": 5790,
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    },
+    {
+      "name": "oddfox-crm-server",
+      "runtimeExecutable": "/opt/homebrew/bin/npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "server"],
+      "port": 8787,
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
     }
   ]
 }

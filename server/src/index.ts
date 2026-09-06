@@ -2,13 +2,18 @@ import express, { type Request, type Response, type NextFunction } from "express
 import { ZodError } from "zod";
 import { AccountPatch, ContactPatch } from "./schemas.js";
 import { JsonFileCrmRepository, type CrmRepository } from "./repository.js";
+import { FirestoreCrmRepository } from "./firestoreRepository.js";
+import { requireGoogleUser } from "./auth.js";
 
 const PORT = Number(process.env.PORT ?? 8787);
-const HOST = "127.0.0.1";
+// Cloud Run only routes traffic to 0.0.0.0; local dev stays loopback-only.
+const HOST = process.env.K_SERVICE ? "0.0.0.0" : "127.0.0.1";
 
-// Swap this one line for a Mongo-backed CrmRepository later — nothing
-// below this point knows or cares where the data actually lives.
-const repo: CrmRepository = new JsonFileCrmRepository();
+// Firestore is the source of truth everywhere, including local dev (ADC
+// already authenticates against the same project). CRM_REPO=json is an
+// escape hatch for offline work against the data/json/crm/*.json seed.
+const repo: CrmRepository =
+  process.env.CRM_REPO === "json" ? new JsonFileCrmRepository() : new FirestoreCrmRepository();
 
 const app = express();
 app.use(express.json());
@@ -20,6 +25,11 @@ function h(fn: (req: Request, res: Response) => Promise<void>) {
 }
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
+
+// Every API route, present or future, requires a signed-in, allow-listed
+// Google account. Mounted broad on purpose — a new route added under /api
+// later is covered automatically, no separate opt-in required.
+app.use("/api", requireGoogleUser);
 
 // ---- Accounts -------------------------------------------------------------
 
