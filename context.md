@@ -14,13 +14,46 @@ Three pieces, one Firebase project (`vocal-vigil-497322-k8`, alias `biofenix`):
 
 | Piece | Lives at | Source | Notes |
 |---|---|---|---|
-| Marketing site | <https://oddfox.ai> | repo root (`index.html`, `assets/`) | no build step |
-| Office app | <https://oddfox-office.web.app> | `OddFoxOffice/` (Vite + React 19) | `npm run build` first |
+| Marketing site | <https://oddfox.ai> · <https://seaworth.ai> | repo root (`index.html`, `assets/`) | no build step |
+| Office app | <https://oddfox-office.web.app> · <https://office.seaworth.ai> | `OddFoxOffice/` (Vite + React 19) | `npm run build` first |
 | CRM API | `/api/**` on the office site | `server/` (Express + zod) | Cloud Run `oddfox-crm-server`, `us-central1` |
 
 The office app is a data library of panels plus slide decks. Panels live in
 `OddFoxOffice/src/library/panels/`, registered in `library/Library.tsx` as a
 two-level nav: `GROUPS` (top row) → `TABS` filtered by group (second row).
+
+### Domains — rebranding oddfox.ai → seaworth.ai
+
+`seaworth.ai` and `office.seaworth.ai` were registered as custom domains on
+2026-09-06; the oddfox names stay live alongside them for now, with no redirect.
+`office.oddfox.ai` is dead and stays dead — the office app's new home is
+`office.seaworth.ai`.
+
+A domain fails here in one of two opposite ways, and the symptom tells you which:
+
+| Symptom | Cause |
+|---|---|
+| Name does not resolve at all | Registered in Firebase, **no DNS record** |
+| TLS error, cert says `firebaseapp.com` | DNS is right, **not registered in Firebase Hosting** |
+
+Diagnose against the authoritative nameservers, not your local resolver, and
+look at the certificate actually served:
+
+```bash
+dig +short office.seaworth.ai @ns-cloud-a1.googledomains.com
+echo | openssl s_client -connect seaworth.ai:443 -servername seaworth.ai 2>/dev/null   | openssl x509 -noout -subject -ext subjectAltName
+```
+
+Custom domains have no CLI command — use the Hosting REST API. The POST body's
+`site` field takes the **bare site id**, not `sites/<id>`:
+
+```bash
+TOKEN=$(gcloud auth application-default print-access-token)
+curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json"   -d '{"site":"oddfox-office","domainName":"office.seaworth.ai"}'   https://firebasehosting.googleapis.com/v1beta1/sites/oddfox-office/domains
+```
+
+Certificates provision asynchronously — `CERT_PENDING` for minutes to ~24h even
+once `dnsStatus` reads `DNS_MATCH`. Nothing is wrong; wait.
 
 **The `/api/**` rewrite is on the office site only.** Hitting
 `https://oddfox.ai/api/...` will always 404 — that is the wrong site, not a
