@@ -32,8 +32,12 @@ jobs:
 
       - name: Build OddFoxOffice
         working-directory: OddFoxOffice
+        # npm ci demands a lockfile in exact sync, which multiple contributors
+        # on different platforms keep drifting (optional native deps differ
+        # by OS/CPU). npm install is more forgiving and just as reproducible
+        # for a two-person repo.
         run: |
-          npm ci
+          npm install
           npm run build
 
       - id: auth
