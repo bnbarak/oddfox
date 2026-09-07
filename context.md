@@ -10,56 +10,82 @@ Last updated: 2026-09-06.
 
 ## The shape of the thing
 
-Three pieces, one Firebase project (`vocal-vigil-497322-k8`, alias `biofenix`):
+Everything Seaworth lives in the **`maine-507401`** GCP project (number
+209354378060, Firebase display name "Maine"). It used to live in
+`vocal-vigil-497322-k8`, whose display name is **biofenix** and which is a
+different product's project — it holds a `clinical` database and biofenix's
+own keys. That was a mistake and was undone on 2026-09-06.
 
 | Piece | Lives at | Source | Notes |
 |---|---|---|---|
-| Marketing site | <https://oddfox.ai> · <https://seaworth.ai> | repo root (`index.html`, `assets/`) | no build step |
-| Office app | <https://oddfox-office.web.app> · <https://office.seaworth.ai> | `OddFoxOffice/` (Vite + React 19) | `npm run build` first |
-| CRM API | `/api/**` on the office site | `server/` (Express + zod) | Cloud Run `oddfox-crm-server`, `us-central1` |
+| Marketing site | <https://seaworth.web.app> | repo root (`index.html`, `assets/`) | no build step |
+| Office app | <https://seaworth-office.web.app> | `OddFoxOffice/` (Vite + React 19) | `npm run build` first |
+| CRM API | `/api/**` on the office site | `server/` (Express + zod) | Cloud Run `seaworth-crm-server`, `us-central1` |
+| Heartbeat | Cloud Scheduler `seaworth-crm-heartbeat` | — | every minute, POSTs `/tasks/tick` |
 
 The office app is a data library of panels plus slide decks. Panels live in
 `OddFoxOffice/src/library/panels/`, registered in `library/Library.tsx` as a
 two-level nav: `GROUPS` (top row) → `TABS` filtered by group (second row).
 
-### Domains — rebranding oddfox.ai → seaworth.ai
+**Still in biofenix, not yet moved:** the five custom domains. `oddfox.ai`,
+`www.oddfox.ai`, `seaworth.ai`, `office.oddfox.ai` and `office.seaworth.ai` are
+all `CERT_ACTIVE` on the old project's `vocal-vigil-497322-k8` and
+`oddfox-office` sites. Moving a domain means removing it there and adding it in
+Maine, and the certificate re-provisions from scratch — minutes to ~24h of
+downtime for that name. Do it deliberately, not as a side effect.
 
-`seaworth.ai` and `office.seaworth.ai` were registered as custom domains on
-2026-09-06; the oddfox names stay live alongside them for now, with no redirect.
-`office.oddfox.ai` is dead and stays dead — the office app's new home is
-`office.seaworth.ai`.
+`firebase.json` therefore carries **four** hosting entries: the two old sites
+(which still serve the live domains) and the two new ones. `.firebaserc`
+defaults to `maine-507401` with a `biofenix` alias for the old project.
 
-A domain fails here in one of two opposite ways, and the symptom tells you which:
+### `firebase deploy` does not work on this machine
 
-| Symptom | Cause |
-|---|---|
-| Name does not resolve at all | Registered in Firebase, **no DNS record** |
-| TLS error, cert says `firebaseapp.com` | DNS is right, **not registered in Firebase Hosting** |
-
-Diagnose against the authoritative nameservers, not your local resolver, and
-look at the certificate actually served:
-
-```bash
-dig +short office.seaworth.ai @ns-cloud-a1.googledomains.com
-echo | openssl s_client -connect seaworth.ai:443 -servername seaworth.ai 2>/dev/null   | openssl x509 -noout -subject -ext subjectAltName
-```
-
-Custom domains have no CLI command — use the Hosting REST API. The POST body's
-`site` field takes the **bare site id**, not `sites/<id>`:
+It is OOM-killed — exit 137, no output, about a second in — because the CLI
+wants more memory than is free. Use the REST deployer instead, which streams
+one file at a time and needs a few megabytes:
 
 ```bash
-TOKEN=$(gcloud auth application-default print-access-token)
-curl -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json"   -d '{"site":"oddfox-office","domainName":"office.seaworth.ai"}'   https://firebasehosting.googleapis.com/v1beta1/sites/oddfox-office/domains
+node tools/hosting-deploy.mjs seaworth-office --project maine-507401
+node tools/hosting-deploy.mjs seaworth        --project maine-507401
+node tools/hosting-deploy.mjs vocal-vigil-497322-k8 --project vocal-vigil-497322-k8
 ```
 
-Certificates provision asynchronously — `CERT_PENDING` for minutes to ~24h even
-once `dnsStatus` reads `DNS_MATCH`. Nothing is wrong; wait.
+It reads the site's block out of `firebase.json`, so headers, `cleanUrls` and
+rewrites match what the CLI would have produced. Two translations it has to do,
+because the REST shape is not the file's shape: `source` → `glob`, and a header
+block's list of `{key, value}` becomes a map. `trailingSlash: false` becomes
+`trailingSlashBehavior: "REMOVE"`.
 
-**The `/api/**` rewrite is on the office site only.** Hitting
-`https://oddfox.ai/api/...` will always 404 — that is the wrong site, not a
-broken API. Test against `oddfox-office.web.app`.
+### Never publish the repo root without checking the ignore list
 
----
+The marketing site's `public` is `.`, the repo root, so **anything not in
+`ignore` is on the public internet**. `UPDATING.md` was served at
+`https://oddfox.ai/UPDATING.md` with the PDF gate password in plain text until
+2026-09-06, and the next deploy would have published all of `server/`,
+including `src/auth.ts` with the OAuth client id and the email allow-list.
+`*.md`, `server/**`, `.claude/**` and `.firebase/**` are excluded now. Run
+`node tools/hosting-deploy.mjs <site> --dry` and read the file list before any
+deploy that touches the root.
+
+### Two credential gotchas that cost an hour each
+
+**Cloud Run does not set `GOOGLE_CLOUD_PROJECT`.** It sets `K_SERVICE`,
+`K_REVISION` and `K_CONFIGURATION` and nothing else. `server/src/firebaseApp.ts`
+falls through to a hardcoded project id when it is missing, so a service
+deployed without it quietly talks to *another project's* Firestore and fails
+with a bare gRPC `PERMISSION_DENIED` that names nothing. Always pass
+`--update-env-vars GOOGLE_CLOUD_PROJECT=<project>`.
+
+**ADC does not need a browser.** `gcloud auth application-default login` was
+believed to be the only route; it is not. gcloud already stores user
+credentials with a refresh token, and firebase-admin accepts them:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=~/.config/gcloud/legacy_credentials/admin@biofenix.ai/adc.json
+npx tsx scripts/outreach-cap-test.ts maine-507401
+```
+
+That unblocks every local script that talks to Firestore.
 
 ## Where CRM data actually lives
 
@@ -161,37 +187,114 @@ technical (the operational buyer), 2 = COO, operations, risk, insurance,
 
 ---
 
+## The outreach engine
+
+`server/src/outreach/` — writes, schedules, sends and reviews outreach email.
+Roughly 1,400 lines. What it is *for*, in plain English with no tech, is
+[OUTREACH.md](OUTREACH.md).
+
+**One database.** Everything persists in the same Firestore the CRM already
+uses: `crmSends`, `crmQuota`, `crmReplies`, `crmTicks`, `crmOutreachMeta`.
+There was briefly a Cloud SQL Postgres for this; it was deleted. At fifteen
+messages a day the reports are built by reading the documents and grouping in
+memory, which is cheaper in every sense than running an instance to `GROUP BY`.
+
+**Resend owns everything Resend already does.** Scheduling is `scheduledAt` on
+the send, and the email id it returns *is* the cancel token — that is why
+nothing is ever sent immediately, even two minutes out. Opt-outs are Resend's
+suppression list, which it adds to automatically on every bounce and complaint
+and skips sending to across the whole team; we only push to it when a human
+types "unsubscribe" in a reply, because that is the one thing Resend cannot
+infer. We keep no second list.
+
+**The daily cap is the one real invariant.** Fifteen a day per sending domain,
+enforced in a Firestore transaction, because two requests that both read 14
+must not both write 15 — exceeding it on a young domain gets the domain filed
+as spam and that does not come back. `scripts/outreach-cap-test.ts` proves it:
+20 simultaneous claims against a cap of 5 yield exactly 5. Run it after
+touching `store.ts`.
+
+**Two agents, and the difference matters.** `agent.ts` is the *writer*: a
+Mastra `Agent` with structured output and deliberately **no tools**, because
+everything one outreach email depends on is known before we start, so it all
+goes in the prompt. `operator.ts` is the *operator*, the one you chat to, and
+it has eight tools, because we cannot know in advance what will be asked. Both
+run on Gemini through Mastra's model router (`google/gemini-2.5-pro`, set in
+the config document); the router reads `GOOGLE_API_KEY` itself. Without that
+key the writer degrades to filling the tier template verbatim and the chat
+route answers 409 with an explanation.
+
+**Chat context is managed by two stock processors, not by hand.**
+
+- `ToolCallFilter()` drops tool calls and results from *earlier* turns while
+  leaving the current loop's own results in place. The agent can reason about
+  what it just looked up, but next turn it has no stale numbers to answer
+  from and must call the tool again — which is what you want when the
+  pipeline moves under it. Filtering is transient: the stored thread keeps
+  everything, only the model's view is trimmed.
+- `TokenLimiter(12_000)` is the hard ceiling underneath. It preserves system
+  messages and keeps the most recent turns, so a long conversation degrades
+  by forgetting its beginning rather than by failing.
+
+**One shared thread, in Firestore.** `crmOutreachMeta/thread`, capped at 80
+turns, appended in a transaction. Mastra's own memory and threads need a
+storage adapter implementing the `memory` domain — libSQL, Postgres, Mongo —
+and there is no Firestore one, so using them would mean a second database for
+eighty chat messages. The processors above are plain processors and work
+without any of that. One thread rather than one per person is deliberate: two
+people are on the allow-list working the same pipeline, and a thread each
+would have the agent telling one of them about messages the other scheduled.
+
+**It fails closed.** With no domains, no keys, no postal address and `dry_run`
+on, nothing can be sent, and `/api/crm/outreach/status` lists every blocker at
+once. That is the shipped default; turning it on is a deliberate act.
+
+Tests that need no keys and no network:
+
+```bash
+npx tsx scripts/outreach-render-test.ts     # the compliance rails
+GOOGLE_APPLICATION_CREDENTIALS=~/.config/gcloud/legacy_credentials/admin@biofenix.ai/adc.json \
+  npx tsx scripts/outreach-cap-test.ts maine-507401
+```
+
+---
+
 ## Deploying
 
-Firebase CLI and gcloud authenticate **separately**. The Firebase CLI has its
-own token and works when gcloud's has expired.
-
 ```bash
-npm run build --prefix OddFoxOffice                  # office app must be built first
-firebase deploy --only hosting:oddfox-office         # office app
-firebase deploy --only hosting:vocal-vigil-497322-k8 # marketing site
-firebase deploy --only hosting                       # both
+npm run build --prefix OddFoxOffice
+node tools/hosting-deploy.mjs seaworth-office --project maine-507401
+node tools/hosting-deploy.mjs seaworth        --project maine-507401
+
+gcloud run deploy seaworth-crm-server --project maine-507401 --region us-central1 \
+  --source server \
+  --set-secrets TICK_TOKEN=oddfox-crm-tick-token:latest \
+  --update-env-vars GOOGLE_CLOUD_PROJECT=maine-507401
 ```
 
-The Cloud Run API deploys from `server/Dockerfile`, and Firestore seeding
-(`npm run migrate --prefix server`) uses **gcloud ADC** — both need:
+Cloud Run in Maine cannot be made public with an `allUsers` IAM binding — an
+org policy on permitted domains refuses it. It uses
+`--no-invoker-iam-check` instead, which is how the old service was configured
+too. Firebase Hosting rewrites need anonymous access to reach the service; the
+real access boundary is `server/src/auth.ts`, which checks a Google ID token on
+every `/api` route, and `TICK_TOKEN` on `/tasks/tick`.
+
+Re-seeding Firestore from `data/json/crm/*.json` needs no ADC:
 
 ```bash
-gcloud auth login
-gcloud auth application-default login
+node server/scripts/seed-firestore-rest.mjs maine-507401
 ```
 
-Neither can run from a non-interactive agent session; they need a browser.
+It writes whole documents, so it **overwrites pipeline state**. Check nobody is
+mid-campaign first.
 
-To confirm what is actually live, compare the deployed bundle hash to the local
-one rather than trusting a deploy log:
+To confirm what is live, compare the deployed bundle hash to the local one
+rather than trusting a deploy log:
 
 ```bash
-curl -s https://oddfox-office.web.app/ | grep -o '/assets/main-[^"]*\.js'
+curl -s https://seaworth-office.web.app/ | grep -o '/assets/main-[^"]*\.js'
 ls OddFoxOffice/dist/assets/main-*.js
 ```
-
-Content-hashed filenames mean identical hashes prove identical content.
 
 ---
 

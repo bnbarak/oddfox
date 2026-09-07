@@ -88,5 +88,12 @@ It is a marketing gate, not a vault. Whoever has the password can pass it on, an
 guesses can be tried against the server with no rate limit, so a common word would
 eventually fall to a wordlist. Fine for collateral; not for anything confidential.
 
+## The CRM
+
+The office app at <https://office.seaworth.ai> carries a CRM that writes,
+schedules and tracks outreach to the target list. What it is for, what it will
+not do, and the rules it sends under are in **[OUTREACH.md](OUTREACH.md)** —
+written for a reader who does not want to hear about code.
+
 **Day-to-day instructions — changing the password, replacing the PDF, editing
 copy, deploying — are in [UPDATING.md](UPDATING.md).**
