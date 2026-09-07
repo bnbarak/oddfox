@@ -1,0 +1,188 @@
+import { Router, type NextFunction, type Request, type Response } from "express";
+import { Resend } from "resend";
+import { draft, modelConfigured } from "./agent.js";
+import { blockers, secret } from "./config.js";
+import { heatmap } from "./heatmap.js";
+import { cancel, nextSlot, Refused, schedule } from "./send.js";
+import {
+  allReplies, allSends, clearThread, getConfig, getThread, headroom, lastTick,
+  putConfig, recentTicks,
+} from "./store.js";
+import { chat } from "./operator.js";
+import { due, tick } from "./tick.js";
+import { z } from "zod";
+import { DraftRequest, OutreachConfig, ScheduleRequest } from "./schemas.js";
+
+/* HTTP surface, as its own Router so index.ts needs one import and one mount.
+   Everything here is under /api, so it is already behind the Google sign-in
+   check in ../auth.ts. The heartbeat is the exception and is mounted
+   separately with its own shared secret. */
+
+export const outreachRouter: Router = Router();
+
+const h = (fn: (req: Request, res: Response) => Promise<void>) =>
+  (req: Request, res: Response, next: NextFunction) => fn(req, res).catch(next);
+
+// ---- Status and configuration ---------------------------------------------
+
+/** One call that tells the panel everything it needs: what is stopping a
+    send, how much room each domain has left, and whether the heartbeat is
+    actually beating. */
+outreachRouter.get("/status", h(async (_req, res) => {
+  const cfg = await getConfig();
+  const [domains, beat] = await Promise.all([headroom(cfg), lastTick()]);
+  res.json({
+    configured: { resend: Boolean(secret("RESEND_API_KEY")), model: modelConfigured() },
+    blockers: blockers(cfg),
+    dry_run: cfg.dry_run,
+    auto_followups: cfg.auto_followups,
+    timezone: cfg.timezone,
+    send_window: cfg.send_window,
+    domains,
+    last_tick: beat,
+  });
+}));
+
+outreachRouter.get("/config", h(async (_req, res) => { res.json(await getConfig()); }));
+
+outreachRouter.put("/config", h(async (req, res) => {
+  const patch = OutreachConfig.partial().parse(req.body);
+  res.json(await putConfig(patch));
+}));
+
+// ---- Writing and scheduling -----------------------------------------------
+
+/** Writes a message. Never sends one — the reply is a draft for a person to
+    read, edit, and pass to /schedule. */
+outreachRouter.post("/draft", h(async (req, res) => {
+  const body = DraftRequest.parse(req.body);
+  const cfg = await getConfig();
+  const useModel = body.use_agent && modelConfigured();
+  const prior = (await allSends())
+    .filter((s) => s.contact_id === body.contact_id && s.status !== "canceled");
+  const out = await draft(body.contact_id, body.round, cfg,
+                          { useModel, guidance: body.guidance, prior });
+  res.json({
+    ...out,
+    written_by: useModel ? "agent" : "template",
+    fell_back: body.use_agent && !useModel
+      ? "GOOGLE_API_KEY is not set, so the template was filled instead" : null,
+  });
+}));
+
+outreachRouter.post("/schedule", h(async (req, res) => {
+  const body = ScheduleRequest.parse(req.body);
+  const cfg = await getConfig();
+  res.json(await schedule(body, cfg, await allSends()));
+}));
+
+outreachRouter.post("/sends/:id/cancel", h(async (req, res) => {
+  res.json(await cancel(req.params.id as string));
+}));
+
+outreachRouter.get("/sends", h(async (_req, res) => {
+  res.json({ records: await allSends() });
+}));
+
+/** What is still cancellable, soonest first — the list the panel puts cancel
+    buttons next to. */
+outreachRouter.get("/queue", h(async (_req, res) => {
+  const records = (await allSends())
+    .filter((s) => s.status === "scheduled" || s.status === "draft")
+    .sort((a, b) => (a.scheduled_at ?? "").localeCompare(b.scheduled_at ?? ""));
+  res.json({ records });
+}));
+
+outreachRouter.get("/next-slot", h(async (req, res) => {
+  const cfg = await getConfig();
+  const domain = (req.query.domain as string) || cfg.domains.find((d) => d.enabled)?.domain;
+  if (!domain) { res.status(409).json({ error: "no enabled sending domain" }); return; }
+  res.json({ domain, scheduled_at: nextSlot(cfg, domain, await allSends()).toISOString() });
+}));
+
+// ---- Incoming -------------------------------------------------------------
+
+outreachRouter.get("/replies", h(async (_req, res) => {
+  res.json({ records: await allReplies() });
+}));
+
+/** Proxied straight from Resend, which owns the list: it adds to it on every
+    bounce and complaint and skips sending to anything on it. */
+outreachRouter.get("/suppressions", h(async (_req, res) => {
+  const key = secret("RESEND_API_KEY");
+  if (!key) { res.json({ records: [], note: "no RESEND_API_KEY" }); return; }
+  const { data, error } = await new Resend(key).suppressions.list();
+  if (error) { res.status(502).json({ error: error.message }); return; }
+  res.json({ records: data?.data ?? [] });
+}));
+
+outreachRouter.post("/suppressions", h(async (req, res) => {
+  const email = (req.body as { email?: string }).email;
+  if (!email) { res.status(400).json({ error: "email is required" }); return; }
+  const key = secret("RESEND_API_KEY");
+  if (!key) { res.status(409).json({ error: "no RESEND_API_KEY" }); return; }
+  const { error } = await new Resend(key).suppressions.add({ email });
+  if (error) { res.status(502).json({ error: error.message }); return; }
+  res.json({ email, suppressed: true });
+}));
+
+// ---- The operator agent ---------------------------------------------------
+
+const ChatRequest = z.object({ message: z.string().min(1).max(8000) }).strict();
+
+/** The shared thread, so a reload does not lose the conversation and both
+    people on the allow-list see the same one. */
+outreachRouter.get("/chat", h(async (_req, res) => {
+  res.json({ turns: await getThread(), model_configured: modelConfigured() });
+}));
+
+outreachRouter.delete("/chat", h(async (_req, res) => {
+  await clearThread();
+  res.json({ turns: [] });
+}));
+
+/** Talk to the agent instead of clicking. */
+outreachRouter.post("/chat", h(async (req, res) => {
+  if (!modelConfigured()) {
+    res.status(409).json({
+      error: "no-model",
+      detail: "GOOGLE_API_KEY is not set, so the operator agent cannot run. " +
+              "Everything else on this page still works.",
+    });
+    return;
+  }
+  const { message } = ChatRequest.parse(req.body);
+  res.json(await chat(message));
+}));
+
+// ---- Reporting ------------------------------------------------------------
+
+outreachRouter.get("/heatmap", h(async (req, res) => {
+  const weeks = Math.min(52, Math.max(4, Number(req.query.weeks ?? 12)));
+  const [sends, replies] = await Promise.all([allSends(), allReplies()]);
+  res.json(await heatmap(sends, replies, weeks));
+}));
+
+outreachRouter.get("/due", h(async (_req, res) => {
+  const cfg = await getConfig();
+  res.json({ records: due(cfg, await allSends(), await allReplies()) });
+}));
+
+outreachRouter.get("/ticks", h(async (_req, res) => {
+  res.json({ records: await recentTicks() });
+}));
+
+/** Runs a heartbeat by hand — the same code path as the scheduled one, so a
+    manual run is a real test of it rather than a different thing that also
+    works. */
+outreachRouter.post("/tick", h(async (_req, res) => { res.json(await tick()); }));
+
+// ---- Errors ---------------------------------------------------------------
+
+outreachRouter.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof Refused) {
+    res.status(err.status).json({ error: err.code, detail: err.message });
+    return;
+  }
+  next(err);
+});

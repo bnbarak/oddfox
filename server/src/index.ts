@@ -4,6 +4,9 @@ import { AccountPatch, ContactPatch } from "./schemas.js";
 import { JsonFileCrmRepository, type CrmRepository } from "./repository.js";
 import { FirestoreCrmRepository } from "./firestoreRepository.js";
 import { requireGoogleUser } from "./auth.js";
+import { outreachRouter } from "./outreach/routes.js";
+import { requireScheduler } from "./outreach/tickAuth.js";
+import { tick } from "./outreach/tick.js";
 
 const PORT = Number(process.env.PORT ?? 8787);
 // Cloud Run only routes traffic to 0.0.0.0; local dev stays loopback-only.
@@ -25,6 +28,15 @@ function h(fn: (req: Request, res: Response) => Promise<void>) {
 }
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
+
+// The outreach heartbeat, called once a minute by Cloud Scheduler. It sits
+// outside /api on purpose: Cloud Scheduler has no Google ID token for our
+// OAuth client. It signs each call with an OIDC token for its own service
+// account instead — no shared secret anywhere. Everything it does is
+// idempotent, so a retry or an overlapping beat is harmless.
+app.post("/tasks/tick", requireScheduler, h(async (_req, res) => {
+  res.json(await tick());
+}));
 
 // Every API route, present or future, requires a signed-in, allow-listed
 // Google account. Mounted broad on purpose — a new route added under /api
@@ -74,6 +86,10 @@ app.patch(
     res.json(updated);
   }),
 );
+
+// ---- Outreach (Mastra agent, Resend sending, heat map) --------------------
+
+app.use("/api/crm/outreach", outreachRouter);
 
 // ---- Sequences (read-only content library) --------------------------------
 

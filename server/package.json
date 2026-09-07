@@ -11,9 +11,11 @@
     "migrate": "tsx scripts/migrate-to-firestore.ts"
   },
   "dependencies": {
+    "@mastra/core": "^1.64.0",
     "express": "^5.2.1",
     "firebase-admin": "^14.3.0",
     "google-auth-library": "^11.0.2",
+    "resend": "^6.26.0",
     "zod": "^4.5.4"
   },
   "devDependencies": {
