@@ -1,0 +1,62 @@
+name: Deploy
+
+# Everything Seaworth lives in the maine-507401 GCP project — see context.md
+# at the repo root. This deploys the CRM server to Cloud Run and both
+# Firebase Hosting sites (marketing + office app) on every push to main.
+# Auth is Workload Identity Federation: no long-lived key is stored anywhere,
+# GitHub's own OIDC token is exchanged for short-lived GCP credentials
+# scoped to this one repo.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+env:
+  PROJECT_ID: maine-507401
+  REGION: us-central1
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Build OddFoxOffice
+        working-directory: OddFoxOffice
+        run: |
+          npm ci
+          npm run build
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: projects/209354378060/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: gh-deployer@maine-507401.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy CRM server to Cloud Run
+        run: |
+          gcloud run deploy seaworth-crm-server \
+            --project "$PROJECT_ID" --region "$REGION" \
+            --source server \
+            --update-env-vars GOOGLE_CLOUD_PROJECT="$PROJECT_ID" \
+            --no-invoker-iam-check \
+            --quiet
+
+      - name: Deploy Firebase Hosting (marketing site + office app)
+        run: |
+          npm install -g firebase-tools
+          firebase deploy --project "$PROJECT_ID" \
+            --only hosting:seaworth,hosting:seaworth-office \
+            --non-interactive
