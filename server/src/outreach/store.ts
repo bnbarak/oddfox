@@ -1,6 +1,6 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../firebaseApp.js";
-import { OutreachConfig, type SendRecord, type SendStatus } from "./schemas.js";
+import { OutreachConfig, type Campaign, type SendRecord, type SendStatus } from "./schemas.js";
 import { dayKey } from "./time.js";
 
 /* Everything the outreach engine persists, in the CRM's own Firestore.
@@ -15,6 +15,7 @@ const QUOTA = "crmQuota";
 const REPLIES = "crmReplies";
 const TICKS = "crmTicks";
 const META = "crmOutreachMeta";
+const CAMPAIGNS = "crmCampaigns";
 
 // ---- Config ---------------------------------------------------------------
 
@@ -210,6 +211,26 @@ export async function appendTurns(turns: ChatTurn[]): Promise<ChatTurn[]> {
 
 export const clearThread = (): Promise<unknown> =>
   db().collection(META).doc("thread").set({ turns: [], updated: new Date().toISOString() });
+
+// ---- Campaigns --------------------------------------------------------
+
+export async function allCampaigns(): Promise<Campaign[]> {
+  const snap = await db().collection(CAMPAIGNS).get();
+  return snap.docs.map((d) => d.data() as Campaign);
+}
+
+export async function putCampaign(c: Campaign): Promise<Campaign> {
+  await db().collection(CAMPAIGNS).doc(c.id).set(c);
+  return c;
+}
+
+/** The one place company and persona meet, and only because a campaign
+    explicitly lists this account — everywhere else the two stay orthogonal. */
+export async function campaignFor(accountId: string | null): Promise<Campaign | null> {
+  if (!accountId) return null;
+  const list = await allCampaigns();
+  return list.find((c) => c.active && c.account_ids.includes(accountId)) ?? null;
+}
 
 // ---- Poll cursor ----------------------------------------------------------
 

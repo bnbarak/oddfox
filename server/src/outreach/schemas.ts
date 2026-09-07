@@ -180,3 +180,24 @@ export const ScheduleRequest = z.object({
   template_tier: z.number().int().nullable().default(null),
 }).strict();
 export type ScheduleRequest = z.infer<typeof ScheduleRequest>;
+
+// ---- Campaigns --------------------------------------------------------
+
+/** A persona and a message aimed at a chosen set of accounts, independent
+    of those accounts' own tier. Companies and campaigns are orthogonal by
+    design: an account's tier still exists and means what it always meant,
+    but a campaign can borrow any tier's copy for any accounts, so the same
+    company can be reached with a different argument without reclassifying
+    it, and the same persona can run across accounts of different tiers. */
+export const Campaign = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  persona: z.string().min(1),
+  /** Which sequences.json tier's copy this campaign's message borrows —
+      no separate content schema needed for a new persona. */
+  template_tier: z.number().int(),
+  account_ids: z.array(z.string()).default([]),
+  active: z.boolean().default(true),
+  created_at: z.string().default(""),
+}).strict();
+export type Campaign = z.infer<typeof Campaign>;

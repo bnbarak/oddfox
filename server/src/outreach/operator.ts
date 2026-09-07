@@ -8,9 +8,10 @@ import * as crm from "./crm.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, Refused, schedule } from "./send.js";
 import {
-  allReplies, allSends, appendTurns, getConfig, getThread, headroom, lastTick,
-  type ChatTurn,
+  allCampaigns, allReplies, allSends, appendTurns, getConfig, getThread, headroom,
+  lastTick, putCampaign, type ChatTurn,
 } from "./store.js";
+import { Campaign } from "./schemas.js";
 import { due } from "./tick.js";
 
 /* The operator: the agent you talk to instead of clicking.
@@ -83,6 +84,47 @@ const t = {
           has_email: Boolean(c.email), priority: c.priority, status: c.status, replied: c.replied,
         })),
       };
+    },
+  }),
+
+  listCampaigns: createTool({
+    id: "list-campaigns",
+    description:
+      "Every campaign: a persona and a message (borrowed from one tier's template) aimed at a chosen " +
+      "list of accounts, independent of those accounts' own tier.",
+    inputSchema: z.object({}),
+    outputSchema: z.object({
+      records: z.array(z.object({
+        id: z.string(), name: z.string(), persona: z.string(), template_tier: z.number(),
+        account_ids: z.array(z.string()), active: z.boolean(),
+      })),
+    }),
+    execute: async () => ({
+      records: (await allCampaigns()).map(
+        ({ id, name, persona, template_tier, account_ids, active }) =>
+          ({ id, name, persona, template_tier, account_ids, active })),
+    }),
+  }),
+
+  setCampaign: createTool({
+    id: "set-campaign",
+    description:
+      "Create or update a campaign: aim a persona and a tier's message at a chosen list of accounts, " +
+      "regardless of those accounts' own tier — companies and campaigns are independent. Pass the same " +
+      "id again to change its accounts, persona, template or active flag.",
+    inputSchema: z.object({
+      id: z.string().describe("A short slug, e.g. 'cfo-risk-push'. Reuse it to update this campaign."),
+      name: z.string(),
+      persona: z.string().describe("Who this message is written for, e.g. 'risk-averse CFO'"),
+      template_tier: z.number().int().describe("Which existing sequence's copy this campaign's message borrows"),
+      account_ids: z.array(z.string()).describe("Account ids in this campaign, any tier, from find-people or the CRM"),
+      active: z.boolean().nullish(),
+    }),
+    outputSchema: z.object({ id: z.string(), active: z.boolean() }),
+    execute: async (input) => {
+      const c = Campaign.parse({ ...input, active: input.active ?? true, created_at: new Date().toISOString() });
+      await putCampaign(c);
+      return { id: c.id, active: c.active };
     },
   }),
 
@@ -246,6 +288,11 @@ How to behave:
 
 - Look things up rather than guessing. You have tools for people, activity,
   who is owed a follow-up, the queue, and system status.
+- A campaign assigns a persona and one tier's message to a chosen list of
+  accounts, independent of those accounts' real tier — use set-campaign when
+  asked to target a persona or a different message across specific companies,
+  not the write/schedule tools directly. Drafting for someone in a campaign
+  automatically uses that campaign's message; you do not need to pass it.
 - Never schedule anything without first showing the exact subject and body and
   getting a clear yes in this conversation. Set confirmed_by_operator only
   after they have said so. "Draft one for Ana" is not permission to send it.

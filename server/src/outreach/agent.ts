@@ -3,6 +3,7 @@ import { z } from "zod";
 import * as crm from "./crm.js";
 import { secret } from "./config.js";
 import { fill, varsFor } from "./render.js";
+import { campaignFor } from "./store.js";
 import type { OutreachConfig, SendRecord } from "./schemas.js";
 
 /* The writing agent.
@@ -94,7 +95,11 @@ export async function draft(
   const contact = await crm.contact(contactId);
   if (!contact) throw new Error(`no contact with id ${contactId}`);
   const account = await crm.account(contact.account_id);
-  const tier = account?.tier ?? 1;
+  // A campaign borrows another tier's copy for this account on purpose —
+  // companies and campaigns/personas are orthogonal, so this overrides the
+  // account's own tier rather than being derived from it.
+  const campaign = await campaignFor(contact.account_id);
+  const tier = campaign?.template_tier ?? account?.tier ?? 1;
   if (!crm.isEmailTier(tier)) {
     throw new Error(`tier ${tier} is a LinkedIn sequence, not an email one — do not send it as email`);
   }
@@ -124,6 +129,8 @@ export async function draft(
     ``,
     `The tier ${tier} template ("${t.seq.tier_name}") argues this:`,
     t.seq.premise ? `Premise: ${t.seq.premise}` : ``,
+    campaign ? `\nThis account is in the "${campaign.name}" campaign — write for the persona ` +
+      `"${campaign.persona}", not a generic tier ${tier} reader.` : ``,
     `Subject: ${subject.text}`,
     `Body:`,
     body.text,
