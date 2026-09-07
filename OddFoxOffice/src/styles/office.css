@@ -156,3 +156,57 @@ a.co-row:hover .co-name { color: var(--hot); text-decoration: underline; }
   line-height: 1.6; color: var(--paper); background: rgba(255,255,255,.03);
   border-left: 2px solid var(--line); padding: 14px 16px; margin: 14px 0; border-radius: 0 3px 3px 0;
 }
+
+/* ---------- outreach: quota, heartbeat, heat map ---------- */
+.of-quota { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+.of-quota__row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.of-quota__name { font-family: var(--mono); font-size: 12px; min-width: 150px; }
+.of-quota__bar { display: flex; gap: 3px; }
+/* One pip per message the domain may send today. A cap is a countable thing,
+   so it is drawn as countable rather than as a percentage bar. */
+.of-quota__pip {
+  width: 10px; height: 14px; border-radius: 2px;
+  border: 1px solid var(--line-soft); background: transparent;
+}
+.of-quota__pip.is-used { background: var(--cool); border-color: var(--cool); }
+.of-quota__n { font-family: var(--mono); font-size: 11px; color: var(--fog); }
+
+.of-heartbeat { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+
+.of-heat__h { font-family: var(--mono); font-size: 10px; opacity: .7; }
+.of-heat { padding: 0 2px !important; }
+.of-heat__c {
+  display: block; width: 16px; height: 16px; border-radius: 2px;
+  border: 1px solid var(--line-soft); margin: 0 auto;
+}
+.of-heat__c.has-reply { box-shadow: 0 0 0 1px var(--calm); }
+
+/* ---------- outreach: the operator agent ---------- */
+.of-chat { border: 1px solid var(--line-soft); border-radius: 3px; overflow: hidden; }
+.of-chat__log {
+  max-height: 42vh; min-height: 120px; overflow-y: auto;
+  padding: 16px; display: flex; flex-direction: column; gap: 12px;
+}
+.of-chat__m {
+  white-space: pre-wrap; word-break: break-word;
+  font-size: 13.5px; line-height: 1.6; max-width: 52em;
+}
+.of-chat__m.is-user {
+  align-self: flex-end; color: var(--void); background: var(--paper);
+  border-radius: 3px; padding: 8px 12px;
+}
+.of-chat__m.is-assistant {
+  align-self: flex-start; color: var(--paper);
+  border-left: 2px solid var(--line); padding: 2px 0 2px 12px;
+}
+.of-chat__bar {
+  display: flex; gap: 8px; align-items: flex-end; padding: 10px;
+  border-top: 1px solid var(--line-soft); background: rgba(255,255,255,.02);
+}
+.of-chat__in {
+  flex: 1; resize: vertical; font: inherit; font-size: 13.5px; line-height: 1.5;
+  color: var(--paper); background: #0a1015; border: 1px solid var(--line-soft);
+  border-radius: 2px; padding: 8px 10px;
+}
+.of-chat__in:focus { outline: none; border-color: var(--line); }
+.of-chat__in[disabled] { opacity: .5; }

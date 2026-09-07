@@ -1,0 +1,142 @@
+import { useCallback, useEffect, useState } from "react";
+import { getIdToken } from "./googleAuth";
+
+/** Typed client over /api/crm/outreach/*, owned by ../../../server
+    (server/src/outreach). Same shape as crmStore: every request carries the
+    signed-in user's Google ID token and the server is the one place that
+    checks it. */
+
+const BASE = "/api/crm/outreach";
+
+function authHeaders(): HeadersInit {
+  const token = getIdToken();
+  return token ? { authorization: `Bearer ${token}` } : {};
+}
+
+async function get<T>(path: string): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, { headers: authHeaders() });
+  if (!res.ok) {
+    const body = (await res.json().catch(() => null)) as { error?: string; detail?: string } | null;
+    throw new Error(body?.detail ?? body?.error ?? `GET ${path} → ${res.status}`);
+  }
+  return res.json() as Promise<T>;
+}
+
+async function post<T>(path: string, body?: unknown): Promise<T> {
+  const res = await fetch(`${BASE}${path}`, {
+    method: "POST",
+    headers: { "content-type": "application/json", ...authHeaders() },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const parsed = (await res.json().catch(() => null)) as
+    | (T & { error?: string; detail?: string })
+    | null;
+  if (!res.ok) throw new Error(parsed?.detail ?? parsed?.error ?? `POST ${path} → ${res.status}`);
+  return parsed as T;
+}
+
+// ---- Types ----------------------------------------------------------------
+
+export type Blocker = { code: string; detail: string };
+export type DomainRoom = { domain: string; day: string; used: number; cap: number; left: number };
+export type TickRow = {
+  at: string; due: number; sent: number; replies: number; events: number; ms: number;
+  note: string | null; error: string | null;
+};
+
+export type Status = {
+  configured: { resend: boolean; model: boolean };
+  blockers: Blocker[];
+  dry_run: boolean;
+  auto_followups: boolean;
+  timezone: string;
+  send_window: { start_hour: number; end_hour: number };
+  domains: DomainRoom[];
+  last_tick: TickRow | null;
+};
+
+export type Cell = { sent: number; planned: number; replies: number; bounces: number };
+export type HeatRow = {
+  account_id: string; company: string; tier: number; url: string | null;
+  linkedin_url: string | null; status: string; contacts: number;
+  cells: Cell[]; total: Cell; last_sent: string | null;
+};
+export type Heatmap = {
+  weeks: string[]; rows: HeatRow[];
+  totals: Cell & { accounts_touched: number; accounts: number };
+};
+
+export type QueueRow = {
+  id: string; resend_id: string | null; company: string | null; to_email: string;
+  subject: string; round: number; from_domain: string; scheduled_at: string | null;
+  quota_day: string | null; dry_run: boolean; status: string;
+};
+
+export type ReplyRow = {
+  id: string; from_email: string; subject: string | null; received_at: string;
+  send_id: string | null; account_id: string | null; contact_id: string | null;
+  excerpt: string | null; unsubscribe: boolean; automated: boolean;
+};
+
+// ---- Hooks ----------------------------------------------------------------
+
+/** One fetch, one error string, one manual reload. The panel renders a real
+    explanation when this fails rather than an empty table, because "the
+    outreach API is not configured yet" is the expected state until the keys
+    arrive, not a bug. */
+function useResource<T>(path: string) {
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(true);
+
+  const load = useCallback(async () => {
+    setBusy(true);
+    try {
+      setData(await get<T>(path));
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(false);
+    }
+  }, [path]);
+
+  useEffect(() => { void load(); }, [load]);
+  return { data, error, busy, reload: load };
+}
+
+export const useOutreachStatus = () => useResource<Status>("/status");
+export const useHeatmap = (weeks: number) => useResource<Heatmap>(`/heatmap?weeks=${weeks}`);
+export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
+export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");
+
+// ---- Actions --------------------------------------------------------------
+
+export const cancelSend = (id: string) =>
+  post<{ id: string; canceled: boolean; note: string }>(`/sends/${id}/cancel`);
+
+export const runTick = () =>
+  post<{ at: string; due: number; scheduled: number; replies: number; events: number;
+         ms: number; blocked: string[]; notes: string[] }>("/tick");
+
+export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
+
+/** The conversation lives on the server, as one thread shared by everyone on
+    the allow-list — so a reload keeps it, and two people working the pipeline
+    see the same one rather than each telling the agent things the other
+    already asked for. */
+export const useThread = () =>
+  useResource<{ turns: ChatTurn[]; model_configured: boolean }>("/chat");
+
+export const sendChat = (message: string) =>
+  post<{ text: string; thread: ChatTurn[] }>("/chat", { message });
+
+export async function clearThread(): Promise<void> {
+  const res = await fetch(`${BASE}/chat`, { method: "DELETE", headers: authHeaders() });
+  if (!res.ok) throw new Error(`DELETE /chat → ${res.status}`);
+}
+
+export const draftMessage = (contact_id: string, round: 1 | 2 | 3, guidance: string | null) =>
+  post<{ subject: string; body: string; why: string; template_tier: number;
+         unresolved: string[]; written_by: string; fell_back: string | null }>(
+    "/draft", { contact_id, round, use_agent: true, guidance });

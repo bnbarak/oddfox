@@ -10,6 +10,7 @@ import { GTM } from "./panels/GTM";
 import { CrmAccounts } from "./panels/crm/Accounts";
 import { CrmPeople } from "./panels/crm/People";
 import { CrmSequences } from "./panels/crm/Sequences";
+import { CrmOutreach } from "./panels/crm/Outreach";
 import { Players } from "./panels/Players";
 import { Dossier } from "./panels/Dossier";
 import { Distance } from "./panels/Distance";
@@ -54,6 +55,7 @@ export const TABS = [
   { id: "crm",           label: "Accounts",  group: "crm" },
   { id: "crm-people",    label: "People",    group: "crm" },
   { id: "crm-sequences", label: "Sequences", group: "crm" },
+  { id: "crm-outreach",   label: "Outreach",  group: "crm" },
 
   { id: "stats",      label: "Stats",      group: "sources" },
   { id: "registries", label: "Registries", group: "sources" },
@@ -89,6 +91,7 @@ export function Library({ tab, v, set }: {
     "crm":           <CrmAccounts />,
     "crm-people":    <CrmPeople />,
     "crm-sequences": <CrmSequences />,
+    "crm-outreach":  <CrmOutreach />,
     exposed:    <Exposed />,
     segments:   <Segments />,
     players:    <Players playerCat={v.playerCat} setPlayerCat={set("playerCat")} />,
