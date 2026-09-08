@@ -8,6 +8,7 @@ import { presentations } from "./presentations";
 import { Library, TABS, GROUPS, groupOf, tabsIn, type TabId, type ViewState } from "./library/Library";
 import { DB } from "./data";
 import { AuthGate } from "./AuthGate";
+import { Operator } from "./library/panels/crm/Operator";
 
 /* Browser routing gives clean paths (/library/overview). It needs the host to
    serve index.html for unknown paths — Vite's dev server does this by default.
@@ -49,7 +50,7 @@ function LibraryLayout() {
     <div className="office">
       <header className="of-head">
         <div className="of-head-in">
-          <div className="of-mark">Odd Fox <span>/ office</span></div>
+          <div className="of-mark">Seaworth <span>/ office</span></div>
           <div className="of-head-meta">
             v{DB.manifest.version} · {DB.manifest.datasets.length} datasets · updated {DB.manifest.updated}
           </div>
@@ -83,6 +84,9 @@ function LibraryLayout() {
       <main className="of-main">
         <Outlet context={{ v, set } satisfies Ctx} />
       </main>
+      {/* The agent is docked for the whole CRM section, not one panel: the
+          questions worth asking it are the same on every tab. */}
+      {groupOf(tab ?? "") === "crm" && <Operator />}
       <footer className="of-foot">
         <div className="of-wrap" style={{ display: "flex", gap: 18, flexWrap: "wrap", width: "100%" }}>
           <span>Internal. Not deployed.</span>

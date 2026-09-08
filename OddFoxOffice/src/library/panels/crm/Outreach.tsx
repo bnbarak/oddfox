@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
-  cancelSend, clearThread, runTick, sendChat, useHeatmap, useOutreachStatus, useQueue,
-  useReplies, useThread, type Cell, type HeatRow,
+  cancelSend, runTick, useHeatmap, useOutreachStatus, useQueue, useReplies,
+  type Cell, type HeatRow,
 } from "../../../lib/outreachStore";
+import { CRM_CHANGED } from "./Operator";
 
 /** Heat, 0–1, from how much an account got in one week. Deliberately not
     linear: the difference between nothing and one message matters far more
@@ -34,103 +35,6 @@ function HeatCell({ c, week, company }: { c: Cell; week: string; company: string
   );
 }
 
-/** The operator agent. Everything this panel used to need buttons for —
-    drafting, scheduling, cancelling, asking who is overdue — is asked for in
-    words here, and the tables below are what happened. The transcript lives
-    in this component, so it is per-session by design: no history to manage,
-    and no stale conversation to inherit. */
-function Operator({ enabled, onAct }: { enabled: boolean; onAct: () => void }) {
-  const thread = useThread();
-  const [pending, setPending] = useState<string | null>(null);
-  const [input, setInput] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const log = useRef<HTMLDivElement | null>(null);
-  const turns = thread.data?.turns ?? [];
-
-  useEffect(() => {
-    log.current?.scrollTo({ top: log.current.scrollHeight });
-  }, [turns.length, busy]);
-
-  const ask = async () => {
-    const text = input.trim();
-    if (!text || busy) return;
-    setInput("");
-    setPending(text);   // shown immediately; the server owns the real thread
-    setBusy(true);
-    setError(null);
-    try {
-      await sendChat(text);
-      await thread.reload();
-      // The agent may have scheduled or cancelled something, so the state
-      // views below are stale the moment it answers.
-      onAct();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    } finally {
-      setPending(null);
-      setBusy(false);
-    }
-  };
-
-  const forget = async () => {
-    setBusy(true);
-    try {
-      await clearThread();
-      await thread.reload();
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  return (
-    <Section kicker="Ask">
-      {!enabled && (
-        <Note style={{ marginBottom: 12 }}>
-          <strong>The agent is not running. </strong>
-          <code>GOOGLE_API_KEY</code> is not set on the server, so there is nothing to talk to.
-          Everything below still works.
-        </Note>
-      )}
-      <div className="of-chat">
-        <div className="of-chat__log" ref={log}>
-          {turns.length === 0 && (
-            <p className="of-note">
-              Ask for what you want. “Who at Bernhard Schulte have we not written to?” ·
-              “Draft round 2 for the Pacific Basin fleet people” · “What is left today?” ·
-              “Cancel the one to Ana”. It will show you a message before it schedules anything.
-            </p>
-          )}
-          {turns.map((m) => (
-            <div key={`${m.at}-${m.role}`} className={`of-chat__m is-${m.role}`}>{m.content}</div>
-          ))}
-          {pending && <div className="of-chat__m is-user">{pending}</div>}
-          {busy && <div className="of-chat__m is-assistant of-note">thinking…</div>}
-        </div>
-        <div className="of-chat__bar">
-          <textarea
-            className="of-chat__in" rows={2} value={input} disabled={!enabled || busy}
-            placeholder={enabled ? "Ask the agent…" : "unavailable — no model key"}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void ask(); }
-            }}
-          />
-          <button className="of-facet__b" disabled={!enabled || busy || !input.trim()}
-                  onClick={() => void ask()}>
-            {busy ? "…" : "Send"}
-          </button>
-          {turns.length > 0 && (
-            <button className="of-facet__b" disabled={busy} title="Clear the shared thread"
-                    onClick={() => void forget()}>Clear</button>
-          )}
-        </div>
-      </div>
-      {error && <Note style={{ marginTop: 12 }}>{error}</Note>}
-    </Section>
-  );
-}
-
 export function CrmOutreach() {
   const [weeks, setWeeks] = useState(12);
   const status = useOutreachStatus();
@@ -141,6 +45,16 @@ export function CrmOutreach() {
   const [said, setSaid] = useState<string | null>(null);
 
   const s = status.data;
+
+  // The agent is docked in the layout, so it cannot call these reloaders
+  // directly. It announces instead, and every panel that cares listens.
+  useEffect(() => {
+    const refresh = () => {
+      void queue.reload(); void map.reload(); void status.reload(); void replies.reload();
+    };
+    window.addEventListener(CRM_CHANGED, refresh);
+    return () => window.removeEventListener(CRM_CHANGED, refresh);
+  }, [queue, map, status, replies]);
 
   const doCancel = async (id: string) => {
     setBusy(id);
@@ -192,12 +106,6 @@ export function CrmOutreach() {
   return (
     <>
       <H1>Outreach</H1>
-      <p className="of-lede">
-        Ask the agent for what you want; the tables are what happened. It drafts, schedules and
-        cancels, but it shows you a message before scheduling it, and nothing leaves without a slot
-        inside the day's cap for its sending domain.
-      </p>
-
       {s && s.blockers.length > 0 && (
         <Note style={{ marginBottom: 16 }}>
           <strong>Not sending. </strong>
@@ -209,11 +117,6 @@ export function CrmOutreach() {
       )}
 
       {said && <Note style={{ marginBottom: 16 }}>{said}</Note>}
-
-      <Operator
-        enabled={Boolean(s?.configured.model)}
-        onAct={() => { void queue.reload(); void map.reload(); void status.reload(); void replies.reload(); }}
-      />
 
       <Section kicker="Today">
         <Grid cols={4}>
@@ -241,10 +144,7 @@ export function CrmOutreach() {
             ))}
           </div>
         ) : (
-          <Note style={{ marginTop: 14 }}>
-            No sending domain is configured yet. Each one gets its own daily cap — 15 by default —
-            and a message is only ever scheduled against a domain that has room.
-          </Note>
+          <Note style={{ marginTop: 14 }}>No sending domain configured.</Note>
         )}
 
         <div className="of-heartbeat">
@@ -319,9 +219,7 @@ export function CrmOutreach() {
           </table>
         </div>
         <Note style={{ marginTop: 14 }}>
-          One column per week, most recent on the right. Blue is volume, green means somebody
-          replied that week, red means something bounced. An account with a long blank run is one
-          nobody is working; a dark run is one being worked too hard.
+          Blue is volume, green a reply, red a bounce. Newest week on the right.
         </Note>
       </Section>
 
@@ -368,8 +266,7 @@ export function CrmOutreach() {
             </table>
           </div>
         ) : (
-          <Note>Nothing is queued. A scheduled message stays cancellable right up until it goes —
-            that is what the token in this table is for.</Note>
+          <Note>Nothing queued.</Note>
         )}
       </Section>
 
@@ -398,11 +295,7 @@ export function CrmOutreach() {
             </table>
           </div>
         ) : (
-          <Note>
-            Nothing has come back yet. Replies are collected by polling Resend on every heartbeat —
-            an opt-out suppresses the address immediately, an out-of-office is logged but does not
-            count as a reply, and a real reply ends that person's sequence.
-          </Note>
+          <Note>Nothing has come back yet.</Note>
         )}
       </Section>
     </>

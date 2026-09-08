@@ -18,6 +18,7 @@ import { MatrixPanel, type MatrixFilters, type MatrixSort } from "./panels/Matri
 import { Platforms } from "./panels/Platforms";
 import { Registries } from "./panels/Registries";
 import { Economics } from "./panels/Economics";
+import { Insurers } from "./panels/Insurers";
 import { Sources } from "./panels/Sources";
 import { Stats } from "./panels/Stats";
 import { VC } from "./panels/VC";
@@ -45,6 +46,7 @@ export const TABS = [
   { id: "dossiers",   label: "Dossiers",   group: "market" },
   { id: "platforms",  label: "Platforms",  group: "market" },
   { id: "economics",  label: "Economics",  group: "market" },
+  { id: "insurers",   label: "Insurers",   group: "market" },
 
   { id: "gtm",        label: "GTM",        group: "customers" },
   { id: "vc",         label: "VC",         group: "customers" },
@@ -52,10 +54,12 @@ export const TABS = [
   { id: "segments",   label: "Segments",   group: "customers" },
   { id: "owners",     label: "Buying chain", group: "customers" },
 
+  // Outreach is first because it is the CRM's landing page: the group nav
+  // links to tabsIn(group)[0], so order here decides where "CRM" goes.
+  { id: "crm-outreach",  label: "Outreach",  group: "crm" },
   { id: "crm",           label: "Accounts",  group: "crm" },
   { id: "crm-people",    label: "People",    group: "crm" },
   { id: "crm-sequences", label: "Sequences", group: "crm" },
-  { id: "crm-outreach",   label: "Outreach",  group: "crm" },
 
   { id: "stats",      label: "Stats",      group: "sources" },
   { id: "registries", label: "Registries", group: "sources" },
@@ -104,6 +108,7 @@ export function Library({ tab, v, set }: {
     stats:      <Stats />,
     registries: <Registries />,
     economics:  <Economics />,
+    insurers:   <Insurers />,
     sources:    <Sources />,
   };
 
