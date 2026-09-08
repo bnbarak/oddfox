@@ -25,6 +25,21 @@ export const SendingDomain = z.object({
   daily_cap: z.number().int().positive().default(15),
   /** A domain that is not enabled is never picked and never sends. */
   enabled: z.boolean().default(true),
+  /** Reserved for messages a person wrote by hand.
+
+      The automated side never picks it: not for a sequence round, not for a
+      follow-up, not when every other domain is full. A personal domain earns
+      its reputation over years of ordinary mail and can lose it in a week of
+      cold outreach, and the two must not share a sending identity. */
+  manual_only: z.boolean().default(false),
+  /** Whether inbound mail to this domain is pulled into the CRM.
+
+      The MX record is at the apex, so Resend receives mail for *every*
+      address at a domain — not just the one we send from. For an
+      outreach-only domain that is what we want. For a personal domain it
+      would drag private correspondence into a shared database and onto a
+      page other people can read, so it is off wherever manual_only is on. */
+  listen_inbound: z.boolean().default(true),
   /** Free text — why this domain exists, when it was warmed, anything a human needs. */
   note: z.string().nullable().default(null),
 });
@@ -37,8 +52,19 @@ export const OutreachConfig = z.object({
   default_daily_cap: z.number().int().positive().default(15),
   /** IANA zone that decides where one sending day ends and the next begins. */
   timezone: z.string().default("UTC"),
-  /** Signed at the bottom of every message. */
+  /** Signed at the bottom of every message when no signature is chosen. */
   sender_name: z.string().default("Barak"),
+  /** Sign-offs to pick from when writing. The postal address and the opt-out
+      line are NOT part of these — they are appended after whichever one is
+      used, because they are a legal requirement and must not be removable by
+      editing a signature. */
+  signatures: z.array(z.object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    body: z.string().max(2000),
+  })).default([]),
+  /** Which signature is used when the writer does not choose. */
+  default_signature: z.string().nullable().default(null),
   /** A real postal address is required for lawful commercial email in the
       UK/EU. Sending stays blocked until this is filled in. */
   postal_address: z.string().nullable().default(null),
@@ -185,6 +211,8 @@ export const ScheduleRequest = z.object({
   domain: z.string().nullable().default(null),
   written_by: z.enum(["template", "agent"]).default("agent"),
   template_tier: z.number().int().nullable().default(null),
+  /** Which sign-off to use. Omitted uses the configured default. */
+  signature: z.string().nullable().default(null),
 }).strict();
 export type ScheduleRequest = z.infer<typeof ScheduleRequest>;
 

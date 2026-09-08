@@ -19,10 +19,6 @@ export function CrmPeople() {
   return (
     <>
       <H1>People</H1>
-      <p className="of-lede">
-        Named individuals at the target accounts. Profile links were matched from public search
-        results on name plus employer plus published title — nothing was read from behind a login.
-      </p>
 
       <ServerState live={live} error={error} />
 

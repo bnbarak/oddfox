@@ -2,6 +2,7 @@ import { Resend } from "resend";
 import { FirestoreCrmRepository } from "../firestoreRepository.js";
 import * as crm from "./crm.js";
 import { secret } from "./config.js";
+import { getConfig } from "./store.js";
 import { readsAsAutomated, readsAsOptOut } from "./render.js";
 import {
   allSends, getCursor, haveReply, openSends, putReply, setCursor, setStatus,
@@ -68,6 +69,15 @@ async function attribute(from: string) {
 }
 
 export async function pollReplies(): Promise<number> {
+  const cfg = await getConfig();
+  // Resend receives mail for every address at every domain we have MX for.
+  // Only the domains we deliberately listen to are ingested; a personal
+  // domain's mail is left in Resend rather than copied into the CRM.
+  const listening = new Set(
+    cfg.domains.filter((d) => d.listen_inbound).map((d) => d.domain.toLowerCase()));
+  const heard = (to: string[]) =>
+    to.some((a) => listening.has((a.split("@")[1] ?? "").trim().toLowerCase()));
+
   const since = await getCursor();
   const { data, error } = await resend().emails.receiving.list({ limit: 100 });
   if (error || !data) return 0;
@@ -79,6 +89,7 @@ export async function pollReplies(): Promise<number> {
     const at = new Date(ref.created_at).toISOString();
     if (!newest || at > newest) newest = at;
     if (since && at <= since) continue;
+    if (!heard(ref.to)) continue;
     if (await haveReply(ref.id)) continue;
 
     const full = await resend().emails.receiving.get(ref.id).catch(() => null);

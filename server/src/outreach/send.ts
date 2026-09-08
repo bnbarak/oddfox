@@ -89,12 +89,24 @@ export async function schedule(
   if (!d) throw new Refused("unknown-domain", `${domain} is not a configured sending domain`);
   if (!d.enabled) throw new Refused("domain-disabled", `${domain} is not enabled`);
 
+  // round 0 is a one-off somebody typed. Anything else is the machine, and
+  // the machine does not touch a manual-only domain — that is the whole
+  // point of the flag, so it is checked here rather than only in pickDomain.
+  if (d.manual_only && req.round !== 0) {
+    throw new Refused("manual-only",
+      `${domain} is reserved for messages written by hand; a sequence round cannot use it.`);
+  }
+
   const at = req.scheduled_at ? new Date(req.scheduled_at) : nextSlot(cfg, domain, queued);
   if (Number.isNaN(at.getTime())) throw new Refused("bad-date", `${req.scheduled_at} is not a date`);
 
   const day = dayKey(at, cfg.timezone);
-  const from = fromAddress(cfg, domain)!;
-  const text = withFooter(req.body, cfg);
+  const from = fromAddress(cfg, domain);
+  if (!from) {
+    throw new Refused("unknown-sender",
+      `${domain} has no sender defined in SENDERS — adding one is a code change.`);
+  }
+  const text = withFooter(req.body, cfg, req.signature);
   const account = await crm.account(contact.account_id);
   const now = new Date().toISOString();
 

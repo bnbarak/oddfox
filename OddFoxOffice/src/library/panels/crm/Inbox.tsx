@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Chip, H1, Note } from "../../../ui";
-import { cancelSend, sendDirect, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
+import {
+  cancelSend, sendDirect, useOutreachConfig, useOutreachStatus, useThreads,
+  type Thread, type ThreadMessage,
+} from "../../../lib/outreachStore";
 import { CRM_CHANGED } from "./Operator";
 import { useContacts } from "./shared";
 
@@ -76,6 +79,20 @@ export function CrmInbox() {
   const [to, setTo] = useState<string>("");
   const [find, setFind] = useState("");
   const { rows: contacts } = useContacts();
+  const status = useOutreachStatus();
+  const senders = useMemo(() => status.data?.senders ?? [], [status.data]);
+  const [fromDomain, setFromDomain] = useState<string>("");
+  const conf = useOutreachConfig();
+  const signatures = useMemo(() => conf.data?.signatures ?? [], [conf.data]);
+  const [signature, setSignature] = useState<string>("");
+
+  // Default to an outreach domain, never the personal one — picking that has
+  // to be a deliberate choice, not what happens if you do not look.
+  useEffect(() => {
+    if (!fromDomain && senders.length) {
+      setFromDomain((senders.find((x) => !x.manual_only) ?? senders[0]!).domain);
+    }
+  }, [senders, fromDomain]);
 
   useEffect(() => {
     const r = () => void reload();
@@ -83,9 +100,7 @@ export function CrmInbox() {
     return () => window.removeEventListener(CRM_CHANGED, r);
   }, [reload]);
 
-  const open: Thread | null = composing
-    ? null
-    : threads.find((t) => t.contact_id === openId) ?? threads[0] ?? null;
+  const open: Thread | null = threads.find((t) => t.contact_id === openId) ?? threads[0] ?? null;
   const last = open?.messages[open.messages.length - 1];
 
   // Only people with an address can be written to; a picker full of names
@@ -124,7 +139,8 @@ export function CrmInbox() {
     if (!target || !subject.trim() || !body.trim()) return;
     setWorking(true);
     try {
-      const r = await sendDirect(target, subject.trim(), body.trim());
+      const r = await sendDirect(target, subject.trim(), body.trim(),
+                                 fromDomain || null, signature || null);
       setSaid(r.dry_run
         ? `Queued as a dry run for ${fmt(r.scheduled_at)} — nothing was sent.`
         : `Scheduled for ${fmt(r.scheduled_at)}. Cancellable until it goes.`);
@@ -139,40 +155,77 @@ export function CrmInbox() {
     return <><H1>Inbox</H1><Note><strong>The CRM server is not answering. </strong>{error}</Note></>;
   }
 
-  const composer = (
-    <div className="of-compose">
-      {composing && (
-        <>
-          <input className="of-chat__in" placeholder="To — search by name, company or role"
-                 value={find} disabled={working}
-                 onChange={(e) => { setFind(e.target.value); setTo(""); }} />
-          {!to && find.trim() && (
-            <div className="of-to">
-              {writable.length === 0 && <span className="of-note">Nobody matches, or they have no address on record.</span>}
-              {writable.map((c) => (
-                <button key={c.id} className="of-to__b"
-                        onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
-                  <strong>{c.full_name}</strong>
-                  <span className="of-note"> · {c.title || "role unknown"} · {c.company ?? "—"}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </>
-      )}
-      <input className="of-chat__in" placeholder="Subject" value={subject}
-             disabled={working} onChange={(e) => setSubject(e.target.value)} />
-      <textarea className="of-chat__in" rows={8} placeholder="Write a message…"
-                value={body} disabled={working} onChange={(e) => setBody(e.target.value)} />
-      <div className="of-compose__bar">
+  const composer = !(composing || replying) ? null : (
+    <div className="of-cw" role="dialog" aria-label="Compose">
+      <header className="of-cw__h">
+        <span>{composing ? "New message" : `Reply to ${open?.full_name ?? ""}`}</span>
+        <button className="of-cw__x" onClick={() => { setComposing(false); setReplying(false); }}
+                title="Close">×</button>
+      </header>
+      <div className="of-cw__b">
+        <label className="of-cw__row">
+          <span className="of-cw__k">From</span>
+          <select className="of-sel of-cw__v" value={fromDomain} disabled={working}
+                  onChange={(e) => setFromDomain(e.target.value)}>
+            {senders.map((x) => (
+              <option key={x.domain} value={x.domain}>
+                {x.address}{x.manual_only ? "  (personal — by hand only)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {composing ? (
+          <label className="of-cw__row">
+            <span className="of-cw__k">To</span>
+            <input className="of-cw__v of-chat__in" placeholder="Search name, company or role"
+                   value={find} disabled={working}
+                   onChange={(e) => { setFind(e.target.value); setTo(""); }} />
+          </label>
+        ) : (
+          <div className="of-cw__row">
+            <span className="of-cw__k">To</span>
+            <span className="of-cw__v of-note">{open?.email ?? "no address on record"}</span>
+          </div>
+        )}
+
+        {composing && !to && find.trim() && (
+          <div className="of-to">
+            {writable.length === 0 && <span className="of-note">Nobody matches, or they have no address on record.</span>}
+            {writable.map((c) => (
+              <button key={c.id} className="of-to__b"
+                      onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
+                <strong>{c.full_name}</strong>
+                <span className="of-note"> · {c.title || "role unknown"} · {c.company ?? "—"}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {signatures.length > 0 && (
+          <label className="of-cw__row">
+            <span className="of-cw__k">Sign</span>
+            <select className="of-sel of-cw__v" value={signature} disabled={working}
+                    onChange={(e) => setSignature(e.target.value)}>
+              <option value="">
+                {signatures.find((x) => x.id === conf.data?.default_signature)?.name ?? "Default"}
+              </option>
+              {signatures.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+            </select>
+          </label>
+        )}
+        <input className="of-chat__in" placeholder="Subject" value={subject}
+               disabled={working} onChange={(e) => setSubject(e.target.value)} />
+        <textarea className="of-chat__in of-cw__body" rows={10} placeholder="Write a message…"
+                  value={body} disabled={working} onChange={(e) => setBody(e.target.value)} />
+      </div>
+      <footer className="of-cw__f">
         <button className="of-facet__b" onClick={() => void doSend()}
                 disabled={working || !subject.trim() || !body.trim() || (composing && !to)}>
           {working ? "…" : "Schedule"}
         </button>
-        <button className="of-dock__x"
-                onClick={() => { setComposing(false); setReplying(false); }}>discard</button>
         <span className="of-note">Signature, address and opt-out line are added for you.</span>
-      </div>
+      </footer>
     </div>
   );
 
@@ -182,19 +235,20 @@ export function CrmInbox() {
     </button>
   );
 
-  if (threads.length === 0 && !composing) {
+  if (threads.length === 0) {
     return (
       <>
-        <div className="of-inbox__bar"><H1>Inbox</H1>{newButton}</div>
+        <div className="of-inbox__bar">{newButton}</div>
         {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
         <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
+        {composer}
       </>
     );
   }
 
   return (
     <>
-      <div className="of-inbox__bar"><H1>Inbox</H1>{newButton}</div>
+      <div className="of-inbox__bar">{newButton}</div>
       {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
 
       <div className="of-inbox">
@@ -222,15 +276,6 @@ export function CrmInbox() {
         </nav>
 
         <div className="of-inbox__thread">
-          {composing && (
-            <>
-              <header className="of-inbox__head">
-                <div className="of-inbox__title">New email</div>
-                <div className="of-note">Goes out under the same cap, footer and dry-run switch as everything else.</div>
-              </header>
-              {composer}
-            </>
-          )}
           {open && (
             <>
               <header className="of-inbox__head">
@@ -259,17 +304,16 @@ export function CrmInbox() {
                 );
               })}
 
-              {!replying ? (
-                <button className="of-facet__b" style={{ marginTop: 14 }}
-                        disabled={!open.email} onClick={startReply}
-                        title={open.email ? "Write to this person" : "No address on record"}>
-                  Reply
-                </button>
-              ) : composer}
+              <button className="of-facet__b" style={{ marginTop: 14 }}
+                      disabled={!open.email} onClick={startReply}
+                      title={open.email ? "Write to this person" : "No address on record"}>
+                Reply
+              </button>
             </>
           )}
         </div>
       </div>
+      {composer}
     </>
   );
 }

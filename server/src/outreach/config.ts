@@ -14,6 +14,29 @@ export const secret = (name: string): string | null => {
   return v ? v : null;
 };
 
+/** The only addresses this system may ever send as.
+
+    Hardcoded for the same reason auth.ts hardcodes its allow-list: who we
+    appear to be is not something that should change because a document was
+    edited. Resend will happily send from any address at a verified domain —
+    random@seaworth.io included — so the constraint has to live here.
+
+    It is also a deliverability rule. Cold outreach scattered across many
+    local parts on a young domain is one of the clearer spam signals there
+    is; one consistent human sender per domain is what a real person looks
+    like. Adding a sender is a deliberate code change and a deploy. */
+export const SENDERS = [
+  { domain: "seaworth.io", from_local: "barak", from_name: "Barak Nissim" },
+  { domain: "theseaworth.com", from_local: "barak", from_name: "Barak Nissim" },
+  // Personal. Present so it can be picked by hand in the Inbox; kept off the
+  // automated path by manual_only, and out of the CRM's reply store by
+  // listen_inbound: false.
+  { domain: "seaworth.ai", from_local: "barak", from_name: "Barak Nissim" },
+] as const;
+
+export const senderFor = (domain: string) =>
+  SENDERS.find((x) => x.domain === domain.toLowerCase()) ?? null;
+
 export type Blocker = { code: string; detail: string };
 
 /** Everything standing between the current configuration and a live send, as
@@ -36,6 +59,15 @@ export function blockers(cfg: OutreachConfig): Blocker[] {
     out.push({ code: "no-unsubscribe-mailbox",
                detail: "An opt-out address is required; it is also the List-Unsubscribe target." });
   }
+  // A configured domain with no hardcoded sender can never send, so say so
+  // here rather than failing at the moment somebody tries.
+  const unknown = cfg.domains.filter((d) => d.enabled && !senderFor(d.domain));
+  if (unknown.length) {
+    out.push({
+      code: "unknown-sender",
+      detail: `No sender is defined in SENDERS for ${unknown.map((d) => d.domain).join(", ")}.`,
+    });
+  }
   if (cfg.dry_run) {
     out.push({ code: "dry-run", detail: "dry_run is on — messages are written and logged but never sent." });
   }
@@ -48,8 +80,13 @@ export const domainOf = (cfg: OutreachConfig, domain: string): SendingDomain | n
 export const capOf = (cfg: OutreachConfig, domain: string): number =>
   domainOf(cfg, domain)?.daily_cap ?? cfg.default_daily_cap;
 
-/** The address a domain sends as, e.g. `Barak <barak@seaworth.ai>`. */
-export function fromAddress(cfg: OutreachConfig, domain: string): string | null {
-  const d = domainOf(cfg, domain);
-  return d ? `${d.from_name} <${d.from_local}@${d.domain}>` : null;
+/** The address a domain sends as, e.g. `Barak Nissim <barak@seaworth.io>`.
+
+    Read from SENDERS, not from the config document — the document decides
+    whether a domain is used and how much, never who it claims to be. A
+    domain that is not in SENDERS cannot produce an address, and send.ts
+    refuses rather than guessing one. */
+export function fromAddress(_cfg: OutreachConfig, domain: string): string | null {
+  const s = senderFor(domain);
+  return s ? `${s.from_name} <${s.from_local}@${s.domain}>` : null;
 }

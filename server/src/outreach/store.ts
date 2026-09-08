@@ -81,11 +81,13 @@ export async function headroom(cfg: OutreachConfig, at = new Date()): Promise<He
   }));
 }
 
-/** The enabled domain with the most room left today. Spreading across domains
-    rather than draining one keeps each domain's daily volume flat, which is
-    what warming wants. */
+/** The domain the automation should use next: the one with the most room
+    left today, ignoring anything reserved for hand-written mail. Spreading
+    across domains rather than draining one keeps each domain's daily volume
+    flat, which is what warming wants. */
 export async function pickDomain(cfg: OutreachConfig, at = new Date()): Promise<Headroom | null> {
-  const open = (await headroom(cfg, at)).filter((r) => r.left > 0);
+  const manual = new Set(cfg.domains.filter((d) => d.manual_only).map((d) => d.domain));
+  const open = (await headroom(cfg, at)).filter((r) => r.left > 0 && !manual.has(r.domain));
   open.sort((a, b) => b.left - a.left);
   return open[0] ?? null;
 }

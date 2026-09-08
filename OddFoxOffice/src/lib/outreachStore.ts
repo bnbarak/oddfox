@@ -44,8 +44,33 @@ export type TickRow = {
   note: string | null; error: string | null;
 };
 
+export type Sender = { domain: string; address: string | null; manual_only: boolean };
+export type Signature = { id: string; name: string; body: string };
+export type OutreachConfig = {
+  signatures: Signature[]; default_signature: string | null;
+  sender_name: string; postal_address: string | null; unsubscribe_mailbox: string | null;
+  dry_run: boolean; auto_followups: boolean; timezone: string;
+  send_window: { start_hour: number; end_hour: number };
+  domains: { domain: string; from_local: string; from_name: string; daily_cap: number;
+             enabled: boolean; manual_only: boolean; listen_inbound: boolean; note: string | null }[];
+};
+
+export const useOutreachConfig = () => useResource<OutreachConfig>("/config");
+
+export async function putOutreachConfig(patch: Partial<OutreachConfig>): Promise<OutreachConfig> {
+  const res = await fetch(`${BASE}/config`, {
+    method: "PUT",
+    headers: { "content-type": "application/json", ...authHeaders() },
+    body: JSON.stringify(patch),
+  });
+  const body = (await res.json().catch(() => null)) as (OutreachConfig & { error?: string }) | null;
+  if (!res.ok) throw new Error(body?.error ?? `PUT /config → ${res.status}`);
+  return body as OutreachConfig;
+}
+
 export type Status = {
   configured: { resend: boolean; model: boolean };
+  senders: Sender[];
   blockers: Blocker[];
   dry_run: boolean;
   auto_followups: boolean;
@@ -135,11 +160,14 @@ export const useThreads = () => useResource<{ threads: Thread[] }>("/threads");
 /** A one-off, written by hand. round 0 keeps it out of the sequence, so it
     never triggers a follow-up — but it still goes through the same schedule
     path, so the daily cap, the footer and dry-run all still apply. */
-export const sendDirect = (contact_id: string, subject: string, body: string) =>
+export const sendDirect = (
+  contact_id: string, subject: string, body: string,
+  domain: string | null = null, signature: string | null = null,
+) =>
   post<{ id: string; cancel_token: string | null; scheduled_at: string; dry_run: boolean }>(
     "/schedule",
-    { contact_id, round: 0, subject, body, scheduled_at: null, domain: null,
-      written_by: "template", template_tier: null });
+    { contact_id, round: 0, subject, body, scheduled_at: null, domain,
+      written_by: "template", template_tier: null, signature });
 
 export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
 

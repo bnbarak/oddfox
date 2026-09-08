@@ -377,3 +377,42 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 }
 .of-to__b:last-child { border-bottom: 0; }
 .of-to__b:hover { background: rgba(255,255,255,.05); }
+
+/* ---------- compose: a popup, not a page ---------- */
+.of-cw {
+  position: fixed; bottom: 0; right: 22px; z-index: 60;
+  width: min(560px, calc(100vw - 44px)); max-height: 82vh;
+  display: flex; flex-direction: column;
+  background: var(--ink); border: 1px solid var(--line);
+  border-bottom: 0; border-radius: 4px 4px 0 0;
+  box-shadow: 0 -8px 44px rgba(0,0,0,.6);
+}
+/* Sit beside the agent rail rather than under it. */
+body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
+.of-cw__h {
+  display: flex; align-items: center; gap: 10px; padding: 11px 14px;
+  background: rgba(255,255,255,.06); border-bottom: 1px solid var(--line-soft);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--paper);
+}
+.of-cw__x { margin-left: auto; font: inherit; font-size: 16px; line-height: 1; cursor: pointer;
+            color: var(--fog); background: transparent; border: 0; padding: 0 4px; }
+.of-cw__x:hover { color: var(--paper); }
+.of-cw__b { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+.of-cw__row { display: flex; align-items: center; gap: 10px; }
+.of-cw__k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
+            text-transform: uppercase; color: var(--fog); width: 44px; flex-shrink: 0; }
+.of-cw__v { flex: 1; min-width: 0; }
+.of-cw__body { min-height: 180px; resize: vertical; }
+.of-cw__f { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            padding: 11px 14px; border-top: 1px solid var(--line-soft); }
+
+@media (max-width: 900px) {
+  .of-cw, body[data-crm-dock="open"] .of-cw { right: 0; left: 0; width: 100%; }
+}
+
+/* ---------- settings: signatures ---------- */
+.of-sig { border: 1px solid var(--line-soft); border-radius: 3px; padding: 12px; margin-bottom: 10px; }
+.of-sig__h { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+.of-sig__name { flex: 1; min-width: 160px; }
+.of-sig__def { display: flex; align-items: center; gap: 6px; white-space: nowrap; }

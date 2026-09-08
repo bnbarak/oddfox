@@ -49,10 +49,6 @@ export function CrmSequences() {
   return (
     <>
       <H1>Sequences</H1>
-      <p className="of-lede">
-        One three-round sequence per tier. The premise differs by tier because what the buyer is
-        exposed to differs by tier.
-      </p>
 
       <Section kicker="Sequences">
         {/* A sidebar rather than a row of buttons: six tier names are long

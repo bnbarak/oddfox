@@ -53,9 +53,15 @@ export function fill(template: string, vars: Vars): { text: string; unresolved: 
 
 /** The block that closes every message. Kept out of the templates on purpose:
     the templates are copy and get rewritten often, this is a legal
-    requirement and must not depend on someone remembering it. */
-export function footer(cfg: OutreachConfig): string {
-  const lines = [cfg.sender_name];
+    requirement and must not depend on someone remembering it.
+
+    A signature only replaces the sign-off. The postal address and the opt-out
+    line are appended regardless, so no amount of editing a signature can
+    remove them. */
+export function footer(cfg: OutreachConfig, signatureId?: string | null): string {
+  const id = signatureId ?? cfg.default_signature;
+  const sig = cfg.signatures.find((x) => x.id === id);
+  const lines = [sig ? sig.body.trimEnd() : cfg.sender_name];
   if (cfg.postal_address) lines.push(cfg.postal_address);
   if (cfg.unsubscribe_mailbox) {
     lines.push(`Reply "unsubscribe" and you will not hear from me again.`);
@@ -65,8 +71,9 @@ export function footer(cfg: OutreachConfig): string {
 
 /** Body plus footer, with exactly one blank line between them however the
     body happens to end. */
-export const withFooter = (body: string, cfg: OutreachConfig): string =>
-  `${body.trimEnd()}\n\n--\n${footer(cfg)}\n`;
+export const withFooter = (
+  body: string, cfg: OutreachConfig, signatureId?: string | null,
+): string => `${body.trimEnd()}\n\n--\n${footer(cfg, signatureId)}\n`;
 
 /** Headers that make an opt-out one action in the recipient's mail client
     rather than a hunt through the text. mailto rather than a URL because the

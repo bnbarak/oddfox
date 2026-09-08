@@ -101,6 +101,7 @@ export async function tick(): Promise<Tick> {
           scheduled_at: null, domain: null,
           written_by: modelConfigured() ? "agent" : "template",
           template_tier: written.template_tier,
+          signature: null,   // the configured default
         }, cfg, sends);
         scheduled++;
       } catch (e) {

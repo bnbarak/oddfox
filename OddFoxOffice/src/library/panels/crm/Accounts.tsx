@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Section, Grid, Cell, Stat, Note, H1, Chip, Gap, Bars, Site, Logo, Star } from "../../../ui";
+import { Section, Grid, Cell, Stat, H1, Chip, Gap, Bars, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
 import { PIPE, TONE, today, link, accountsFile, contactsFile, useAccounts } from "./shared";
 import { ServerState } from "./ServerState";
@@ -28,11 +28,6 @@ export function CrmAccounts() {
   return (
     <>
       <H1>Accounts</H1>
-      <p className="of-lede">
-        {seed.length} accounts seeded from the research. Every row links out to the company — its own
-        site where it publishes one, its LinkedIn page where it does not. Pipeline state is written
-        straight back to data/json/crm/accounts.json by the CRM server.
-      </p>
 
       <ServerState live={live} error={error} />
 
@@ -51,7 +46,7 @@ export function CrmAccounts() {
           <button className={`of-facet__b${tier === "all" ? " is-on" : ""}`} onClick={() => setTier("all")}>
             All<span className="of-facet__n">{seed.length}</span>
           </button>
-          {[1, 2, 3, 4, 5].map((t) => (
+          {[1, 2, 3, 4, 5, 6].map((t) => (
             <button key={t} className={`of-facet__b${tier === t ? " is-on" : ""}`} onClick={() => setTier(t)}>
               Tier {t}<span className="of-facet__n">{seed.filter((r) => r.tier === t).length}</span>
             </button>
@@ -121,10 +116,6 @@ export function CrmAccounts() {
             </tbody>
           </table>
         </div>
-        <Note style={{ marginTop: 14 }}>
-          Logos are the company's own favicon, fetched from its site. A company with no site on
-          record falls back to a monogram.
-        </Note>
       </Section>
 
       <Section kicker="What blocks this today">

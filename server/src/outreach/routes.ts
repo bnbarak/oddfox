@@ -1,7 +1,7 @@
 import { Router, type NextFunction, type Request, type Response } from "express";
 import { Resend } from "resend";
 import { draft, modelConfigured } from "./agent.js";
-import { blockers, secret } from "./config.js";
+import { blockers, fromAddress, secret } from "./config.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule } from "./send.js";
 import {
@@ -40,6 +40,13 @@ outreachRouter.get("/status", h(async (_req, res) => {
     timezone: cfg.timezone,
     send_window: cfg.send_window,
     domains,
+    /** Which addresses a person may send from by hand, and which of those
+        the automation is forbidden to use. */
+    senders: cfg.domains.filter((d) => d.enabled).map((d) => ({
+      domain: d.domain,
+      address: fromAddress(cfg, d.domain),
+      manual_only: d.manual_only,
+    })).filter((x) => x.address),
     last_tick: beat,
   });
 }));
