@@ -82,7 +82,7 @@ html, body, #root { height: auto; overflow: auto; }
 .of-matrix td.co .of-star { margin-right: 4px; }
 /* CRM tables put the star after the name, so flip the gutter it carries in
    the matrix, where it leads. */
-.of-table td.co .of-star { margin-right: 0; margin-left: 6px; }
+.of-crm td.co .of-star { margin-right: 0; margin-left: 6px; }
 .of-site { font-family: var(--mono); font-size: 11.5px; overflow-wrap: anywhere; }
 .of-linkcell { display: flex; flex-direction: column; gap: 3px; }
 
@@ -366,3 +366,14 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
   .of-inbox__list { max-height: 220px; border-right: 0; border-bottom: 1px solid var(--line-soft); }
   .of-inbox__thread { max-height: none; }
 }
+
+/* ---------- inbox: compose ---------- */
+.of-inbox__bar { display: flex; align-items: baseline; gap: 16px; margin-bottom: 14px; }
+.of-to { border: 1px solid var(--line-soft); border-radius: 3px; max-height: 240px; overflow-y: auto; }
+.of-to__b {
+  display: block; width: 100%; text-align: left; font: inherit; font-size: 13px; cursor: pointer;
+  color: var(--paper); background: transparent; border: 0;
+  border-bottom: 1px solid var(--line-soft); padding: 9px 12px;
+}
+.of-to__b:last-child { border-bottom: 0; }
+.of-to__b:hover { background: rgba(255,255,255,.05); }

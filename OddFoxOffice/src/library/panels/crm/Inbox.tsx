@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Chip, H1, Note } from "../../../ui";
 import { cancelSend, sendDirect, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
 import { CRM_CHANGED } from "./Operator";
+import { useContacts } from "./shared";
 
 /* The inbox. One conversation per person: what we sent, what came back.
 
@@ -70,6 +71,11 @@ export function CrmInbox() {
   const [body, setBody] = useState("");
   const [working, setWorking] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
+  // Composing to someone with no thread yet — the only way to start one.
+  const [composing, setComposing] = useState(false);
+  const [to, setTo] = useState<string>("");
+  const [find, setFind] = useState("");
+  const { rows: contacts } = useContacts();
 
   useEffect(() => {
     const r = () => void reload();
@@ -77,8 +83,27 @@ export function CrmInbox() {
     return () => window.removeEventListener(CRM_CHANGED, r);
   }, [reload]);
 
-  const open: Thread | null = threads.find((t) => t.contact_id === openId) ?? threads[0] ?? null;
+  const open: Thread | null = composing
+    ? null
+    : threads.find((t) => t.contact_id === openId) ?? threads[0] ?? null;
   const last = open?.messages[open.messages.length - 1];
+
+  // Only people with an address can be written to; a picker full of names
+  // that cannot be selected is worse than a shorter list.
+  const writable = useMemo(
+    () => contacts.filter((c) => c.email)
+      .filter((c) => {
+        const q = find.trim().toLowerCase();
+        if (!q) return true;
+        return `${c.full_name} ${c.company ?? ""} ${c.title}`.toLowerCase().includes(q);
+      })
+      .slice(0, 60),
+    [contacts, find]);
+
+  const startCompose = () => {
+    setComposing(true); setReplying(false);
+    setTo(""); setFind(""); setSubject(""); setBody("");
+  };
 
   const startReply = () => {
     const s = last?.subject ?? "";
@@ -95,14 +120,16 @@ export function CrmInbox() {
   };
 
   const doSend = async () => {
-    if (!open || !subject.trim() || !body.trim()) return;
+    const target = composing ? to : open?.contact_id;
+    if (!target || !subject.trim() || !body.trim()) return;
     setWorking(true);
     try {
-      const r = await sendDirect(open.contact_id, subject.trim(), body.trim());
+      const r = await sendDirect(target, subject.trim(), body.trim());
       setSaid(r.dry_run
         ? `Queued as a dry run for ${fmt(r.scheduled_at)} — nothing was sent.`
         : `Scheduled for ${fmt(r.scheduled_at)}. Cancellable until it goes.`);
-      setReplying(false); setSubject(""); setBody("");
+      setReplying(false); setComposing(false); setSubject(""); setBody("");
+      if (composing) setOpenId(target);
       await reload();
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
     finally { setWorking(false); }
@@ -112,18 +139,62 @@ export function CrmInbox() {
     return <><H1>Inbox</H1><Note><strong>The CRM server is not answering. </strong>{error}</Note></>;
   }
 
-  if (threads.length === 0) {
+  const composer = (
+    <div className="of-compose">
+      {composing && (
+        <>
+          <input className="of-chat__in" placeholder="To — search by name, company or role"
+                 value={find} disabled={working}
+                 onChange={(e) => { setFind(e.target.value); setTo(""); }} />
+          {!to && find.trim() && (
+            <div className="of-to">
+              {writable.length === 0 && <span className="of-note">Nobody matches, or they have no address on record.</span>}
+              {writable.map((c) => (
+                <button key={c.id} className="of-to__b"
+                        onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
+                  <strong>{c.full_name}</strong>
+                  <span className="of-note"> · {c.title || "role unknown"} · {c.company ?? "—"}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+      <input className="of-chat__in" placeholder="Subject" value={subject}
+             disabled={working} onChange={(e) => setSubject(e.target.value)} />
+      <textarea className="of-chat__in" rows={8} placeholder="Write a message…"
+                value={body} disabled={working} onChange={(e) => setBody(e.target.value)} />
+      <div className="of-compose__bar">
+        <button className="of-facet__b" onClick={() => void doSend()}
+                disabled={working || !subject.trim() || !body.trim() || (composing && !to)}>
+          {working ? "…" : "Schedule"}
+        </button>
+        <button className="of-dock__x"
+                onClick={() => { setComposing(false); setReplying(false); }}>discard</button>
+        <span className="of-note">Signature, address and opt-out line are added for you.</span>
+      </div>
+    </div>
+  );
+
+  const newButton = (
+    <button className="of-facet__b" onClick={startCompose} disabled={composing}>
+      New email
+    </button>
+  );
+
+  if (threads.length === 0 && !composing) {
     return (
       <>
-        <H1>Inbox</H1>
-        <Note>{busy ? "Loading…" : "Nothing here yet. A conversation appears once a message has been written to someone."}</Note>
+        <div className="of-inbox__bar"><H1>Inbox</H1>{newButton}</div>
+        {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
+        <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
       </>
     );
   }
 
   return (
     <>
-      <H1>Inbox</H1>
+      <div className="of-inbox__bar"><H1>Inbox</H1>{newButton}</div>
       {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
 
       <div className="of-inbox">
@@ -151,6 +222,15 @@ export function CrmInbox() {
         </nav>
 
         <div className="of-inbox__thread">
+          {composing && (
+            <>
+              <header className="of-inbox__head">
+                <div className="of-inbox__title">New email</div>
+                <div className="of-note">Goes out under the same cap, footer and dry-run switch as everything else.</div>
+              </header>
+              {composer}
+            </>
+          )}
           {open && (
             <>
               <header className="of-inbox__head">
@@ -185,26 +265,7 @@ export function CrmInbox() {
                         title={open.email ? "Write to this person" : "No address on record"}>
                   Reply
                 </button>
-              ) : (
-                /* Writing by hand goes through the same schedule path as
-                   everything else, so the daily cap, the footer and the
-                   dry-run switch all still apply. */
-                <div className="of-compose">
-                  <input className="of-chat__in" placeholder="Subject" value={subject}
-                         disabled={working} onChange={(e) => setSubject(e.target.value)} />
-                  <textarea className="of-chat__in" rows={8} placeholder="Write a message…"
-                            value={body} disabled={working}
-                            onChange={(e) => setBody(e.target.value)} />
-                  <div className="of-compose__bar">
-                    <button className="of-facet__b" onClick={() => void doSend()}
-                            disabled={working || !subject.trim() || !body.trim()}>
-                      {working ? "…" : "Schedule"}
-                    </button>
-                    <button className="of-dock__x" onClick={() => setReplying(false)}>discard</button>
-                    <span className="of-note">Signature, address and opt-out line are added for you.</span>
-                  </div>
-                </div>
-              )}
+              ) : composer}
             </>
           )}
         </div>
