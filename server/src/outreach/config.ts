@@ -26,12 +26,12 @@ export const secret = (name: string): string | null => {
     is; one consistent human sender per domain is what a real person looks
     like. Adding a sender is a deliberate code change and a deploy. */
 export const SENDERS = [
-  { domain: "seaworth.io", from_local: "barak", from_name: "Barak" },
-  { domain: "theseaworth.com", from_local: "barak", from_name: "Barak" },
+  { domain: "seaworth.io", from_local: "barak", from_name: "Barak Ben Noon" },
+  { domain: "theseaworth.com", from_local: "barak", from_name: "Barak Ben Noon" },
   // Personal. Present so it can be picked by hand in the Inbox; kept off the
   // automated path by manual_only, and out of the CRM's reply store by
   // listen_inbound: false.
-  { domain: "seaworth.ai", from_local: "barak", from_name: "Barak" },
+  { domain: "seaworth.ai", from_local: "barak", from_name: "Barak Ben Noon" },
 ] as const;
 
 export const senderFor = (domain: string) =>
