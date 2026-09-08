@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { Section, Grid, Cell, Stat, Note, H1, Card, Chip, Site, Logo, Star } from "../../../ui";
 import type { Rec } from "../../../data";
 import type { ContactRecord } from "../../../lib/crmStore";
@@ -16,6 +17,23 @@ export function CrmPeople() {
   const withProfile = people.filter((x) => x.linkedin_url).length;
   const con = contactsFile;
 
+  /* Reaching someone needs an address or a profile. The useful question is
+     therefore not "who is on the list" but "who can we not reach yet", which
+     is what these filters answer — they are a research worklist. */
+  const FILTERS = [
+    { id: "all", label: "All", fn: () => true },
+    { id: "no-email", label: "No email", fn: (x: ContactRecord) => !x.email },
+    { id: "no-linkedin", label: "No LinkedIn", fn: (x: ContactRecord) => !x.linkedin_url },
+    { id: "neither", label: "Neither", fn: (x: ContactRecord) => !x.email && !x.linkedin_url },
+    { id: "both", label: "Both", fn: (x: ContactRecord) => Boolean(x.email && x.linkedin_url) },
+  ] as const;
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("all");
+  const rows = useMemo(
+    () => people.filter(FILTERS.find((f) => f.id === filter)!.fn),
+    // FILTERS is rebuilt each render but its predicates are pure and stable.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [people, filter]);
+
   return (
     <>
       <H1>People</H1>
@@ -32,15 +50,24 @@ export function CrmPeople() {
                       label="first-degree connections" sub="warm, message directly" /></Cell>
         </Grid>
 
-        {people.length > 0 ? (
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
+          {FILTERS.map((f) => (
+            <button key={f.id} className={`of-facet__b${filter === f.id ? " is-on" : ""}`}
+                    onClick={() => setFilter(f.id)}>
+              {f.label}<span className="of-facet__n">{people.filter(f.fn).length}</span>
+            </button>
+          ))}
+        </div>
+
+        {rows.length > 0 ? (
           <div className="of-matrix-wrap">
             <table className="of-matrix of-crm">
               <thead><tr>
                 <th className="co">Name</th><th>Title</th><th>Company</th>
-                <th>Buying role</th><th>P</th><th>Warm</th><th>LinkedIn</th><th>Source</th>
+                <th>Buying role</th><th>P</th><th>Warm</th><th>Email</th><th>LinkedIn</th><th>Source</th>
               </tr></thead>
               <tbody>
-                {people.map((x) => {
+                {rows.map((x) => {
                   const acct = accountFor(x);
                   return (
                     <tr key={x.id}>
@@ -65,6 +92,9 @@ export function CrmPeople() {
                       <td className="val">{x.priority ?? "—"}</td>
                       <td className="cell">{x.connection_degree === 1
                         ? <Chip tone="calm">1st</Chip> : <span className="of-dot-off" />}</td>
+                      <td className="cell">{x.email
+                        ? <a className="of-link of-site" href={`mailto:${x.email}`}>{x.email}</a>
+                        : <span className="of-dot-off" title="no address on record" />}</td>
                       <td className="cell">{x.linkedin_url
                         ? <Site url={x.linkedin_url} label="profile" />
                         : <span className="of-dot-off" title="no public profile found" />}</td>
@@ -76,7 +106,9 @@ export function CrmPeople() {
             </table>
           </div>
         ) : (
-          <Note>No people on record yet. The role map below is what the research will fill.</Note>
+          <Note>{people.length === 0
+            ? "No people on record yet."
+            : "Nobody matches that filter."}</Note>
         )}
 
         <div style={{ marginTop: 24 }}>

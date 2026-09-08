@@ -220,11 +220,26 @@ export function CrmInbox() {
                   value={body} disabled={working} onChange={(e) => setBody(e.target.value)} />
       </div>
       <footer className="of-cw__f">
-        <button className="of-facet__b" onClick={() => void doSend()}
-                disabled={working || !subject.trim() || !body.trim() || (composing && !to)}>
-          {working ? "…" : "Schedule"}
-        </button>
-        <span className="of-note">Signature, address and opt-out line are added for you.</span>
+        {(() => {
+          // Say why the button is dead rather than leaving it greyed and
+          // unexplained — "no recipient picked" is not obvious when the
+          // search box already has text in it.
+          const missing = composing && !to ? "pick a recipient from the list"
+            : !subject.trim() ? "add a subject"
+            : !body.trim() ? "write a message"
+            : null;
+          return (
+            <>
+              <button className="of-facet__b" onClick={() => void doSend()}
+                      disabled={working || Boolean(missing)}>
+                {working ? "…" : "Send"}
+              </button>
+              <span className="of-note">
+                {missing ?? "Signature, address and opt-out line are added for you."}
+              </span>
+            </>
+          );
+        })()}
       </footer>
     </div>
   );
