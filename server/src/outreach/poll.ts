@@ -75,8 +75,15 @@ export async function pollReplies(): Promise<number> {
   // domain's mail is left in Resend rather than copied into the CRM.
   const listening = new Set(
     cfg.domains.filter((d) => d.listen_inbound).map((d) => d.domain.toLowerCase()));
+  // Individually tracked mailboxes are ingested whatever their domain says,
+  // so one address on a personal domain can be followed without listening to
+  // the whole of it.
+  const tracked = new Set(cfg.tracked_addresses.map((a) => a.trim().toLowerCase()));
   const heard = (to: string[]) =>
-    to.some((a) => listening.has((a.split("@")[1] ?? "").trim().toLowerCase()));
+    to.some((raw) => {
+      const a = (raw.match(/<([^>]+)>/)?.[1] ?? raw).trim().toLowerCase();
+      return tracked.has(a) || listening.has((a.split("@")[1] ?? "").trim());
+    });
 
   const since = await getCursor();
   const { data, error } = await resend().emails.receiving.list({ limit: 100 });

@@ -65,6 +65,14 @@ export const OutreachConfig = z.object({
   })).default([]),
   /** Which signature is used when the writer does not choose. */
   default_signature: z.string().nullable().default(null),
+  /** Individual addresses whose inbound mail is pulled into the CRM even
+      when their domain is not listened to.
+
+      Per-address rather than per-domain because the MX record is at the
+      apex: listening to a domain means listening to every address on it.
+      This lets one mailbox on a personal domain be tracked without dragging
+      the rest of that domain's mail into a shared database. */
+  tracked_addresses: z.array(z.string().email()).default([]),
   /** A real postal address is required for lawful commercial email in the
       UK/EU. Sending stays blocked until this is filled in. */
   postal_address: z.string().nullable().default(null),

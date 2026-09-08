@@ -421,3 +421,6 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-inbox__counts { font-family: var(--mono); font-size: 11.5px; color: var(--fog); }
 .of-inbox__counts strong { color: var(--paper); font-weight: 500; }
 .of-inbox__sep { margin: 0 8px; opacity: .5; }
+.of-track { display: flex; align-items: center; gap: 12px; padding: 8px 0;
+            border-bottom: 1px solid var(--line-soft); }
+.of-track__a { font-family: var(--mono); font-size: 12.5px; color: var(--paper); flex: 1; }

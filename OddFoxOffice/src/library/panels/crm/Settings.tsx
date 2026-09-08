@@ -18,11 +18,17 @@ export function CrmSettings() {
   const status = useOutreachStatus();
   const [sigs, setSigs] = useState<Signature[]>([]);
   const [def, setDef] = useState<string | null>(null);
+  const [tracked, setTracked] = useState<string[]>([]);
+  const [newAddr, setNewAddr] = useState("");
   const [saving, setSaving] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
 
   useEffect(() => {
-    if (cfg.data) { setSigs(cfg.data.signatures); setDef(cfg.data.default_signature); }
+    if (cfg.data) {
+      setSigs(cfg.data.signatures);
+      setDef(cfg.data.default_signature);
+      setTracked(cfg.data.tracked_addresses ?? []);
+    }
   }, [cfg.data]);
 
   const save = async () => {
@@ -32,6 +38,7 @@ export function CrmSettings() {
       await putOutreachConfig({
         signatures: clean,
         default_signature: clean.some((s) => s.id === def) ? def : (clean[0]?.id ?? null),
+        tracked_addresses: tracked,
       });
       await cfg.reload();
       setSaid("Saved.");
@@ -100,6 +107,48 @@ ${cfg.data?.postal_address ?? "(no postal address set)"}
 Reply "unsubscribe" and you will not hear from me again.`}
           </pre>
         </Note>
+      </Section>
+
+      <Section kicker="Mail we watch">
+        {/* Per address, not per domain: the MX record is at the apex, so
+            listening to a domain means listening to every mailbox on it.
+            This follows one address without pulling in the rest. */}
+        {tracked.length === 0 && (
+          <Note style={{ marginBottom: 12 }}>
+            Nothing tracked individually. Mail still comes in for any domain marked below as
+            “replies come into the CRM”.
+          </Note>
+        )}
+        {tracked.map((a) => (
+          <div key={a} className="of-track">
+            <span className="of-track__a">{a}</span>
+            <button className="of-dock__x"
+                    onClick={() => setTracked((p) => p.filter((x) => x !== a))}>remove</button>
+          </div>
+        ))}
+        <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+          <input className="of-chat__in" style={{ flex: 1, minWidth: 220 }}
+                 placeholder="address to track — e.g. barak@seaworth.ai"
+                 value={newAddr} onChange={(e) => setNewAddr(e.target.value)}
+                 onKeyDown={(e) => {
+                   if (e.key !== "Enter") return;
+                   e.preventDefault();
+                   const a = newAddr.trim().toLowerCase();
+                   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a) && !tracked.includes(a)) {
+                     setTracked((p) => [...p, a]); setNewAddr("");
+                   }
+                 }} />
+          <button className="of-facet__b"
+                  disabled={!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newAddr.trim())}
+                  onClick={() => {
+                    const a = newAddr.trim().toLowerCase();
+                    if (!tracked.includes(a)) setTracked((p) => [...p, a]);
+                    setNewAddr("");
+                  }}>Add</button>
+          <button className="of-facet__b" onClick={() => void save()} disabled={saving}>
+            {saving ? "…" : "Save"}
+          </button>
+        </div>
       </Section>
 
       <Section kicker="Addresses you can send from">

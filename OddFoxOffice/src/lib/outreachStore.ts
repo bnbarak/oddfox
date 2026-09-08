@@ -48,6 +48,7 @@ export type Sender = { domain: string; address: string | null; manual_only: bool
 export type Signature = { id: string; name: string; body: string };
 export type OutreachConfig = {
   signatures: Signature[]; default_signature: string | null;
+  tracked_addresses: string[];
   sender_name: string; postal_address: string | null; unsubscribe_mailbox: string | null;
   dry_run: boolean; auto_followups: boolean; timezone: string;
   send_window: { start_hour: number; end_hour: number };
