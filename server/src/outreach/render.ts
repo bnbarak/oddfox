@@ -51,20 +51,35 @@ export function fill(template: string, vars: Vars): { text: string; unresolved: 
   return { text, unresolved: [...missing] };
 }
 
-/** The block that closes every message. Kept out of the templates on purpose:
-    the templates are copy and get rewritten often, this is a legal
-    requirement and must not depend on someone remembering it.
+/** The opt-out sentence, and the marker for where an appended footer
+    begins in a rendered body. */
+export const OPT_OUT_LINE = `Reply "unsubscribe" and you will not hear from me again.`;
 
-    A signature only replaces the sign-off. The postal address and the opt-out
-    line are appended regardless, so no amount of editing a signature can
-    remove them. */
-export function footer(cfg: OutreachConfig, signatureId?: string | null): string {
+/** The block that closes a message: a sign-off, and for marketing mail the
+    postal address and opt-out line as well.
+
+    `commercial` is the distinction that matters, and it is not "automated vs
+    typed by hand" — it is what the law cares about. A tier sequence is
+    unsolicited marketing to a stranger, so CAN-SPAM and PECR require a
+    postal address and a working opt-out. A one-off note to somebody you
+    already know is ordinary correspondence, and bolting an unsubscribe line
+    onto it reads as machine-generated, which defeats the point of writing it
+    by hand.
+
+    Kept out of the templates on purpose: templates are copy and get
+    rewritten often; this is a legal requirement on the messages that need it
+    and must not depend on someone remembering. A signature only ever
+    replaces the sign-off — it cannot remove the compliance lines from a
+    message that needs them. */
+export function footer(
+  cfg: OutreachConfig, signatureId?: string | null, commercial = true,
+): string {
   const id = signatureId ?? cfg.default_signature;
   const sig = cfg.signatures.find((x) => x.id === id);
   const lines = [sig ? sig.body.trimEnd() : cfg.sender_name];
-  if (cfg.postal_address) lines.push(cfg.postal_address);
-  if (cfg.unsubscribe_mailbox) {
-    lines.push(`Reply "unsubscribe" and you will not hear from me again.`);
+  if (commercial) {
+    if (cfg.postal_address) lines.push(cfg.postal_address);
+    if (cfg.unsubscribe_mailbox) lines.push(OPT_OUT_LINE);
   }
   return lines.join("\n");
 }
@@ -78,20 +93,21 @@ export function footer(cfg: OutreachConfig, signatureId?: string | null): string
     dropping the marker costs nothing legally. Anything that needs to find
     where the body ends should use footerStart() rather than matching "--". */
 export const withFooter = (
-  body: string, cfg: OutreachConfig, signatureId?: string | null,
-): string => `${body.trimEnd()}\n\n${footer(cfg, signatureId)}\n`;
+  body: string, cfg: OutreachConfig, signatureId?: string | null, commercial = true,
+): string => `${body.trimEnd()}\n\n${footer(cfg, signatureId, commercial)}\n`;
 
 /** Where the appended footer begins in a rendered body, or -1. Used to show
     just the human-written part. Matches the opt-out line, which footer()
     always emits last and which no hand-written message would contain. */
-export const OPT_OUT_LINE = `Reply "unsubscribe" and you will not hear from me again.`;
 
 /** Headers that make an opt-out one action in the recipient's mail client
     rather than a hunt through the text. mailto rather than a URL because the
     API has no public unencrypted surface to host a click endpoint on, and a
     mailto target is honoured by every major client. */
-export function listHeaders(cfg: OutreachConfig): Record<string, string> {
-  if (!cfg.unsubscribe_mailbox) return {};
+export function listHeaders(cfg: OutreachConfig, commercial = true): Record<string, string> {
+  // Same rule as the footer: a personal note does not carry an unsubscribe
+  // header, because it is not a mailing list.
+  if (!commercial || !cfg.unsubscribe_mailbox) return {};
   return { "List-Unsubscribe": `<mailto:${cfg.unsubscribe_mailbox}?subject=unsubscribe>` };
 }
 

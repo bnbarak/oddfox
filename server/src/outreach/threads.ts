@@ -41,6 +41,31 @@ export type Thread = {
   messages: ThreadMessage[];
 };
 
+/** Strips reply and forward prefixes so "Re: Marine Security" and "Marine
+    Security" are recognised as the same conversation. Repeated because mail
+    clients stack them: "Re: Fwd: Re: ...". */
+export function normaliseSubject(subject: string | null | undefined): string {
+  let t = (subject ?? "").trim();
+  for (;;) {
+    const next = t.replace(/^(re|fwd?|aw|sv|vs|antw)\s*(\[\d+\])?\s*:\s*/i, "");
+    if (next === t) break;
+    t = next;
+  }
+  return t.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+/** What makes two messages the same conversation.
+
+    Keyed by counterparty *and* subject, not by person: two unrelated notes
+    from the same address are two conversations, and stacking them into one
+    thread makes the second look like a reply to the first. A message with no
+    subject stands alone under its own id rather than collapsing every
+    subjectless message from that address together. */
+const threadKey = (who: string, subject: string | null, id: string): string => {
+  const norm = normaliseSubject(subject);
+  return norm ? `${who.toLowerCase()}|${norm}` : `${who.toLowerCase()}|#${id}`;
+};
+
 const outbound = (s: SendRecord): ThreadMessage => ({
   dir: "out", id: s.id, subject: s.subject, body: s.body,
   at: s.scheduled_at ?? s.created_at, status: s.status, round: s.round,
@@ -68,8 +93,13 @@ export async function threads(): Promise<Thread[]> {
     cur.to ??= addr;
     byKey.set(key, cur);
   };
-  for (const s of sends) push(s.contact_id ?? s.to, s.contact_id, s.to, outbound(s));
-  for (const r of replies) push(r.contact_id ?? r.from, r.contact_id, r.from, inbound(r));
+  const bare = (a: string) => (a.match(/<([^>]+)>/)?.[1] ?? a).trim();
+  for (const s of sends) {
+    push(threadKey(bare(s.to), s.subject, s.id), s.contact_id, s.to, outbound(s));
+  }
+  for (const r of replies) {
+    push(threadKey(bare(r.from), r.subject, r.id), r.contact_id, r.from, inbound(r));
+  }
 
   const out: Thread[] = [];
   for (const [key, t] of byKey) {

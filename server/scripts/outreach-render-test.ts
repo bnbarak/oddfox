@@ -124,6 +124,22 @@ ok("while applying what it did send", merged.signatures.length === 1);
 const naive = OutreachConfig.parse({ ...current, ...patch });
 ok("the naive spread is what broke it", naive.domains.length === 0 && naive.postal_address === null);
 
+
+/* ---- threading ---------------------------------------------------------
+
+   Two unrelated notes from the same address are two conversations. Keying
+   threads by person alone stacked them, which made the second look like a
+   reply to the first. */
+{
+  const { normaliseSubject } = await import("../src/outreach/threads.js");
+  ok("Re: is stripped", normaliseSubject("Re: Marine Security") === "marine security");
+  ok("stacked prefixes are stripped",
+     normaliseSubject("Re: Fwd: Re: Marine Security") === "marine security");
+  ok("different subjects stay different",
+     normaliseSubject("Another test!") !== normaliseSubject("Marine Security"));
+  ok("empty stays empty", normaliseSubject(null) === "");
+}
+
 // eslint-disable-next-line no-console
 console.log(failed ? `\n${failed} failed` : "\nall passed");
 process.exitCode = failed ? 1 : 0;

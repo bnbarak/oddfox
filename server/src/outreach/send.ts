@@ -114,7 +114,10 @@ export async function schedule(
     throw new Refused("unknown-sender",
       `${domain} has no sender defined in SENDERS — adding one is a code change.`);
   }
-  const text = withFooter(req.body, cfg, req.signature);
+  // Rounds 1-3 are unsolicited marketing and carry the compliance block.
+  // round 0 is a note somebody typed to a person, and does not.
+  const commercial = req.round >= 1;
+  const text = withFooter(req.body, cfg, req.signature, commercial);
   const account = contact ? await crm.account(contact.account_id) : null;
   const now = new Date().toISOString();
 
@@ -165,7 +168,7 @@ export async function schedule(
       from, to, subject: req.subject, text,
       ...(d.reply_to ? { replyTo: d.reply_to } : {}),
       scheduledAt: at.toISOString(),
-      headers: listHeaders(cfg),
+      headers: listHeaders(cfg, commercial),
       tags: [{ name: "round", value: String(req.round) }],
     });
     if (error || !data) throw new Error(error?.message ?? "Resend returned no id");
