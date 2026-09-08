@@ -105,7 +105,23 @@ export async function schedule(
       `${domain} is reserved for messages written by hand; a sequence round cannot use it.`);
   }
 
-  const at = req.scheduled_at ? new Date(req.scheduled_at) : nextSlot(cfg, domain, queued);
+  /* Sequence mail is paced: inside the sending window, spaced out, because
+     that is what protects a young domain. A message somebody just typed is
+     not paced — they pressed send and it should go.
+
+     It is still scheduled, a minute out, rather than sent outright: Resend
+     will only cancel a message it has not released yet, so that minute is
+     the undo. Same reason a mail client waits a few seconds before it
+     actually sends. */
+  // Rounds 1-3 are unsolicited marketing: paced, and carrying the compliance
+  // block. round 0 is a note somebody typed to a person, and is neither.
+  const commercial = req.round >= 1;
+
+  const at = req.scheduled_at
+    ? new Date(req.scheduled_at)
+    : commercial
+      ? nextSlot(cfg, domain, queued)
+      : new Date(Date.now() + 60 * 1000);
   if (Number.isNaN(at.getTime())) throw new Refused("bad-date", `${req.scheduled_at} is not a date`);
 
   const day = dayKey(at, cfg.timezone);
@@ -114,9 +130,6 @@ export async function schedule(
     throw new Refused("unknown-sender",
       `${domain} has no sender defined in SENDERS — adding one is a code change.`);
   }
-  // Rounds 1-3 are unsolicited marketing and carry the compliance block.
-  // round 0 is a note somebody typed to a person, and does not.
-  const commercial = req.round >= 1;
   const text = withFooter(req.body, cfg, req.signature, commercial);
   const account = contact ? await crm.account(contact.account_id) : null;
   const now = new Date().toISOString();

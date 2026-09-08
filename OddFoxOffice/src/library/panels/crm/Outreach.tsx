@@ -5,6 +5,7 @@ import {
   type Cell, type HeatRow,
 } from "../../../lib/outreachStore";
 import { CRM_CHANGED } from "./Operator";
+import { Toast } from "./Toast";
 
 /** Heat, 0–1, from how much an account got in one week. Deliberately not
     linear: the difference between nothing and one message matters far more
@@ -124,8 +125,6 @@ export function CrmOutreach() {
           </Note>
         );
       })()}
-
-      {said && <Note style={{ marginBottom: 16 }}>{said}</Note>}
 
       <Section kicker="Today">
         <Grid cols={4}>
@@ -306,6 +305,7 @@ export function CrmOutreach() {
           <Note>Nothing has come back yet.</Note>
         )}
       </Section>
+      <Toast message={said} onDone={() => setSaid(null)} />
     </>
   );
 }

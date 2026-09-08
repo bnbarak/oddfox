@@ -214,6 +214,20 @@ a.co-row:hover .co-name { color: var(--hot); text-decoration: underline; }
 .of-chat__in:focus { outline: none; border-color: var(--line); }
 .of-chat__in[disabled] { opacity: .5; }
 
+/* ---------- who is signed in ---------- */
+/* Floats over the top right of every page. The agent dock is also pinned to
+   that edge, so the chip steps aside for it rather than sitting on its head. */
+.of-whoami {
+  position: fixed; top: 8px; right: 12px; z-index: 1000;
+  display: flex; gap: 8px; align-items: center;
+  font-size: 12px; opacity: .7;
+}
+.of-whoami__out {
+  font: inherit; color: inherit; background: none; cursor: pointer;
+  border: 1px solid currentColor; border-radius: 4px; padding: 2px 8px; opacity: .8;
+}
+body[data-crm-dock="open"] .of-whoami { right: calc(min(400px, 34vw) + 12px); }
+
 /* ---------- outreach: the agent, a rail down the right of the CRM ---------- */
 .of-dock {
   position: fixed; top: 0; right: 0; bottom: 0; z-index: 40;
@@ -259,6 +273,9 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 
 @media (max-width: 900px) {
   .of-dock { width: 100vw; min-width: 0; }
+  /* The dock covers the screen, so there is nowhere for the chip to stand
+     aside to. Collapsing the dock brings it back. */
+  body[data-crm-dock="open"] .of-whoami { display: none; }
   body[data-crm-dock="open"] .of-main,
   body[data-crm-dock="open"] .of-head,
   body[data-crm-dock="open"] .of-foot { padding-right: 0; }
@@ -308,10 +325,19 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 }
 
 /* ---------- inbox: a mail client ---------- */
-.of-inbox { display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: 0; align-items: start;
+/* The inbox sizes itself to what the window has left, so the page's usual
+   tall bottom padding would come straight out of the reading area. */
+.office .of-main:has(.of-inbox) { padding-bottom: 24px; }
+
+/* Height is set from JS to whatever the window has left; the panes scroll
+   inside it so the page itself does not move. */
+.of-inbox { display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: 0;
+            align-items: stretch; min-height: 0;
             border: 1px solid var(--line-soft); border-radius: 3px; overflow: hidden; }
-.of-inbox__list { display: flex; flex-direction: column; max-height: 74vh; overflow-y: auto;
+.of-inbox__list { display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
                   border-right: 1px solid var(--line-soft); }
+/* Room to scroll the last conversation up to the top, like any mail client. */
+.of-inbox__list::after { content: ""; flex: 0 0 60vh; }
 .of-inbox__row {
   text-align: left; cursor: pointer; font: inherit; background: transparent;
   border: 0; border-bottom: 1px solid var(--line-soft); border-left: 3px solid transparent;
@@ -333,7 +359,7 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-inbox__l3  { font-family: var(--mono); font-size: 10.5px; color: var(--fog);
                  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.of-inbox__thread { min-width: 0; padding: 20px 22px; max-height: 74vh; overflow-y: auto; }
+.of-inbox__thread { min-width: 0; min-height: 0; padding: 20px 22px; overflow-y: auto; }
 .of-inbox__head { padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--line-soft); }
 .of-inbox__title { font-size: 18px; color: var(--paper); margin-bottom: 5px; }
 
@@ -362,9 +388,8 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-compose__bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
 @media (max-width: 900px) {
-  .of-inbox { grid-template-columns: 1fr; }
-  .of-inbox__list { max-height: 220px; border-right: 0; border-bottom: 1px solid var(--line-soft); }
-  .of-inbox__thread { max-height: none; }
+  .of-inbox { grid-template-columns: 1fr; grid-template-rows: 220px 1fr; }
+  .of-inbox__list { border-right: 0; border-bottom: 1px solid var(--line-soft); }
 }
 
 /* ---------- inbox: compose ---------- */
@@ -424,3 +449,19 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-track { display: flex; align-items: center; gap: 12px; padding: 8px 0;
             border-bottom: 1px solid var(--line-soft); }
 .of-track__a { font-family: var(--mono); font-size: 12.5px; color: var(--paper); flex: 1; }
+
+/* ---------- toast ---------- */
+.of-toast {
+  position: fixed; left: 22px; bottom: 22px; z-index: 70;
+  display: flex; align-items: center; gap: 14px;
+  max-width: min(460px, calc(100vw - 44px));
+  padding: 12px 14px; font-size: 13px; line-height: 1.5;
+  color: var(--void); background: var(--paper);
+  border-radius: 3px; box-shadow: 0 12px 36px rgba(0,0,0,.55);
+  animation: of-toast-in .16s var(--ease);
+}
+.of-toast__x { font: inherit; font-size: 16px; line-height: 1; cursor: pointer;
+               color: var(--void); opacity: .5; background: transparent; border: 0; padding: 0 2px; }
+.of-toast__x:hover { opacity: 1; }
+@keyframes of-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .of-toast { animation: none; } }

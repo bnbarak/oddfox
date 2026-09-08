@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Chip, H1, Note } from "../../../ui";
 import {
   cancelSend, sendDirect, useOutreachConfig, useOutreachStatus, useThreads,
   type Thread, type ThreadMessage,
 } from "../../../lib/outreachStore";
 import { CRM_CHANGED } from "./Operator";
+import { Toast } from "./Toast";
 import { useContacts } from "./shared";
 
 /* The inbox. One conversation per person: what we sent, what came back.
@@ -111,6 +112,40 @@ export function CrmInbox() {
 
   const open: Thread | null = threads.find((t) => t.key === openId) ?? threads[0] ?? null;
   const last = open?.messages[open.messages.length - 1];
+
+  /* The mail client fills what is left of the window and scrolls inside
+     itself. Letting the page scroll instead moves the list and the thread
+     together, which is exactly what you do not want when reading one thread
+     against the list. Measured rather than guessed, because what sits above
+     the inbox — the header, the tabs, a notice — changes height. */
+  const box = useRef<HTMLDivElement | null>(null);
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el) return;
+    const fit = () => {
+      // Take the room under the inbox, then give back whatever that made the
+      // page overflow by. Measuring the correction beats predicting it: what
+      // sits below — page padding, the footer — is not this panel's business.
+      const top = el.getBoundingClientRect().top;
+      const h = Math.max(320, window.innerHeight - top - 8);
+      el.style.height = `${h}px`;
+      const over = document.documentElement.scrollHeight - window.innerHeight;
+      if (over > 0) el.style.height = `${Math.max(320, h - over)}px`;
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  });
+
+  /* Selecting a conversation pulls it to the top of the list, so the thread
+     you are reading and the row it came from line up. */
+  const listEl = useRef<HTMLElement | null>(null);
+  useLayoutEffect(() => {
+    const list = listEl.current;
+    const row = list?.querySelector<HTMLElement>(".of-inbox__row.is-on");
+    if (!list || !row) return;
+    list.scrollTop += row.getBoundingClientRect().top - list.getBoundingClientRect().top;
+  }, [open?.key]);
 
   // Only people with an address can be written to; a picker full of names
   // that cannot be selected is worse than a shorter list.
@@ -285,9 +320,9 @@ export function CrmInbox() {
     return (
       <>
         <div className="of-inbox__bar">{newButton}{counts}</div>
-        {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
         <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
         {composer}
+        <Toast message={said} onDone={() => setSaid(null)} />
       </>
     );
   }
@@ -295,10 +330,9 @@ export function CrmInbox() {
   return (
     <>
       <div className="of-inbox__bar">{newButton}{counts}</div>
-      {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
 
-      <div className="of-inbox">
-        <nav className="of-inbox__list" aria-label="Conversations">
+      <div className="of-inbox" ref={box}>
+        <nav className="of-inbox__list" aria-label="Conversations" ref={listEl}>
           {threads.map((t) => {
             const preview = t.messages[t.messages.length - 1];
             return (
@@ -360,6 +394,7 @@ export function CrmInbox() {
         </div>
       </div>
       {composer}
+      <Toast message={said} onDone={() => setSaid(null)} />
     </>
   );
 }
