@@ -5,7 +5,7 @@ import { secret } from "./config.js";
 import { getConfig } from "./store.js";
 import { readsAsAutomated, readsAsOptOut } from "./render.js";
 import {
-  allSends, getCursor, haveReply, openSends, putReply, setCursor, setStatus,
+  allSends, haveReply, openSends, putReply, setCursor, setStatus,
 } from "./store.js";
 import type { SendStatus } from "./schemas.js";
 
@@ -71,13 +71,10 @@ async function attribute(from: string) {
 export async function pollReplies(): Promise<number> {
   const cfg = await getConfig();
   // Resend receives mail for every address at every domain we have MX for.
-  // Only the domains we deliberately listen to are ingested; a personal
-  // domain's mail is left in Resend rather than copied into the CRM.
+  // Only what we deliberately watch is ingested: a listened domain, or an
+  // individually tracked mailbox on one we do not listen to.
   const listening = new Set(
     cfg.domains.filter((d) => d.listen_inbound).map((d) => d.domain.toLowerCase()));
-  // Individually tracked mailboxes are ingested whatever their domain says,
-  // so one address on a personal domain can be followed without listening to
-  // the whole of it.
   const tracked = new Set(cfg.tracked_addresses.map((a) => a.trim().toLowerCase()));
   const heard = (to: string[]) =>
     to.some((raw) => {
@@ -85,20 +82,25 @@ export async function pollReplies(): Promise<number> {
       return tracked.has(a) || listening.has((a.split("@")[1] ?? "").trim());
     });
 
-  const since = await getCursor();
   const { data, error } = await resend().emails.receiving.list({ limit: 100 });
   if (error || !data) return 0;
 
-  let newest = since;
   let stored = 0;
 
+  /* Deliberately no timestamp cursor.
+
+     There used to be one, and it was wrong: it advanced past mail that had
+     been skipped, so adding an address to the watch list could never pick up
+     anything already received — the messages were permanently invisible.
+     Deduplication is by document id instead, which is what actually makes
+     this idempotent, and it means a newly watched mailbox backfills from
+     whatever Resend still holds. At a dozen messages a day, re-reading one
+     page a minute costs nothing. */
   for (const ref of data.data) {
-    const at = new Date(ref.created_at).toISOString();
-    if (!newest || at > newest) newest = at;
-    if (since && at <= since) continue;
     if (!heard(ref.to)) continue;
     if (await haveReply(ref.id)) continue;
 
+    const at = new Date(ref.created_at).toISOString();
     const full = await resend().emails.receiving.get(ref.id).catch(() => null);
     const text = full?.data?.text ?? null;
     const automated = readsAsAutomated(ref.from, ref.subject ?? null);
@@ -131,6 +133,6 @@ export async function pollReplies(): Promise<number> {
     }
   }
 
-  if (newest && newest !== since) await setCursor(newest);
+  await setCursor(new Date().toISOString());   // kept for "when did we last look"
   return stored;
 }
