@@ -1,4 +1,4 @@
-// Shared style constants for the Odd Fox deck. Nothing here is imported by the
+// Shared style constants for the Seaworth deck. Nothing here is imported by the
 // framework; it exists so slides stay visually consistent without a component
 // library.
 export const TONE = {

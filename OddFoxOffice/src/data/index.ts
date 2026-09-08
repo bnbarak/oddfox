@@ -13,6 +13,7 @@ import crmSequences from "@data/crm/sequences.json";
 import industryFleet from "@data/industry/fleet.json";
 import industryRates from "@data/industry/rates.json";
 import industryInsurance from "@data/industry/insurance.json";
+import insuranceMarket from "@data/insurance-market.json";
 import industryRoutes from "@data/industry/routes.json";
 import unknowns from "@data/industry/unknowns.json";
 import industryTrends from "@data/industry/trends.json";
@@ -52,6 +53,7 @@ export const DB = {
   industryFleet,
   industryRates,
   industryInsurance,
+  insuranceMarket,
   industryRoutes,
   unknowns,
   industryTrends,

@@ -88,7 +88,10 @@ export function CrmOutreach() {
   if (status.error) {
     return (
       <>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
         <H1>Outreach</H1>
+        {s && <Chip tone={s.dry_run ? "warm" : "calm"}>{s.dry_run ? "dry run" : "live"}</Chip>}
+      </div>
         <Note>
           <strong>The outreach API is not answering. </strong>{status.error}
           <br />
@@ -106,15 +109,21 @@ export function CrmOutreach() {
   return (
     <>
       <H1>Outreach</H1>
-      {s && s.blockers.length > 0 && (
-        <Note style={{ marginBottom: 16 }}>
-          <strong>Not sending. </strong>
-          {s.blockers.length === 1 ? "One thing is" : `${s.blockers.length} things are`} in the way:
-          <ul style={{ margin: "8px 0 0 18px" }}>
-            {s.blockers.map((b) => <li key={b.code}><code>{b.code}</code> — {b.detail}</li>)}
-          </ul>
-        </Note>
-      )}
+      {/* dry-run is a deliberate state, shown as a tag on the title. Only
+          things that are actually missing belong in this list. */}
+      {(() => {
+        const missing = (s?.blockers ?? []).filter((b) => b.code !== "dry-run");
+        if (!missing.length) return null;
+        return (
+          <Note style={{ marginBottom: 16 }}>
+            <strong>Not sending. </strong>
+            {missing.length === 1 ? "One thing is" : `${missing.length} things are`} in the way:
+            <ul style={{ margin: "8px 0 0 18px" }}>
+              {missing.map((b) => <li key={b.code}><code>{b.code}</code> — {b.detail}</li>)}
+            </ul>
+          </Note>
+        );
+      })()}
 
       {said && <Note style={{ marginBottom: 16 }}>{said}</Note>}
 
@@ -160,7 +169,6 @@ export function CrmOutreach() {
           ) : (
             <span className="of-note">no heartbeat has run yet</span>
           )}
-          {s && <Chip tone={s.dry_run ? "warm" : "calm"}>{s.dry_run ? "dry run" : "live"}</Chip>}
           {s && <Chip tone={s.auto_followups ? "cool" : ""}>
             {s.auto_followups ? "auto follow-ups on" : "follow-ups need a person"}
           </Chip>}

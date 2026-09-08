@@ -9,6 +9,7 @@ import {
   putConfig, recentTicks,
 } from "./store.js";
 import { chat } from "./operator.js";
+import { threads } from "./threads.js";
 import { due, tick } from "./tick.js";
 import { z } from "zod";
 import { DraftRequest, OutreachConfig, ScheduleRequest } from "./schemas.js";
@@ -153,6 +154,12 @@ outreachRouter.post("/chat", h(async (req, res) => {
   }
   const { message } = ChatRequest.parse(req.body);
   res.json(await chat(message));
+}));
+
+/** One conversation per person: everything sent, everything that came back,
+    in order. What the Inbox renders. */
+outreachRouter.get("/threads", h(async (_req, res) => {
+  res.json({ threads: await threads() });
 }));
 
 // ---- Reporting ------------------------------------------------------------

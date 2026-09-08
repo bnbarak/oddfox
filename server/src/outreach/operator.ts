@@ -205,7 +205,7 @@ const t = {
       "Schedule a message. Only call this after showing the operator the exact subject and body and being told to go ahead in this conversation. It counts against the sending domain's cap for the day, and it can be cancelled until it goes.",
     inputSchema: z.object({
       contact_id: z.string(),
-      round: z.number().min(1).max(3),
+      round: z.number().min(0).max(3).describe("1-3 for a sequence round, 0 for a one-off"),
       subject: z.string(),
       body: z.string(),
       confirmed_by_operator: z.boolean()
@@ -227,7 +227,7 @@ const t = {
       try {
         const cfg = await getConfig();
         const r = await schedule({
-          contact_id: input.contact_id, round: input.round as 1 | 2 | 3,
+          contact_id: input.contact_id, round: input.round as 0 | 1 | 2 | 3,
           subject: input.subject, body: input.body,
           scheduled_at: input.scheduled_at ?? null, domain: null,
           written_by: modelConfigured() ? "agent" : "template", template_tier: null,

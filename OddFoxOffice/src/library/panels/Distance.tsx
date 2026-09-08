@@ -56,7 +56,7 @@ export function Distance({ proxComp, setProxComp }: { proxComp: string; setProxC
         </Grid>
       </Section>
 
-      <Section kicker="Distance from what Odd Fox does">
+      <Section kicker="Distance from what Seaworth does">
         <Note style={{ marginBottom: 20 }}><strong>{pm.question}</strong> {pm.note}</Note>
         <Grid cols={4}>
           <Cell><Stat value={all.filter((r) => r.proximity === 4).length} label="score 4 of 4" sub="same business" /></Cell>

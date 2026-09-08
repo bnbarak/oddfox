@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Section, Grid, Cell, Stat, Note, H1, Chip, Gap, Bars, Site, Logo } from "../../../ui";
+import { Section, Grid, Cell, Stat, Note, H1, Chip, Gap, Bars, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
 import { PIPE, TONE, today, link, accountsFile, contactsFile, useAccounts } from "./shared";
 import { ServerState } from "./ServerState";
@@ -74,6 +74,7 @@ export function CrmAccounts() {
                   <>
                     <Logo url={r.url} name={r.company} />
                     <span className="co-name">{r.company}</span>
+                    <Star on={r.starred} title="Starred account" />
                   </>
                 );
                 return (

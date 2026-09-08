@@ -31,7 +31,7 @@ export function Passages() {
         <Grid cols={2}>
           <Cell><div className="of-kicker" style={{ marginBottom: 14 }}>Status</div>
             <Pie items={tally(rows, "status")} centreLabel="PASSAGES" /></Cell>
-          <Cell><div className="of-kicker" style={{ marginBottom: 14 }}>Named on oddfox.ai</div>
+          <Cell><div className="of-kicker" style={{ marginBottom: 14 }}>Named on seaworth.ai</div>
             <Pie centreLabel="PASSAGES" items={[
               { label: "named on site", value: rows.filter((r) => r.on_oddfox_site).length },
               { label: "not named", value: rows.filter((r) => !r.on_oddfox_site).length },
@@ -53,7 +53,7 @@ export function Passages() {
           <Card key={r.id} style={{ marginBottom: 16 }}>
             <div style={{ display: "flex", gap: 12, alignItems: "baseline", flexWrap: "wrap" }}>
               <H2>{r.name}</H2>
-              {r.on_oddfox_site && <Chip tone="solid">named on oddfox.ai</Chip>}
+              {r.on_oddfox_site && <Chip tone="solid">named on seaworth.ai</Chip>}
               {r.coords && <Src>{r.coords[0].toFixed(2)}, {r.coords[1].toFixed(2)}</Src>}
             </div>
             <div style={{ marginTop: 12 }}><Chips items={r.threat_types ?? []} /></div>

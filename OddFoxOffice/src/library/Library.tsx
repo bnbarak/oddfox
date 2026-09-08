@@ -11,6 +11,7 @@ import { CrmAccounts } from "./panels/crm/Accounts";
 import { CrmPeople } from "./panels/crm/People";
 import { CrmSequences } from "./panels/crm/Sequences";
 import { CrmOutreach } from "./panels/crm/Outreach";
+import { CrmInbox } from "./panels/crm/Inbox";
 import { Players } from "./panels/Players";
 import { Dossier } from "./panels/Dossier";
 import { Distance } from "./panels/Distance";
@@ -57,6 +58,7 @@ export const TABS = [
   // Outreach is first because it is the CRM's landing page: the group nav
   // links to tabsIn(group)[0], so order here decides where "CRM" goes.
   { id: "crm-outreach",  label: "Outreach",  group: "crm" },
+  { id: "crm-inbox",     label: "Inbox",     group: "crm" },
   { id: "crm",           label: "Accounts",  group: "crm" },
   { id: "crm-people",    label: "People",    group: "crm" },
   { id: "crm-sequences", label: "Sequences", group: "crm" },
@@ -96,6 +98,7 @@ export function Library({ tab, v, set }: {
     "crm-people":    <CrmPeople />,
     "crm-sequences": <CrmSequences />,
     "crm-outreach":  <CrmOutreach />,
+    "crm-inbox":     <CrmInbox />,
     exposed:    <Exposed />,
     segments:   <Segments />,
     players:    <Players playerCat={v.playerCat} setPlayerCat={set("playerCat")} />,

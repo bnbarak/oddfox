@@ -1,4 +1,4 @@
-import { Section, Grid, Cell, Stat, Note, H1, Card, Chip, Site, Logo } from "../../../ui";
+import { Section, Grid, Cell, Stat, Note, H1, Card, Chip, Site, Logo, Star } from "../../../ui";
 import type { Rec } from "../../../data";
 import type { ContactRecord } from "../../../lib/crmStore";
 import { contactsFile, useAccounts, useContacts } from "./shared";
@@ -53,8 +53,10 @@ export function CrmPeople() {
                           ? <a className="co-row" href={x.linkedin_url} target="_blank"
                                rel="noopener noreferrer" title={x.linkedin_url}>
                               <span className="co-name">{x.full_name}</span>
+                              <Star on={x.starred} title="Starred contact" />
                             </a>
-                          : <span className="co-row"><span className="co-name">{x.full_name}</span></span>}
+                          : <span className="co-row"><span className="co-name">{x.full_name}</span>
+                              <Star on={x.starred} title="Starred contact" /></span>}
                       </td>
                       <td className="cell"><span className="of-note">{x.title}</span></td>
                       <td className="cell">

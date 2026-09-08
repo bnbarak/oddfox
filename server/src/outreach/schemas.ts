@@ -58,10 +58,14 @@ export const OutreachConfig = z.object({
   cadence_days: z.object({ round_2: z.number().int().positive().default(4),
                            round_3: z.number().int().positive().default(7) }).default({ round_2: 4, round_3: 7 }),
   /** Mastra model-router id, `provider/model`. Google needs GOOGLE_API_KEY
-      in the environment; the router reads it itself. Swap to
-      google/gemini-2.5-flash here if you want cheaper and faster over
-      careful — at fifteen messages a day the cost difference is noise. */
-  model: z.string().default("google/gemini-2.5-pro"),
+      in the environment; the router reads it itself.
+
+      Not a `-preview` model on purpose. gemini-2.5-pro was the first choice
+      and the API refused it — "no longer available to new users" — which is
+      exactly how a preview model ends too, except later and in production.
+      google/gemini-3.1-pro-preview also works today if you want more care in
+      the writing; it is one config edit and no deploy. */
+  model: z.string().default("google/gemini-3.8-flash"),
   updated: z.string().default(""),
 });
 export type OutreachConfig = z.infer<typeof OutreachConfig>;
@@ -94,7 +98,9 @@ export const SendRecord = z.object({
   from_domain: z.string(),
   from_address: z.string(),
   reply_to: z.string().nullable(),
-  round: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+  /** 1–3 are sequence rounds. 0 is a one-off written by hand, which is why
+      it never advances the cadence and never triggers a follow-up. */
+  round: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
   subject: z.string(),
   body: z.string(),
   /** How the copy was produced — which template, and whether the agent wrote it. */
@@ -168,7 +174,8 @@ export type DraftRequest = z.infer<typeof DraftRequest>;
 
 export const ScheduleRequest = z.object({
   contact_id: z.string().min(1),
-  round: z.union([z.literal(1), z.literal(2), z.literal(3)]),
+  /** 0 for a one-off message written by hand; 1–3 for a sequence round. */
+  round: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
   subject: z.string().min(1),
   body: z.string().min(1),
   /** ISO instant, or omitted for the next free slot inside the send window. */

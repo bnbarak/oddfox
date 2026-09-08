@@ -31,7 +31,7 @@ export function FieldSlide() {
         ))}
       </div>
       <div style={source}>
-        Source: Odd Fox market-players dataset, {companies.filter((c) => (c.source_ids as string[])?.length).length} of{" "}
+        Source: Seaworth market-players dataset, {companies.filter((c) => (c.source_ids as string[])?.length).length} of{" "}
         {companies.length} records sourced
       </div>
     </Slide>

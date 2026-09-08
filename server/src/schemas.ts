@@ -43,7 +43,7 @@ export type SequenceDates = z.infer<typeof SequenceDates>;
 export const AccountRecord = z.object({
   id: z.string().min(1),
   company: z.string().min(1),
-  tier: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
+  tier: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5), z.literal(6)]),
   tier_name: z.string(),
   buying_roles: z.array(BuyingRole),
   country: z.string().nullable(),
@@ -57,6 +57,9 @@ export const AccountRecord = z.object({
   reachable: z.boolean(),
   status: PipelineStatus,
   owner: z.string().nullable(),
+  /** Operator-set flag for "watch this one". Working state, not research —
+      so it is patchable from the UI, unlike company, tier or fleet. */
+  starred: z.boolean().default(false),
   last_touch: isoDate.nullable(),
   sequence: SequenceDates,
   contacts: z.array(z.string()),
@@ -81,6 +84,7 @@ export const AccountPatch = z
   .object({
     status: PipelineStatus,
     owner: z.string().nullable(),
+    starred: z.boolean(),
     last_touch: isoDate.nullable(),
     sequence: SequenceDates,
     notes: z.string().nullable(),
@@ -108,6 +112,11 @@ export const ContactRecord = z.object({
   linkedin_source: z.string().nullable().optional(),
   email: z.string().email().nullable(),
   email_status: EmailStatus,
+  /** Corporate direct dial only. The collection policy in contacts.json
+      forbids storing personal or mobile numbers, so there is deliberately
+      no field for one. */
+  phone_office: z.string().nullable().optional(),
+  starred: z.boolean().default(false),
   source_url: z.string().nullable(),
   source: z.string().optional(),
   published: z.string().nullable().optional(),
@@ -138,6 +147,7 @@ export const ContactPatch = z
     status: PipelineStatus,
     sequence: SequenceDates,
     replied: z.boolean(),
+    starred: z.boolean(),
     notes: z.string().nullable(),
   })
   .partial()

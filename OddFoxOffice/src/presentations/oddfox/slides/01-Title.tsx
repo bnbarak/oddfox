@@ -6,14 +6,14 @@ import { source } from "../slide-design-system";
 export function TitleSlide() {
   return (
     <Slide align="start" tone="default">
-      <Eyebrow>Odd Fox — business context</Eyebrow>
+      <Eyebrow>Seaworth — business context</Eyebrow>
       <Title>Where the gap is</Title>
       <Subtitle>
         What the attack record, the money and {companies.length} companies say about
         uncrewed escort for commercial shipping.
       </Subtitle>
       <div style={source}>
-        Built from the Odd Fox data library v{manifest.version} · {manifest.datasets.length} datasets ·{" "}
+        Built from the Seaworth data library v{manifest.version} · {manifest.datasets.length} datasets ·{" "}
         {platforms.records.length} platform specifications · retrieved {manifest.retrieved}
       </div>
     </Slide>

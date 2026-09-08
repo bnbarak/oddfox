@@ -42,7 +42,9 @@ export function due(
   for (const [contactId, group] of byContact) {
     if (answered.has(contactId)) continue;
     const live = group.filter((s) => s.status !== "canceled");
-    const last = live.filter((s) => !s.dry_run && landed.has(s.status))
+    // round 0 is a one-off written by hand — it is not part of the sequence,
+    // so it neither advances the cadence nor starts one.
+    const last = live.filter((s) => s.round >= 1 && !s.dry_run && landed.has(s.status))
       .sort((a, b) => (b.scheduled_at ?? b.created_at).localeCompare(a.scheduled_at ?? a.created_at))[0];
     if (!last || last.round >= 3) continue;
 

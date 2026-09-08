@@ -18,13 +18,15 @@ export const CRM_CHANGED = "crm:changed";
 
 const OPEN_KEY = "crm.operator.open";
 
+/** Open unless this browser has been told otherwise. The agent is the main
+    way to work the CRM, so it should be there on arrival; only an explicit
+    collapse is remembered. A private window or blocked site data makes this
+    throw rather than return null, so it is guarded, not just null-checked. */
 function readOpen(): boolean {
-  // A private window or blocked site data makes this throw rather than
-  // return null, so it has to be guarded, not just null-checked.
   try {
-    return localStorage.getItem(OPEN_KEY) === "1";
+    return localStorage.getItem(OPEN_KEY) !== "0";
   } catch {
-    return false;
+    return true;
   }
 }
 

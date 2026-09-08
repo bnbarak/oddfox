@@ -16,10 +16,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
         minHeight: "100vh", display: "flex", flexDirection: "column",
         alignItems: "center", justifyContent: "center", gap: 16, padding: 24,
       }}>
-        <div style={{ fontSize: 22, fontWeight: 600 }}>Odd Fox / office</div>
-        <div style={{ opacity: 0.7, maxWidth: 420, textAlign: "center", fontSize: 14 }}>
-          Internal only. Sign in with an allow-listed Google account to continue.
-        </div>
+        <div style={{ fontSize: 22, fontWeight: 600 }}>Seaworth / office</div>
         <div ref={buttonRef} />
         {!ready && <div style={{ opacity: 0.5, fontSize: 13 }}>loading Google Sign-In…</div>}
       </div>

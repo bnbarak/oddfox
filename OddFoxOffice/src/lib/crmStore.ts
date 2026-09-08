@@ -22,7 +22,7 @@ export type SequenceDates = { round_1: string | null; round_2: string | null; ro
 export type AccountRecord = {
   id: string;
   company: string;
-  tier: 1 | 2 | 3 | 4 | 5;
+  tier: 1 | 2 | 3 | 4 | 5 | 6;
   tier_name: string;
   buying_roles: string[];
   country: string | null;
@@ -36,6 +36,8 @@ export type AccountRecord = {
   reachable: boolean;
   status: PipelineStatus;
   owner: string | null;
+  /** Operator-set "watch this one" flag. Working state, so it is patchable. */
+  starred: boolean;
   last_touch: string | null;
   sequence: SequenceDates;
   contacts: string[];
@@ -44,7 +46,7 @@ export type AccountRecord = {
 };
 
 export type AccountPatch = Partial<
-  Pick<AccountRecord, "status" | "owner" | "last_touch" | "sequence" | "notes">
+  Pick<AccountRecord, "status" | "owner" | "starred" | "last_touch" | "sequence" | "notes">
 >;
 
 export type EmailStatus = "unknown" | "guessed" | "verified" | "bounced";
@@ -66,6 +68,9 @@ export type ContactRecord = {
   linkedin_source?: string | null;
   email: string | null;
   email_status: EmailStatus;
+  /** Corporate direct dial only — see the collection policy in contacts.json. */
+  phone_office?: string | null;
+  starred: boolean;
   source_url: string | null;
   source?: string;
   published?: string | null;
@@ -77,7 +82,7 @@ export type ContactRecord = {
 };
 
 export type ContactPatch = Partial<
-  Pick<ContactRecord, "linkedin_url" | "email" | "email_status" | "status" | "sequence" | "replied" | "notes">
+  Pick<ContactRecord, "linkedin_url" | "email" | "email_status" | "status" | "sequence" | "replied" | "starred" | "notes">
 >;
 
 function authHeaders(): HeadersInit {

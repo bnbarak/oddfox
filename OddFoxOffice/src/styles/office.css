@@ -80,6 +80,9 @@ html, body, #root { height: auto; overflow: auto; }
 /* ---------- competitor star + links ---------- */
 .of-star { color: var(--hot); font-size: 12px; line-height: 1; margin-right: 5px; letter-spacing: 0; }
 .of-matrix td.co .of-star { margin-right: 4px; }
+/* CRM tables put the star after the name, so flip the gutter it carries in
+   the matrix, where it leads. */
+.of-table td.co .of-star { margin-right: 0; margin-left: 6px; }
 .of-site { font-family: var(--mono); font-size: 11.5px; overflow-wrap: anywhere; }
 .of-linkcell { display: flex; flex-direction: column; gap: 3px; }
 
@@ -302,4 +305,64 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
   .of-cad { height: auto; padding-right: 0; display: flex; flex-direction: column; gap: 12px; }
   .of-cad__line { display: none; }
   .of-cad__node, .of-cad__end { position: static; max-width: none; width: auto; transform: none; }
+}
+
+/* ---------- inbox: a mail client ---------- */
+.of-inbox { display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: 0; align-items: start;
+            border: 1px solid var(--line-soft); border-radius: 3px; overflow: hidden; }
+.of-inbox__list { display: flex; flex-direction: column; max-height: 74vh; overflow-y: auto;
+                  border-right: 1px solid var(--line-soft); }
+.of-inbox__row {
+  text-align: left; cursor: pointer; font: inherit; background: transparent;
+  border: 0; border-bottom: 1px solid var(--line-soft); border-left: 3px solid transparent;
+  padding: 11px 14px; display: flex; flex-direction: column; gap: 3px; min-width: 0;
+}
+.of-inbox__row:hover { background: rgba(255,255,255,.03); }
+.of-inbox__row.is-on { background: rgba(255,255,255,.07); border-left-color: var(--hot); }
+/* A thread with a human reply reads as unread: it is the one owed an answer. */
+.of-inbox__row.is-unread .of-inbox__who,
+.of-inbox__row.is-unread .of-inbox__subj { color: var(--paper); font-weight: 600; }
+
+.of-inbox__l1 { display: flex; align-items: baseline; gap: 8px; }
+.of-inbox__who { color: var(--mist); font-size: 13px; flex: 1; overflow: hidden;
+                 text-overflow: ellipsis; white-space: nowrap; }
+.of-inbox__at  { font-family: var(--mono); font-size: 10.5px; color: var(--fog); flex-shrink: 0; }
+.of-inbox__l2  { font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.of-inbox__subj { color: var(--mist); }
+.of-inbox__peek { color: var(--fog); }
+.of-inbox__l3  { font-family: var(--mono); font-size: 10.5px; color: var(--fog);
+                 overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.of-inbox__thread { min-width: 0; padding: 20px 22px; max-height: 74vh; overflow-y: auto; }
+.of-inbox__head { padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--line-soft); }
+.of-inbox__title { font-size: 18px; color: var(--paper); margin-bottom: 5px; }
+
+.of-msg { border: 1px solid var(--line-soft); border-radius: 3px; margin-bottom: 8px; }
+.of-msg.is-in  { border-left: 2px solid var(--calm); }
+.of-msg.is-out { border-left: 2px solid var(--cool); }
+.of-msg__h { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
+             padding: 9px 12px; cursor: pointer; min-width: 0; }
+.of-msg__h:hover { background: rgba(255,255,255,.03); }
+.of-msg.is-open > .of-msg__h { border-bottom: 1px solid var(--line-soft); }
+.of-msg__who  { font-family: var(--mono); font-size: 10px; letter-spacing: .07em;
+                text-transform: uppercase; color: var(--fog); flex-shrink: 0; }
+.of-msg__peek { color: var(--fog); font-size: 12px; flex: 1; overflow: hidden;
+                text-overflow: ellipsis; white-space: nowrap; }
+.of-msg__tag  { font-family: var(--mono); font-size: 10px; color: var(--fog);
+                border: 1px solid var(--line-soft); border-radius: 2px; padding: 1px 5px; flex-shrink: 0; }
+.of-msg__at   { margin-left: auto; font-family: var(--mono); font-size: 10.5px;
+                color: var(--fog); flex-shrink: 0; }
+.of-msg__open { padding: 12px 14px 14px; }
+.of-msg__subj { color: var(--paper); font-size: 13.5px; margin-bottom: 8px; }
+.of-msg__body { white-space: pre-wrap; word-break: break-word; margin: 0 0 10px;
+                font-family: var(--mono); font-size: 12px; line-height: 1.65; color: var(--mist); }
+
+.of-compose { display: flex; flex-direction: column; gap: 8px; margin-top: 16px;
+              padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.of-compose__bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .of-inbox { grid-template-columns: 1fr; }
+  .of-inbox__list { max-height: 220px; border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  .of-inbox__thread { max-height: none; }
 }
