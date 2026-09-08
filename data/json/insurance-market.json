@@ -1,0 +1,2462 @@
+{
+ "$schema": "../schema/insurance-market.schema.json",
+ "dataset": "insurance-market",
+ "title": "Who insures a ship",
+ "description": "Marine insurance is a stack of separate covers written by separate parties, and a loss is denied at the seams between them far more often than it is denied outright. This dataset names the institutions, attributes cover to individual attacked hulls where the market let it become public, and records who was refused. It is deliberately as much a map of what is not disclosed as of what is: five of the vessels here have no identifiable insurer at all, and that is the finding, not a failure to find one.",
+ "updated": "2026-09-06",
+ "retrieved": "2026-09-06",
+ "layers": [
+  {
+   "id": "hull-and-machinery",
+   "layer": "Hull and machinery",
+   "covers": "Physical loss or damage to the ship itself, from ordinary marine perils — grounding, collision, fire, heavy weather.",
+   "excludes": "War, strikes, terrorism and malicious acts are struck out by the standard war exclusion and bought back separately.",
+   "who_writes_it": "Commercial insurers and Lloyd's syndicates, on a slip with a lead and following lines.",
+   "who_pays": "The shipowner.",
+   "note": "This is the layer most people mean by 'the ship's insurance', and it is the one that does not answer a missile."
+  },
+  {
+   "id": "war-risk",
+   "layer": "War risk",
+   "covers": "The bought-back perils — war, civil war, revolution, capture, seizure, mines, terrorism and malicious acts. Priced as a percentage of hull value for a period, typically seven days, not per voyage or per year.",
+   "excludes": "Detainment by reason of customs or trading infringements, and — the live question — losses the insurer can characterise as falling under a different exclusion.",
+   "who_writes_it": "Lloyd's syndicates, specialist MGAs such as Vessel Protect and Navium Marine, war risk mutuals such as DNK, and several P&I clubs writing primary hull war in their own right.",
+   "who_pays": "Under most time and voyage charters the charterer bears the additional premium, which is why the charterer is often the party with the budget.",
+   "note": "A vessel entering a Joint War Committee listed area must notify its insurers, who may charge an additional premium or decline. Eternity C is what happens when they decline.",
+   "source_ids": [
+    "jwla-034",
+    "howden-hormuz"
+   ]
+  },
+  {
+   "id": "p-and-i",
+   "layer": "Protection and indemnity",
+   "covers": "Third-party liabilities — crew injury and death, pollution, wreck removal, cargo claims, collision liability. Mutual, not commercial: the members are the insurers.",
+   "excludes": "War risks, which fall to a separate excess war P&I cover.",
+   "who_writes_it": "The twelve clubs of the International Group, covering about 87% of the world's ocean-going tonnage, plus fixed-premium providers outside it.",
+   "who_pays": "The shipowner, through calls rather than premiums.",
+   "note": "Sounion is the clean illustration: the vessel was entered with Gard, and Gard carried no exposure, because the loss was a war risk.",
+   "source_ids": [
+    "ig-about"
+   ]
+  },
+  {
+   "id": "excess-war-pi",
+   "layer": "Excess war P&I",
+   "covers": "Third-party war liabilities above the primary layer. $500m each event for owners in 2026/27, inclusive of interest and costs.",
+   "excludes": "Automatic cessation on outbreak of war between any of the UK, USA, France, Russia and China — the five-powers clause.",
+   "who_writes_it": "The International Group clubs, reinsured through the group programme.",
+   "who_pays": "Included in the mutual entry, free and unlimited.",
+   "note": "The minimum excess is the ship's proper value or $500m, whichever is the lesser — so the owner must buy primary war cover to that level and is deemed to have it. This is the layer that survived the 2026 cancellations untouched, and the reason 'P&I clubs cancelled war cover' was wrong.",
+   "source_ids": [
+    "ig-gxl-2026"
+   ]
+  },
+  {
+   "id": "loss-of-hire",
+   "layer": "Loss of hire",
+   "covers": "Lost earnings while the ship is out of service.",
+   "excludes": "Depends entirely on the wording. On the Nordic Plan it requires a 'state power', which is the ground on which Codan is reported to have refused the Galaxy Leader claim.",
+   "who_writes_it": "Commercial insurers.",
+   "who_pays": "The shipowner.",
+   "note": "The layer where the Houthis' legal status — state power, terrorist, or neither — turns into money.",
+   "source_ids": [
+    "id-galaxy-leader-codan"
+   ]
+  },
+  {
+   "id": "cargo",
+   "layer": "Cargo",
+   "covers": "The goods, not the ship. Separate policy, separate insurer, often a separate broker.",
+   "excludes": "War cover bought back separately, as for hull.",
+   "who_writes_it": "Cargo underwriters — the largest line in the global marine market at 56.7% of premium.",
+   "who_pays": "Whoever bears risk in the cargo under the sale contract.",
+   "note": "Cargo war cover is where affiliation exclusions bit hardest in 2026: Ascot and Navium restricted war cargo cover for Saudi-linked ships in July.",
+   "source_ids": [
+    "iumi-stats-2025",
+    "ft-saudi-2026"
+   ]
+  },
+  {
+   "id": "k-and-r",
+   "layer": "Kidnap and ransom",
+   "covers": "Ransom payment, negotiator fees and crew repatriation.",
+   "excludes": "Varies; heavily bespoke and rarely discussed publicly.",
+   "who_writes_it": "Predominantly Lloyd's, plus MGAs bundling it with war risk.",
+   "who_pays": "The shipowner.",
+   "note": "The most secretive layer in the stack. The Abdullah's $5m ransom was arranged by a UK P&I club that no source has ever named.",
+   "source_ids": [
+    "tbs-abdullah-ransom"
+   ]
+  },
+  {
+   "id": "mortgagee-interest",
+   "layer": "Mortgagee interest",
+   "covers": "The financing bank, where the owner's own policy fails to respond.",
+   "excludes": "Depends on why the owner's cover failed.",
+   "who_writes_it": "Commercial insurers, placed by specialist brokers.",
+   "who_pays": "The mortgagee bank.",
+   "note": "Usually invisible. It surfaced in the Vyssos judgment, which is the only complete insurance chain in this dataset available from a primary court document.",
+   "source_ids": [
+    "ewhc-2025-3293"
+   ]
+  }
+ ],
+ "vessel_cover": [
+  {
+   "id": "galaxy-leader",
+   "vessel": "Galaxy Leader",
+   "imo": "9237307",
+   "incident_id": "galaxy-leader-2023",
+   "date": "2023-11-19",
+   "status": "disputed",
+   "insured_value_usd": 65000000,
+   "insured_value_note": "Roughly $65m insured; hull alone put above $40m. Owner Ray Car Carriers claimed a constructive total loss on the basis of twelve months' deprivation of use.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Ascot",
+     "line_pct": 25,
+     "role": "lead",
+     "outcome": "disputed",
+     "source_ids": [
+      "ll-galaxy-leader-slip"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Markel",
+     "line_pct": 20,
+     "role": "lead",
+     "outcome": "disputed",
+     "note": "The Insurer's headline calls Markel the lead of the ~$65m hull policy; Lloyd's List gives Ascot the larger line. See conflict.",
+     "source_ids": [
+      "ll-galaxy-leader-slip",
+      "ti-galaxy-leader"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Swiss Re",
+     "line_pct": 15,
+     "role": "follow",
+     "outcome": "disputed",
+     "source_ids": [
+      "ll-galaxy-leader-slip"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Arch",
+     "line_pct": 12.5,
+     "role": "follow",
+     "outcome": "disputed",
+     "source_ids": [
+      "ll-galaxy-leader-slip"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Skuld",
+     "line_pct": 12.5,
+     "role": "follow",
+     "outcome": "disputed",
+     "note": "A P&I club taking a line on a hull war slip — clubs are not only mutuals.",
+     "source_ids": [
+      "ll-galaxy-leader-slip"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Tokio Marine HCC",
+     "line_pct": 12.5,
+     "role": "follow",
+     "outcome": "disputed",
+     "source_ids": [
+      "ll-galaxy-leader-slip"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Ark",
+     "line_pct": 2.5,
+     "role": "follow",
+     "outcome": "disputed",
+     "source_ids": [
+      "ll-galaxy-leader-slip"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "loss-of-hire",
+     "insurer": "Codan",
+     "line_pct": null,
+     "role": "sole",
+     "outcome": "refused",
+     "note": "Reported to have refused the loss-of-hire claim on the ground that the Houthis are not a 'state power' as the Nordic Plan requires.",
+     "source_ids": [
+      "id-galaxy-leader-codan"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "conflict": {
+    "field": "Who leads the hull war risk slip",
+    "readings": [
+     "Lloyd's List, 18 Nov 2024: Ascot 25%, the largest single line.",
+     "The Insurer: 'Markel leads ~$65mn hull policy'."
+    ],
+    "action": "Both recorded with attribution. Do not pick one."
+   },
+   "note": "The most completely documented slip in this dataset, and the clearest illustration of the underwriters' argument: they said a war risk policy answers physical damage, not deprivation of use.",
+   "source_ids": [
+    "ll-galaxy-leader-slip",
+    "id-galaxy-leader-codan",
+    "ti-galaxy-leader"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "true-confidence",
+   "vessel": "True Confidence",
+   "imo": "9460784",
+   "incident_id": "true-confidence-2024",
+   "date": "2024-03-06",
+   "status": "named",
+   "insured_value_usd": 17600000,
+   "insured_value_note": "Hull value estimated at $17.6m.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Navium Marine",
+     "line_pct": 100,
+     "role": "sole",
+     "outcome": "unknown",
+     "note": "A marine MGA led by Clive Washbourn, writing outside the Lloyd's syndicate structure. Reported to be protected in part by a sidecar arrangement with reinsurer Fidelis.",
+     "source_ids": [
+      "ll-true-confidence",
+      "ti-true-confidence"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "what_we_tried": "P&I club and cargo insurer searched under owner True Confidence Shipping (Liberia) and operator Third January Maritime (Greece). Neither named in any source.",
+   "note": "Three seafarers were killed — the first deaths of the Houthi campaign — so the P&I liability layer mattered here, and it is exactly the layer nobody published.",
+   "source_ids": [
+    "ll-true-confidence",
+    "ti-true-confidence"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "tutor",
+   "vessel": "Tutor",
+   "imo": null,
+   "incident_id": "tutor-2024",
+   "date": "2024-06-12",
+   "status": "disputed",
+   "insured_value_usd": 40000000,
+   "insured_value_note": "A $40m loss, plus a salvage claim reported as likely to exceed $2m.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Travelers",
+     "line_pct": null,
+     "role": "lead",
+     "outcome": "disputed",
+     "note": "Lloyd's List reported that Travelers, which leads the slip, had so far failed to put up security for the salvage claim.",
+     "source_ids": [
+      "ll-sounion-salvage-gap"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "salvage",
+     "insurer": "Tsavliris Salvage Group",
+     "line_pct": null,
+     "role": "salvor",
+     "outcome": "unknown",
+     "note": "Engaged on Lloyd's Open Form with SCOPIC declared. The vessel sank before the tugs arrived.",
+     "source_ids": [
+      "ll-sounion-salvage-gap"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "conflict": {
+    "field": "Which vessel the $40m / Travelers / no-salvage-security reporting belongs to",
+    "readings": [
+     "The Lloyd's List passage names Tutor. Confirmed by reading the surrounding sentences in the article.",
+     "Several aggregators reproduce the same passage attributed to Sounion. That is wrong."
+    ],
+    "action": "Recorded against Tutor. Flagged here because the error is live in the wild and will be re-imported if anyone re-researches this."
+   },
+   "note": "A claim that Gard AS was Tutor's oil-pollution insurer appears in an American Bar Association article whose own footnote does not support it. Not recorded as fact.",
+   "source_ids": [
+    "ll-sounion-salvage-gap"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "sounion",
+   "vessel": "Sounion",
+   "imo": "9312145",
+   "incident_id": "sounion-2024",
+   "date": "2024-08-21",
+   "status": "named",
+   "insured_value_note": "Carrying roughly one million barrels of crude. Final salvage cost never published.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Brit — Keel Consortium",
+     "line_pct": 100,
+     "role": "sole",
+     "outcome": "paid",
+     "note": "Brit arranged and funded the salvage. Keel capacity is stated at $120m-$152.5m per risk. A list of consortium members circulated in search results but Brit's own Keel page does not name them, so it is not recorded here.",
+     "source_ids": [
+      "ll-sounion-keel"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "p-and-i",
+     "insurer": "Gard",
+     "line_pct": null,
+     "role": "sole",
+     "outcome": "no-exposure",
+     "note": "The vessel was entered with Gard, but the club carried no exposure because the war risk exclusion applied. The cleanest public example of the P&I / war-risk boundary in this dataset.",
+     "source_ids": [
+      "ll-sounion-keel",
+      "ll-sounion-salvage-gap"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "salvage",
+     "insurer": "Ambrey",
+     "line_pct": null,
+     "role": "salvor",
+     "outcome": "unknown",
+     "note": "Executed the salvage with 200+ personnel, seven salvage vessels and three European naval assets.",
+     "source_ids": [
+      "ambrey-sounion"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "note": "Worth holding next to Sounion's P&I entry: being entered with a club tells you nothing about who pays when the loss is a war risk.",
+   "source_ids": [
+    "ll-sounion-keel",
+    "ll-sounion-salvage-gap",
+    "ambrey-sounion"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "magic-seas",
+   "vessel": "Magic Seas",
+   "imo": "9736169",
+   "incident_id": "magic-seas-2025",
+   "date": "2025-07-06",
+   "status": "named",
+   "insured_value_usd": 40000000,
+   "insured_value_note": "London market put hull value near $40m; the estimated bill for the total loss is the same figure.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Vessel Protect",
+     "line_pct": 100,
+     "role": "sole",
+     "outcome": "unknown",
+     "note": "A specialist war risks MGA founded in 2020, owned by Gallagher and backed 100% by Lloyd's syndicates.",
+     "source_ids": [
+      "ll-magic-seas",
+      "ti-magic-seas"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "what_we_tried": "No report found confirming whether the $40m was paid.",
+   "source_ids": [
+    "ll-magic-seas",
+    "ti-magic-seas"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "eternity-c",
+   "vessel": "Eternity C",
+   "imo": "9588249",
+   "incident_id": "eternity-c-2025",
+   "date": "2025-07-07",
+   "status": "declined",
+   "insured_value_note": "Hull value described as in the lower double-digit millions.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Travelers",
+     "line_pct": null,
+     "role": "sole",
+     "outcome": "declined-to-write",
+     "note": "The owner held an annual baseline war risk policy with Travelers' London operation. Vessels entering a Joint War Committee listed area must notify insurers, who may charge an additional premium or decline. Travelers declined the final voyage.",
+     "source_ids": [
+      "ll-eternity-c-declined",
+      "ll-eternity-c-travelers"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "note": "Market consensus reported by Lloyd's List is that the vessel was uninsured for this loss and the owner, Cosmoship Management, bears it entirely. Lloyd's List described the decline as unusual, with no publicly known precedent in either the Black Sea or Red Sea conflicts. No litigation found as of September 2026.",
+   "source_ids": [
+    "ll-eternity-c-declined",
+    "ll-eternity-c-travelers",
+    "ll-eternity-c-comment"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "rubymar",
+   "vessel": "Rubymar",
+   "imo": null,
+   "incident_id": "rubymar-2024",
+   "date": "2024-02-18",
+   "status": "uninsured",
+   "insured_value_usd": 4820000,
+   "insured_value_note": "Vessel value $4.82m. Not believed covered in the major London market.",
+   "cover": [
+    {
+     "layer": "p-and-i",
+     "insurer": "Thomas Miller Specialty",
+     "line_pct": null,
+     "role": "sole",
+     "outcome": "refused",
+     "note": "Fixed-premium P&I. The owner assumed basic war risk was included; TMS said it was not. TMS had notified assureds on 13 February 2024 that reinsurers could no longer support war risks in the Indian Ocean, Gulf of Aden and Southern Red Sea, effective 20 February — two days after Rubymar was hit. TMS told Lloyd's List it does not comment on an assured's cover or claims.",
+     "source_ids": [
+      "ll-rubymar"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "what_we_tried": "Lloyd's List approached 23 separate P&I providers; all confirmed they do not cover Rubymar. No war risk underwriter found — most likely none existed.",
+   "note": "A sunken vessel leaking fertiliser into the Red Sea with no identifiable war-risk underwriter and a disputed P&I entry. The environmental liability had no obvious payer.",
+   "source_ids": [
+    "ll-rubymar",
+    "reuters-rubymar-rates"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "abdullah",
+   "vessel": "Abdullah",
+   "imo": "9745598",
+   "incident_id": "abdullah-2024",
+   "date": "2024-03-12",
+   "status": "partial",
+   "cover": [
+    {
+     "layer": "k-and-r",
+     "insurer": "Unnamed UK-based P&I club",
+     "line_pct": null,
+     "role": "sole",
+     "outcome": "paid",
+     "note": "Arranged a $5m ransom, collected the cash (reportedly from the UAE), chartered a plane from Kenya and airdropped three waterproof bags into the sea. All notes were under ten years old.",
+     "source_ids": [
+      "tbs-abdullah-ransom"
+     ],
+     "confidence": "medium"
+    }
+   ],
+   "what_we_tried": "Five or more query formulations across Bangladeshi, Indian and UK trade press. Every source describes only 'a UK-based P&I club'. The club is never named. Likely protected by non-disclosure.",
+   "note": "The only confirmed ransom payment in this dataset, and the payer is anonymous. Owner SR Shipping (KSRM Group).",
+   "source_ids": [
+    "tbs-abdullah-ransom"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "minervagracht",
+   "vessel": "Minervagracht",
+   "imo": null,
+   "incident_id": null,
+   "date": "2025-10",
+   "status": "named",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "AXA XL",
+     "line_pct": null,
+     "role": "lead",
+     "outcome": "unknown",
+     "note": "Per Lloyd's List and Insurance Day.",
+     "source_ids": [
+      "ll-minervagracht"
+     ],
+     "confidence": "medium"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Convex",
+     "line_pct": null,
+     "role": "lead",
+     "outcome": "unknown",
+     "note": "Per The Insurer, which calls Convex the lead. Lloyd's List has Convex on a follow line behind AXA XL.",
+     "source_ids": [
+      "ti-minervagracht"
+     ],
+     "confidence": "medium"
+    }
+   ],
+   "conflict": {
+    "field": "Who leads the hull war cover",
+    "readings": [
+     "The Insurer, 6 Oct 2025: Convex leads.",
+     "Lloyd's List and Insurance Day: AXA XL leads, with Convex believed to hold a follow line."
+    ],
+    "action": "Both recorded. Two reputable publishers disagree and neither is resolvable without a subscription."
+   },
+   "note": "Spliethoff vessel, attacked twice, one crew death. Not in our incidents dataset — added here because the underwriter is on the record.",
+   "source_ids": [
+    "ll-minervagracht",
+    "ti-minervagracht"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "vyssos",
+   "vessel": "Vyssos",
+   "imo": null,
+   "incident_id": null,
+   "date": "2023-12-27",
+   "status": "named",
+   "insured_value_usd": 3600000,
+   "insured_value_note": "USD 3.6m claimed on a mortgagee interest policy.",
+   "cover": [
+    {
+     "layer": "war-risk",
+     "insurer": "Lloyd's Insurance Company SA",
+     "line_pct": 100,
+     "role": "sole",
+     "outcome": "paid",
+     "note": "Policy written by Vessel Protect on behalf of 100% Lloyd's underwriters.",
+     "source_ids": [
+      "ewhc-2025-3293"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "war-risk",
+     "insurer": "Vessel Protect",
+     "line_pct": null,
+     "role": "mga",
+     "outcome": "unknown",
+     "source_ids": [
+      "ewhc-2025-3293"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "reinsurance",
+     "insurer": "Lloyd's Syndicates 2623 and 623 (Beazley)",
+     "line_pct": null,
+     "role": "reinsurer",
+     "outcome": "unknown",
+     "source_ids": [
+      "ewhc-2025-3293"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "mortgagee-interest",
+     "insurer": "Wilhelmsen Insurance Services AS",
+     "line_pct": null,
+     "role": "broker",
+     "outcome": "unknown",
+     "source_ids": [
+      "ewhc-2025-3293"
+     ],
+     "confidence": "high"
+    },
+    {
+     "layer": "mortgagee-interest",
+     "insurer": "CR International Sarl",
+     "line_pct": null,
+     "role": "broker",
+     "outcome": "unknown",
+     "source_ids": [
+      "ewhc-2025-3293"
+     ],
+     "confidence": "high"
+    }
+   ],
+   "note": "Mine strike in Ukrainian waters, constructive total loss. The only insurance chain in this dataset that comes from a primary court document rather than trade journalism — because litigation forces disclosure that the market otherwise withholds.",
+   "source_ids": [
+    "ewhc-2025-3293"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "ruen",
+   "vessel": "Ruen",
+   "imo": "9754903",
+   "incident_id": "ruen-2023",
+   "date": "2023-12-14",
+   "status": "not-found",
+   "what_we_tried": "'Ruen insurer', 'Ruen P&I club', 'Ruen ransom claim', Navibulgar plus hull war risk, and Bulgarian-language framing. No insurer named anywhere. Coverage focused on the Indian Navy rescue and the Mumbai piracy convictions of July 2026.",
+   "note": "Genuine gap. A hijacked and recaptured vessel with a Bulgarian owner and no identifiable underwriter.",
+   "confidence": "high"
+  },
+  {
+   "id": "hellas-aphrodite",
+   "vessel": "Hellas Aphrodite",
+   "imo": "9722766",
+   "incident_id": "hellas-aphrodite-2025",
+   "date": "2025-11-06",
+   "status": "not-found",
+   "what_we_tried": "Vessel name against P&I, war risk, Latsco, ransom and release. The W. E. Cox casualty notice was fetched in full and names only the owner and manager — Latsco Shipping and Uckfield Marine S.A. — and explicitly no insurers.",
+   "note": "EUNAVFOR boarded and freed the vessel; no ransom was paid. Genuine gap.",
+   "source_ids": [
+    "wecox-hellas-aphrodite"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "msc-aries",
+   "vessel": "MSC Aries",
+   "imo": null,
+   "incident_id": null,
+   "date": "2024-04-13",
+   "status": "not-found",
+   "what_we_tried": "Vessel against underwriters, hull war, detention and constructive total loss, plus a Clyde & Co briefing which discusses CTL pressure at the one-year mark but names no market.",
+   "note": "Seized by Iran. Leased from Gortal Shipping, a Zodiac Maritime BVI affiliate, operated by MSC. Genuine gap.",
+   "source_ids": [
+    "clydeco-msc-aries"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "marlin-luanda",
+   "vessel": "Marlin Luanda",
+   "imo": null,
+   "incident_id": null,
+   "date": "2024-01-26",
+   "status": "not-found",
+   "what_we_tried": "Trafigura against insurance claim, underwriters and war risk. Extensive coverage of the attack and of Trafigura's route reassessment, and zero insurer identification.",
+   "note": "A missile strike on a Trafigura-chartered tanker with a cargo fire, and not one underwriter named. Genuine gap.",
+   "confidence": "high"
+  },
+  {
+   "id": "lila-norfolk",
+   "vessel": "Lila Norfolk",
+   "imo": null,
+   "incident_id": "lila-norfolk-2024",
+   "date": "2024-01-05",
+   "status": "no-claim",
+   "note": "Boarding repelled by the Indian Navy; no damage reported, so no claim is likely to have arisen. Not a gap.",
+   "confidence": "medium"
+  },
+  {
+   "id": "maersk-yorktown",
+   "vessel": "Maersk Yorktown",
+   "imo": "9289192",
+   "incident_id": "maersk-yorktown-2024",
+   "date": "2024-04-09",
+   "status": "no-claim",
+   "note": "Missile intercepted by the US Navy. No damage, no injuries, no claim. Not a gap — a non-event as far as cover is concerned.",
+   "confidence": "medium"
+  },
+  {
+   "id": "falcon",
+   "vessel": "Falcon",
+   "imo": null,
+   "incident_id": null,
+   "date": "2025",
+   "status": "uninsured",
+   "what_we_tried": "Reported to have no known insurer.",
+   "note": "LPG tanker, Gulf of Aden. Cameroon-flagged, Indian-owned, 31 years old, detained in Istanbul in January 2025 with 13 deficiencies. The shadow-fleet profile in one hull.",
+   "source_ids": [
+    "gcaptain-falcon"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "chem-pluto",
+   "vessel": "Chem Pluto",
+   "imo": null,
+   "incident_id": null,
+   "date": "2023-12-23",
+   "status": "not-found",
+   "what_we_tried": "Multiple insurer, underwriter and dispute permutations. Nothing.",
+   "confidence": "high"
+  }
+ ],
+ "underwriters": [
+  {
+   "id": "american-club",
+   "name": "The American Club",
+   "kind": "p-and-i-club",
+   "domicile": "New York State",
+   "domicile_iso": "US",
+   "founded": 1917,
+   "tonnage_gt_m": 25.91,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [
+    "Russian oil voyages 2024"
+   ],
+   "url": "https://www.american-club.com",
+   "note": "AM Best B+ stable. Managers Shipowners Claims Bureau Inc, CEO Dorothea Ioannou. Free reserves $48.3m GAAP / $65m statutory at 31 Dec 2025. Cancelled non-mutual Gulf war cover on 1 March 2026 and reinstated on a buy-back basis on 10 March.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "britannia",
+   "name": "Britannia",
+   "kind": "p-and-i-club",
+   "domicile": "England and Wales",
+   "domicile_iso": "GB",
+   "founded": 1855,
+   "tonnage_gt_m": 149.2,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://britanniapandi.com",
+   "note": "The oldest club in the group. Managed externally by Tindall Riley. 250 members. Free reserves $572.2m. S&P A, outlook cut to negative. Paid the Maryland settlement for the DALI / Baltimore bridge allision.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "gard",
+   "name": "Gard",
+   "kind": "p-and-i-club",
+   "domicile": "Bermuda and Norway",
+   "domicile_iso": "NO",
+   "founded": 1907,
+   "tonnage_gt_m": 311.0,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [
+    "Sounion"
+   ],
+   "url": "https://www.gard.no",
+   "note": "The largest club, and the first past 300m GT. In-house managed, HQ Arendal. Equity $1,745m. Its CEO Rolf Thore Roppestad chairs the International Group and signed the March 2026 war-risk cancellation circular.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "japan-pi",
+   "name": "Japan P&I Club",
+   "kind": "p-and-i-club",
+   "domicile": "Japan",
+   "domicile_iso": "JP",
+   "founded": 1950,
+   "tonnage_gt_m": 85.0,
+   "ships": 3537,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://www.piclub.or.jp",
+   "note": "Free reserves about $304m. Combined ratio 82.1%, the best in the group. S&P BBB+, outlook raised to positive July 2026.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "london-pi",
+   "name": "London P&I Club",
+   "kind": "p-and-i-club",
+   "domicile": "England",
+   "domicile_iso": "GB",
+   "founded": 1866,
+   "tonnage_gt_m": 56.7,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [
+    "Russian oil voyages 2024"
+   ],
+   "url": "https://www.londonpandi.com",
+   "note": "Writes primary hull war in its own right, with separate limits unrestricted by the ship's insured hull value and war P&I to $500m. Free reserves $192.4m. Withdrew southern Red Sea war components in August 2026.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "northstandard",
+   "name": "NorthStandard",
+   "kind": "p-and-i-club",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": 2023,
+   "tonnage_gt_m": 270.0,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://north-standard.com",
+   "note": "Formed by the 2023 merger of North and the Standard Club — the reason the group has twelve members and not thirteen. Free reserves $923m.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "shipowners-club",
+   "name": "The Shipowners' Club",
+   "kind": "p-and-i-club",
+   "domicile": "Luxembourg",
+   "domicile_iso": "LU",
+   "founded": 1855,
+   "tonnage_gt_m": 34.4,
+   "ships": 35378,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://www.shipownersclub.com",
+   "note": "By far the most vessels of any club — 35,378 across 8,296 members — because it specialises in smaller tonnage. Best combined ratio in the group at 99.6%.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "skuld",
+   "name": "Skuld",
+   "kind": "p-and-i-club",
+   "domicile": "Norway and Bermuda",
+   "domicile_iso": "NO",
+   "founded": 1897,
+   "tonnage_gt_m": 126.0,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": "https://www.skuld.com",
+   "note": "Took a 12.5% line on the Galaxy Leader hull war slip — a P&I club acting as a hull war underwriter. Contingency reserves $659m, combined ratio 96% net.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "steamship-mutual",
+   "name": "Steamship Mutual",
+   "kind": "p-and-i-club",
+   "domicile": "Bermuda",
+   "domicile_iso": "BM",
+   "founded": 1909,
+   "tonnage_gt_m": 283.0,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://www.steamshipmutual.com",
+   "note": "Record free reserves of $578m. Customarily the first club to announce its general increase, and announced the highest for 2026 at 8%.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "swedish-club",
+   "name": "The Swedish Club",
+   "kind": "p-and-i-club",
+   "domicile": "Sweden",
+   "domicile_iso": "SE",
+   "founded": 1872,
+   "tonnage_gt_m": 55.3,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://www.swedishclub.com",
+   "note": "Free reserves $270m. Its 2026 war terms extend standard cover to cyber-related war risks on a portfolio aggregate basis — the only club found to have done so.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "uk-pi-club",
+   "name": "UK P&I Club",
+   "kind": "p-and-i-club",
+   "domicile": "United Kingdom and Bermuda",
+   "domicile_iso": "GB",
+   "founded": 1869,
+   "tonnage_gt_m": 168.0,
+   "ships": 6952,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://www.ukpandi.com",
+   "note": "Managed externally by Thomas Miller. Record free reserves $586m. Principal-entity domicile is genuinely unresolved between the UK and Bermuda in public sources.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "west-of-england",
+   "name": "West of England",
+   "kind": "p-and-i-club",
+   "domicile": "Luxembourg",
+   "domicile_iso": "LU",
+   "founded": 1870,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [
+    "Russian oil voyages 2024"
+   ],
+   "url": "https://www.westpandi.com",
+   "note": "Writes 'West War', a comprehensive primary war risks product, and will lead or follow on brokers' slips. Record free reserves $376.8m, up 23%. Combined ratio 98%. Tonnage not published.",
+   "source_ids": [
+    "ig-clubs",
+    "ig-about"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "dnk",
+   "name": "DNK — Den Norske Krigsforsikring for Skib",
+   "kind": "war-risk-mutual",
+   "domicile": "Norway",
+   "domicile_iso": "NO",
+   "founded": 1935,
+   "tonnage_gt_m": null,
+   "ships": 3244,
+   "international_group": false,
+   "seen_on": [],
+   "url": "https://www.warrisk.no",
+   "note": "457 members, 3,244 vessels and mobile units, total value insured $271bn at 31 December 2025. Writes on the Nordic Marine Insurance Plan and uniquely retains Major Powers War cover, which continues when all conventional insurance automatically terminates.",
+   "source_ids": [
+    "dnk-finance"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "hellenic-war-risks",
+   "name": "Hellenic War Risks",
+   "kind": "war-risk-mutual",
+   "domicile": "Bermuda and Isle of Man",
+   "domicile_iso": "BM",
+   "founded": 1961,
+   "tonnage_gt_m": null,
+   "ships": 3100,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Managed by Thomas Miller. Claims to cover about 80% of all Greek-owned ships and over 3,100 vessels, but the figures on its site carry no as-at date.",
+   "source_ids": [
+    "thomas-miller-war"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "uk-war-risks",
+   "name": "UK War Risks",
+   "kind": "war-risk-mutual",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": 1913,
+   "tonnage_gt_m": null,
+   "ships": 878,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "PRA-authorised, managed by Thomas Miller. 878 international vessels, undated.",
+   "source_ids": [
+    "thomas-miller-war"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "norwegian-hull-club",
+   "name": "Norwegian Hull Club",
+   "kind": "war-risk-mutual",
+   "domicile": "Norway",
+   "domicile_iso": "NO",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Represented on the Joint War Committee through Andrew Hannay. Returned 12% of premium, $19.1m, for a sixth consecutive year. S&P A.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "ingosstrakh",
+   "name": "Ingosstrakh",
+   "kind": "insurer",
+   "domicile": "Russia",
+   "domicile_iso": "RU",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Andromeda Star"
+   ],
+   "url": null,
+   "note": "Was Russia's largest marine-risk provider. Designated by the UK on 13 June 2024 and by OFAC on 10 January 2025 for insuring tankers carrying Russian petroleum. Discloses none of its insured vessels. Remains on some flag states' approved-insurer lists despite sanctions.",
+   "source_ids": [
+    "ofac-jy2777",
+    "ll-uk-ingosstrakh",
+    "kse-shadow-insurance"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "maritime-mutual",
+   "name": "Maritime Mutual Insurance Association",
+   "kind": "p-and-i-club",
+   "domicile": "New Zealand",
+   "domicile_iso": "NZ",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": 231,
+   "international_group": false,
+   "seen_on": [
+    "Russian oil voyages 2024"
+   ],
+   "url": null,
+   "note": "Not an International Group club. Insured almost one in six of all Western-sanctioned shadow-fleet tankers; 231 covered since 2018. Revenue grew from $14.2m in 2018 to $108.5m in 2024. Reinsured through Lloyd's — Munich Re, Hannover Re, MS Amlin and Atrium named. Offices searched by New Zealand police in October 2025.",
+   "source_ids": [
+    "reuters-maritime-mutual"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "romarine",
+   "name": "Romarine AS",
+   "kind": "insurer",
+   "domicile": "Norway",
+   "domicile_iso": "NO",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": 30,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Never registered as an insurer. Ordered to halt operations by Norway's Finanstilsynet in March 2025 after issuing certificates for more than 30 sanctioned tankers, one forged on the regulator's own letterhead.",
+   "source_ids": [
+    "reuters-romarine"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "seaguard-pi",
+   "name": "Seaguard P&I",
+   "kind": "insurer",
+   "domicile": "Germany",
+   "domicile_iso": "DE",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": 5,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Does not exist as a commercial entity. Its listed address in Pinneberg is a residential apartment block. Issued certificates for at least five tankers.",
+   "source_ids": [
+    "ij-seaguard"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "ascot",
+   "name": "Ascot",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "Took the largest line, 25%, on the Galaxy Leader hull war slip. Its Andrew Moulton chairs the Joint War Committee. In July 2026 told brokers it would not write war cargo cover for Saudi-linked ships.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "markel",
+   "name": "Markel",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "20% of the Galaxy Leader slip. The Insurer calls it the lead; Lloyd's List gives Ascot the larger line. Represented on the Joint War Committee.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "swiss-re",
+   "name": "Swiss Re",
+   "kind": "reinsurer",
+   "domicile": "Switzerland",
+   "domicile_iso": "CH",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "15% of the Galaxy Leader slip.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "arch",
+   "name": "Arch",
+   "kind": "insurer",
+   "domicile": "Bermuda",
+   "domicile_iso": "BM",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "12.5% of the Galaxy Leader slip.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "tokio-marine-hcc",
+   "name": "Tokio Marine HCC",
+   "kind": "insurer",
+   "domicile": "Japan",
+   "domicile_iso": "JP",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "12.5% of the Galaxy Leader slip.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "ark",
+   "name": "Ark",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "2.5% of the Galaxy Leader slip.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "codan",
+   "name": "Codan",
+   "kind": "insurer",
+   "domicile": "Denmark",
+   "domicile_iso": "DK",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Galaxy Leader"
+   ],
+   "url": null,
+   "note": "Loss-of-hire insurer on the Galaxy Leader. Reported to have refused the claim on the ground that the Houthis are not a 'state power' as the Nordic Plan requires.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "travelers",
+   "name": "Travelers",
+   "kind": "insurer",
+   "domicile": "United States",
+   "domicile_iso": "US",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Tutor",
+    "Eternity C"
+   ],
+   "url": null,
+   "note": "The most consequential insurer in this dataset. Led the Tutor war slip and was reported not to have posted salvage security; was Eternity C's annual war-risk insurer and declined to cover its final voyage; and is one of the seven US carriers in the DFC facility.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "brit",
+   "name": "Brit — Keel Consortium",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Sounion"
+   ],
+   "url": null,
+   "note": "Held 100% of the Sounion war risk and both arranged and funded the salvage. Keel capacity is stated at $120m to $152.5m per risk. Represented on the Joint War Committee.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "navium-marine",
+   "name": "Navium Marine",
+   "kind": "mga",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "True Confidence"
+   ],
+   "url": null,
+   "note": "An MGA led by Clive Washbourn, writing outside the Lloyd's syndicate structure. Held 100% of the True Confidence war risk, reportedly protected by a sidecar with reinsurer Fidelis. In July 2026 restricted cover for Saudi-linked ships.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "vessel-protect",
+   "name": "Vessel Protect",
+   "kind": "mga",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Magic Seas",
+    "Vyssos"
+   ],
+   "url": null,
+   "note": "Founded 2020, owned by Gallagher, backed 100% by Lloyd's syndicates. Automatic capacity $250m. Held 100% of the Magic Seas war risk and wrote the Vyssos policy on behalf of Lloyd's underwriters. At peak insured almost a third of Ukrainian grain ships.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "axa-xl",
+   "name": "AXA XL",
+   "kind": "insurer",
+   "domicile": "France",
+   "domicile_iso": "FR",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Minervagracht"
+   ],
+   "url": null,
+   "note": "Reported by Lloyd's List and Insurance Day as lead on the Minervagracht war slip. Also leads the International Group's group excess-of-loss reinsurance programme, and is the largest Lloyd's syndicate in marine kidnap and ransom.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "convex",
+   "name": "Convex",
+   "kind": "insurer",
+   "domicile": "Bermuda",
+   "domicile_iso": "BM",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Minervagracht"
+   ],
+   "url": null,
+   "note": "Reported by The Insurer as lead on the Minervagracht hull war cover, against Lloyd's List's reading that it holds a follow line behind AXA XL. Represented on the Joint War Committee.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "beazley",
+   "name": "Beazley",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Vyssos"
+   ],
+   "url": null,
+   "note": "Syndicates 2623 and 623 reinsured the Vyssos policy. In April 2026 launched a $1bn marine war consortium — $500m hull war and $500m cargo war. Represented on the Joint War Committee.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "lloyds-insurance-sa",
+   "name": "Lloyd's Insurance Company SA",
+   "kind": "insurer",
+   "domicile": "Belgium",
+   "domicile_iso": "BE",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Vyssos"
+   ],
+   "url": null,
+   "note": "The named insurer in the Vyssos judgment, the only complete insurance chain in this dataset from a primary court document.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "thomas-miller-specialty",
+   "name": "Thomas Miller Specialty",
+   "kind": "insurer",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Rubymar"
+   ],
+   "url": null,
+   "note": "Fixed-premium P&I on the Rubymar. Told assureds on 13 February 2024 that reinsurers could no longer support war risks in the Indian Ocean, Gulf of Aden and southern Red Sea from 20 February — two days after Rubymar was hit.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "chubb",
+   "name": "Chubb",
+   "kind": "insurer",
+   "domicile": "Switzerland",
+   "domicile_iso": "CH",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Lead underwriter of the US DFC maritime facility — it manages the facility, sets pricing and terms, assumes risk, issues policies and handles claims. Also leads a Lloyd's Hormuz consortium of $200m each of hull, P&I and cargo.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "atrium",
+   "name": "Atrium",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Confirmed it still reinsures Maritime Mutual, after MS Amlin ended its own relationship. Represented on the Joint War Committee.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "ms-amlin",
+   "name": "MS Amlin",
+   "kind": "lloyds-syndicate",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": null,
+   "note": "Confirmed it reinsured Maritime Mutual and has since ended the relationship. Not on the Joint War Committee.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "tsavliris",
+   "name": "Tsavliris Salvage Group",
+   "kind": "insurer",
+   "domicile": "Greece",
+   "domicile_iso": "GR",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Tutor"
+   ],
+   "url": null,
+   "note": "Salvor on the Tutor, engaged on Lloyd's Open Form with SCOPIC declared. The vessel sank before the tugs arrived.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "ambrey",
+   "name": "Ambrey",
+   "kind": "insurer",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [
+    "Sounion"
+   ],
+   "url": null,
+   "note": "Executed the Sounion salvage with more than 200 personnel, seven salvage vessels and three European naval assets over 135 days.",
+   "source_ids": [
+    "jwc-members"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "joint-war-committee",
+   "name": "Joint War Committee",
+   "kind": "market-body",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": "https://lmalloyds.com/committee/joint-war-committee",
+   "note": "Underwriting representatives of the Lloyd's and IUA company markets. Chaired by Andrew Moulton of Ascot; secretary Neil Roberts of the LMA. It publishes the Listed Areas circular that turns a geography into a premium — but sets no rates itself: 'rating is a matter for individual negotiation between underwriters and brokers and the JWC plays no role in that.'",
+   "source_ids": [
+    "jwc-members",
+    "jwla-034"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "international-group",
+   "name": "International Group of P&I Clubs",
+   "kind": "market-body",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": 1899,
+   "tonnage_gt_m": 1700.0,
+   "ships": null,
+   "international_group": true,
+   "seen_on": [],
+   "url": "https://www.igpandi.org",
+   "note": "Twelve clubs covering about 87% of the world's ocean-going tonnage — 1.7bn GT, up from 2.5m GT in 1953. The first Pooling Agreement was signed in 1899. Free reserves reached a record $6.79bn in 2025/26. Chair Rolf Thore Roppestad of Gard; secretariat CEO Nick Shaw.",
+   "source_ids": [
+    "ig-about",
+    "ig-data-2025"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "iumi",
+   "name": "International Union of Marine Insurance",
+   "kind": "market-body",
+   "domicile": "Germany",
+   "domicile_iso": "DE",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": "https://iumi.com",
+   "note": "Publishes the global marine premium statistics. Secretary General Lars Lange. Its reading of the March 2026 cancellations is the one to hold: 'a controlled adaptation of risk rather than a withdrawal of capacity.'",
+   "source_ids": [
+    "iumi-stats-2025",
+    "iumi-spring-2026"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "lloyds",
+   "name": "Lloyd's of London",
+   "kind": "market-body",
+   "domicile": "United Kingdom",
+   "domicile_iso": "GB",
+   "founded": null,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": "https://www.lloyds.com",
+   "note": "Calls itself 'a recognised global leader' in war risk and publishes no number for it — no capacity figure, no syndicate count. It does not break out marine at all, reporting Marine, Aviation and Energy as one segment, which ran a 103.5% combined ratio in 2025 on aviation losses. Any quantified Lloyd's Hormuz loss figure did not come from Lloyd's.",
+   "source_ids": [
+    "lloyds-fy2025",
+    "lloyds-hy2026"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "dfc-facility",
+   "name": "US DFC maritime reinsurance facility",
+   "kind": "state-programme",
+   "domicile": "United States",
+   "domicile_iso": "US",
+   "founded": 2026,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": "https://www.dfc.gov",
+   "note": "The US backstop of 2026, and it never insured a single voyage. Announced 6 March 2026 at $20bn and expanded to $40bn on 3 April, using BUILD Act political risk authority rather than MARAD's. Chubb led; Travelers, Liberty Mutual, Berkshire Hathaway, AIG, Starr and CNA participated. The Congressional Research Service reported on 7 August 2026 that DFC had provided no coverage under the facility; Chubb had said in April that the naval escorts expected to complement it never materialised, making activation infeasible. It was built to solve unavailability of cover. The actual problems were price and crew safety, so it sat idle.",
+   "source_ids": [
+    "dfc-20bn",
+    "dfc-40bn",
+    "crs-r45281",
+    "crs-in12688"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "marad-title-xii",
+   "name": "MARAD war risk insurance, Title XII",
+   "kind": "state-programme",
+   "domicile": "United States",
+   "domicile_iso": "US",
+   "founded": 1936,
+   "tonnage_gt_m": null,
+   "ships": null,
+   "international_group": false,
+   "seen_on": [],
+   "url": "https://www.maritime.dot.gov",
+   "note": "The dormant statutory last resort, and confirmed dormant throughout 2026. Its expiry date was repealed in 2018, so the authority is permanent — there is no sunset to track. It activates only on a finding, with the President's approval, that adequate cover cannot be obtained on reasonable terms from US-authorised companies; the market repriced rather than withdrew, so that gate was never met. It is a live standby facility rather than a dead statute — existing interim binders stay in force without re-application, P&I is capped at $750 per gross ton, and premium rates are fixed only once the event triggers them. It was also built for the wrong war: cover is limited to vessels with a US nexus and is unavailable for the foreign-to-foreign trade that actually needed restarting.",
+   "source_ids": [
+    "usc-46-53912",
+    "ecfr-308",
+    "crs-r45281"
+   ],
+   "confidence": "high"
+  }
+ ],
+ "denials": [
+  {
+   "id": "affiliation-warranties-2024",
+   "kind": "declined-to-write",
+   "date": "2024-01-17",
+   "who": "Vessels with US, UK or Israeli ownership or 'interest'",
+   "by": "The London war-risk market broadly",
+   "what_happened": "Warranty clauses requiring 'no US, UK or Israeli involvement' were attached to Red Sea cover across the market. Marcus Baker of Marsh: it is 'just about everybody', and 'it essentially means they won't provide insurance'.",
+   "grounds": "Affiliation warranty rather than an outright refusal — the commercial effect is the same.",
+   "source_ids": [
+    "bloomberg-affiliation-2024"
+   ],
+   "confidence": "high",
+   "note": "Underwriters rarely issue a formal refusal. They attach a warranty, decline the additional premium for a listed area, or cancel on notice. This is the first rung."
+  },
+  {
+   "id": "tata-aig-red-sea-2024",
+   "kind": "market-exit",
+   "date": "2024-01",
+   "who": "All vessels, any flag",
+   "by": "Tata AIG General Insurance",
+   "what_happened": "Excluded the Red Sea route entirely from standard marine insurance, regardless of a vessel's provenance.",
+   "source_ids": [
+    "et-tata-aig"
+   ],
+   "confidence": "medium",
+   "note": "The only named insurer found to have excluded the route outright. It is an Indian insurer — no named London or Lloyd's underwriter has done so publicly on the record."
+  },
+  {
+   "id": "no-cover-at-any-price-2025",
+   "kind": "declined-to-write",
+   "date": "2025-06-24",
+   "who": "Vessels with US, Israeli or UK links",
+   "by": "Unnamed London underwriters",
+   "what_happened": "Many underwriters would not offer Middle East cover to US, Israel or UK-linked vessels at any price. One London underwriter said it had no appetite to insure vessels 'even remotely linked' to those three states for a Red Sea passage.",
+   "source_ids": [
+    "cnbc-any-price-2025"
+   ],
+   "confidence": "medium",
+   "note": "High confidence the practice exists — multiple independent reports. Low confidence on attribution: no underwriter is named."
+  },
+  {
+   "id": "travelers-eternity-c",
+   "kind": "declined-to-write",
+   "date": "2025-07-06",
+   "who": "Eternity C — Cosmoship Management / Guildford Navigation",
+   "by": "Travelers",
+   "what_happened": "Declined to extend war-risk cover for the Red Sea passage. The vessel held a baseline annual war-risk policy with Travelers but sailed without the additional cover a Joint War Committee listed area requires. It was sunk by the Houthis the next day; four dead, five missing.",
+   "grounds": "Heightened risk. Vessels entering a JWC listed area must notify insurers, who may charge an additional premium or decline.",
+   "amount_usd": 20000000,
+   "resolved": "No litigation by Cosmoship against Travelers found as of September 2026. The loss falls on the owner.",
+   "source_ids": [
+    "ft-eternity-c",
+    "ll-eternity-c-travelers",
+    "ll-eternity-c-declined"
+   ],
+   "confidence": "high",
+   "note": "The only case found where a named insurer declined cover for a specific vessel that was then destroyed. Lloyd's List headlined it 'Decision swerved big payout'. Eternity C had no direct Israeli link — the operator's other vessels had merely called at Israeli ports. Affiliation-based denial reaching two degrees out. Hull put at $15-20m by the market."
+  },
+  {
+   "id": "israel-port-call-freeze-2025",
+   "kind": "surcharged",
+   "date": "2025-07-16",
+   "who": "Vessels with indirect Israeli ties",
+   "by": "Marine insurers generally",
+   "what_happened": "Israel approached marine insurers about the war-risk status of vessels with indirect Israeli ties, fearing traffic would collapse at Haifa. A maritime security official: vessels will start avoiding Israeli ports not from fear of being hit, but from fear of not being insured.",
+   "source_ids": [
+    "mee-israel-insurance"
+   ],
+   "confidence": "medium",
+   "note": "The second-order effect of affiliation warranties: the denial does not have to happen for the deterrent to work."
+  },
+  {
+   "id": "ascot-navium-saudi-2026",
+   "kind": "declined-to-write",
+   "date": "2026-07-24",
+   "who": "Vessels with any 'Saudi touchpoints', including other flags with past Saudi port calls",
+   "by": "Ascot and Navium Marine, plus several leading marine war insurers at Lloyd's",
+   "what_happened": "Told brokers they would not sell war cargo insurance to Saudi-linked ships in the Red Sea, and were preparing to cancel existing policies.",
+   "grounds": "Houthi declaration of a naval blockade on Saudi Arabia, 20 July 2026, and strikes on the Saudi-flagged tankers Encelia and Layla on 22 July.",
+   "source_ids": [
+    "ft-saudi-2026"
+   ],
+   "confidence": "high",
+   "note": "The first time named Lloyd's syndicates have been publicly identified as restricting by affiliation. Marsh's Marcus Baker said Saudi Arabia may be moving into the same bracket as Israel, the US and the UK. Navium declined to comment; Ascot did not respond."
+  },
+  {
+   "id": "three-times-more-2026",
+   "kind": "surcharged",
+   "date": "2026-02",
+   "who": "US, UK and Israeli ships",
+   "by": "The Middle East war-risk market",
+   "what_happened": "Charged three times more than others for Middle East war cover.",
+   "source_ids": [
+    "ll-three-times"
+   ],
+   "confidence": "medium",
+   "note": "Headline verified; article body paywalled."
+  },
+  {
+   "id": "ofac-ingosstrakh-alfa",
+   "kind": "sanctions-block",
+   "date": "2025-01-10",
+   "who": "Ingosstrakh Insurance Company and Alfastrakhovanie Group",
+   "by": "OFAC (US Treasury)",
+   "what_happened": "Designated under Executive Orders 14024 and 13662 on the stated ground that they 'have insured oil tankers transporting Russian petroleum products'. Roughly 180 vessels were listed in the same action.",
+   "source_ids": [
+    "ofac-jy2777"
+   ],
+   "confidence": "high",
+   "note": "Ingosstrakh was Russia's largest marine-risk provider. The UK had designated it earlier, on 13 June 2024, in its first shadow-fleet package."
+  },
+  {
+   "id": "uk-ingosstrakh-2024",
+   "kind": "sanctions-block",
+   "date": "2024-06-13",
+   "who": "Ingosstrakh, plus four tankers",
+   "by": "UK Government (OFSI / FCDO)",
+   "what_happened": "First UK shadow-fleet designations. Ingosstrakh was at the time Russia's top marine-risk provider.",
+   "source_ids": [
+    "ll-uk-ingosstrakh"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "uk-alfa-vsk-2024",
+   "kind": "sanctions-block",
+   "date": "2024-11-25",
+   "who": "Alfastrakhovanie and VSK, plus 30 ships",
+   "by": "UK Government",
+   "what_happened": "Two Russian marine insurers designated in what was then the UK's largest dark-fleet action.",
+   "source_ids": [
+    "worldoil-uk-nov2024"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "ofac-iran-hormuz-insurers-2026",
+   "kind": "sanctions-block",
+   "date": "2026-07-29",
+   "who": "Persian Gulf Marine Insurance Co and HormuzSafe Marine Services Authority",
+   "by": "OFAC",
+   "what_happened": "Designated as integral to an Iranian scheme to extract digital assets and other revenue from ships transiting the Strait of Hormuz through insurance policies.",
+   "source_ids": [
+    "ofac-sb0581",
+    "reuters-ofac-iran-2026"
+   ],
+   "confidence": "high",
+   "note": "An insurance product used as an extortion instrument. OFAC has sanctioned more than 100 Iran shadow-fleet vessels since the start of 2026."
+  },
+  {
+   "id": "price-cap-attestation-gap",
+   "kind": "sanctions-block",
+   "date": "2024-04",
+   "who": "P&I clubs and their assureds on Russian oil voyages",
+   "by": "The price-cap attestation regime itself",
+   "what_happened": "The International Group called the attestation process 'a flawed regime which potentially exposes both the P&I Club and a shipowner, operator, charterer to a breach'. Clubs sit at Tier 3A, without direct access to cargo price information.",
+   "grounds": "Cover is void for voyages in breach of the cap — set out in the rulebooks of every International Group club.",
+   "resolved": "Gard, West of England and the American Club each said they would end cover if an attestation proved inaccurate. No documented instance of it actually being pulled.",
+   "source_ids": [
+    "ig-attestation",
+    "reuters-western-insurers-2024",
+    "allianz-price-cap"
+   ],
+   "confidence": "high",
+   "note": "Reuters found five Western insurers — American Club, West of England, Gard, London P&I Club and Maritime Mutual — covering ten Russia-to-Asia voyages in 2024. Neil Roberts of IUMI: 'You're relying on their word.' The cap was lowered from $60 to $47.60 in September 2025."
+  },
+  {
+   "id": "romarine",
+   "kind": "fraudulent-cover",
+   "date": "2025-03-04",
+   "who": "More than 30 sanctioned tankers",
+   "by": "Norway's Finanstilsynet ordered Romarine AS to halt operations",
+   "what_happened": "Romarine was never registered as an insurer. It had issued certificates for at least 30 sanctioned tankers, presented to Russian port authorities at Primorsk and De Kastri. A forged document used the financial regulator's own letterhead, cited a non-existent Norwegian law, carried a false stamp and the signature of a person who never worked there.",
+   "resolved": "Public warning issued 25 March 2025. Oslo police investigated four individuals for forgery and unlicensed insurance mediation.",
+   "source_ids": [
+    "reuters-romarine"
+   ],
+   "confidence": "high",
+   "note": "Owned by Andrey Mochalin, a Russian citizen and former employee of Norwegian insurer Hydor AS. Website hosted on a St Petersburg IP. Romarine's explanation for listing sanctioned vessels was 'a technical glitch'."
+  },
+  {
+   "id": "seaguard",
+   "kind": "fraudulent-cover",
+   "date": "2026-04-16",
+   "who": "At least five tankers, including the sanctioned Paz and the Deyna",
+   "by": "Exposed by Ukraine's foreign intelligence service",
+   "what_happened": "Seaguard P&I of Pinneberg, Germany, does not exist as a commercial entity. Its listed address is a residential apartment block.",
+   "source_ids": [
+    "ij-seaguard"
+   ],
+   "confidence": "medium",
+   "note": "Bloomberg could not definitively corroborate; Seaguard did not respond. The Deyna was seized by France in March 2026. A reported European Commission investigation rests on a single advocacy-organisation source and is not independently confirmed."
+  },
+  {
+   "id": "maritime-mutual",
+   "kind": "fraudulent-cover",
+   "date": "2025-10-28",
+   "who": "Almost one in six of all Western-sanctioned shadow-fleet tankers",
+   "by": "Maritime Mutual Insurance Association, Auckland — real, and reinsured at Lloyd's",
+   "what_happened": "Reuters identified 231 tankers covered since 2018. Of those, 97 sanctioned tankers had held cover and 48 were carrying it on the day they were blacklisted. Seven declared Maritime Mutual insurance after being blacklisted. Revenue grew from $14.2m in 2018 to $108.5m in 2024.",
+   "amount_usd": null,
+   "resolved": "New Zealand police searched its Auckland and Christchurch offices and an Auckland residence on 16 October 2025. No charges filed as of publication. Four days later the board resolved not to cover any vessel identified as shadow fleet by Windward or Lloyd's List, nor any vessel carrying Russian oil or refined products.",
+   "source_ids": [
+    "reuters-maritime-mutual"
+   ],
+   "confidence": "high",
+   "note": "The largest single enabler found, and not a fake company — reinsured through Lloyd's, with Munich Re, Hannover Re, MS Amlin and Atrium named. MS Amlin confirmed it has ended the relationship; Atrium confirmed it continues. Reuters found no instance of Maritime Mutual ever paying a claim to a sanctioned vessel or owner."
+  },
+  {
+   "id": "gulf-cancellation-2026-03",
+   "kind": "cover-withdrawn",
+   "date": "2026-03-01",
+   "who": "All assureds trading Iran and the Persian/Arabian Gulf",
+   "by": "Gard, Skuld, NorthStandard, London P&I Club and the American Club",
+   "what_happened": "A 72-hour Notice of Cancellation for war risks under clause JL2022-020, effective 00:00 GMT on 5 March 2026. Cover was automatically reinstated at the same instant with a geographic exclusion covering Iranian waters, the Persian/Arabian Gulf, the Gulf of Oman and adjacent waters. Roughly 21 non-mutual product lines were affected — charterers' P&I, traders' P&I, fixed-premium and extended crew cover, MOU cover and others.",
+   "grounds": "Gard's own circular states the cause in its opening sentence: the clubs had themselves received Notice of Cancellation from their reinsurers.",
+   "source_ids": [
+    "gard-circular-01-2026",
+    "guardian-gulf-2026"
+   ],
+   "confidence": "high",
+   "note": "Read this precisely. The mutual owned P&I cover and the Excess War P&I reinsurance were untouched — the International Group confirms that cover 'has not been amended' and remains free and unlimited. Lloyd's List published a corrective headlined 'No, P&I clubs have not cancelled war risk cover'. What went was the non-poolable layer, mainly chartered-vessel exposures."
+  },
+  {
+   "id": "red-sea-withdrawal-2026-08",
+   "kind": "cover-withdrawn",
+   "date": "2026-08-12",
+   "who": "All entered tonnage transiting Bab el-Mandeb, the southern Red Sea, the Gulf of Aden and the western Indian Ocean",
+   "by": "London P&I, Skuld, the Swedish Club, NorthStandard, the Shipowners' Club and the UK P&I Club",
+   "what_happened": "Fixed-premium and non-poolable war-risk components withdrawn, effective around 16 August 2026. The excluded zone was extended north to latitude 25°30'N, capturing most of Saudi Arabia's Red Sea coastline — considerably further north than any previous Red Sea restriction. Buy-back was available at renegotiated terms.",
+   "grounds": "The clubs' commercial reinsurers cancelled the underlying agreements.",
+   "source_ids": [
+    "spglobal-redsea-2026",
+    "splash-redsea-2026"
+   ],
+   "confidence": "high",
+   "note": "Triggered by the Tihamah, hit off Al Mokha on 11 August 2026 with several seafarers killed. Lloyd's List reported that syndicates and reinsurance carriers 'pushed home their advantage to secure restrictive warranties'. Saudi-linked ships were then excluded from the buy-back."
+  },
+  {
+   "id": "saudi-buyback-exclusion-2026",
+   "kind": "declined-to-write",
+   "date": "2026-08-19",
+   "who": "Saudi-linked tonnage",
+   "by": "International Group clubs, in the Red Sea buy-back terms",
+   "what_happened": "Saudi-linked tonnage was explicitly excluded from the Red Sea buy-back cover. Charterers' liability cover remained obtainable, at higher cost.",
+   "source_ids": [
+    "ll-saudi-buyback"
+   ],
+   "confidence": "medium"
+  },
+  {
+   "id": "shadow-fleet-uninsured",
+   "kind": "uninsured-fleet",
+   "date": "2025-02-14",
+   "who": "36.5% of the global tanker fleet — 5,134 vessels",
+   "by": "No insurer identifiable",
+   "what_happened": "The KSE Institute reviewed roughly 14,000 active tankers, 141 flag-state-recognised P&I providers and 42 public databases, and could identify insurance for only 63.5%. Of tankers carrying Russian crude in 2024, just 29.4% had International Group cover, against more than 90% for tankers carrying only non-Russian cargo.",
+   "source_ids": [
+    "kse-shadow-insurance"
+   ],
+   "confidence": "high",
+   "note": "Non-IG ships average 18.1 years against 14.4 for IG-insured, and 64.2% sit on grey, black or unranked registries against 25%."
+  },
+  {
+   "id": "paper-not-certificate-gap",
+   "kind": "fraudulent-cover",
+   "date": "2026-02-26",
+   "who": "Around one third of oil tankers crossing the Baltic",
+   "by": "Sanctioned Russian or Russian-linked insurers",
+   "what_happened": "In late February 2026, roughly a third of Baltic tanker transits presented insurance certificates from sanctioned Russian or Russian-linked insurers. Separately, more than 90% of shadow-fleet ships produce an insurance certificate when challenged — around 95% of those challenged by Finland and 92% by Estonia.",
+   "source_ids": [
+    "atlantic-council-shadow",
+    "ll-certificates"
+   ],
+   "confidence": "medium",
+   "note": "The two figures are not in conflict — they measure paper against substance. Over 90% produce a certificate; 36.5% have no verifiable cover. The gap between a document produced at a Baltic checkpoint and an insurer that would actually pay is the shadow fleet's insurance problem, and Romarine, Seaguard and Maritime Mutual are its three named faces. Sanctioned insurers also remain on some flag states' approved lists."
+  }
+ ],
+ "case_law": [
+  {
+   "id": "russian-aircraft-lessors",
+   "case": "Russian Aircraft Lessor Policy Claims",
+   "citation": "[2025] EWHC 1430 (Comm)",
+   "court": "English Commercial Court, Butcher J",
+   "date": "2025-06-11",
+   "vessel": null,
+   "issue": "Whether aircraft stranded in Russia by Order 311 of 10 March 2022 fell to All Risks or to War Risks insurers, and whether sanctions barred payment.",
+   "held": "Order 311 was a 'restraint' or 'detention' within the Government Peril definition, so the claims were excluded from All Risks cover and fell to the War Risks insurers. The loss date was fixed at 10 March 2022. AerCap succeeded under Contingent Cover rather than Possessed Cover because no lessor had taken steps to repossess, and recovered the lower $1.2bn limit of indemnity.",
+   "who_won": "assured",
+   "amount_usd": 1200000000,
+   "why_it_matters": "Now the leading English authority on war-risk exclusions, after a 50-day trial, and directly analogous to a marine blocking-and-trapping claim. Two points bite on shipping. First, Butcher J indicated obiter that the Wayne Tank principle — where concurrent causes exist and one is excluded, the exclusion prevails — applies to independent concurrent causes as well as interdependent ones, materially widening insurers' ability to defeat a claim on causation. Second, some lessors' war-risk policies contained geographical-limit review provisions under which insurers had terminated Russia cover before the loss. That is precisely the 'we cancelled on notice before the loss' defence now being built into Gulf and Red Sea cover.",
+   "url": "https://www.judiciary.uk/judgments/russian-aircraft-lessor-policy-claims/",
+   "source_ids": [
+    "ewhc-2025-1430"
+   ],
+   "confidence": "high",
+   "note": "On 16 September 2025 Butcher J refused the war-risk insurers permission to appeal on all grounds and ordered payment of interest. AerCap recovers 65% of its costs, roughly £81m."
+  },
+  {
+   "id": "oceanus-vyssos",
+   "case": "Oceanus Capital SARL v Lloyd's Insurance Company SA (the Vyssos)",
+   "citation": "[2025] EWHC 3293 (Comm)",
+   "court": "English Commercial Court",
+   "date": "2025-12-17",
+   "vessel": "Vyssos",
+   "issue": "Whether a mortgagee interest claim for a mine strike in Ukrainian waters failed because of a trading-warranty breach evidenced by forged additional cover.",
+   "held": "The proximate cause of the loss was the mine strike, not the forged additional cover. The assured was not privy to the trading-warranty breach because it had relied on fraudulent documentation. Judgment for the claimant.",
+   "who_won": "assured",
+   "amount_usd": 3600000,
+   "why_it_matters": "The only complete insurance chain in this dataset that comes from a primary court document rather than trade journalism — insurer, MGA, reinsurers and both brokers are all named in the judgment. It also shows the route by which a forged certificate reaches an English court, which is the shadow-fleet problem arriving in litigation.",
+   "url": "https://caselaw.nationalarchives.gov.uk/ewhc/comm/2025/3293",
+   "source_ids": [
+    "ewhc-2025-3293"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "delos-win-win",
+   "case": "Delos Shipholding SA v Allianz Global Corporate & Specialty SE (the Win Win)",
+   "citation": "[2024] EWHC 719 (Comm), upheld [2025] EWCA Civ 1019",
+   "court": "English Commercial Court, then Court of Appeal (Males, Asplin and Popplewell LJJ)",
+   "date": "2025",
+   "vessel": "Win Win",
+   "issue": "Whether detention by Indonesia for anchoring in Singapore's waters was a fortuity, and whether the owners had made a fair presentation of the risk.",
+   "held": "The loss was fortuitous — the anchorage had for many years been used by hundreds if not thousands of vessels without problem. Detention beyond six months made it a constructive total loss. The Court of Appeal unanimously dismissed the insurers' appeal.",
+   "who_won": "assured",
+   "amount_usd": 37500000,
+   "why_it_matters": "The most recent appellate confirmation that a war-risks detention claim will be paid where the detention was genuinely unexpected. Written on the American Institute Hull War Risks and Strikes Clauses 1/12/1977, and also the leading recent treatment of the duty of fair presentation in a marine context.",
+   "source_ids": [
+    "ewhc-2024-719"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "b-atlantic",
+   "case": "Navigators Insurance v Atlasnavios-Navegação (the B Atlantic)",
+   "citation": "[2018] UKSC 26",
+   "court": "UK Supreme Court",
+   "date": "2018-05-22",
+   "vessel": "B Atlantic",
+   "issue": "Whether cover for 'persons acting maliciously' responded where 132kg of cocaine was strapped to the hull by third parties in Venezuela and the vessel was detained.",
+   "held": "The claim failed. Cover for persons acting maliciously was defeated by the exclusion for detainment by reason of infringement of customs regulations. The Court also held that malice requires a mental element of spite or ill-will.",
+   "who_won": "insurer",
+   "why_it_matters": "The controlling authority on how an exclusion overrides an insured peril in the Institute War and Strikes Clauses. Owners abandoned the vessel after six months' detention and still recovered nothing.",
+   "source_ids": [
+    "uksc-2018-26"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "brillante-virtuoso",
+   "case": "Suez Fortune Investments and Piraeus Bank v Talbot Underwriting (the Brillante Virtuoso)",
+   "citation": "[2019] EWHC 2599 (Comm)",
+   "court": "English Commercial Court",
+   "date": "2019-10-07",
+   "vessel": "Brillante Virtuoso",
+   "issue": "Whether a fire in the Gulf of Aden was piracy, or a deliberate scuttling.",
+   "held": "The vessel was deliberately scuttled on the instructions of the owners and the beneficial owner in a failed fraud. Piracy was unavailable because the event was not objectively so motivated. War risk insurers denied liability and were vindicated. The innocent co-assured, Piraeus Bank, also lost.",
+   "who_won": "insurer",
+   "amount_usd": 77000000,
+   "why_it_matters": "The reason underwriters investigate rather than pay a Gulf of Aden total loss on the face of it, and the origin of the 'innocent co-assured's uninsured peril' problem — a financing bank with no involvement in the fraud still recovered nothing.",
+   "source_ids": [
+    "ewhc-2019-2599"
+   ],
+   "confidence": "high"
+  },
+  {
+   "id": "ocean-victory",
+   "case": "Gard Marine & Energy v China National Chartering (the Ocean Victory)",
+   "citation": "[2017] UKSC 35",
+   "court": "UK Supreme Court",
+   "date": "2017-05-10",
+   "vessel": "Ocean Victory",
+   "issue": "Whether time charterers breached a safe-port warranty when a capesize grounded leaving Kashima and broke in two.",
+   "held": "The Supreme Court affirmed the Court of Appeal against Gard. It also settled that a charterer cannot limit liability the way an owner can for the loss of a chartered ship.",
+   "who_won": "insurer",
+   "why_it_matters": "Included as the leading safe-port and subrogated-recourse authority, not as a war-risk coverage case. It is what happens after a hull insurer pays and then tries to recover from the charterer. Gard sued as H&M insurer and assignee, and lost.",
+   "source_ids": [
+    "uksc-2017-35"
+   ],
+   "confidence": "high",
+   "note": "Recorded here with an explicit caveat: this is a recourse case, not a coverage case. Do not cite it for whether a war-risk claim gets paid."
+  },
+  {
+   "id": "houthi-characterisation",
+   "case": "Whether a Houthi attack is an act of war, terrorism or a malicious act",
+   "citation": null,
+   "court": null,
+   "date": null,
+   "vessel": null,
+   "issue": "Which exclusion or insured peril a Houthi missile or drone strike falls under. This determines who pays on every Red Sea loss in this dataset.",
+   "held": "No published court or arbitration decision, 2023 to 2026. Searched extensively and specifically.",
+   "who_won": "pending",
+   "why_it_matters": "The single largest hole in the legal record. Practitioner commentary reports that disputes at the intersection of war risk, sanctions and charterparty obligations are already flowing into arbitration in Singapore and London — but London and Singapore maritime arbitration is confidential and unreported, so this may never surface publicly. The nearest usable analogue is the Russian Aircraft Lessor judgment.",
+   "source_ids": [],
+   "confidence": "high",
+   "note": "Recorded as a case-law entry on purpose. The absence is the finding."
+  }
+ ],
+ "claims": [
+  {
+   "id": "galaxy-leader-ctl",
+   "what": "Galaxy Leader hull war risk policy",
+   "vessel": "Galaxy Leader",
+   "date": "2023-11-19",
+   "amount_usd": 65000000,
+   "label": "$65m",
+   "basis": "claimed",
+   "payer": "Ascot, Markel, Swiss Re, Arch, Skuld, Tokio Marine HCC, Ark",
+   "source_ids": [
+    "ll-galaxy-leader-slip",
+    "id-galaxy-leader-codan"
+   ],
+   "confidence": "medium",
+   "note": "Constructive total loss declared on deprivation of use beyond twelve months. Owner reported as set to collect. Payment never publicly confirmed, and a separate loss-of-hire dispute with Codan is unresolved."
+  },
+  {
+   "id": "rubymar-litigation",
+   "what": "Rubymar hull claim, now in litigation",
+   "vessel": "Rubymar",
+   "date": "2024-03-02",
+   "amount_usd": 5000000,
+   "label": "$5m",
+   "basis": "claimed",
+   "payer": "Berytus Insurance & Reinsurance SAL",
+   "source_ids": [
+    "ewhc-2025-664",
+    "quadrant-rubymar"
+   ],
+   "confidence": "high",
+   "note": "Berytus Insurance & Reinsurance SAL v Golden Adventure Shipping SA [2025] EWHC 664 (Comm). The insurer sued first, on 17 August 2024, for negative declaratory relief; the owner's defence was lodged 7 July 2025. Insurers deny liability. Only the jurisdiction ruling is public — the merits are undecided."
+  },
+  {
+   "id": "sounion-vessel-value",
+   "what": "Sounion vessel value",
+   "vessel": "Sounion",
+   "date": "2024-08-21",
+   "amount_usd": 80000000,
+   "label": "about $80m",
+   "basis": "estimated",
+   "payer": null,
+   "source_ids": [
+    "ambrey-sounion"
+   ],
+   "confidence": "medium",
+   "note": "Vessel and roughly a million barrels of crude were saved, so no hull total loss claim arose. The salvage was funded by the vessel's insurers over 135 days with more than 200 personnel and seven salvage vessels. The cost has never been disclosed."
+  },
+  {
+   "id": "msc-aries-cargo",
+   "what": "MSC Aries cargo value",
+   "vessel": "MSC Aries",
+   "date": "2024-04-13",
+   "amount_usd": 93600000,
+   "label": "$93.6m",
+   "basis": "estimated",
+   "payer": null,
+   "source_ids": [
+    "clydeco-msc-aries"
+   ],
+   "confidence": "low",
+   "note": "Media estimate relayed by Clyde & Co, not a verified figure. The parties took a wait-and-see approach as the one-year Marine Insurance Act s.60 constructive total loss mark approached. No payout confirmed. Iranian prosecutors separately sought a $170m fine from Zodiac Maritime."
+  },
+  {
+   "id": "eternity-c-uninsured",
+   "what": "Eternity C loss, borne by the owner",
+   "vessel": "Eternity C",
+   "date": "2025-07-09",
+   "amount_usd": 20000000,
+   "label": "about $20m",
+   "basis": "estimated",
+   "payer": "Cosmoship Management — no insurer",
+   "source_ids": [
+    "ft-eternity-c"
+   ],
+   "confidence": "high",
+   "note": "Nothing was paid. Travelers, the vessel's usual war risk insurer, declined to extend cover before the passage and the vessel sailed without it. Four crew died."
+  },
+  {
+   "id": "tutor-value",
+   "what": "Tutor vessel value",
+   "vessel": "Tutor",
+   "date": "2024-06-12",
+   "amount_usd": 37000000,
+   "label": "about $37m",
+   "basis": "estimated",
+   "payer": null,
+   "source_ids": [
+    "clarksons-tutor"
+   ],
+   "confidence": "medium",
+   "note": "Clarksons valuation via Bloomberg. A vessel value, not a claim. Lloyd's List separately reported a $40m loss and a salvage claim likely above $2m, with lead underwriter Travelers not having posted security."
+  },
+  {
+   "id": "lloyds-middle-east-2026",
+   "what": "Lloyd's of London net losses from the Middle East conflict",
+   "vessel": null,
+   "date": "2026-09-03",
+   "amount_usd": 1900000000,
+   "label": "£1.4bn / $1.9bn",
+   "basis": "reserved",
+   "payer": "Lloyd's of London",
+   "source_ids": [
+    "lloyds-hy2026"
+   ],
+   "confidence": "high",
+   "note": "Half-year 2026 results, covering the period from 28 February 2026. CFO Jim Bichard confirmed £1.4bn is net and gross is larger. CEO Patrick Tiernan: 'we do not currently expect the situation to constitute a capital event.' Hardest-hit classes were marine, energy and political violence. Lloyd's activated its major event response group in early March 2026."
+  },
+  {
+   "id": "iumi-gulf-claims-2026",
+   "what": "Marine insurer claims from the Gulf conflict",
+   "vessel": null,
+   "date": "2026-09",
+   "amount_usd": 2000000000,
+   "label": "$1.5-2bn across about 70 casualties",
+   "basis": "market-estimate",
+   "payer": null,
+   "source_ids": [
+    "iumi-lange-2026",
+    "gcaptain-2bn"
+   ],
+   "confidence": "high",
+   "note": "Lars Lange, Secretary General of IUMI, via Lloyd's List. David Osler puts it at roughly $2bn across 70+ claims and calls it the second-biggest payout for marine underwriters in more than a decade, exceeded only by the Baltimore bridge in 2024."
+  },
+  {
+   "id": "red-sea-not-a-market-event",
+   "what": "Red Sea campaign 2023-2025 as a market loss event",
+   "vessel": null,
+   "date": "2025",
+   "amount_usd": null,
+   "label": "no major loss event recorded",
+   "basis": "market-estimate",
+   "payer": null,
+   "source_ids": [
+    "lloyds-fy2025"
+   ],
+   "confidence": "high",
+   "note": "Lloyd's full-year 2025 results name no Red Sea major loss event at all. The major-claims narrative runs Ukraine 2022, then Hurricane Ian, then Milton, Helene and Beryl. Major claims ratio was 5.8% in 2025 against a ten-year average of 10.4%. IUMI's Secretary General said in March 2024 that losses remained within underwriting tolerance. The 2023-25 Red Sea campaign was not a market loss event. The 2026 Iran war is."
+  },
+  {
+   "id": "global-war-risk-premium",
+   "what": "Global marine war-risk premium income",
+   "vessel": null,
+   "date": "2025-01-06",
+   "amount_usd": 1000000000,
+   "label": "about $1bn a year",
+   "basis": "market-estimate",
+   "payer": null,
+   "source_ids": [
+    "bloomberg-war-premium"
+   ],
+   "confidence": "medium",
+   "note": "London alone put at about £500m by Marsh McLennan; the ~$1bn global figure comes from two unnamed insurance officials. Bloomberg notes there is no industry-standard measure of war-risk premium written, so no formal loss ratio exists. Treat every profitability claim in this area as qualitative."
+  },
+  {
+   "id": "abdullah-ransom",
+   "what": "MV Abdullah ransom",
+   "vessel": "Abdullah",
+   "date": "2024-04-14",
+   "amount_usd": 5000000,
+   "label": "$5m",
+   "basis": "paid",
+   "payer": "An unnamed UK-based P&I club",
+   "source_ids": [
+    "tbs-abdullah-ransom",
+    "maritime-exec-abdullah"
+   ],
+   "confidence": "medium",
+   "note": "Hijacked 12 March 2024 with 23 crew and 55,000 tonnes of coal; released 14 April. Sourced to two named pirates; cash airdropped in three sacks. Owner KSRM has never publicly confirmed it. The only confirmed ransom payment in this dataset."
+  },
+  {
+   "id": "ruen-no-ransom",
+   "what": "MV Ruen — no ransom",
+   "vessel": "Ruen",
+   "date": "2024-03-16",
+   "amount_usd": 0,
+   "label": "nothing paid",
+   "basis": "paid",
+   "payer": null,
+   "source_ids": [
+    "aljazeera-ruen-pirates"
+   ],
+   "confidence": "high",
+   "note": "Retaken by the Indian Navy after a 40-hour operation; 35 pirates surrendered. A military resolution, not a payment. Recorded explicitly because the Ruen and the Abdullah are routinely conflated — the $5m was the Abdullah."
+  },
+  {
+   "id": "galaxy-leader-crew",
+   "what": "Galaxy Leader crew release — no ransom",
+   "vessel": "Galaxy Leader",
+   "date": "2025-01",
+   "amount_usd": 0,
+   "label": "nothing paid",
+   "basis": "paid",
+   "payer": null,
+   "source_ids": [
+    "ll-galaxy-leader-slip"
+   ],
+   "confidence": "medium",
+   "note": "Twenty-five seafarers held 430 days, released via Omani mediation. A political release, not a kidnap-and-ransom settlement."
+  },
+  {
+   "id": "iumi-global-premium-2024",
+   "what": "Global marine insurance premium",
+   "vessel": null,
+   "date": "2025-10",
+   "amount_usd": 39920000000,
+   "label": "$39.92bn",
+   "basis": "market-estimate",
+   "payer": null,
+   "source_ids": [
+    "iumi-stats-2025"
+   ],
+   "confidence": "high",
+   "note": "IUMI Stats Report 2025, data year 2024, up 1.5% on 2023. Cargo $22.64bn, ocean hull $9.67bn, offshore energy down 8%. Cargo loss ratios improved for a sixth consecutive year."
+  },
+  {
+   "id": "allianz-persian-gulf-exposure",
+   "what": "Cargo vessels and value trapped in the Persian Gulf",
+   "vessel": null,
+   "date": "2026-06-15",
+   "amount_usd": 125000000000,
+   "label": "$125bn across ~1,150 vessels",
+   "basis": "estimated",
+   "payer": null,
+   "source_ids": [
+    "allianz-ssr-2026"
+   ],
+   "confidence": "high",
+   "note": "Roughly 1,150 cargo vessels, 29m gross tonnes, combined vessel and cargo value about $125bn, as at 15 June 2026. The IMO recorded 46 merchant vessels damaged in the conflict as at 11 June 2026. Underwriters warn of multibillion-dollar total-loss liabilities if trapped vessels reach the twelve-month deprivation-of-use threshold."
+  },
+  {
+   "id": "shadow-fleet-spill-cost",
+   "what": "Potential oil spill cleanup from a shadow-fleet tanker",
+   "vessel": null,
+   "date": "2026-06",
+   "amount_usd": 1600000000,
+   "label": "up to $1.6bn",
+   "basis": "estimated",
+   "payer": null,
+   "source_ids": [
+    "allianz-ssr-2026"
+   ],
+   "confidence": "high",
+   "note": "The reason uninsured tonnage is a systemic problem and not just a commercial one. With 36.5% of the tanker fleet carrying no verifiable cover, there may be no solvent payer."
+  },
+  {
+   "id": "war-risk-in-oil-price",
+   "what": "War-risk insurance embedded in the crude oil price",
+   "vessel": null,
+   "date": "2026-09-03",
+   "amount_usd": null,
+   "label": "$7-8 a barrel",
+   "basis": "market-estimate",
+   "payer": null,
+   "source_ids": [
+    "gcaptain-2bn"
+   ],
+   "confidence": "medium",
+   "note": "David Osler, Lloyd's List. Where the cost actually lands: not on the shipowner, but on the consumer."
+  }
+ ],
+ "market": {
+  "figures": [
+   {
+    "id": "global-marine-premium",
+    "metric": "Global marine insurance premium",
+    "value": 39.92,
+    "unit": "US$ billion",
+    "period": "2024",
+    "publisher": "IUMI",
+    "note": "Up 1.5%. Cargo $22.64bn (56.7%), ocean hull $9.67bn (24.2%), offshore energy $4.34bn (10.9%), marine liability the balance. IUMI's own narrative text gives a different split from its chart; only the chart set reconciles with the dollar amounts.",
+    "source_ids": [
+     "iumi-stats-2025"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "marine-war-share",
+    "metric": "Marine war as a share of the marine market",
+    "value": "2-3%",
+    "unit": "share of marine premium",
+    "period": "2024-2026",
+    "publisher": "IUA and Howden Re",
+    "note": "The IUA's London company market figure of 2.5% and Howden Re's 2-3% agree independently. War risk is a rounding error in the marine market that determines whether trade moves at all.",
+    "source_ids": [
+     "iua-stats-2025",
+     "howden-hormuz"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "london-war-premium",
+    "metric": "Marine war premium, London company market",
+    "value": 145.0,
+    "unit": "£ million",
+    "period": "2024",
+    "publisher": "IUA",
+    "note": "The only discrete marine war premium line anyone publishes. Read it as a floor: it excludes Lloyd's entirely, excludes London-controlled business written elsewhere, and the IUA's methodology pushes un-split returns into 'Other'.",
+    "source_ids": [
+     "iua-stats-2025"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "ig-tonnage-share",
+    "metric": "Share of world ocean-going tonnage covered by the International Group",
+    "value": 87.0,
+    "unit": "percent",
+    "period": "2026",
+    "publisher": "International Group of P&I Clubs",
+    "note": "The IG's About page says 87% twice in body text. The widely-quoted 90% survives only in the site-wide HTML meta description — most 90% citations are quoting a meta tag.",
+    "source_ids": [
+     "ig-about"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "ig-tonnage",
+    "metric": "Tonnage insured by the International Group",
+    "value": 1.7,
+    "unit": "billion gross tonnes",
+    "period": "2025",
+    "publisher": "International Group of P&I Clubs",
+    "note": "Up from 2.5m GT in 1953.",
+    "source_ids": [
+     "ig-data-2025"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "ig-free-reserves",
+    "metric": "International Group free reserves",
+    "value": 6.79,
+    "unit": "US$ billion",
+    "period": "2025-2026",
+    "publisher": "Gallagher",
+    "note": "A record, up $850m or 14.3%. Club-reported figures differ from broker comparable-basis figures for several clubs; neither is wrong.",
+    "source_ids": [
+     "gallagher-pi-2026"
+    ],
+    "confidence": "medium"
+   },
+   {
+    "id": "ig-gxl",
+    "metric": "Cover above the individual club retention",
+    "value": 3.35,
+    "unit": "US$ billion",
+    "period": "2026-2027",
+    "publisher": "International Group of P&I Clubs",
+    "note": "$2.25bn of group excess of loss above a $100m pool ceiling, plus $1bn of collective overspill. AXA XL leads. The pooling agreement shares claims to about $8.9bn.",
+    "source_ids": [
+     "ig-gxl-2026"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "uninsured-tankers",
+    "metric": "Global tanker fleet with no identifiable insurance",
+    "value": 36.5,
+    "unit": "percent",
+    "period": "2025-02",
+    "publisher": "KSE Institute",
+    "note": "5,134 vessels of roughly 14,000. Only 29.4% of tankers carrying Russian crude in 2024 had International Group cover, against more than 90% for tankers carrying only non-Russian cargo.",
+    "source_ids": [
+     "kse-shadow-insurance"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "hormuz-rate-2026",
+    "metric": "Hormuz war risk rate",
+    "value": "7.5-10%",
+    "unit": "percent of hull value per transit",
+    "period": "2026-07",
+    "publisher": "S&P Global Platts, citing Marsh",
+    "note": "Up from 0.10-0.15% before the war began on 28 February 2026, and about 2.5% at the March peak. $10.5-14m on a VLCC. This settles a long-standing flag in this library: the figure is right and needed only a date.",
+    "source_ids": [
+     "platts-hormuz-2026-07",
+     "ll-hormuz-vlcc"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "lloyds-appetite",
+    "metric": "Lloyd's marine war underwriters still writing hull war",
+    "value": 88.0,
+    "unit": "percent",
+    "period": "2026-03",
+    "publisher": "Lloyd's Market Association",
+    "note": "Over 90% still writing cargo. The LMA's own statement: reports that cover was cancelled or unaffordable, and that this is why vessels stopped transiting Hormuz, are 'not accurate'. The binding constraint was crew safety.",
+    "source_ids": [
+     "lma-hormuz-2026"
+    ],
+    "confidence": "high"
+   },
+   {
+    "id": "us-ocean-marine",
+    "metric": "US ocean marine direct premiums written",
+    "value": 5.71,
+    "unit": "US$ billion",
+    "period": "2025",
+    "publisher": "AM Best",
+    "note": "Industry total, down 0.6%. AIG leads on $817.7m. US statutory only — not comparable with IUMI's global figure. Note also that US 'inland marine' is a statutory line covering goods in transit and contractors' equipment, and is not maritime at all.",
+    "source_ids": [
+     "ambest-rankings-2026"
+    ],
+    "confidence": "high"
+   }
+  ]
+ },
+ "why_it_is_opaque": [
+  "Insurers are named when a London market lead exists and Lloyd's List, Insurance Day or The Insurer choose to report the slip, or when litigation forces disclosure. There is no third route. Every named insurer in this dataset traces back to four publishers or one court.",
+  "Vessels outside the London market stay opaque. Rubymar, Abdullah, Ruen and shadow-fleet tonnage yielded nothing, and they are exactly the hulls where cover is most likely to be absent or fictitious.",
+  "Settlements are never published. Insured values, claims filed and constructive total loss declarations are on the record; what was actually paid is not. No confirmed settled payment amount exists for any vessel here.",
+  "Arbitration is confidential. London and Singapore maritime arbitration is unreported, so the disputes that would tell us how Red Sea losses are actually being resolved may never surface.",
+  "Reputable publishers contradict each other on the same slip, and neither is checkable without a subscription. Both readings are recorded rather than one being chosen.",
+  "The market does not disclose its own size by company. No premium-based global ranking of marine insurers exists, and no broker publishes marine revenue or market share."
+ ],
+ "gaps": [
+  "No confirmed settled payment amount for any vessel in this dataset. Insurers do not publish settlements.",
+  "The UK P&I club that arranged the Abdullah's $5m ransom is never named in any source, in any language. Likely protected by non-disclosure.",
+  "No insurer identified for Ruen, Hellas Aphrodite, MSC Aries, Marlin Luanda or Chem Pluto, despite extensive searching. See what_we_tried on each record.",
+  "No published court or arbitration decision, 2023 to 2026, on whether a Houthi attack is an act of war, terrorism or a malicious act. This is the question that decides who pays on every Red Sea loss here.",
+  "The outcome of the Galaxy Leader constructive total loss claim and the Codan loss-of-hire dispute is unknown, as is whether the $65m was ever paid.",
+  "The Rubymar litigation is decided only on jurisdiction. The merits are undecided.",
+  "The Sounion salvage cost has never been disclosed, though the insurers funded it.",
+  "No documented instance of a P&I club actually voiding cover for a false Russian price-cap attestation, though Gard, West of England and the American Club all say they would.",
+  "Lloyd's claims to be a recognised global leader in war risk and publishes no capacity figure and no syndicate count for it. It does not break out marine at all.",
+  "Participating syndicates in the Chubb and Beazley 2026 war consortia are not disclosed.",
+  "Ingosstrakh's insured vessel list is deliberately undisclosed. Only the Andromeda Star is documented.",
+  "Whether the DFC facility required US-flag status is unknown — the eligibility criteria were never published, and a US senator's request for them went unanswered."
+ ],
+ "open_questions": [
+  "Does any underwriter discount for an escort, and who has to certify it? Without a broker willing to write the discount, an escort's value has to come entirely out of the routing saving. This remains the single most commercially important unanswered question in the library.",
+  "Who actually buys — the owner, the charterer, or the underwriter? Under most charters the charterer bears the war-risk premium, so the party with the budget may not be the party with the ship. An escort sold to a shipowner may be sold to the wrong person.",
+  "Is there a product in underwriting the gap rather than closing it? Eternity C was destroyed after its insurer declined the voyage. Cosmoship bore roughly $20m alone. Who serves the owner an underwriter has just walked away from?",
+  "Could an escort change the JWC listed-area boundary rather than the premium? The circular is what turns a geography into a price, and it moved the Red Sea line 7.5 degrees north in a single revision. Influencing the boundary is worth more than influencing a rate.",
+  "The denial decision moved upstream to the reinsurers in 2026, twice. If reinsurers cancel on 72 hours' notice, the customer for risk reduction may be the reinsurance layer and not the shipowner at all.",
+  "What is a verified escort worth against a fraudulent insurance certificate? Over 90% of shadow-fleet ships produce a certificate on demand; 36.5% of the tanker fleet has no verifiable cover. Verification, not protection, may be the sellable product.",
+  "The US government built a $40bn facility for unavailability and the actual problem was price and crew safety, so it wrote nothing. What would a product aimed at crew safety rather than at cover have sold?"
+ ]
+}
