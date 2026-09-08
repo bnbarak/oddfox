@@ -150,7 +150,7 @@ export type ThreadMessage = {
   automated?: boolean; unsubscribe?: boolean;
 };
 export type Thread = {
-  contact_id: string; full_name: string; title: string; company: string | null;
+  key: string; contact_id: string | null; full_name: string; title: string; company: string | null;
   account_id: string | null; email: string | null; last_at: string;
   sent: number; replies: number; replied: boolean; messages: ThreadMessage[];
 };
@@ -160,13 +160,15 @@ export const useThreads = () => useResource<{ threads: Thread[] }>("/threads");
 /** A one-off, written by hand. round 0 keeps it out of the sequence, so it
     never triggers a follow-up — but it still goes through the same schedule
     path, so the daily cap, the footer and dry-run all still apply. */
+/** `who` is a CRM contact id, or a plain address for somebody outside it. */
 export const sendDirect = (
-  contact_id: string, subject: string, body: string,
+  who: { contact_id: string | null; to: string | null },
+  subject: string, body: string,
   domain: string | null = null, signature: string | null = null,
 ) =>
   post<{ id: string; cancel_token: string | null; scheduled_at: string; dry_run: boolean }>(
     "/schedule",
-    { contact_id, round: 0, subject, body, scheduled_at: null, domain,
+    { ...who, round: 0, subject, body, scheduled_at: null, domain,
       written_by: "template", template_tier: null, signature });
 
 export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };

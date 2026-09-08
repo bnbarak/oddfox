@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/platforms.schema.json",
+  "$id": "https://seaworth.ai/data/schema/platforms.schema.json",
   "title": "Vessel platforms and their specifications",
   "description": "One record per named platform, not per company. Exists because the company dataset holds platform names but no comparable specifications, which makes capability claims unfalsifiable.",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/flag-states.schema.json",
+  "$id": "https://seaworth.ai/data/schema/flag-states.schema.json",
   "title": "Flag states and registries",
   "type": "object",
   "required": ["dataset", "records"],

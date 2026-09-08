@@ -1,7 +1,7 @@
 {
  "dataset": "industry-insurance",
  "title": "What risk costs",
- "updated": "2026-09-04",
+ "updated": "2026-09-06",
  "retrieved": "2026-09-04",
  "how_war_risk_works": "Quoted as a percentage of the insured hull value, usually for a seven-day cover period rather than per voyage or per year. Underwriters price individually, so a published rate is indicative. Discounts are common and vessels with US, UK or Israeli links have been quoted materially higher than the market rate.",
  "war_risk_series": [
@@ -115,13 +115,15 @@
  ],
  "conflict": {
   "field": "Strait of Hormuz war risk, July 2026",
-  "held_in_library": "risk-economics.json records 7.5-10% of hull value, at confidence high.",
-  "contradicted_by": "Reuters reports Hormuz at 0.5% on 2025-06-23, up from 0.2-0.3%, and the highest Red Sea figure found anywhere is 2%.",
-  "assessment": "7.5-10% of hull value would be $7.5-10 million on a $100 million vessel for one transit, which is far outside every other figure in this series. The most likely explanations are a units error or a percentage change misread as a percentage of hull value.",
-  "action": "Confidence downgraded to low and the figure flagged. Do not use externally until a primary broker source confirms it.",
+  "held_in_library": "risk-economics.json records 7.5-10% of hull value.",
+  "previously_contradicted_by": "A Reuters reading of 0.5% on 2025-06-23, and the fact that the highest Red Sea figure found anywhere was 2%.",
+  "assessment": "RESOLVED 2026-09-06, against the library's own earlier assessment. The 7.5-10% figure is correct and correctly scaled. S&P Global Platts, citing Marsh, published it for 22 July 2026; Lloyd's List corroborated it on 27 July with 'Hormuz war risk cover tops $10m for single VLCC trip'. The error was comparing a July 2026 wartime rate against a June 2025 peacetime one. A US-Israel-Iran war began on 28 February 2026 and Hormuz was effectively closed; the rate moved from 0.1-0.15% before the war to about 2.5% in March and 7.5-10% by late July. For scale, Kharg Island reached 7.5% in May 1984 and Odesa 5% in 2022.",
+  "action": "Confidence restored to high and the figure date-stamped. The full dated series is held in insurance-market.json.",
+  "residual_doubt": "The library's own 0.5% entry for 2025-06-23 is retained and still attributed to Reuters, but a re-search could not reproduce it; Marsh via Platts gives 0.2% for the Persian Gulf on 19 June 2025, and 0.7% was an Israeli-ports rate. Both readings are kept. Neither affects the July 2026 figure.",
   "source_ids": [
-   "reuters-warrisk-2025-06",
-   "reuters-warrisk-2026-07"
+   "platts-hormuz-2026-07",
+   "ll-hormuz-vlcc",
+   "platts-hormuz-2025-06"
   ]
  },
  "pandi_general_increases": [
@@ -210,6 +212,6 @@
   "No kidnap and ransom pricing.",
   "No loss of hire daily rates.",
   "P&I general increases are published, but cost per gross tonne is not.",
-  "The Hormuz 7.5-10% figure in risk-economics.json is unverified and probably wrong."
+  "Named insurers, per-vessel attribution, denials and claims now live in insurance-market.json — this file remains the pricing series only."
  ]
 }

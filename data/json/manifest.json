@@ -1,158 +1,166 @@
 {
-  "$schema": "../schema/manifest.schema.json",
-  "library": "oddfox-data",
-  "title": "Odd Fox — business context library",
-  "version": "0.6.0",
-  "updated": "2026-09-03",
-  "purpose": "Structured, sourced business context for Odd Fox: who gets attacked at sea, where, what it costs, and who actually owns and rents the ships. Every dataset is plain JSON so it can be lifted into an application without rewriting.",
-  "conventions": {
-    "join_key": "IMO number for vessels. Never ship name — names change, IMO numbers do not.",
-    "ids": "Lowercase kebab-case, stable across versions. Cross-dataset references use <dataset>_id fields.",
-    "dates": "ISO 8601. Periods as YYYY, YYYY-Qn, or YYYY-H1.",
-    "provenance": "Every quantitative record carries source_ids into sources.json.",
-    "confidence": "high — read from the publishing body. medium — reported by a credible secondary outlet. low — aggregator or unverified; do not quote externally without checking.",
-    "shelf_life": "Piracy data goes stale in months, not years. The Somali reading changed completely between the 2025 annual reports and the H1 2026 half-years. Check the date on every record before relying on it.",
-    "no_interpretation": "Records carry facts and sources. Analysis, inference and framing are deliberately absent; add them where they are used, not here.",
-    "flags": "Flag images come from flagsapi.com by ISO 3166-1 alpha-2 code, held in flag_iso fields. Null where the source does not name a flag.",
-    "map": "Coordinates are [lat, lon] decimal degrees. The map projects equirectangular into a 2000x1000 box; see tools/build-world-path.py.",
-    "dating": "Every source and company record carries a retrieved date — when this library last read it. Dataset files carry a top-level retrieved date. A figure without a date is not usable; a figure with an old date is a re-check, not a fact."
+ "$schema": "../schema/manifest.schema.json",
+ "library": "oddfox-data",
+ "title": "Seaworth — business context library",
+ "version": "0.7.0",
+ "updated": "2026-09-06",
+ "purpose": "Structured, sourced business context for Seaworth: who gets attacked at sea, where, what it costs, and who actually owns and rents the ships. Every dataset is plain JSON so it can be lifted into an application without rewriting.",
+ "conventions": {
+  "join_key": "IMO number for vessels. Never ship name — names change, IMO numbers do not.",
+  "ids": "Lowercase kebab-case, stable across versions. Cross-dataset references use <dataset>_id fields.",
+  "dates": "ISO 8601. Periods as YYYY, YYYY-Qn, or YYYY-H1.",
+  "provenance": "Every quantitative record carries source_ids into sources.json.",
+  "confidence": "high — read from the publishing body. medium — reported by a credible secondary outlet. low — aggregator or unverified; do not quote externally without checking.",
+  "shelf_life": "Piracy data goes stale in months, not years. The Somali reading changed completely between the 2025 annual reports and the H1 2026 half-years. Check the date on every record before relying on it.",
+  "no_interpretation": "Records carry facts and sources. Analysis, inference and framing are deliberately absent; add them where they are used, not here.",
+  "flags": "Flag images come from flagsapi.com by ISO 3166-1 alpha-2 code, held in flag_iso fields. Null where the source does not name a flag.",
+  "map": "Coordinates are [lat, lon] decimal degrees. The map projects equirectangular into a 2000x1000 box; see tools/build-world-path.py.",
+  "dating": "Every source and company record carries a retrieved date — when this library last read it. Dataset files carry a top-level retrieved date. A figure without a date is not usable; a figure with an old date is a re-check, not a fact."
+ },
+ "datasets": [
+  {
+   "id": "sources",
+   "file": "sources.json",
+   "title": "Source register",
+   "kind": "reference",
+   "blurb": "Every external source cited anywhere in the library."
   },
-  "datasets": [
-    {
-      "id": "sources",
-      "file": "sources.json",
-      "title": "Source register",
-      "kind": "reference",
-      "blurb": "Every external source cited anywhere in the library."
-    },
-    {
-      "id": "ownership-model",
-      "file": "ownership-model.json",
-      "title": "Who owns a ship",
-      "kind": "model",
-      "blurb": "The eight-party stack behind any hull, the four charter types, and the cheapest path from a ship sighting to a named buyer."
-    },
-    {
-      "id": "threat-stats",
-      "file": "threat-stats.json",
-      "title": "Incident counts",
-      "kind": "timeseries",
-      "blurb": "IMB, ReCAAP and IMO counts through H1 2026, with the reasons they disagree."
-    },
-    {
-      "id": "incidents",
-      "file": "incidents.json",
-      "title": "Named incidents",
-      "kind": "events",
-      "blurb": "Nine attacks where the ownership chain is on the record."
-    },
-    {
-      "id": "chokepoints",
-      "file": "chokepoints.json",
-      "title": "High-risk passages",
-      "kind": "places",
-      "blurb": "Thirteen passages, their threat types, and which of them the incident data actually supports."
-    },
-    {
-      "id": "flag-states",
-      "file": "flag-states.json",
-      "title": "Flags and registries",
-      "kind": "reference",
-      "blurb": "Where tonnage is registered, and why that tells you almost nothing about who to call."
-    },
-    {
-      "id": "operators",
-      "file": "operators.json",
-      "title": "Owners and operators",
-      "kind": "entities",
-      "blurb": "Companies that can sign a contract, plus an explicit list of who is still missing."
-    },
-    {
-      "id": "risk-economics",
-      "file": "risk-economics.json",
-      "title": "What risk costs",
-      "kind": "economics",
-      "blurb": "War-risk premiums as a percentage of hull value, from 0.125% to 10%."
-    },
-    {
-      "id": "tactics",
-      "file": "tactics.json",
-      "title": "How ships are attacked",
-      "kind": "model",
-      "blurb": "Four threat models that share almost nothing, plus the BMP defence layers and what each one actually stops."
-    },
-    {
-      "id": "attack-log",
-      "file": "attack-log.json",
-      "title": "Attack log",
-      "kind": "events",
-      "blurb": "Incident-level entries at UKMTO/ReCAAP granularity, the H1 2026 pattern data, and the eight live feeds to pull from."
-    },
-    {
-      "id": "registries",
-      "file": "registries.json",
-      "title": "Registries",
-      "kind": "reference",
-      "blurb": "Fourteen authoritative lists sorted by what they answer: identity, what is happening now, and what it costs."
-    },
-    {
-      "id": "route-economics",
-      "file": "route-economics.json",
-      "title": "What protection is worth",
-      "kind": "economics",
-      "blurb": "The Cape diversion, the price of armed guards, and a 2012 convoy-escort precedent that priced at roughly $7,500 per vessel."
-    },
-    {
-      "id": "geo-incidents",
-      "file": "geo-incidents.json",
-      "title": "Incidents by location",
-      "kind": "places",
-      "blurb": "Counts placed on coordinates, one series per counting body and period. Drives the map."
-    },
-    {
-      "id": "houthi-timeline",
-      "file": "houthi-timeline.json",
-      "title": "Houthi attack timeline",
-      "kind": "events",
-      "blurb": "103 attacks, Nov 2023 to Aug 2026, with date, vessel, flag, method and result."
-    },
-    {
-      "id": "world-land",
-      "file": "world-land.json",
-      "title": "World land outline",
-      "kind": "reference",
-      "blurb": "Natural Earth 110m coastline as SVG paths, equirectangular. Generated asset."
-    },
-    {
-      "id": "piracy-history",
-      "file": "piracy-history.json",
-      "title": "Reported attacks 1993-2020",
-      "kind": "timeseries",
-      "blurb": "7,511 geocoded IMB attacks aggregated by year, region, country, type and distance from shore, plus a 2-degree grid."
-    },
-    {
-      "id": "market-players",
-      "file": "market-players.json",
-      "title": "Marine security companies",
-      "kind": "entities",
-      "blurb": "83 companies across escort vessels, PMSC, USVs, counter-drone, domain awareness, non-lethal defence, underwater detection and cyber."
-    },
-    {
-      "id": "platforms",
-      "file": "platforms.json",
-      "title": "Platform specifications",
-      "kind": "entities",
-      "blurb": "39 named vessels with published length, speed, range, endurance, payload, sea state, propulsion and armament."
-    }
-  ],
-  "roadmap": [
-    "Find out what happened to Convoy Escort Programme Ltd and why crewed convoy escort did not become standard. Highest-value open question in the library.",
-    "Re-base all private-security pricing from 2012 to a live 2026 broker quote.",
-    "Tanker and dry-bulk owners — dry bulk was 13 of 38 targeted vessels in H1 2026 and leads every regional breakdown.",
-    "Charterers: the oil majors and traders who bear the war-risk premium under most charter parties.",
-    "A vessels dataset keyed on IMO number, joining incidents, owners, flags and port state control history.",
-    "Automated ingest of the UKMTO and ReCAAP feeds listed in attack-log.json, so the log stops being a sample.",
-    "Per-lane, per-ship-class Cape diversion model netting off tolls, to get the real addressable price."
-  ],
-  "retrieved": "2026-09-03"
+  {
+   "id": "ownership-model",
+   "file": "ownership-model.json",
+   "title": "Who owns a ship",
+   "kind": "model",
+   "blurb": "The eight-party stack behind any hull, the four charter types, and the cheapest path from a ship sighting to a named buyer."
+  },
+  {
+   "id": "threat-stats",
+   "file": "threat-stats.json",
+   "title": "Incident counts",
+   "kind": "timeseries",
+   "blurb": "IMB, ReCAAP and IMO counts through H1 2026, with the reasons they disagree."
+  },
+  {
+   "id": "incidents",
+   "file": "incidents.json",
+   "title": "Named incidents",
+   "kind": "events",
+   "blurb": "Nine attacks where the ownership chain is on the record."
+  },
+  {
+   "id": "chokepoints",
+   "file": "chokepoints.json",
+   "title": "High-risk passages",
+   "kind": "places",
+   "blurb": "Thirteen passages, their threat types, and which of them the incident data actually supports."
+  },
+  {
+   "id": "flag-states",
+   "file": "flag-states.json",
+   "title": "Flags and registries",
+   "kind": "reference",
+   "blurb": "Where tonnage is registered, and why that tells you almost nothing about who to call."
+  },
+  {
+   "id": "operators",
+   "file": "operators.json",
+   "title": "Owners and operators",
+   "kind": "entities",
+   "blurb": "Companies that can sign a contract, plus an explicit list of who is still missing."
+  },
+  {
+   "id": "risk-economics",
+   "file": "risk-economics.json",
+   "title": "What risk costs",
+   "kind": "economics",
+   "blurb": "War-risk premiums as a percentage of hull value, from 0.125% to 10%."
+  },
+  {
+   "id": "tactics",
+   "file": "tactics.json",
+   "title": "How ships are attacked",
+   "kind": "model",
+   "blurb": "Four threat models that share almost nothing, plus the BMP defence layers and what each one actually stops."
+  },
+  {
+   "id": "attack-log",
+   "file": "attack-log.json",
+   "title": "Attack log",
+   "kind": "events",
+   "blurb": "Incident-level entries at UKMTO/ReCAAP granularity, the H1 2026 pattern data, and the eight live feeds to pull from."
+  },
+  {
+   "id": "registries",
+   "file": "registries.json",
+   "title": "Registries",
+   "kind": "reference",
+   "blurb": "Fourteen authoritative lists sorted by what they answer: identity, what is happening now, and what it costs."
+  },
+  {
+   "id": "route-economics",
+   "file": "route-economics.json",
+   "title": "What protection is worth",
+   "kind": "economics",
+   "blurb": "The Cape diversion, the price of armed guards, and a 2012 convoy-escort precedent that priced at roughly $7,500 per vessel."
+  },
+  {
+   "id": "geo-incidents",
+   "file": "geo-incidents.json",
+   "title": "Incidents by location",
+   "kind": "places",
+   "blurb": "Counts placed on coordinates, one series per counting body and period. Drives the map."
+  },
+  {
+   "id": "houthi-timeline",
+   "file": "houthi-timeline.json",
+   "title": "Houthi attack timeline",
+   "kind": "events",
+   "blurb": "103 attacks, Nov 2023 to Aug 2026, with date, vessel, flag, method and result."
+  },
+  {
+   "id": "world-land",
+   "file": "world-land.json",
+   "title": "World land outline",
+   "kind": "reference",
+   "blurb": "Natural Earth 110m coastline as SVG paths, equirectangular. Generated asset."
+  },
+  {
+   "id": "piracy-history",
+   "file": "piracy-history.json",
+   "title": "Reported attacks 1993-2020",
+   "kind": "timeseries",
+   "blurb": "7,511 geocoded IMB attacks aggregated by year, region, country, type and distance from shore, plus a 2-degree grid."
+  },
+  {
+   "id": "market-players",
+   "file": "market-players.json",
+   "title": "Marine security companies",
+   "kind": "entities",
+   "blurb": "83 companies across escort vessels, PMSC, USVs, counter-drone, domain awareness, non-lethal defence, underwater detection and cyber."
+  },
+  {
+   "id": "platforms",
+   "file": "platforms.json",
+   "title": "Platform specifications",
+   "kind": "entities",
+   "blurb": "39 named vessels with published length, speed, range, endurance, payload, sea state, propulsion and armament."
+  },
+  {
+   "id": "insurance-market",
+   "file": "insurance-market.json",
+   "title": "Who insures a ship",
+   "kind": "entities",
+   "blurb": "Named underwriters behind attacked hulls, the twelve P&I clubs and the Lloyd's war market, and — the hard part — who was refused cover."
+  }
+ ],
+ "roadmap": [
+  "Ask a broker directly whether an escort earns a war-risk discount, and who certifies it. insurance-market.json names the underwriters to ask — Ascot, Brit, Vessel Protect, Navium Marine, Travelers — and Miller is the specialist war-risk broker to ask through.",
+  "Find out what happened to Convoy Escort Programme Ltd and why crewed convoy escort did not become standard.",
+  "Re-base all private-security pricing from 2012 to a live 2026 broker quote.",
+  "Charterers: under most charters they bear the war-risk premium, so they, not owners, may be the party with the budget.",
+  "Tanker and dry-bulk owners — dry bulk was 13 of 38 targeted vessels in H1 2026.",
+  "A vessels dataset keyed on IMO number, joining incidents, owners, flags, insurers and port state control history.",
+  "Automated ingest of the UKMTO and ReCAAP feeds listed in attack-log.json.",
+  "Per-lane, per-ship-class Cape diversion model netting off tolls."
+ ],
+ "retrieved": "2026-09-06"
 }

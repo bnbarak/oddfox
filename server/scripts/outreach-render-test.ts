@@ -56,7 +56,8 @@ const body = withFooter("Thursday or Friday?", cfg);
 ok("footer carries a named sender", body.includes("Barak"));
 ok("footer carries the postal address", body.includes("1 Example Street"));
 ok("footer tells the reader how to stop", /unsubscribe/i.test(body));
-ok("body and footer are separated once", body.includes("Thursday or Friday?\n\n--\n"), JSON.stringify(body));
+ok("body and footer are separated by one blank line", body.includes("Thursday or Friday?\n\nBarak"), JSON.stringify(body));
+ok("no RFC 3676 signature marker", !/^--$/m.test(body), JSON.stringify(body));
 
 const bare = OutreachConfig.parse({ sender_name: "Barak" });
 ok("with no address configured the footer claims none", !footer(bare).includes("Street"));
@@ -91,6 +92,37 @@ ok("out of office is automated", readsAsAutomated("ana@vgroup.com", "Out of Offi
 ok("automatic reply is automated", readsAsAutomated("ana@vgroup.com", "Automatic reply: Annual leave"));
 ok("no-reply is automated", readsAsAutomated("no-reply@vgroup.com", "Receipt"));
 ok("a real person is not automated", !readsAsAutomated("Ana <ana@vgroup.com>", "Re: escort"));
+
+/* ---- config merge -------------------------------------------------------
+
+   A partial patch must never blank a field it did not mention. Regression
+   test for a real incident: saving a signature from the settings page erased
+   every sending domain, the postal address and the opt-out mailbox, because
+   the patch carried those keys as undefined and the schema defaults filled
+   the holes it left. */
+
+const current = OutreachConfig.parse({
+  domains: [{ domain: "seaworth.io", from_local: "barak", from_name: "B" }],
+  postal_address: "1 Example Street",
+  unsubscribe_mailbox: "optout@seaworth.io",
+});
+
+const patch: Record<string, unknown> = {
+  signatures: [{ id: "s", name: "S", body: "B" }],
+  domains: undefined,
+  postal_address: undefined,
+};
+const given = Object.fromEntries(Object.entries(patch).filter(([, v]) => v !== undefined));
+const merged = OutreachConfig.parse({ ...current, ...given });
+
+ok("a patch that omits domains keeps them", merged.domains.length === 1,
+   `${merged.domains.length} domains`);
+ok("and keeps the postal address", merged.postal_address === "1 Example Street");
+ok("and keeps the opt-out mailbox", merged.unsubscribe_mailbox === "optout@seaworth.io");
+ok("while applying what it did send", merged.signatures.length === 1);
+
+const naive = OutreachConfig.parse({ ...current, ...patch });
+ok("the naive spread is what broke it", naive.domains.length === 0 && naive.postal_address === null);
 
 // eslint-disable-next-line no-console
 console.log(failed ? `\n${failed} failed` : "\nall passed");

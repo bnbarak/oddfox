@@ -2,7 +2,7 @@
   "$schema": "../schema/chokepoints.schema.json",
   "dataset": "chokepoints",
   "title": "High-risk passages",
-  "description": "The passages Odd Fox names as its market, plus the ones the data says belong on the list. Each carries the threat type, because the countermeasure differs: a boarding is stopped by hardening and speed, a drone boat is not.",
+  "description": "The passages Seaworth names as its market, plus the ones the data says belong on the list. Each carries the threat type, because the countermeasure differs: a boarding is stopped by hardening and speed, a drone boat is not.",
   "updated": "2026-09-02",
   "records": [
     {

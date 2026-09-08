@@ -3,4 +3,4 @@ Allow: /
 Disallow: /brief
 Disallow: /assets/d/
 
-Sitemap: https://oddfox.ai/sitemap.xml
+Sitemap: https://seaworth.ai/sitemap.xml

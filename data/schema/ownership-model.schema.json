@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/ownership-model.schema.json",
+  "$id": "https://seaworth.ai/data/schema/ownership-model.schema.json",
   "title": "Ship ownership model",
   "type": "object",
   "required": ["dataset", "records", "charter_types", "resolution_path"],

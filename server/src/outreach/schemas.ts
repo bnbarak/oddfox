@@ -199,7 +199,11 @@ export const DraftRequest = z.object({
 export type DraftRequest = z.infer<typeof DraftRequest>;
 
 export const ScheduleRequest = z.object({
-  contact_id: z.string().min(1),
+  /** A CRM contact, when there is one. */
+  contact_id: z.string().min(1).nullable().default(null),
+  /** A plain address, for someone not in the CRM. Ignored when contact_id
+      is given. One of the two is required. */
+  to: z.string().email().nullable().default(null),
   /** 0 for a one-off message written by hand; 1–3 for a sequence round. */
   round: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
   subject: z.string().min(1),
@@ -213,7 +217,9 @@ export const ScheduleRequest = z.object({
   template_tier: z.number().int().nullable().default(null),
   /** Which sign-off to use. Omitted uses the configured default. */
   signature: z.string().nullable().default(null),
-}).strict();
+}).strict().refine((r) => r.contact_id ?? r.to, {
+  message: "either contact_id or to is required",
+});
 export type ScheduleRequest = z.infer<typeof ScheduleRequest>;
 
 // ---- Campaigns --------------------------------------------------------

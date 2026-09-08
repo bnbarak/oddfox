@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/piracy-history.schema.json",
+  "$id": "https://seaworth.ai/data/schema/piracy-history.schema.json",
   "title": "Reported attacks 1993-2020",
   "type": "object",
   "required": [

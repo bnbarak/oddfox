@@ -1,0 +1,703 @@
+{
+ "dataset": "attacked-vessel-size",
+ "title": "How big were the ships the Houthis actually hit",
+ "description": "Hull dimensions for the vessels in houthi-timeline.json, resolved from AIS static data, and the size mix of the campaign over time. Answers a question the timeline itself cannot: whether the attack rate in risk-quantification.json is a large-ship number.",
+ "updated": "2026-09-06",
+ "retrieved": "2026-09-06",
+ "source_ids": [
+  "shipfinder-api"
+ ],
+ "confidence": "medium",
+ "method": "For each named vessel in houthi-timeline.json, MMSI was taken from attacked-vessel-registry.json and passed to the ShipFinder AIS/VesselPositionSingle endpoint, which returns AIS static data: length overall, beam, draught and AIS ship-type code. A record was kept only where the returned AIS record carried a valid seven-digit IMO number and, where a seed IMO was already held, the two agreed. Length is LOA in metres as broadcast by the vessel, not deadweight or gross tonnage.",
+ "size_class_thresholds": {
+  "note": "Derived. LOA bands chosen to line up with commercial segments; they are ours, not a publishing body's.",
+  "under-100m": "coaster, small general cargo",
+  "100-179m": "handysize bulker, small product tanker, feeder box",
+  "180-249m": "handymax to panamax, MR/LR tanker, sub-panamax box",
+  "250-299m": "post-panamax box, aframax to suezmax",
+  "300m-plus": "neo-panamax and ULCV box, VLCC"
+ },
+ "coverage": {
+  "timeline_rows": 103,
+  "rows_with_no_vessel_name_in_source": 25,
+  "rows_with_country_in_vessel_field": 3,
+  "rows_with_a_real_vessel_name": 75,
+  "rows_with_size_resolved": 32,
+  "unique_hulls_sized": 31,
+  "note": "31% of all timeline rows and 43% of named rows carry a hull size. Everything below describes that subset."
+ },
+ "distribution": {
+  "loa_m": {
+   "min": 78,
+   "median": 229,
+   "mean": 239,
+   "max": 396
+  },
+  "by_size_class": {
+   "250-299m": 7,
+   "180-249m": 8,
+   "100-179m": 7,
+   "300m-plus": 8,
+   "under-100m": 1
+  },
+  "by_segment": {
+   "tanker": 10,
+   "dry / general cargo": 8,
+   "container": 11,
+   "passenger / ro-pax": 1,
+   "other": 1
+  },
+  "share_200m_plus_pct": 58.1,
+  "share_300m_plus_pct": 25.8
+ },
+ "by_period": [
+  {
+   "period": "2023-H2",
+   "attacks": 17,
+   "size_resolved": 8,
+   "median_loa_m": 345,
+   "mean_loa_m": 332,
+   "attacks_on_300m_plus": 7,
+   "by_segment": {
+    "container": 7,
+    "tanker": 1
+   }
+  },
+  {
+   "period": "2024-H1",
+   "attacks": 52,
+   "size_resolved": 11,
+   "median_loa_m": 229,
+   "mean_loa_m": 218,
+   "attacks_on_300m_plus": 1,
+   "by_segment": {
+    "tanker": 3,
+    "container": 3,
+    "dry / general cargo": 4,
+    "passenger / ro-pax": 1
+   }
+  },
+  {
+   "period": "2024-H2",
+   "attacks": 20,
+   "size_resolved": 9,
+   "median_loa_m": 229,
+   "mean_loa_m": 238,
+   "attacks_on_300m_plus": 1,
+   "by_segment": {
+    "container": 2,
+    "tanker": 4,
+    "dry / general cargo": 3
+   }
+  },
+  {
+   "period": "2025-H2",
+   "attacks": 7,
+   "size_resolved": 1,
+   "median_loa_m": 142,
+   "mean_loa_m": 142,
+   "attacks_on_300m_plus": 0,
+   "by_segment": {
+    "dry / general cargo": 1
+   }
+  },
+  {
+   "period": "2026-H2",
+   "attacks": 7,
+   "size_resolved": 3,
+   "median_loa_m": 183,
+   "mean_loa_m": 148,
+   "attacks_on_300m_plus": 0,
+   "by_segment": {
+    "other": 1,
+    "tanker": 2
+   }
+  }
+ ],
+ "finding": "The campaign did not attack one population of ships. It opened on the largest container ships afloat - seven of the eight hulls sized in 2023-H2 were 300 m or over, median LOA 345 m - and after the box lines rerouted round the Cape in late December 2023 it went on hitting whatever stayed, which was smaller tramp tonnage. The last hit on a 300 m-plus hull in this dataset is Maersk Sentosa on 2024-07-09; 33 attacks follow it, none on a ship that size. Median LOA falls 345 m (2023-H2) to 229 m (2024) to 183 m (2026-H2).",
+ "implication_for_the_attack_rate": "The 0.545% per-transit rate in risk-quantification.json divides a numerator that changes composition by a denominator that also changes composition, and neither side is size-controlled. Both the attacks and the Suez transits skew large, so the number is roughly a large-ship rate by accident. But it is an average over two different campaigns - a short one against ULCVs and a long one against sub-panamax tonnage - and quoting it as a single figure hides that.",
+ "records": [
+  {
+   "vessel": "MSC Clara",
+   "imo": 9708693,
+   "mmsi": 374766000,
+   "loa_m": 396,
+   "beam_m": 59,
+   "draught_m": 11.3,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2023-12-18"
+   ],
+   "outcomes": [
+    "unknown"
+   ]
+  },
+  {
+   "vessel": "CMA CGM Symi",
+   "imo": 9867839,
+   "mmsi": 229779000,
+   "loa_m": 366,
+   "beam_m": 51,
+   "draught_m": 12.8,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2023-11-24"
+   ],
+   "outcomes": [
+    "damaged"
+   ]
+  },
+  {
+   "vessel": "Maersk Hangzhou",
+   "imo": 9784300,
+   "mmsi": 563042200,
+   "loa_m": 353,
+   "beam_m": 54,
+   "draught_m": 16.7,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2023-12-30",
+    "2023-12-31"
+   ],
+   "outcomes": [
+    "minor damage",
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Maersk Gibraltar",
+   "imo": 9739692,
+   "mmsi": 563287500,
+   "loa_m": 337,
+   "beam_m": 48,
+   "draught_m": 14.7,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2023-12-14"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "MSC United VIII",
+   "imo": 9302619,
+   "mmsi": 210610000,
+   "loa_m": 336,
+   "beam_m": 43,
+   "draught_m": 13.2,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2023-12-26"
+   ],
+   "outcomes": [
+    "unknown"
+   ]
+  },
+  {
+   "vessel": "Koi",
+   "imo": 9461489,
+   "mmsi": 636018059,
+   "loa_m": 335,
+   "beam_m": 43,
+   "draught_m": 12.7,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2024-01-30"
+   ],
+   "outcomes": [
+    "unknown"
+   ]
+  },
+  {
+   "vessel": "MSC Alanya",
+   "imo": 9785483,
+   "mmsi": 636021123,
+   "loa_m": 328,
+   "beam_m": 48,
+   "draught_m": 13.8,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2023-12-15"
+   ],
+   "outcomes": [
+    "unknown"
+   ]
+  },
+  {
+   "vessel": "Maersk Sentosa",
+   "imo": 9315202,
+   "mmsi": 369246000,
+   "loa_m": 319,
+   "beam_m": 40,
+   "draught_m": 14.0,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "300m-plus",
+   "attack_dates": [
+    "2024-07-09"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Maersk Detroit",
+   "imo": 9333034,
+   "mmsi": 338474000,
+   "loa_m": 299,
+   "beam_m": 40,
+   "draught_m": 15.0,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-01-24"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "MSC Sarah V",
+   "imo": 9181675,
+   "mmsi": 636018320,
+   "loa_m": 294,
+   "beam_m": 32,
+   "draught_m": 11.5,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-06-24"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Cyclades",
+   "imo": 9268485,
+   "mmsi": 636021947,
+   "loa_m": 289,
+   "beam_m": 45,
+   "draught_m": 10.3,
+   "ais_ship_type": 70,
+   "segment": "dry / general cargo",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-04-29"
+   ],
+   "outcomes": [
+    "minor damage"
+   ]
+  },
+  {
+   "vessel": "Delta Atlantica",
+   "imo": 9419101,
+   "mmsi": 636018765,
+   "loa_m": 274,
+   "beam_m": 50,
+   "draught_m": 15.0,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-08-13"
+   ],
+   "outcomes": [
+    "damaged"
+   ]
+  },
+  {
+   "vessel": "Delta Blue",
+   "imo": 9601235,
+   "mmsi": 636021700,
+   "loa_m": 274,
+   "beam_m": 48,
+   "draught_m": 9.5,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-08-08"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Mount Fuji",
+   "imo": 9509011,
+   "mmsi": 636014252,
+   "loa_m": 274,
+   "beam_m": 50,
+   "draught_m": 9.0,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-07-10"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Abliani",
+   "imo": 9693068,
+   "mmsi": 256903000,
+   "loa_m": 250,
+   "beam_m": 44,
+   "draught_m": 8.2,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "250-299m",
+   "attack_dates": [
+    "2024-06-01"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Laax",
+   "imo": 9512355,
+   "mmsi": 538004478,
+   "loa_m": 229,
+   "beam_m": 32,
+   "draught_m": 7.1,
+   "ais_ship_type": 70,
+   "segment": "dry / general cargo",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2024-05-28"
+   ],
+   "outcomes": [
+    "damaged"
+   ]
+  },
+  {
+   "vessel": "Motaro",
+   "imo": 9310290,
+   "mmsi": 636016529,
+   "loa_m": 229,
+   "beam_m": 32,
+   "draught_m": 7.2,
+   "ais_ship_type": 70,
+   "segment": "dry / general cargo",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2024-10-29"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Minoan Courage",
+   "imo": 9288526,
+   "mmsi": 636016404,
+   "loa_m": 225,
+   "beam_m": 32,
+   "draught_m": 7.8,
+   "ais_ship_type": 70,
+   "segment": "dry / general cargo",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2024-10-01"
+   ],
+   "outcomes": [
+    "damaged"
+   ]
+  },
+  {
+   "vessel": "Lobivia",
+   "imo": 9228564,
+   "mmsi": 563183800,
+   "loa_m": 188,
+   "beam_m": 30,
+   "draught_m": 11.6,
+   "ais_ship_type": 100,
+   "segment": "container",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2024-07-19"
+   ],
+   "outcomes": [
+    "set afire"
+   ]
+  },
+  {
+   "vessel": "Anadolu S",
+   "imo": 9667758,
+   "mmsi": 373312000,
+   "loa_m": 183,
+   "beam_m": 32,
+   "draught_m": 10.5,
+   "ais_ship_type": 79,
+   "segment": "dry / general cargo",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2024-11-19"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Ardmore Encounter",
+   "imo": 9654579,
+   "mmsi": 538005093,
+   "loa_m": 183,
+   "beam_m": 32,
+   "draught_m": 12.1,
+   "ais_ship_type": 81,
+   "segment": "tanker",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2023-12-13"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "NCC Masa",
+   "imo": 9688336,
+   "mmsi": 403114001,
+   "loa_m": 183,
+   "beam_m": 32,
+   "draught_m": 11.1,
+   "ais_ship_type": 89,
+   "segment": "tanker",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2026-07-24"
+   ],
+   "outcomes": [
+    "minor damage"
+   ]
+  },
+  {
+   "vessel": "NCC Wafa",
+   "imo": 9688348,
+   "mmsi": 403115001,
+   "loa_m": 183,
+   "beam_m": 32,
+   "draught_m": 11.0,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "180-249m",
+   "attack_dates": [
+    "2026-08-05"
+   ],
+   "outcomes": [
+    "unknown"
+   ]
+  },
+  {
+   "vessel": "Bentley I",
+   "imo": 9253129,
+   "mmsi": 373259000,
+   "loa_m": 176,
+   "beam_m": 31,
+   "draught_m": 11.1,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2024-07-15"
+   ],
+   "outcomes": [
+    "damaged"
+   ]
+  },
+  {
+   "vessel": "Delonix",
+   "imo": 9298387,
+   "mmsi": 636022979,
+   "loa_m": 164,
+   "beam_m": 23,
+   "draught_m": 6.4,
+   "ais_ship_type": 89,
+   "segment": "tanker",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2024-06-28"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Chem Ranger",
+   "imo": 9490296,
+   "mmsi": 538004628,
+   "loa_m": 159,
+   "beam_m": 27,
+   "draught_m": 10.4,
+   "ais_ship_type": 80,
+   "segment": "tanker",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2024-01-18"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Morning Tide",
+   "imo": 9320506,
+   "mmsi": 314617000,
+   "loa_m": 143,
+   "beam_m": 19,
+   "draught_m": 5.5,
+   "ais_ship_type": 70,
+   "segment": "dry / general cargo",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2024-02-06"
+   ],
+   "outcomes": [
+    "minor damage"
+   ]
+  },
+  {
+   "vessel": "Minervagracht",
+   "imo": 9571521,
+   "mmsi": 246769000,
+   "loa_m": 142,
+   "beam_m": 19,
+   "draught_m": 5.9,
+   "ais_ship_type": 70,
+   "segment": "dry / general cargo",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2025-09-23"
+   ],
+   "outcomes": [
+    "unharmed"
+   ]
+  },
+  {
+   "vessel": "Islander",
+   "imo": 9323704,
+   "mmsi": 311001287,
+   "loa_m": 125,
+   "beam_m": 23,
+   "draught_m": 5.1,
+   "ais_ship_type": 61,
+   "segment": "passenger / ro-pax",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2024-02-22"
+   ],
+   "outcomes": [
+    "damaged"
+   ]
+  },
+  {
+   "vessel": "Norderney",
+   "imo": 9506124,
+   "mmsi": 305901000,
+   "loa_m": 108,
+   "beam_m": 16,
+   "draught_m": 5.6,
+   "ais_ship_type": 79,
+   "segment": "dry / general cargo",
+   "size_class": "100-179m",
+   "attack_dates": [
+    "2024-06-08"
+   ],
+   "outcomes": [
+    "set afire"
+   ]
+  },
+  {
+   "vessel": "Layla",
+   "imo": 9694036,
+   "mmsi": 563148600,
+   "loa_m": 78,
+   "beam_m": 18,
+   "draught_m": 5.4,
+   "ais_ship_type": 90,
+   "segment": "other",
+   "size_class": "under-100m",
+   "attack_dates": [
+    "2026-07-22"
+   ],
+   "outcomes": [
+    "unknown"
+   ]
+  }
+ ],
+ "unresolved": {
+  "count": 44,
+  "reason": "Either no vessel name in the source, or no AIS record with a valid IMO. A vessel that was sunk, captured or scrapped stops transmitting, so it has no current static record to read.",
+  "vessels": [
+   "Andromeda Star",
+   "Blue Lagoon I",
+   "Central Park",
+   "Cordelia Moon",
+   "Daisy",
+   "Eternity C",
+   "Faize Noore Oliya",
+   "Galaxy Leader",
+   "Genco Picardy",
+   "Gibraltar Eagle",
+   "Groton",
+   "Hope Island",
+   "Huang Pu",
+   "Khalissa",
+   "MSC Aby",
+   "MSC Tavivshi",
+   "Maersk Yorktown",
+   "Magic Seas",
+   "Marlin Luanda",
+   "NCC Ghazal",
+   "Number 9",
+   "Ocean Jazz",
+   "Olympic Spirit",
+   "Pollux",
+   "Propel Fortune",
+   "Pumba",
+   "Rubymar",
+   "Scarlet Ray",
+   "Sea Champion",
+   "Sounion",
+   "Star Iris",
+   "Strinda",
+   "Tihamah",
+   "Transworld Navigator",
+   "True Confidence",
+   "Tutor",
+   "Verbena",
+   "Wind",
+   "Yannis",
+   "Zografia"
+  ]
+ },
+ "gaps": [
+  "Missingness is not random and runs the wrong way. Twelve of the fourteen sunk, captured or set-afire vessels could not be sized, because the outcome that makes an incident severe is the same outcome that ends its AIS transmission. Severity by size therefore cannot be read off this dataset, and the apparent pattern that larger hulls absorbed hits better is unsupported.",
+  "AIS static data is entered by the crew and describes the vessel now, not on the day it was attacked. A hull sold and re-registered since may broadcast different particulars.",
+  "LOA is a shape, not a value. Deadweight, gross tonnage and hull value are what the insurance argument needs, and none of them are here.",
+  "Three timeline rows (n=14 Norway, n=46 and n=50 Portugal) carry a country in the vessel field with flag Unknown - the same column-swap defect that houthi-timeline.json records as fixed for seventeen other rows. These three were missed and are excluded here.",
+  "The ShipFinder search quota was exhausted on 2026-09-06, so the 25 named vessels with no MMSI on file could not be resolved. Retry the identity pass before treating coverage as final."
+ ]
+}

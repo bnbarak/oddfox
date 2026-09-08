@@ -26,7 +26,10 @@ const fmt = (iso: string) => {
 /** First line of real text, for the list preview. */
 const snippet = (m: ThreadMessage | undefined): string => {
   if (!m) return "";
-  const body = (m.body ?? "").split("\n--\n")[0] ?? "";   // drop our own footer
+  // Drop our own appended footer. There is no "--" marker any more, so cut at
+  // the opt-out line, which the server always emits last and which no
+  // hand-written message contains.
+  const body = (m.body ?? "").split(/\n+(?=Reply "unsubscribe")/)[0] ?? "";
   return body.replace(/\s+/g, " ").trim().slice(0, 120);
 };
 
@@ -86,6 +89,12 @@ export function CrmInbox() {
   const signatures = useMemo(() => conf.data?.signatures ?? [], [conf.data]);
   const [signature, setSignature] = useState<string>("");
 
+  /* A recipient is either a CRM contact picked from the list, or a plain
+     address typed in. Requiring the former made it impossible to write to
+     anyone outside the CRM, which is most of the point of the personal
+     sending domain. */
+  const typedEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(find.trim()) ? find.trim() : null;
+
   // Default to an outreach domain, never the personal one — picking that has
   // to be a deliberate choice, not what happens if you do not look.
   useEffect(() => {
@@ -100,7 +109,7 @@ export function CrmInbox() {
     return () => window.removeEventListener(CRM_CHANGED, r);
   }, [reload]);
 
-  const open: Thread | null = threads.find((t) => t.contact_id === openId) ?? threads[0] ?? null;
+  const open: Thread | null = threads.find((t) => t.key === openId) ?? threads[0] ?? null;
   const last = open?.messages[open.messages.length - 1];
 
   // Only people with an address can be written to; a picker full of names
@@ -135,17 +144,19 @@ export function CrmInbox() {
   };
 
   const doSend = async () => {
-    const target = composing ? to : open?.contact_id;
-    if (!target || !subject.trim() || !body.trim()) return;
+    const who = composing
+      ? (to ? { contact_id: to, to: null } : typedEmail ? { contact_id: null, to: typedEmail } : null)
+      : (open ? { contact_id: open.contact_id, to: open.contact_id ? null : open.email } : null);
+    if (!who || !subject.trim() || !body.trim()) return;
     setWorking(true);
     try {
-      const r = await sendDirect(target, subject.trim(), body.trim(),
+      const r = await sendDirect(who, subject.trim(), body.trim(),
                                  fromDomain || null, signature || null);
       setSaid(r.dry_run
         ? `Queued as a dry run for ${fmt(r.scheduled_at)} — nothing was sent.`
         : `Scheduled for ${fmt(r.scheduled_at)}. Cancellable until it goes.`);
       setReplying(false); setComposing(false); setSubject(""); setBody("");
-      if (composing) setOpenId(target);
+      if (composing) setOpenId(to ?? typedEmail ?? null);
       await reload();
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
     finally { setWorking(false); }
@@ -189,9 +200,13 @@ export function CrmInbox() {
           </div>
         )}
 
-        {composing && !to && find.trim() && (
+        {composing && !to && find.trim() && !typedEmail && (
           <div className="of-to">
-            {writable.length === 0 && <span className="of-note">Nobody matches, or they have no address on record.</span>}
+            {writable.length === 0 && (
+              <span className="of-note">
+                Nobody matches. Type a full email address to write to someone outside the CRM.
+              </span>
+            )}
             {writable.map((c) => (
               <button key={c.id} className="of-to__b"
                       onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
@@ -205,12 +220,14 @@ export function CrmInbox() {
         {signatures.length > 0 && (
           <label className="of-cw__row">
             <span className="of-cw__k">Sign</span>
-            <select className="of-sel of-cw__v" value={signature} disabled={working}
-                    onChange={(e) => setSignature(e.target.value)}>
-              <option value="">
-                {signatures.find((x) => x.id === conf.data?.default_signature)?.name ?? "Default"}
-              </option>
-              {signatures.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
+            <select className="of-sel of-cw__v"
+                    value={signature || conf.data?.default_signature || ""}
+                    disabled={working} onChange={(e) => setSignature(e.target.value)}>
+              {signatures.map((x) => (
+                <option key={x.id} value={x.id}>
+                  {x.name}{x.id === conf.data?.default_signature ? " (default)" : ""}
+                </option>
+              ))}
             </select>
           </label>
         )}
@@ -224,7 +241,8 @@ export function CrmInbox() {
           // Say why the button is dead rather than leaving it greyed and
           // unexplained — "no recipient picked" is not obvious when the
           // search box already has text in it.
-          const missing = composing && !to ? "pick a recipient from the list"
+          const missing = composing && !to && !typedEmail
+            ? "pick someone from the list, or type a full email address"
             : !subject.trim() ? "add a subject"
             : !body.trim() ? "write a message"
             : null;
@@ -244,6 +262,19 @@ export function CrmInbox() {
     </div>
   );
 
+  /* Always rendered, zeros included. "0 conversations" says the system is
+     working and there is nothing there; a blank space says nothing at all,
+     and you cannot tell it from a page that failed to load. */
+  const counts = (
+    <span className="of-inbox__counts">
+      <strong>{threads.length}</strong> conversation{threads.length === 1 ? "" : "s"}
+      <span className="of-inbox__sep">·</span>
+      <strong>{threads.reduce((n, t) => n + t.replies, 0)}</strong> replied
+      <span className="of-inbox__sep">·</span>
+      <strong>{threads.reduce((n, t) => n + t.sent, 0)}</strong> sent
+    </span>
+  );
+
   const newButton = (
     <button className="of-facet__b" onClick={startCompose} disabled={composing}>
       New email
@@ -253,7 +284,7 @@ export function CrmInbox() {
   if (threads.length === 0) {
     return (
       <>
-        <div className="of-inbox__bar">{newButton}</div>
+        <div className="of-inbox__bar">{newButton}{counts}</div>
         {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
         <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
         {composer}
@@ -263,7 +294,7 @@ export function CrmInbox() {
 
   return (
     <>
-      <div className="of-inbox__bar">{newButton}</div>
+      <div className="of-inbox__bar">{newButton}{counts}</div>
       {said && <Note style={{ marginBottom: 12 }}>{said}</Note>}
 
       <div className="of-inbox">
@@ -271,9 +302,9 @@ export function CrmInbox() {
           {threads.map((t) => {
             const preview = t.messages[t.messages.length - 1];
             return (
-              <button key={t.contact_id}
-                      className={`of-inbox__row${open?.contact_id === t.contact_id ? " is-on" : ""}${t.replied ? " is-unread" : ""}`}
-                      onClick={() => { setOpenId(t.contact_id); setExpanded(new Set()); setReplying(false); }}>
+              <button key={t.key}
+                      className={`of-inbox__row${open?.key === t.key ? " is-on" : ""}${t.replied ? " is-unread" : ""}`}
+                      onClick={() => { setOpenId(t.key); setExpanded(new Set()); setReplying(false); }}>
                 <span className="of-inbox__l1">
                   <span className="of-inbox__who">{t.full_name}</span>
                   <span className="of-inbox__at">{fmt(t.last_at)}</span>

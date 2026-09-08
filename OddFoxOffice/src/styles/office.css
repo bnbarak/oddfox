@@ -418,3 +418,6 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-sig__h { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
 .of-sig__name { flex: 1; min-width: 160px; }
 .of-sig__def { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.of-inbox__counts { font-family: var(--mono); font-size: 11.5px; color: var(--fog); }
+.of-inbox__counts strong { color: var(--paper); font-weight: 500; }
+.of-inbox__sep { margin: 0 8px; opacity: .5; }

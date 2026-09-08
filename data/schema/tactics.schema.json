@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/tactics.schema.json",
+  "$id": "https://seaworth.ai/data/schema/tactics.schema.json",
   "title": "How ships are attacked",
   "type": "object",
   "required": ["dataset", "threat_models", "defence_layers"],

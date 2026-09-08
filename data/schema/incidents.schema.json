@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/incidents.schema.json",
+  "$id": "https://seaworth.ai/data/schema/incidents.schema.json",
   "title": "Named incidents",
   "type": "object",
   "required": ["dataset", "records"],

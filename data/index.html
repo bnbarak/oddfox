@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Odd Fox — Business Context Library</title>
+<title>Seaworth — Business Context Library</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#04070a">
-<link rel="stylesheet" href="lib/oddfox.css?v=1788475997171">
+<link rel="stylesheet" href="lib/oddfox.css?v=1788748304110">
 </head>
 <body>
 
 <header class="of-head">
   <div class="of-head-in">
-    <div class="of-mark">Odd Fox <span>/ business context</span></div>
+    <div class="of-mark">Seaworth <span>/ business context</span></div>
     <div class="of-head-meta" id="meta">loading…</div>
   </div>
   <nav class="of-nav" id="nav" role="tablist"></nav>
@@ -24,8 +24,8 @@
 
 <!-- Offline fallback so the page also works opened from disk, where fetch() on
      file:// is blocked. Regenerate with tools/build-data-bundle.mjs -->
-<script src="json/bundle.js?v=1788475997171" onerror="void 0"></script>
-<script src="lib/oddfox.js?v=1788475997171"></script>
+<script src="json/bundle.js?v=1788748304110" onerror="void 0"></script>
+<script src="lib/oddfox.js?v=1788748304110"></script>
 <script>
 (function () {
   var U = OF.ui, D = OF.data;
@@ -563,7 +563,7 @@
     h += U.section('Summary', '<div class="of-grid cols-2">' +
       '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Status</div>'+
         U.pie(U.tally(d.records,'status'),{centreLabel:'PASSAGES'})+'</div>' +
-      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Named on oddfox.ai</div>'+
+      '<div class="of-cell"><div class="of-kicker" style="margin-bottom:14px">Named on seaworth.ai</div>'+
         U.pie([{label:'named on site',value:d.records.filter(function(r){return r.on_oddfox_site}).length},
                {label:'not named',value:d.records.filter(function(r){return !r.on_oddfox_site}).length}],
               {centreLabel:'PASSAGES'})+'</div>' +
@@ -587,7 +587,7 @@
       return '<div class="of-card" style="margin-bottom:16px">'+
         '<div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">'+
           '<div class="of-h2">'+U.esc(r.name)+'</div>'+
-          (r.on_oddfox_site?U.chip('named on oddfox.ai','solid'):'')+
+          (r.on_oddfox_site?U.chip('named on seaworth.ai','solid'):'')+
           (r.coords?'<span class="of-src of-num">'+r.coords[0].toFixed(2)+', '+r.coords[1].toFixed(2)+'</span>':'')+'</div>'+
         '<div style="margin-top:12px">'+U.chips(r.threat_types||[])+'</div>'+
         (r.status_note?'<p class="of-note" style="margin-top:14px">'+U.esc(r.status_note)+'</p>':'')+
@@ -811,7 +811,7 @@
       return m[0] || 'none';
     });
 
-    h += U.section('Distance from what Odd Fox does',
+    h += U.section('Distance from what Seaworth does',
       '<p class="of-note" style="margin-bottom:20px"><strong>'+U.esc(pm.question)+'</strong> '+U.esc(pm.note)+'</p>' +
       U.grid([
         U.stat(all.filter(function(r){return r.proximity===4}).length,'score 4 of 4','same business'),

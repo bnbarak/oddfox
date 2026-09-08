@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/route-economics.schema.json",
+  "$id": "https://seaworth.ai/data/schema/route-economics.schema.json",
   "title": "What protection is worth",
   "type": "object",
   "required": ["dataset", "the_alternative", "the_substitute", "open_questions"],

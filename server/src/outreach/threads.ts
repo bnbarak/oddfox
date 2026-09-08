@@ -26,7 +26,9 @@ export type ThreadMessage = {
 };
 
 export type Thread = {
-  contact_id: string;
+  /** The contact id, or the bare address for someone outside the CRM. */
+  key: string;
+  contact_id: string | null;
   full_name: string;
   title: string;
   company: string | null;
@@ -53,27 +55,36 @@ const inbound = (r: ReplyRecord): ThreadMessage => ({
 export async function threads(): Promise<Thread[]> {
   const [sends, replies, contacts] = await Promise.all([allSends(), allReplies(), crm.contacts()]);
 
-  const byContact = new Map<string, ThreadMessage[]>();
-  const push = (id: string | null, m: ThreadMessage) => {
-    if (!id) return;
-    byContact.set(id, [...(byContact.get(id) ?? []), m]);
+  /* Keyed by contact where there is one, and by address otherwise — a note
+     to somebody outside the CRM is still a conversation, and dropping it
+     would make the Inbox quietly incomplete. */
+  const byKey = new Map<string, { key: string; contact_id: string | null; to: string | null;
+                                  messages: ThreadMessage[] }>();
+  const push = (key: string | null, contactId: string | null, addr: string | null, m: ThreadMessage) => {
+    if (!key) return;
+    const cur = byKey.get(key) ?? { key, contact_id: contactId, to: addr, messages: [] };
+    cur.messages.push(m);
+    cur.contact_id ??= contactId;
+    cur.to ??= addr;
+    byKey.set(key, cur);
   };
-  for (const s of sends) push(s.contact_id, outbound(s));
-  for (const r of replies) push(r.contact_id, inbound(r));
+  for (const s of sends) push(s.contact_id ?? s.to, s.contact_id, s.to, outbound(s));
+  for (const r of replies) push(r.contact_id ?? r.from, r.contact_id, r.from, inbound(r));
 
   const out: Thread[] = [];
-  for (const [contactId, messages] of byContact) {
-    const c = contacts.find((x) => x.id === contactId);
-    if (!c) continue;
+  for (const [key, t] of byKey) {
+    const c = t.contact_id ? contacts.find((x) => x.id === t.contact_id) : undefined;
+    const messages = t.messages;
     messages.sort((a, b) => a.at.localeCompare(b.at));
     const human = messages.filter((m) => m.dir === "in" && !m.automated);
     out.push({
-      contact_id: contactId,
-      full_name: c.full_name,
-      title: c.title,
-      company: c.company,
-      account_id: c.account_id,
-      email: c.email,
+      key,
+      contact_id: t.contact_id,
+      full_name: c?.full_name ?? t.to ?? key,
+      title: c?.title ?? "",
+      company: c?.company ?? null,
+      account_id: c?.account_id ?? null,
+      email: c?.email ?? t.to ?? null,
       last_at: messages[messages.length - 1]!.at,
       sent: messages.filter((m) => m.dir === "out" && m.status !== "canceled").length,
       replies: human.length,

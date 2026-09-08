@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://seaworth.ai/data/schema/insurance-market.schema.json",
+  "title": "Who insures a ship",
+  "description": "The named institutions behind maritime cover: which underwriter was on which hull, who writes war risk, and — the part nobody publishes — who was refused.",
+  "type": "object",
+  "required": ["dataset", "layers", "vessel_cover", "underwriters", "denials", "open_questions"],
+  "properties": {
+    "dataset": { "const": "insurance-market" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "updated": { "type": "string" },
+    "retrieved": { "type": "string" },
+
+    "layers": {
+      "type": "array",
+      "description": "The stack of covers on a single hull. A claim is denied at a layer boundary far more often than it is denied outright.",
+      "items": {
+        "type": "object",
+        "required": ["id", "layer", "covers", "who_writes_it"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "layer": { "type": "string" },
+          "covers": { "type": "string" },
+          "excludes": { "type": "string" },
+          "who_writes_it": { "type": "string" },
+          "who_pays": { "type": "string" },
+          "note": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" }
+        }
+      }
+    },
+
+    "vessel_cover": {
+      "type": "array",
+      "description": "Per-hull attribution. One record per attacked vessel where cover is on the public record — and, deliberately, where it is not.",
+      "items": {
+        "type": "object",
+        "required": ["id", "vessel", "status"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "vessel": { "type": "string" },
+          "imo": { "type": ["string", "number", "null"] },
+          "incident_id": { "$ref": "common.schema.json#/$defs/id", "description": "Joins into incidents.json." },
+          "date": { "type": "string" },
+          "status": {
+            "enum": ["named", "partial", "declined", "disputed", "uninsured", "not-found", "no-claim"],
+            "description": "named — the slip is public. partial — some layers only. declined — an insurer refused this risk. disputed — cover exists but the claim is contested. uninsured — no cover found to exist. not-found — cover probably existed, we could not identify it. no-claim — attack caused no loss, so no cover was tested."
+          },
+          "insured_value_usd": { "type": ["number", "null"] },
+          "insured_value_note": { "type": "string" },
+          "cover": {
+            "type": "array",
+            "description": "One entry per layer of cover on this hull.",
+            "items": {
+              "type": "object",
+              "required": ["layer", "insurer"],
+              "properties": {
+                "layer": { "type": "string", "description": "war-risk, hull-and-machinery, p-and-i, loss-of-hire, cargo, k-and-r, mortgagee-interest." },
+                "insurer": { "type": "string" },
+                "line_pct": { "type": ["number", "null"], "description": "Share of the slip, where published." },
+                "role": { "enum": ["lead", "follow", "sole", "reinsurer", "broker", "mga", "salvor", "unknown"] },
+                "outcome": { "enum": ["paid", "disputed", "refused", "declined-to-write", "no-exposure", "unknown"] },
+                "note": { "type": "string" },
+                "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+                "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+              }
+            }
+          },
+          "what_we_tried": { "type": "string", "description": "Required in spirit on any not-found record. The searches that came back empty are part of the finding." },
+          "conflict": {
+            "type": "object",
+            "description": "Where reputable publishers disagree. Record both readings; do not pick one.",
+            "properties": {
+              "field": { "type": "string" },
+              "readings": { "type": "array", "items": { "type": "string" } },
+              "action": { "type": "string" }
+            }
+          },
+          "note": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+
+    "underwriters": {
+      "type": "array",
+      "description": "The institutions. P&I clubs, war-risk mutuals, Lloyd's syndicates, MGAs, brokers, state programmes.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "name": { "type": "string" },
+          "kind": {
+            "enum": ["p-and-i-club", "war-risk-mutual", "lloyds-syndicate", "mga", "insurer", "reinsurer", "broker", "state-programme", "market-body"]
+          },
+          "domicile": { "type": "string" },
+          "domicile_iso": { "type": ["string", "null"], "description": "ISO 3166-1 alpha-2, for the flag image." },
+          "founded": { "type": ["number", "null"] },
+          "tonnage_gt_m": { "type": ["number", "null"], "description": "Entered tonnage, millions of gross tonnes." },
+          "ships": { "type": ["number", "null"] },
+          "international_group": { "type": "boolean", "description": "Member of the International Group of P&I Clubs." },
+          "seen_on": { "type": "array", "items": { "type": "string" }, "description": "Vessels in vessel_cover where this entity appears." },
+          "url": { "type": ["string", "null"] },
+          "note": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+
+    "denials": {
+      "type": "array",
+      "description": "Who was refused. Cover declined, withdrawn, voided, or a claim rejected. The hardest data in the library to get.",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "who", "what_happened"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "kind": {
+            "enum": ["declined-to-write", "cover-withdrawn", "claim-refused", "claim-disputed", "sanctions-block", "surcharged", "fraudulent-cover", "market-exit", "uninsured-fleet"]
+          },
+          "date": { "type": "string" },
+          "who": { "type": "string", "description": "The party denied — vessel, owner, fleet or trade." },
+          "by": { "type": "string", "description": "The insurer, club, regulator or government doing the denying." },
+          "what_happened": { "type": "string" },
+          "grounds": { "type": "string", "description": "The exclusion, warranty or sanction relied on." },
+          "amount_usd": { "type": ["number", "null"] },
+          "resolved": { "type": "string" },
+          "note": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+
+    "case_law": {
+      "type": "array",
+      "description": "The judgments that decide whether a war-risk claim gets paid. Precedent, not journalism.",
+      "items": {
+        "type": "object",
+        "required": ["id", "case", "held"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "case": { "type": "string" },
+          "citation": { "type": "string" },
+          "court": { "type": "string" },
+          "date": { "type": "string" },
+          "vessel": { "type": "string" },
+          "issue": { "type": "string" },
+          "held": { "type": "string" },
+          "who_won": { "enum": ["insurer", "assured", "mixed", "pending"] },
+          "amount_usd": { "type": ["number", "null"] },
+          "why_it_matters": { "type": "string" },
+          "url": { "type": ["string", "null"] },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+
+    "claims": {
+      "type": "array",
+      "description": "What was claimed and what was actually paid. Estimates and confirmed payments are separated on purpose.",
+      "items": {
+        "type": "object",
+        "required": ["id", "what", "basis"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "what": { "type": "string" },
+          "vessel": { "type": "string" },
+          "date": { "type": "string" },
+          "amount_usd": { "type": ["number", "null"] },
+          "label": { "type": "string" },
+          "basis": { "enum": ["paid", "claimed", "estimated", "reserved", "market-estimate"], "description": "Never blur these. A market estimate is not a payment." },
+          "payer": { "type": "string" },
+          "note": { "type": "string" },
+          "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+          "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+        }
+      }
+    },
+
+    "market": {
+      "type": "object",
+      "description": "Size and shape of the marine insurance market — IUMI premium, IG tonnage share, war-risk capacity.",
+      "properties": {
+        "figures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "metric", "value"],
+            "properties": {
+              "id": { "$ref": "common.schema.json#/$defs/id" },
+              "metric": { "type": "string" },
+              "value": { "type": ["number", "string"] },
+              "unit": { "type": "string" },
+              "period": { "type": "string" },
+              "publisher": { "type": "string" },
+              "note": { "type": "string" },
+              "source_ids": { "$ref": "common.schema.json#/$defs/sourceIds" },
+              "confidence": { "$ref": "common.schema.json#/$defs/confidence" }
+            }
+          }
+        }
+      }
+    },
+
+    "why_it_is_opaque": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Why this dataset has as many holes as facts. Structural, not a research failure."
+    },
+
+    "gaps": { "type": "array", "items": { "type": "string" } },
+
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Required and non-empty, as everywhere in this library."
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/threat-stats.schema.json",
+  "$id": "https://seaworth.ai/data/schema/threat-stats.schema.json",
   "title": "Incident counts",
   "type": "object",
   "required": ["dataset", "counting_bodies", "series"],

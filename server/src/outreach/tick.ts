@@ -96,7 +96,7 @@ export async function tick(): Promise<Tick> {
           continue;
         }
         await schedule({
-          contact_id: d.contact_id, round: d.next_round,
+          contact_id: d.contact_id, to: null, round: d.next_round,
           subject: written.subject, body: written.body,
           scheduled_at: null, domain: null,
           written_by: modelConfigured() ? "agent" : "template",

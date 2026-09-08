@@ -227,7 +227,7 @@ const t = {
       try {
         const cfg = await getConfig();
         const r = await schedule({
-          contact_id: input.contact_id, round: input.round as 0 | 1 | 2 | 3,
+          contact_id: input.contact_id, to: null, round: input.round as 0 | 1 | 2 | 3,
           subject: input.subject, body: input.body,
           scheduled_at: input.scheduled_at ?? null, domain: null,
           written_by: modelConfigured() ? "agent" : "template", template_tier: null,

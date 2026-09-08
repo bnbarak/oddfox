@@ -90,7 +90,7 @@
     "aljazeera-2026-07-insurance"
    ],
    "confidence": "low",
-   "note": "Flagged 2026-09-04: 1-3% is well above the 0.2-0.3% Reuters gives as the pre-escalation Hormuz rate."
+   "note": "Kept as an undated secondary reading. The dated Platts series now supersedes it: Hormuz sat at 0.05-0.07% for the eighteen months to June 2025, 0.1-0.15% before 28 February 2026, then 2.5% in March and 7.5-10% by July 2026. A 'historic normal' of 1-3% matches none of those periods."
   },
   {
    "id": "hormuz-2026-07",
@@ -102,8 +102,8 @@
    "source_ids": [
     "aljazeera-2026-07-insurance"
    ],
-   "confidence": "low",
-   "note": "FLAGGED 2026-09-04. Reuters reports Hormuz war risk at 0.5% in June 2025, up from 0.2-0.3%, and the highest Red Sea figure found anywhere is 2%. 7.5-10% is far outside that range and is probably a units error. Do not use externally until confirmed by a broker. See industry/insurance.json conflict."
+   "confidence": "high",
+   "note": "RESOLVED 2026-09-06. Previously flagged as a probable units error. It is not. S&P Global Platts, citing Marsh, gives 7.5-10% of hull and machinery value for the Strait of Hormuz on 22 July 2026, and Lloyd's List corroborates it on 27 July with 'Hormuz war risk cover tops $10m for single VLCC trip' — $10.5-14m on a VLCC at about $140m. The figure needed a date stamp, not a correction. The contradicting 0.2-0.5% readings are June 2025, twenty months and one war earlier. See insurance-market.json."
   }
  ],
  "traffic_effects": [

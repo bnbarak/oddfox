@@ -68,13 +68,21 @@ export type Scheduled = {
 export async function schedule(
   req: ScheduleRequest, cfg: OutreachConfig, queued: SendRecord[],
 ): Promise<Scheduled> {
-  const contact = await crm.contact(req.contact_id);
-  if (!contact) throw new Refused("no-contact", `no contact with id ${req.contact_id}`, 404);
-  if (!contact.email) {
-    throw new Refused("no-address", `${contact.full_name} has no email address on record`);
+  /* Two kinds of recipient. A CRM contact carries provenance and pipeline
+     state; a plain address is somebody outside the CRM entirely — a personal
+     note, an introduction, a reply to a stranger. Both go through every rule
+     below; only the record-keeping differs. */
+  const contact = req.contact_id ? await crm.contact(req.contact_id) : null;
+  if (req.contact_id && !contact) {
+    throw new Refused("no-contact", `no contact with id ${req.contact_id}`, 404);
   }
-  if (contact.email_status === "bounced") {
-    throw new Refused("bounced", `${contact.email} has already bounced`);
+  const to = contact?.email ?? req.to;
+  if (!to) {
+    throw new Refused("no-address",
+      contact ? `${contact.full_name} has no email address on record` : "no recipient given");
+  }
+  if (contact?.email_status === "bounced") {
+    throw new Refused("bounced", `${to} has already bounced`);
   }
   if (/\{\{|\}\}/.test(`${req.subject}${req.body}`)) {
     throw new Refused("unresolved-placeholder",
@@ -107,15 +115,15 @@ export async function schedule(
       `${domain} has no sender defined in SENDERS — adding one is a code change.`);
   }
   const text = withFooter(req.body, cfg, req.signature);
-  const account = await crm.account(contact.account_id);
+  const account = contact ? await crm.account(contact.account_id) : null;
   const now = new Date().toISOString();
 
   const record: SendRecord = {
     id: randomUUID(),
-    account_id: contact.account_id,
-    contact_id: contact.id,
-    company: contact.company ?? account?.company ?? null,
-    to: contact.email,
+    account_id: contact?.account_id ?? null,
+    contact_id: contact?.id ?? null,
+    company: contact?.company ?? account?.company ?? null,
+    to,
     from_domain: domain,
     from_address: from,
     reply_to: d.reply_to,
@@ -154,7 +162,7 @@ export async function schedule(
 
   try {
     const { data, error } = await resend().emails.send({
-      from, to: contact.email, subject: req.subject, text,
+      from, to, subject: req.subject, text,
       ...(d.reply_to ? { replyTo: d.reply_to } : {}),
       scheduledAt: at.toISOString(),
       headers: listHeaders(cfg),

@@ -70,10 +70,21 @@ export function footer(cfg: OutreachConfig, signatureId?: string | null): string
 }
 
 /** Body plus footer, with exactly one blank line between them however the
-    body happens to end. */
+    body happens to end.
+
+    No "--" separator: the RFC 3676 sig marker makes a hand-written note look
+    machine-generated, which is the opposite of what this outreach is going
+    for. The footer is still appended unconditionally — see footer() — so
+    dropping the marker costs nothing legally. Anything that needs to find
+    where the body ends should use footerStart() rather than matching "--". */
 export const withFooter = (
   body: string, cfg: OutreachConfig, signatureId?: string | null,
-): string => `${body.trimEnd()}\n\n--\n${footer(cfg, signatureId)}\n`;
+): string => `${body.trimEnd()}\n\n${footer(cfg, signatureId)}\n`;
+
+/** Where the appended footer begins in a rendered body, or -1. Used to show
+    just the human-written part. Matches the opt-out line, which footer()
+    always emits last and which no hand-written message would contain. */
+export const OPT_OUT_LINE = `Reply "unsubscribe" and you will not hear from me again.`;
 
 /** Headers that make an opt-out one action in the recipient's mail client
     rather than a hunt through the text. mailto rather than a URL because the

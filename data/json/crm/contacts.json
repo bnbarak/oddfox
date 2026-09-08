@@ -1,7 +1,7 @@
 {
  "dataset": "crm-contacts",
  "title": "People",
- "updated": "2026-09-05",
+ "updated": "2026-09-07",
  "records": [
   {
    "id": "vikrant-malhotra",
@@ -26,7 +26,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "frank-lasse",
@@ -51,7 +52,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "No public LinkedIn profile found on 2026-09-05. Reach him through the BSM management page instead."
+   "notes": "No public LinkedIn profile found on 2026-09-05. Reach him through the BSM management page instead.",
+   "starred": false
   },
   {
    "id": "nicholas-rich",
@@ -76,7 +78,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "evangelos-sfakiotakis",
@@ -101,7 +104,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "william-nugent",
@@ -126,7 +130,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "christos-triantafyllou",
@@ -151,7 +156,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "katsuhiko-haruna",
@@ -176,7 +182,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "kenichiro-sutoh",
@@ -201,7 +208,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "yasushi-yamamoto",
@@ -226,7 +234,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "torger-trige",
@@ -251,7 +260,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "istein-jensen",
@@ -276,7 +286,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "harshavardhan-bhave",
@@ -301,7 +312,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "vikram-dhingra",
@@ -326,7 +338,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "george-petropoulos",
@@ -355,7 +368,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "Highest-value profile on record. DPA, CSO and HSQE held together is exactly the buying role, and it is a first-degree connection. Employer is not stated on the profile and must be established before any approach."
+   "notes": "Highest-value profile on record. DPA, CSO and HSQE held together is exactly the buying role, and it is a first-degree connection. Employer is not stated on the profile and must be established before any approach.",
+   "starred": false
   },
   {
    "id": "panda-soumya-prakash",
@@ -380,7 +394,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "radoslaw-walczak",
@@ -405,7 +420,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "carsten-ostenfeldt",
@@ -430,7 +446,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "dilip-swarup",
@@ -455,7 +472,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "swapnodeep-mondal",
@@ -480,7 +498,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "debbie-leng",
@@ -505,7 +524,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "jeroen-deelen",
@@ -530,7 +550,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "antonis-georgantzis",
@@ -555,7 +576,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "Profile is published under the spelling Antonios Georgantzis."
+   "notes": "Profile is published under the spelling Antonios Georgantzis.",
+   "starred": false
   },
   {
    "id": "capt-uttam-k-jaiswal",
@@ -580,7 +602,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "capt-xiaofeng-bao",
@@ -605,7 +628,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "james-chesman",
@@ -630,7 +654,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "justin-mulquiney",
@@ -655,7 +680,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "kitty-mok",
@@ -680,7 +706,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "richard-griffiths",
@@ -705,7 +732,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "xiu-cheng",
@@ -730,7 +758,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "ofer-rogers",
@@ -759,7 +788,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "Agency and commercial side rather than a shipowner. Covers the Middle East and Black Sea, which is our geography, and states an interest in maritime security. Better as a route-in and a sense-check than as a buyer."
+   "notes": "Agency and commercial side rather than a shipowner. Covers the Middle East and Black Sea, which is our geography, and states an interest in maritime security. Better as a route-in and a sense-check than as a buyer.",
+   "starred": false
   },
   {
    "id": "ioannis-foteinos",
@@ -784,7 +814,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "nicos-rescos",
@@ -809,7 +840,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "ian-trebinski",
@@ -834,7 +866,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "bjorn-hojgaard",
@@ -859,7 +892,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "niraj-nanda",
@@ -884,7 +918,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "eng-ahmed-ali-alsubaey",
@@ -909,7 +944,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "eng-khalid-alhammad",
@@ -934,7 +970,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "eng-mohammed-bin-battal",
@@ -959,7 +996,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "eng-mohit-sibal",
@@ -984,7 +1022,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "mr-abdullah-bin-eid",
@@ -1009,7 +1048,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "mr-faisal-al-husseini",
@@ -1034,7 +1074,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "mr-hisham-al-nughaimish",
@@ -1059,7 +1100,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "andreas-solomonides",
@@ -1084,7 +1126,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "fabian-reimers",
@@ -1109,7 +1152,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "ian-beveridge",
@@ -1134,7 +1178,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "martin-roolvink",
@@ -1159,7 +1204,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "nick-topham",
@@ -1184,7 +1230,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "raymond-peter",
@@ -1209,7 +1256,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "sankalp-shukla",
@@ -1234,7 +1282,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "sebastian-von-hardenberg",
@@ -1259,7 +1308,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "theophanis-theophanous",
@@ -1284,7 +1334,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "umesh-lulla",
@@ -1309,7 +1360,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "ioannis-g-zafirakis",
@@ -1334,7 +1386,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "semiramis-paliou",
@@ -1359,7 +1412,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "lars-h-barstad",
@@ -1384,7 +1438,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "jesper-christensen",
@@ -1409,7 +1464,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "john-c-wobensmith",
@@ -1434,7 +1490,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "mikael-skov",
@@ -1459,7 +1516,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "Stepped down as CEO on 2026-09-01 — Soren Steenberg Jensen now holds the role. Skov is proposed as a non-independent director at the 2026-09-23 EGM. Re-target this account before sequencing."
+   "notes": "Stepped down as CEO on 2026-09-01 — Soren Steenberg Jensen now holds the role. Skov is proposed as a non-independent director at the 2026-09-23 EGM. Re-target this account before sequencing.",
+   "starred": false
   },
   {
    "id": "sren-steenberg-jensen",
@@ -1484,7 +1542,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "derek-solon",
@@ -1509,7 +1568,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "lois-k-zabrocky",
@@ -1534,7 +1594,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "angeliki-frangou",
@@ -1559,7 +1620,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "george-achniotis",
@@ -1584,7 +1646,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "atsuhiko-kurosawa",
@@ -1609,7 +1672,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "hironobu-watanabe",
@@ -1634,7 +1698,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "nobuaki-sumida",
@@ -1659,7 +1724,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "shingo-mizutani",
@@ -1684,7 +1750,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "bjrn-hammer",
@@ -1709,7 +1776,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "harald-fotland",
@@ -1734,7 +1802,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "kristian-helt",
@@ -1759,7 +1828,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "martin-fruergaard",
@@ -1784,7 +1854,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "morten-ingebrigtsen",
@@ -1809,7 +1880,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "sivanand-ray",
@@ -1834,7 +1906,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "dr-loukas-barmparis",
@@ -1859,7 +1932,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "polys-hajioannou",
@@ -1884,7 +1958,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "charis-plakantonaki",
@@ -1909,7 +1984,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "Listed as 'CSO' on the management page — that is Chief Strategy Officer (strategy, HR, IT, ESG), not Company Security Officer."
+   "notes": "Listed as 'CSO' on the management page — that is Chief Strategy Officer (strategy, HR, IT, ESG), not Company Security Officer.",
+   "starred": false
   },
   {
    "id": "hamish-norton",
@@ -1934,7 +2010,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "petros-pappas",
@@ -1959,7 +2036,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "zenon-kleopas",
@@ -1984,7 +2062,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "bjarke-nissen",
@@ -2009,7 +2088,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "maren-schroeder",
@@ -2034,7 +2114,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "udo-lange",
@@ -2059,7 +2140,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "james-muir",
@@ -2084,7 +2166,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "jesper-bo-hansen",
@@ -2109,7 +2192,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "morten-wedel-jorgensen",
@@ -2134,7 +2218,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "rene-kofod-olsen",
@@ -2159,7 +2244,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "robert-desai",
@@ -2184,7 +2270,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "shubpreet-singh",
@@ -2209,7 +2296,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "torbjorn-gjervik",
@@ -2234,7 +2322,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "daniel-reinsborg",
@@ -2259,7 +2348,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "haakon-lenz",
@@ -2284,7 +2374,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": "Profile is published under the spelling Hakon Lenz."
+   "notes": "Profile is published under the spelling Hakon Lenz.",
+   "starred": false
   },
   {
    "id": "michael-silies",
@@ -2309,7 +2400,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "roine-ahlquist",
@@ -2334,7 +2426,8 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
   },
   {
    "id": "wiebke-schutt",
@@ -2359,7 +2452,2652 @@
     "round_3": null
    },
    "replied": false,
-   "notes": null
+   "notes": null,
+   "starred": false
+  },
+  {
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "buying_role": "other",
+   "linkedin_url": "https://www.linkedin.com/in/ben-wyatt-63082686/",
+   "email_status": "verified",
+   "source_url": "https://www.bhspecialty.com/press-releases/",
+   "source": "Supplied by the founder from the contact's own email signature.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "ben-wyatt",
+   "full_name": "Ben Wyatt",
+   "title": "Head of Marine for North America and the UK",
+   "role_class": "insurer-marine-lead",
+   "priority": 1,
+   "email": "ben.wyatt@bhspecialty.com",
+   "phone_office": "+1 332-204-2602",
+   "starred": true,
+   "notes": "STARRED. Promoted on 2 June 2026 from SVP, Head of US Marine to Head of Marine for North America and the UK — his email signature still reads the shorter 'Head of Marine'. The published release title is recorded here. Reports to Sanjay Godhwani, Head of North America; global marine sits under Cathy Miller, Global CUO Property & Marine. Note BHSI writes no marine war risk — see the account notes before pitching. A mobile was supplied and is deliberately NOT stored, per this file's collection policy.",
+   "linkedin_source": "public profile search, matched on name, employer and title"
+  },
+  {
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "source_url": null,
+   "source": "Supplied by the founder from the contact's own email signature.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "chris-frick",
+   "full_name": "Chris Frick",
+   "title": "Head of Marine Claims",
+   "role_class": "insurer-claims-lead",
+   "priority": 1,
+   "email": "chris.frick@bhspecialty.com",
+   "phone_office": "+1 332-204-2611",
+   "starred": false,
+   "notes": "Head of Marine Claims at BHSI. Not starred — no star was requested for this contact. A mobile number was supplied and is deliberately NOT stored, per this file's collection policy. Claims is the function that decides whether a loss gets paid, so this is arguably the more useful seat for testing whether an escort earns a premium discount."
+  },
+  {
+   "account_id": "aig",
+   "company": "AIG (American International Group)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "source_url": "https://www.aig.com/",
+   "starred": false,
+   "source": "AIG North America Marine Insurance Solutions brochure, supplied by the founder.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "gavin-spencer",
+   "full_name": "Gavin Spencer",
+   "title": "Head of Marine, North America",
+   "role_class": "insurer-marine-lead",
+   "priority": 1,
+   "email": "Gavin.Spencer@aig.com",
+   "phone_office": "+1 415-791-1006",
+   "notes": "Most senior marine seat at the largest US ocean marine writer. The primary target at this account."
+  },
+  {
+   "account_id": "aig",
+   "company": "AIG (American International Group)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "source_url": "https://www.aig.com/",
+   "starred": false,
+   "source": "AIG North America Marine Insurance Solutions brochure, supplied by the founder.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "francisco-campos-da-silva",
+   "full_name": "Francisco Campos Da Silva",
+   "title": "Head of Hull and Marine Liability, North America",
+   "role_class": "insurer-hull-lead",
+   "priority": 1,
+   "email": "Francisco.Campos@aig.com",
+   "phone_office": "+1 305-586-0439",
+   "notes": "Hull and marine liability is the line an escort product actually bears on — arguably the sharpest seat here, alongside the Head of Marine."
+  },
+  {
+   "account_id": "aig",
+   "company": "AIG (American International Group)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "source_url": "https://www.aig.com/",
+   "starred": false,
+   "source": "AIG North America Marine Insurance Solutions brochure, supplied by the founder.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "ryne-slawson",
+   "full_name": "Ryne Slawson",
+   "title": "Head of Ocean Cargo, North America",
+   "role_class": "insurer-cargo-lead",
+   "priority": 2,
+   "email": "Ryne.Slawson@aig.com",
+   "phone_office": "+1 646-857-5134",
+   "notes": "Ocean cargo is the largest line in the global marine market at 56.7% of premium, and cargo war cover is where affiliation exclusions bit hardest in 2026."
+  },
+  {
+   "account_id": "aig",
+   "company": "AIG (American International Group)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "source_url": "https://www.aig.com/",
+   "starred": false,
+   "source": "AIG North America Marine Insurance Solutions brochure, supplied by the founder.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "joane-whitaker",
+   "full_name": "Joane Whitaker",
+   "title": "Marine Lead, Canada",
+   "role_class": "insurer-marine-lead",
+   "priority": 2,
+   "email": "Joane.Whitaker@aig.com",
+   "phone_office": "+1 416-419-1135",
+   "notes": "Canada rather than the US book."
+  },
+  {
+   "account_id": "aig",
+   "company": "AIG (American International Group)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "source_url": "https://www.aig.com/",
+   "starred": false,
+   "source": "AIG North America Marine Insurance Solutions brochure, supplied by the founder.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "danielle-garza",
+   "full_name": "Danielle Garza",
+   "title": "Underwriting Manager, Inland Marine, United States",
+   "role_class": "insurer-inland-marine",
+   "priority": 3,
+   "email": "Danielle.Garza@aig.com",
+   "phone_office": "+1 346-355-2835",
+   "notes": "Deprioritised on purpose. US 'inland marine' is a statutory line covering goods in transit and contractors' equipment — it is not maritime at all, despite the name. Wrong seat for an escort conversation."
+  },
+  {
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "starred": false,
+   "source_url": "https://www.american-club.com/page/contacts-ny",
+   "source": "The American Club's own published New York contacts page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "william-moore",
+   "full_name": "William H. Moore, Dr.Eng.",
+   "title": "Global Loss Prevention Director - S.V.P.",
+   "role_class": "insurer-loss-prevention",
+   "priority": 1,
+   "email": "william.moore@american-club.com",
+   "email_status": "verified",
+   "notes": "Arguably the single most relevant seat in this CRM. Loss prevention is the function that assesses whether a measure actually reduces risk — which is the question an escort product has to answer before any underwriter will price it differently. Start here, not with the CEO.",
+   "phone_office": "+1 212-847-4542"
+  },
+  {
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "starred": false,
+   "source_url": "https://www.american-club.com/page/contacts-ny",
+   "source": "The American Club's own published New York contacts page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "steven-ogullukian",
+   "full_name": "Steven A. Ogullukian",
+   "title": "Deputy Global Underwriting Director & Reinsurance Director - S.V.P.",
+   "role_class": "insurer-underwriting-lead",
+   "priority": 1,
+   "email": null,
+   "email_status": "unknown",
+   "notes": "On the public record about the 2026 Gulf cancellations: 'It's more of a rerating than a cancellation... From the beginning of the conflict, if an owner wanted that cover, it's insurable.' He also holds the REINSURANCE brief — and 2026's cancellations were driven from the reinsurance layer, not the insurers. No email or direct line was published on the page supplied; neither has been guessed."
+  },
+  {
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "starred": false,
+   "source_url": "https://www.american-club.com/page/contacts-ny",
+   "source": "The American Club's own published New York contacts page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "dorothea-ioannou",
+   "full_name": "Dorothea Ioannou, J.D.",
+   "title": "Chief Executive Officer - E.V.P.",
+   "role_class": "insurer-ceo",
+   "priority": 1,
+   "email": "dorothea.ioannou@american-club.com",
+   "email_status": "verified",
+   "notes": "CEO of Shipowners Claims Bureau, the American Club's managers. Signed Circular 06/26 reinstating charterers' war cover on a buy-back basis in March 2026.",
+   "phone_office": "+1 212-847-4544"
+  },
+  {
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "starred": false,
+   "source_url": "https://www.american-club.com/page/contacts-ny",
+   "source": "The American Club's own published New York contacts page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "daniel-tadros",
+   "full_name": "Daniel A. Tadros, J.D.",
+   "title": "Chief Operating Officer - E.V.P.",
+   "role_class": "insurer-coo",
+   "priority": 2,
+   "email": "daniel.tadros@american-club.com",
+   "email_status": "verified",
+   "notes": null,
+   "phone_office": "+1 212-847-4501"
+  },
+  {
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "starred": false,
+   "source_url": "https://www.american-club.com/page/contacts-ny",
+   "source": "The American Club's own published New York contacts page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "manny-beri",
+   "full_name": "Manny Beri",
+   "title": "Chief Information and Chief Security Officer - S.V.P.",
+   "role_class": "insurer-ciso",
+   "priority": 3,
+   "email": "manny.beri@american-club.com",
+   "email_status": "verified",
+   "notes": "Information and cyber security rather than marine underwriting. Lower priority for an escort conversation.",
+   "phone_office": "+1 212-847-4528"
+  },
+  {
+   "id": "patrick-leahy",
+   "account_id": "gard",
+   "company": "Gard",
+   "full_name": "Patrick Michael Leahy",
+   "title": "Vice President, North America, Managing Director New York",
+   "role_class": "insurer-regional-head",
+   "buying_role": "other",
+   "priority": 1,
+   "location": "New York, United States",
+   "linkedin_url": null,
+   "email": "patrick.leahy@gard.no",
+   "email_status": "verified",
+   "phone_office": "+1 646-880-9506",
+   "starred": false,
+   "source_url": "https://www.gard.no/",
+   "source": "Gard's own published employee directory page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Runs Gard's North America book out of New York. Senior enough to route internally, and at the club that both leads the market on tonnage and sits at the centre of the 2026 war-risk cancellations. A mobile number is published on the same page and is deliberately NOT stored, per this file's collection policy."
+  },
+  {
+   "account_id": "gard",
+   "company": "Gard",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "starred": false,
+   "source_url": "https://www.gard.no/",
+   "source": "Gard's own published employee directory page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "bjornar-andresen",
+   "full_name": "Bjørnar Andresen",
+   "title": "EVP - Chief Underwriting Officer",
+   "role_class": "insurer-cuo",
+   "priority": 1,
+   "email": "Baa@gard.no",
+   "phone_office": "+44 20 7444 7240",
+   "location": "London, United Kingdom",
+   "notes": "THE most important contact in this CRM for the escort-discount question. Chief Underwriting Officer of the world's largest P&I club, and named to succeed Mike Hall as chair of the International Group's REINSURANCE COMMITTEE for the 2027/28 renewal — the seat that negotiates the group excess-of-loss programme, $2.25bn above a $100m pool ceiling, with the commercial reinsurance market. This matters because the 2026 war-risk cancellations did not originate with insurers: Gard's own Circular 01/2026 says the club acted because ITS reinsurers served notice on IT. If an escort is ever going to earn a premium discount, the decision sits at the reinsurance layer, and this is the person who sits there. Approach with a loss-reduction argument and evidence, not a sales pitch."
+  },
+  {
+   "account_id": "gard",
+   "company": "Gard",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email_status": "verified",
+   "starred": false,
+   "source_url": "https://www.gard.no/",
+   "source": "Gard's own published employee directory page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "james-barth",
+   "full_name": "James Barth",
+   "title": "Claims Executive",
+   "role_class": "insurer-claims",
+   "priority": 3,
+   "email": "James.Barth@gard.no",
+   "phone_office": "+44 20 7444 7215",
+   "location": "London, United Kingdom",
+   "notes": "Claims executive rather than underwriting or loss prevention. Useful for understanding how a war-risk claim is actually handled, but not a decision-maker on pricing."
+  },
+  {
+   "account_id": "gard",
+   "company": "Gard",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": "https://www.gard.no/",
+   "source": "Gard's own published employee directory page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "marie-kelly",
+   "full_name": "Marie Kelly",
+   "title": "Vice President, Charterers and Traders and Defence Global",
+   "role_class": "insurer-charterers-lead",
+   "priority": 1,
+   "location": "London, United Kingdom",
+   "notes": "Directly relevant, for two reasons. First, under most time and voyage charters the CHARTERER bears the war-risk premium — so charterers are the party with the budget, and our CRM has only one charterer account. She runs that book globally at the largest club. Second, the covers Gard actually cancelled in March 2026 were the non-mutual ones: P&I for Charterers, P&I for Traders, extended crew and deviation liability. That is her portfolio. No email or phone was published on the card supplied; neither has been guessed."
+  },
+  {
+   "account_id": "gard",
+   "company": "Gard",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": "https://www.gard.no/",
+   "source": "Gard's own published employee directory page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "paul-grehan",
+   "full_name": "Paul Grehan",
+   "title": "Vice President, Americas, Managing Director",
+   "role_class": "insurer-regional-head",
+   "priority": 2,
+   "location": "London, United Kingdom",
+   "notes": "Runs the Americas book from London. Sits alongside Patrick Leahy, who is Gard's VP North America based in New York — worth establishing which of them owns a US approach before contacting either. No email or phone published on the card supplied."
+  },
+  {
+   "account_id": "gard",
+   "company": "Gard",
+   "buying_role": "other",
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": "https://www.gard.no/",
+   "source": "Gard's own published employee directory page.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "id": "jake-fisher",
+   "full_name": "Jake Fisher",
+   "title": "Vice President, Investment Management",
+   "role_class": "insurer-investments",
+   "priority": 3,
+   "location": "London, United Kingdom",
+   "notes": "Investment management — the club's own asset portfolio, not marine underwriting. No bearing on whether an escort earns a premium discount. Recorded for completeness only. No email or phone published on the card supplied."
+  },
+  {
+   "id": "andrew-moulton",
+   "account_id": "ascot",
+   "company": "Ascot",
+   "full_name": "Andrew Moulton",
+   "title": "Executive Underwriter; Chair, Joint War Committee",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://uk.linkedin.com/in/andrew-moulton-09b049226",
+   "email": "andrew.moulton@ascotgroup.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Chairs the Joint War Committee. The JWC sets no rates, but its Listed Areas circular is what turns a geography into a premium — and JWLA-034 of 29 July 2026 moved the Red Sea line 7.5 degrees north in a single revision. Influencing that boundary is worth more than influencing any single rate. Ascot also took the largest line on Galaxy Leader.",
+   "phone_office": "+44 20 7743 9670",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "sophie-bugeja",
+   "account_id": "ascot",
+   "company": "Ascot",
+   "full_name": "Sophie Bugeja",
+   "title": "Underwriter (Marine Hull)",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "sophie.bugeja@ascotgroup.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7743 9684"
+  },
+  {
+   "id": "charlotte-brotherton-farrell",
+   "account_id": "ascot",
+   "company": "Ascot",
+   "full_name": "Charlotte Brotherton Farrell",
+   "title": "Underwriter (Marine Hull)",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "cbf@ascotgroup.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 203 650 0623"
+  },
+  {
+   "id": "gary-brice",
+   "account_id": "brit",
+   "company": "Brit",
+   "full_name": "Gary C Brice",
+   "title": "Head of Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "gary.brice@britinsurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Heads marine at the syndicate whose Keel Consortium held 100% of Sounion and funded the salvage outright — the clearest proof in our library that a war underwriter will spend to save a hull.",
+   "phone_office": "+44 20 4526 6720"
+  },
+  {
+   "id": "deborah-shillabeer",
+   "account_id": "brit",
+   "company": "Brit",
+   "full_name": "Deborah Shillabeer",
+   "title": "Class Underwriter",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "deborah.shillabeer@britinsurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Brit's Joint War Committee seat.",
+   "phone_office": "+44 20 3857 0461"
+  },
+  {
+   "id": "matthew-gysbers",
+   "account_id": "axa-xl",
+   "company": "AXA XL",
+   "full_name": "Matthew Gysbers",
+   "title": "Underwriting Manager, Marine Hull & War, UK & Lloyd's",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://uk.linkedin.com/in/matthew-gysbers-0a5b22116",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Marine hull and war at the firm that leads the International Group's group excess-of-loss programme. AXA XL publishes no named marine contacts, so only the switchboard is on record; the email was NOT guessed.",
+   "phone_office": "+44 20 7626 0486",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "deepa-nathvani",
+   "account_id": "beazley",
+   "company": "Beazley",
+   "full_name": "Deepa Nathvani",
+   "title": "Focus Group Leader, Hull & War",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "deepa.nathvani@beazley.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Leads hull and war at the syndicate that launched a $1bn marine war consortium in April 2026.",
+   "phone_office": "+44 20 7674 7418"
+  },
+  {
+   "id": "sam-kimber",
+   "account_id": "beazley",
+   "company": "Beazley",
+   "full_name": "Sam Kimber",
+   "title": "Underwriter - Hull & War",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "sam.kimber@beazley.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Beazley's Joint War Committee seat.",
+   "phone_office": "+44 20 7674 7438"
+  },
+  {
+   "id": "john-potter",
+   "account_id": "convex",
+   "company": "Convex",
+   "full_name": "John Potter",
+   "title": "Head of Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Heads marine overall; Kelly Gallagher holds the war brief.",
+   "phone_office": "+44 20 3997 1153"
+  },
+  {
+   "id": "kelly-gallagher",
+   "account_id": "convex",
+   "company": "Convex",
+   "full_name": "Kelly Gallagher",
+   "title": "Head of Marine, Property & War",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "kelly.gallagher@convexin.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Convex's Joint War Committee seat. A mobile is published on the company page and is deliberately NOT stored.",
+   "phone_office": "+44 20 3997 1153"
+  },
+  {
+   "id": "daniel-mccarthy",
+   "account_id": "markel-international",
+   "company": "Markel International",
+   "full_name": "Daniel McCarthy",
+   "title": "Managing Director, Marine, Energy and Construction",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "daniel.mccarthy@markel.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7953 6000"
+  },
+  {
+   "id": "katie-costello",
+   "account_id": "markel-international",
+   "company": "Markel International",
+   "full_name": "Katie Costello",
+   "title": "Head of Hull & War",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "katie.costello@markel.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Markel splits the hull-and-war desk from its JWC seat, which Paul Western holds.",
+   "phone_office": "+44 20 7953 6000"
+  },
+  {
+   "id": "paul-western",
+   "account_id": "markel-international",
+   "company": "Markel International",
+   "full_name": "Paul Western",
+   "title": "Head of Hull Underwriting and Senior Underwriter, War",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://uk.linkedin.com/in/paul-western-60004b1a6",
+   "email": "paul.western@markel.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Markel's Joint War Committee seat. Markel took 20% of the Galaxy Leader slip.",
+   "phone_office": "+44 20 7953 6000",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "mike-maccoll",
+   "account_id": "atrium-underwriters",
+   "company": "Atrium Underwriters",
+   "full_name": "Mike MacColl",
+   "title": "Head of Hull & War Underwriting",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://www.linkedin.com/in/mike-maccoll-40125b138/",
+   "email": "Mike.maccoll@atrium-uw.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Atrium's Joint War Committee seat.",
+   "phone_office": "+44 207 050 3000",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "martin-jackson",
+   "account_id": "apollo-underwriting",
+   "company": "Apollo Underwriting",
+   "full_name": "Martin Jackson",
+   "title": "Head of Marine, Energy & Transportation and Aviation",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 3169 1969"
+  },
+  {
+   "id": "iain-henstridge",
+   "account_id": "apollo-underwriting",
+   "company": "Apollo Underwriting",
+   "full_name": "Iain Henstridge",
+   "title": "Class Leader, Hull",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": "https://www.linkedin.com/in/iain-henstridge-07b92b111/",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Apollo's Joint War Committee seat.",
+   "phone_office": "+44 20 3169 1969",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "matthew-mitchell",
+   "account_id": "qbe",
+   "company": "QBE",
+   "full_name": "Matthew Mitchell",
+   "title": "not published",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": "https://uk.linkedin.com/in/matthew-mitchell-acii-6bb953137",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Holds QBE's Joint War Committee seat. QBE publishes no underwriter profiles at all, so no job title could be confirmed and none has been invented.",
+   "phone_office": "+44 20 7105 4000",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "emma-russell",
+   "account_id": "munich-re-syndicate",
+   "company": "Munich Re Specialty - Global Markets (Syndicate)",
+   "full_name": "Emma Russell",
+   "title": "Group Head of War & Hull",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "EmRussell@munichre.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Munich Re Syndicate's Joint War Committee seat.",
+   "phone_office": "+44 20 7886 3965"
+  },
+  {
+   "id": "annabel-brydon",
+   "account_id": "sompo-international",
+   "company": "Sompo International",
+   "full_name": "Annabel Brydon",
+   "title": "VP, Head of Marine Hull",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": "https://www.linkedin.com/in/annabel-brydon-185b5435/",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Sompo's Joint War Committee seat.",
+   "phone_office": "+44 20 7337 2800",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "paul-russell",
+   "account_id": "fidelis",
+   "company": "The Fidelis Partnership",
+   "full_name": "Paul Russell",
+   "title": "Head of Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 203 846 6060"
+  },
+  {
+   "id": "hannah-charnaud",
+   "account_id": "fidelis",
+   "company": "The Fidelis Partnership",
+   "full_name": "Hannah Charnaud",
+   "title": "Deputy Head of Underwriting - Marine; Deputy Active Underwriter, Syndicate 3123",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://uk.linkedin.com/in/hannah-charnaud-469197ba",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Fidelis's Joint War Committee seat.",
+   "phone_office": "+44 203 846 6060",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "charles-fernandez",
+   "account_id": "canopius",
+   "company": "Canopius",
+   "full_name": "Charles Fernandez",
+   "title": "Head of Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": "https://uk.linkedin.com/in/charles-fernandez-024a3856",
+   "email": "charles.fernandez@canopius.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Canopius's JWC co-opted observer.",
+   "phone_office": "+44 20 7337 3700",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "edward-carpenter",
+   "account_id": "everest",
+   "company": "Everest",
+   "full_name": "Edward Carpenter",
+   "title": "Head of Marine UK and Ireland",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": "https://www.linkedin.com/in/edward-carpenter-673250140/",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Everest's Joint War Committee seat.",
+   "phone_office": "+44 203 887 2500",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "tom-batterbury",
+   "account_id": "vessel-protect",
+   "company": "Vessel Protect (Pen Underwriting, Gallagher)",
+   "full_name": "Tom Batterbury",
+   "title": "Managing Director",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Runs Pen Underwriting's marine war business, trading as Vessel Protect — which held 100% of the Magic Seas war risk and wrote the Vyssos policy. CORRECTION: Chris Goddard, widely reported as Vessel Protect's CEO, left on 1 January 2026. Batterbury is the current seat."
+  },
+  {
+   "id": "clive-washbourn",
+   "account_id": "navium-marine",
+   "company": "Navium Marine",
+   "full_name": "Clive Washbourn",
+   "title": "CEO & Director",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Navium held 100% of the True Confidence war risk.",
+   "phone_office": "+44 20 4551 3914"
+  },
+  {
+   "id": "neil-roberts",
+   "account_id": "ascot",
+   "company": "Ascot",
+   "full_name": "Neil Roberts",
+   "title": "Head of Marine & Aviation, LMA; Secretary, Joint War Committee",
+   "role_class": "market-body",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Secretary of the Joint War Committee at the Lloyd's Market Association, not an Ascot employee — filed here only because the JWC is chaired from Ascot and we have no LMA account. He is also chair of IUMI's Policy Forum and is quoted in our library on the price-cap attestation regime: 'You're relying on their word.' The route to understanding how the Listed Areas circular is actually set."
+  },
+  {
+   "id": "phil-wheeler",
+   "account_id": "miller",
+   "company": "Miller",
+   "full_name": "Phil Wheeler",
+   "title": "Managing Director - Head of Marine",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "phil.wheeler@miller-insurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7031 2366"
+  },
+  {
+   "id": "daniel-lyons",
+   "account_id": "miller",
+   "company": "Miller",
+   "full_name": "Daniel Lyons",
+   "title": "Executive Director - Head of Direct Marine War",
+   "role_class": "broker-war-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://uk.linkedin.com/in/daniel-lyons-b9a51755",
+   "email": "daniel.lyons@miller-insurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Heads direct marine war at the specialist war broker. Miller places about 10,000 breach-of-warranty voyages a year — a breach voyage is exactly what a vessel entering a JWC listed area buys. If anyone can say whether an escort changes a quote, it is this desk.",
+   "phone_office": "+44 20 7031 2425",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "andreas-bisbas",
+   "account_id": "miller",
+   "company": "Miller",
+   "full_name": "Andreas Bisbas",
+   "title": "Executive Director - Head of Mutual War and Chairman of Marine Mutual RI",
+   "role_class": "broker-war-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "andreas.bisbas@miller-insurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Heads mutual war AND chairs Marine Mutual Reinsurance. Miller places reinsurance for some of the largest war mutuals, so this seat sits on the reinsurance side of the decision — the layer that actually drove the 2026 cancellations.",
+   "phone_office": "+44 20 7031 2284"
+  },
+  {
+   "id": "david-watson",
+   "account_id": "miller",
+   "company": "Miller",
+   "full_name": "David Watson",
+   "title": "Senior Director - Mutual War",
+   "role_class": "broker-war-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "david.watson@miller-insurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7031 2504"
+  },
+  {
+   "id": "nick-summers",
+   "account_id": "miller",
+   "company": "Miller",
+   "full_name": "Nick Summers",
+   "title": "Head of Direct Marine",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "nick.summers@miller-insurance.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7031 2832"
+  },
+  {
+   "id": "marcus-baker",
+   "account_id": "marsh",
+   "company": "Marsh",
+   "full_name": "Marcus Baker",
+   "title": "Global Head of Marine, Cargo and Logistics",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": "https://uk.linkedin.com/in/marcus-baker-1915a311",
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "The most-quoted broker voice on war risk in 2026 and the source of the 7.5-10% Hormuz figure our library carries. Also author of the 'broken feedback loop' line: fewer transits means underwriters lose pricing confidence, so rates stay prohibitive, so transits stay depressed. Marsh publishes no email or direct line for him.",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "daniel-whiteside",
+   "account_id": "howden",
+   "company": "Howden",
+   "full_name": "Daniel Whiteside",
+   "title": "Managing Director, Global Practice Leader Marine, Cargo & Logistics",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Howden runs a Red Sea cargo war facility at $50m per vessel. No contact details published."
+  },
+  {
+   "id": "alex-vullo",
+   "account_id": "gallagher-specialty",
+   "company": "Gallagher Specialty",
+   "full_name": "Alex Vullo",
+   "title": "CEO of marine and fine art & specie",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": "https://uk.linkedin.com/in/alex-vullo-a7a49749",
+   "email": "Alex_Vullo@ajg.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Promoted 17 June 2026, succeeding Jonathan Suckling; Gallagher's own team page is stale and still shows the old title. Gallagher owns Vessel Protect. A mobile is published on the P&I team page and is deliberately NOT stored.",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "alistair-rivers",
+   "account_id": "lockton",
+   "company": "Lockton",
+   "full_name": "Alistair Rivers",
+   "title": "Partner and Head of Marine & Transportation",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Only a switchboard is published.",
+   "phone_office": "+44 20 7933 0000"
+  },
+  {
+   "id": "ben-abraham",
+   "account_id": "wtw",
+   "company": "WTW (Willis)",
+   "full_name": "Ben Abraham",
+   "title": "Global Head of Marine / CEO Global Marine",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "WEAKEST RECORD IN THIS BATCH — re-verify before contact. WTW's own pages disagree on his title, and the most recent first-party confirmation found is July 2025. The phone came from indexed text rather than a page render.",
+   "phone_office": "+44 20 3124 7786"
+  },
+  {
+   "id": "david-smith-mcgill",
+   "account_id": "mcgill-partners",
+   "company": "McGill and Partners",
+   "full_name": "David Smith",
+   "title": "Partner - Head of Marine",
+   "role_class": "broker-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": "https://uk.linkedin.com/in/david-smith-3143a829",
+   "email": "david.smith@mcgillpartners.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Employer's own published page or leadership release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Quoted in our library on Gulf rates of 3.5-7.5% in March 2026, and on the binding constraint being 'the fear factor' rather than price.",
+   "phone_office": "+44 20 3985 1800",
+   "linkedin_source": "employer page or public profile matched on name, employer and title"
+  },
+  {
+   "id": "colin-gillespie",
+   "account_id": "northstandard",
+   "company": "NorthStandard",
+   "full_name": "Colin Gillespie",
+   "title": "Global Head of Loss Prevention",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "colin.gillespie@north-standard.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Club's own published loss-prevention or people page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the highest-value role class in this CRM for us. Loss prevention is the function that assesses whether a measure actually reduces risk, which is the question an escort has to answer before any underwriter reprices it. Our library's top open question is whether underwriters discount for an escort and who certifies it; this is the seat that would certify it. Approach with evidence, not a pitch.",
+   "phone_office": "+44 191 232 5221"
+  },
+  {
+   "id": "simon-hodgkinson",
+   "account_id": "west-of-england",
+   "company": "West of England",
+   "full_name": "Simon Hodgkinson",
+   "title": "Global Head of Loss Prevention",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "Simon.Hodgkinson@westpandi.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Club's own published loss-prevention or people page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the highest-value role class in this CRM for us. Loss prevention is the function that assesses whether a measure actually reduces risk, which is the question an escort has to answer before any underwriter reprices it. Our library's top open question is whether underwriters discount for an escort and who certifies it; this is the seat that would certify it. Approach with evidence, not a pitch."
+  },
+  {
+   "id": "carl-durow",
+   "account_id": "london-pi-club",
+   "company": "London P&I Club",
+   "full_name": "Carl Durow",
+   "title": "Loss Prevention Manager",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Club's own published loss-prevention or people page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the highest-value role class in this CRM for us. Loss prevention is the function that assesses whether a measure actually reduces risk, which is the question an escort has to answer before any underwriter reprices it. Our library's top open question is whether underwriters discount for an escort and who certifies it; this is the seat that would certify it. Approach with evidence, not a pitch. No individual email published by this club; none has been guessed.",
+   "phone_office": "+44 20 7772 8039"
+  },
+  {
+   "id": "joakim-enstrom",
+   "account_id": "swedish-club",
+   "company": "The Swedish Club",
+   "full_name": "Joakim Enström",
+   "title": "Loss Prevention Manager",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "joakim.enstrom@swedishclub.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Club's own published loss-prevention or people page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the highest-value role class in this CRM for us. Loss prevention is the function that assesses whether a measure actually reduces risk, which is the question an escort has to answer before any underwriter reprices it. Our library's top open question is whether underwriters discount for an escort and who certifies it; this is the seat that would certify it. Approach with evidence, not a pitch.",
+   "phone_office": "+46 31 638 445"
+  },
+  {
+   "id": "louise-hall",
+   "account_id": "shipowners-club",
+   "company": "The Shipowners' Club",
+   "full_name": "Louise Hall",
+   "title": "Director - Loss Prevention & Corporate Responsibility",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Club's own published loss-prevention or people page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the highest-value role class in this CRM for us. Loss prevention is the function that assesses whether a measure actually reduces risk, which is the question an escort has to answer before any underwriter reprices it. Our library's top open question is whether underwriters discount for an escort and who certifies it; this is the seat that would certify it. Approach with evidence, not a pitch. No individual email published by this club; none has been guessed.",
+   "phone_office": "+44 207 488 0911"
+  },
+  {
+   "id": "marius-schonberg",
+   "account_id": "gard",
+   "company": "Gard",
+   "full_name": "Marius Schønberg",
+   "title": "VP, Head of Loss Prevention",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Club's own published loss-prevention or people page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the highest-value role class in this CRM for us. Loss prevention is the function that assesses whether a measure actually reduces risk, which is the question an escort has to answer before any underwriter reprices it. Our library's top open question is whether underwriters discount for an escort and who certifies it; this is the seat that would certify it. Approach with evidence, not a pitch. No individual email published by this club; none has been guessed. Gard publishes only the team address LP@gard.no.",
+   "phone_office": "+47 37 01 91 00"
+  },
+  {
+   "id": "yves-vandenborn",
+   "account_id": "northstandard",
+   "company": "NorthStandard",
+   "full_name": "Capt Yves Vandenborn, FNI",
+   "title": "Head of Loss Prevention Asia Pacific",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it. No individual email published; none guessed."
+  },
+  {
+   "id": "dean-crossley",
+   "account_id": "west-of-england",
+   "company": "West of England",
+   "full_name": "Dean Crossley",
+   "title": "Head of Loss Prevention Asia",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "Dean.Crossley@Westpandi.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it."
+  },
+  {
+   "id": "danielle-centeno",
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "full_name": "Danielle Centeno",
+   "title": "Loss Prevention Director (Americas) - V.P.",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "danielle.centeno@american-club.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it.",
+   "phone_office": "+1 212-847-4535"
+  },
+  {
+   "id": "lorraine-hager",
+   "account_id": "swedish-club",
+   "company": "The Swedish Club",
+   "full_name": "Lorraine Hager",
+   "title": "Senior Loss Prevention Executive",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "lorraine.hager@swedishclub.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it.",
+   "phone_office": "+46 31 638 492"
+  },
+  {
+   "id": "akshat-arora",
+   "account_id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "full_name": "Akshat Arora",
+   "title": "Regional Loss Prevention Director (Singapore)",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "akshat.arora@thomasmiller.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it."
+  },
+  {
+   "id": "kostas-karavasilis",
+   "account_id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "full_name": "Kostas Karavasilis",
+   "title": "Regional Loss Prevention Director, Greece",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "kostas.karavasilis@thomasmiller.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it. Greece matters: Greek owners dominate the attacked-vessel list in our incident data.",
+   "phone_office": "+30 210 221 4764"
+  },
+  {
+   "id": "stuart-edmonston",
+   "account_id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "full_name": "Stuart Edmonston",
+   "title": "Director of Safety & Risk Management",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "POSSIBLY DEPARTED — no longer appears in the UK P&I Club's People Finder and the profile URL redirects to the index. Verify before any outreach."
+  },
+  {
+   "id": "ansuman-ghosh",
+   "account_id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "full_name": "Ansuman Ghosh",
+   "title": "Director of Engineering",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "LOSS PREVENTION — the role class that matters most to us. This is the function that certifies whether a measure actually reduces risk, which is precisely what an escort must prove before an underwriter reprices. Our library's top open question is whether underwriters discount for an escort and who certifies it."
+  },
+  {
+   "id": "rupert-harris",
+   "account_id": "steamship-mutual",
+   "company": "Steamship Mutual",
+   "full_name": "Rupert Harris",
+   "title": "Chief Underwriting Officer",
+   "role_class": "insurer-cuo",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "rupert.harris@simsl.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "UNDERWRITING — the seat that sets the price. Pair with the loss-prevention contact at the same club: loss prevention certifies that a measure works, underwriting decides whether that is worth a discount. Steamship writes its own hull war, K&R and war loss-of-hire covers.",
+   "phone_office": "+44 20 7650 6644"
+  },
+  {
+   "id": "lars-dueled",
+   "account_id": "skuld",
+   "company": "Skuld",
+   "full_name": "Lars Dueled",
+   "title": "Chief Underwriting Officer",
+   "role_class": "insurer-cuo",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "UNDERWRITING — the seat that sets the price. Pair with the loss-prevention contact at the same club: loss prevention certifies that a measure works, underwriting decides whether that is worth a discount. Skuld took a 12.5% line on the Galaxy Leader hull war slip.",
+   "phone_office": "+47 22 00 23 12"
+  },
+  {
+   "id": "helen-todd",
+   "account_id": "britannia",
+   "company": "Britannia",
+   "full_name": "Helen Todd",
+   "title": "Chief Underwriting Officer",
+   "role_class": "insurer-cuo",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "htodd@tindallriley.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "UNDERWRITING — the seat that sets the price. Pair with the loss-prevention contact at the same club: loss prevention certifies that a measure works, underwriting decides whether that is worth a discount. Became CUO in June 2026 when Simon Williams moved to Chief Commercial Officer."
+  },
+  {
+   "id": "ryoichi-oda",
+   "account_id": "japan-pi-club",
+   "company": "Japan P&I Club",
+   "full_name": "Ryoichi Oda",
+   "title": "Executive Director, Chief Underwriting Officer",
+   "role_class": "insurer-cuo",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "UNDERWRITING — the seat that sets the price. Pair with the loss-prevention contact at the same club: loss prevention certifies that a measure works, underwriting decides whether that is worth a discount.",
+   "phone_office": "+81 3 6687 0505"
+  },
+  {
+   "id": "christen-guddal",
+   "account_id": "gard",
+   "company": "Gard",
+   "full_name": "Christen Guddal",
+   "title": "EVP, Nordics CUO and Chief Claims Officer",
+   "role_class": "insurer-cuo",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "UNDERWRITING — the seat that sets the price. Pair with the loss-prevention contact at the same club: loss prevention certifies that a measure works, underwriting decides whether that is worth a discount. Underwriting and claims in one seat at the largest club.",
+   "phone_office": "+47 37 01 91 00"
+  },
+  {
+   "id": "jeremy-grose",
+   "account_id": "northstandard",
+   "company": "NorthStandard",
+   "full_name": "Jeremy Grose",
+   "title": "Managing Director",
+   "role_class": "insurer-ceo",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "jeremy.grose@north-standard.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "NorthStandard has two Managing Directors, Grose and Paul Jennings, rather than a single CEO.",
+   "phone_office": "+44 20 3320 2200"
+  },
+  {
+   "id": "andrew-taylor",
+   "account_id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "full_name": "Andrew Taylor",
+   "title": "Chief Executive Officer",
+   "role_class": "insurer-ceo",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "andrew.J.taylor@thomasmiller.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "UK P&I / TT Club were mid-acquisition of Thomas Miller as of July 2026; titles and reporting lines here are likely to move.",
+   "phone_office": "+44 20 7204 2172"
+  },
+  {
+   "id": "jonathan-andrews",
+   "account_id": "steamship-mutual",
+   "company": "Steamship Mutual",
+   "full_name": "Jonathan Andrews",
+   "title": "Chief Executive Officer",
+   "role_class": "insurer-ceo",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "jonathan.andrews@simsl.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7650 6427"
+  },
+  {
+   "id": "tom-bowsher",
+   "account_id": "west-of-england",
+   "company": "West of England",
+   "full_name": "Tom Bowsher",
+   "title": "Group Chief Executive Officer",
+   "role_class": "insurer-ceo",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "Tom.Bowsher@Westpandi.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "West writes 'West War', a primary war risks product, and will lead or follow on brokers' slips."
+  },
+  {
+   "id": "vincent-solarino",
+   "account_id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "full_name": "Vincent J. Solarino",
+   "title": "President",
+   "role_class": "insurer-ceo",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "vince.solarino@american-club.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+1 212-847-4506"
+  },
+  {
+   "id": "sam-kendall-marsden",
+   "account_id": "northstandard",
+   "company": "NorthStandard",
+   "full_name": "Sam Kendall-Marsden",
+   "title": "Chief Claims Officer",
+   "role_class": "insurer-claims-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "sam.kendall-marsden@north-standard.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 3320 2200"
+  },
+  {
+   "id": "alan-mackinnon",
+   "account_id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "full_name": "Alan Mackinnon",
+   "title": "Chief Claims Officer",
+   "role_class": "insurer-claims-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "alan.mackinnon@thomasmiller.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+44 20 7204 2408"
+  },
+  {
+   "id": "andrew-hannay",
+   "account_id": "norwegian-hull-club",
+   "company": "Norwegian Hull Club",
+   "full_name": "Andrew Hannay",
+   "title": "Joint War Committee member (IUA seat)",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Holds Norwegian Hull Club's IUA seat on the Joint War Committee. The LMA roster publishes names and entity only, no titles; none has been invented."
+  },
+  {
+   "id": "ben-jones",
+   "account_id": "amphitrite-underwriting",
+   "company": "Amphitrite Underwriting",
+   "full_name": "Ben Jones",
+   "title": "Joint War Committee member (IUA seat)",
+   "role_class": "war-risk-underwriter",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published people or leadership page; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Holds Amphitrite Underwriting's IUA seat on the Joint War Committee. No title published by the LMA roster."
+  },
+  {
+   "id": "cathy-miller",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Cathy Miller",
+   "title": "Global Chief Underwriting Officer, Property & Marine",
+   "role_class": "insurer-cuo",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Owns marine globally at BHSI — Ben Wyatt reports up to her through Sanjay Godhwani. If the escort conversation needs an underwriting decision rather than a regional one, it ends here. No email published; none guessed.",
+   "phone_office": "+1 917-960-2406"
+  },
+  {
+   "id": "pedro-mairos",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Pedro Mairos",
+   "title": "Global Underwriting Officer, Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "pedro.mairos@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "The global marine underwriting seat, based in London, between Cathy Miller and the regional heads. With Nick Holding retiring and BHSI advertising a London marine underwriter role, the UK desk is in transition — which is the opening.",
+   "phone_office": "+44 20 3429 4935"
+  },
+  {
+   "id": "nick-holding",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Nick Holding",
+   "title": "Head of Marine, UK",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "Nick.Holding@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "RETIRING as of June 2026 and already removed from BHSI's current UK contact sheet. Recorded so nobody opens on him. Ben Wyatt absorbed the UK remit."
+  },
+  {
+   "id": "jake-hesson",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Jake Hesson",
+   "title": "Underwriting Manager, Marine",
+   "role_class": "insurer-hull-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "Jake.Hesson@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Hired in August 2022 specifically to take BHSI into the commercial HULL market in Australasia — one of only two places BHSI writes hull at all. Since BHSI has no war product and no hull book in London or the US, this is the single most relevant underwriting seat at the account for anything escort-related."
+  },
+  {
+   "id": "anna-spink",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Anna Spink",
+   "title": "Head of Marine, Australasia",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 1,
+   "linkedin_url": null,
+   "email": "anna.spink@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Runs the region that holds BHSI's hull book. Promoted 3 September 2025. Only a mobile is published; it is deliberately not stored."
+  },
+  {
+   "id": "julia-joes",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Julia Joes",
+   "title": "Vice President, Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "julia.joes@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Singapore — the other place BHSI writes hull, per its MAS Notice 124 branch disclosure of January 2026.",
+   "phone_office": "+65 6675 1161"
+  },
+  {
+   "id": "james-nasso",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "James Nasso",
+   "title": "AVP, Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "james.nasso@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+1 332-204-2610"
+  },
+  {
+   "id": "louis-eiler",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Louis Eiler",
+   "title": "Underwriter, Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "louis.eiler@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+1 332-204-2613"
+  },
+  {
+   "id": "kevin-kempf",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Kevin Kempf",
+   "title": "Vice President, Ocean Marine Cargo/Stock Throughput",
+   "role_class": "insurer-cargo-lead",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Cargo and stock throughput is the core of BHSI's marine book, and cargo War & Strikes is the ONLY war exposure BHSI writes. If a war conversation happens at this account, it happens here. No contact details published."
+  },
+  {
+   "id": "scott-miller-bhsi",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Scott Miller",
+   "title": "Head of Property, Energy, and Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "scott.miller@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Canada. Two different numbers are published; this is the one from the dated March 2025 appetite guide rather than the undated team sheet.",
+   "phone_office": "+1 416-721-2074"
+  },
+  {
+   "id": "dirk-flesch",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Dirk Flesch",
+   "title": "Head of Marine",
+   "role_class": "insurer-marine-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "dirk.flesch@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Germany.",
+   "phone_office": "+49 221 4555 1974"
+  },
+  {
+   "id": "cheryl-tan",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Cheryl Tan",
+   "title": "Head of Marine Claims, Asia Middle East",
+   "role_class": "insurer-claims-lead",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": "cheryl.tan@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": null,
+   "phone_office": "+65 6675 1503"
+  },
+  {
+   "id": "lewis-liem",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Lewis Liem",
+   "title": "Marine Risk Engineer",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": "lewis.liem@bhspecialty.com",
+   "email_status": "verified",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Risk engineering is BHSI's nearest equivalent to a club's loss-prevention function — the seat that would assess whether an escort measurably reduces risk.",
+   "phone_office": "+65 6675 1491"
+  },
+  {
+   "id": "sanjay-godhwani",
+   "account_id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "full_name": "Sanjay Godhwani",
+   "title": "Head of North America",
+   "role_class": "insurer-regional-head",
+   "buying_role": "other",
+   "priority": 3,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Ben Wyatt's line manager.",
+   "phone_office": "+1 617-936-2904"
+  },
+  {
+   "id": "yoshiro-sakamoto",
+   "account_id": "japan-pi-club",
+   "company": "Japan P&I Club",
+   "full_name": "Yoshiro Sakamoto",
+   "title": "Director, i/c Loss Prevention & Ship Inspection Dept.",
+   "role_class": "insurer-loss-prevention",
+   "buying_role": "other",
+   "priority": 2,
+   "linkedin_url": null,
+   "email": null,
+   "email_status": "unknown",
+   "starred": false,
+   "source_url": null,
+   "source": "Organisation's own published contact sheet, product PDF or press release; corporate contact points only.",
+   "published": null,
+   "retrieved": "2026-09-07",
+   "status": "not started",
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "replied": false,
+   "notes": "Completes the loss-prevention map across the International Group. Japan P&I published personnel changes dated 7 September 2026 effective 1 October — re-check before outreach. No individual email published.",
+   "phone_office": "+81 3 6687 0505"
   }
  ],
  "description": "One row per named individual at a target account. Collected from each company's own published leadership or management page on 2026-09-05, name and title as published. LinkedIn profile URLs are either published by the company itself or matched from public search results on name plus employer plus title. Nothing was read from behind a login. Pure HR, finance, audit, legal and IT roles are deliberately not collected — they are not a buying role for this product.",

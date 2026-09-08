@@ -188,6 +188,19 @@ table.of-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:56
 
 /* ---------- toggle ---------- */
 .of-toggle{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:18px}
+.of-toggle-v{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-bottom:0}
+.of-toggle-v .of-opt{width:100%;text-align:left;line-height:1.4}
+
+/* ---------- split: picker rail on the left, matter on the right ---------- */
+.of-split{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:28px;align-items:start}
+.of-split-side{position:sticky;top:24px}
+.of-split-main{min-width:0}
+@media (max-width:900px){
+  .of-split{grid-template-columns:1fr;gap:18px}
+  .of-split-side{position:static}
+  .of-toggle-v{flex-direction:row;flex-wrap:wrap}
+  .of-toggle-v .of-opt{width:auto}
+}
 .of-opt{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
   color:var(--paper);padding:7px 12px;border:1px solid var(--line);border-radius:2px;
   cursor:pointer;background:none;transition:background .2s var(--ease),color .2s var(--ease)}

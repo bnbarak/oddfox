@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/risk-economics.schema.json",
+  "$id": "https://seaworth.ai/data/schema/risk-economics.schema.json",
   "title": "What risk costs",
   "type": "object",
   "required": ["dataset", "how_it_works", "premiums", "open_questions"],

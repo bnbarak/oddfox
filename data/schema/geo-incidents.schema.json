@@ -112,5 +112,5 @@
       }
     }
   },
-  "$id": "https://oddfox.ai/data/schema/geo-incidents.schema.json"
+  "$id": "https://seaworth.ai/data/schema/geo-incidents.schema.json"
 }

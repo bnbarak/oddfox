@@ -1,6 +1,6 @@
 import { DB, point, pctChange, sum, type Rec } from "../../data";
 import { Section, Grid, Cell, Stat, Table, Note, Cite, ConfChip, H1, Toggle,
-         Bars, WorldMap, Columns } from "../../ui";
+         Bars, WorldMap, Columns, Split } from "../../ui";
 
 export function Overview({ geoSeries, setGeoSeries }: {
   geoSeries: string; setGeoSeries: (v: string) => void;
@@ -35,27 +35,29 @@ export function Overview({ geoSeries, setGeoSeries }: {
 
       <Section kicker="Incidents by location">
         <p className="of-lede" style={{ marginTop: -6 }}>{g.description}</p>
-        <Toggle options={all.map((s) => ({ id: s.id as string, label: s.label as string }))}
-                value={geoSeries} onChange={setGeoSeries} />
-        <Grid cols={3} style={{ marginBottom: 22 }}>
-          <Cell><Stat value={series.total} label="reported total for the period" sub={`${series.body} · ${series.period}`} /></Cell>
-          <Cell><Stat value={(series.points as Rec[]).length} label="locations plotted"
-                      sub={series.complete ? "points sum to the published total" : "points do not sum to the total"} /></Cell>
-          <Cell><Stat value={sum(series.points as Rec[], "count")} label="accounted for by these points" /></Cell>
-        </Grid>
-        <WorldMap points={series.points as any} reference={g.reference_points as any} label={series.label} />
-        {series.note ? <Note style={{ marginTop: 16 }}>{series.note}</Note> : null}
-        <div style={{ marginTop: 12 }}><ConfChip level={series.confidence} /></div>
-        <div style={{ marginTop: 12 }}><Cite ids={series.source_ids} /></div>
-      </Section>
+        <Split side={
+          <Toggle vertical options={all.map((s) => ({ id: s.id as string, label: s.label as string }))}
+                  value={geoSeries} onChange={setGeoSeries} />
+        }>
+          <Grid cols={3} style={{ marginBottom: 22 }}>
+            <Cell><Stat value={series.total} label="reported total for the period" sub={`${series.body} · ${series.period}`} /></Cell>
+            <Cell><Stat value={(series.points as Rec[]).length} label="locations plotted"
+                        sub={series.complete ? "points sum to the published total" : "points do not sum to the total"} /></Cell>
+            <Cell><Stat value={sum(series.points as Rec[], "count")} label="accounted for by these points" /></Cell>
+          </Grid>
+          <WorldMap points={series.points as any} reference={g.reference_points as any} label={series.label} />
+          {series.note ? <Note style={{ marginTop: 16 }}>{series.note}</Note> : null}
+          <div style={{ marginTop: 12 }}><ConfChip level={series.confidence} /></div>
+          <div style={{ marginTop: 12 }}><Cite ids={series.source_ids} /></div>
 
-      <Section kicker={`Points plotted — ${series.label}`}>
-        <Table rows={series.points as Rec[]} cols={[
-          { key: "name", label: "Location", render: (r) => <strong>{r.name}</strong> },
-          { key: "coords", label: "Lat, lon", render: (r) => <span className="of-num">{r.coords[0].toFixed(2)}, {r.coords[1].toFixed(2)}</span> },
-          { key: "count", label: "Count", num: true, render: (r) => r.count != null ? <strong>{r.count}</strong> : (r.unquantified ?? "—") },
-          { key: "note", label: "Note", render: (r) => <span className="of-note">{r.note ?? ""}</span> },
-        ]} />
+          <div className="of-kicker" style={{ marginTop: 32 }}>Points plotted — {series.label}</div>
+          <Table rows={series.points as Rec[]} cols={[
+            { key: "name", label: "Location", render: (r) => <strong>{r.name}</strong> },
+            { key: "coords", label: "Lat, lon", render: (r) => <span className="of-num">{r.coords[0].toFixed(2)}, {r.coords[1].toFixed(2)}</span> },
+            { key: "count", label: "Count", num: true, render: (r) => r.count != null ? <strong>{r.count}</strong> : (r.unquantified ?? "—") },
+            { key: "note", label: "Note", render: (r) => <span className="of-note">{r.note ?? ""}</span> },
+          ]} />
+        </Split>
       </Section>
 
       <Section kicker="Comparison across series">

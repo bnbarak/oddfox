@@ -149,11 +149,19 @@ export function Table<T extends Record<string, any>>({ rows, cols }: { rows: T[]
   );
 }
 
-export function Toggle<T extends string>({ options, value, onChange }: {
-  options: { id: T; label: string }[]; value: T; onChange: (v: T) => void;
+/** Two columns: a sticky left rail for the picker, the reading matter on the right. */
+export const Split = ({ side, children }: { side: ReactNode; children: ReactNode }) => (
+  <div className="of-split">
+    <aside className="of-split-side">{side}</aside>
+    <div className="of-split-main">{children}</div>
+  </div>
+);
+
+export function Toggle<T extends string>({ options, value, onChange, vertical }: {
+  options: { id: T; label: string }[]; value: T; onChange: (v: T) => void; vertical?: boolean;
 }) {
   return (
-    <div className="of-toggle">
+    <div className={vertical ? "of-toggle of-toggle-v" : "of-toggle"}>
       {options.map((o) => (
         <button key={o.id} className="of-opt" aria-pressed={o.id === value} onClick={() => onChange(o.id)}>
           {o.label}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/operators.schema.json",
+  "$id": "https://seaworth.ai/data/schema/operators.schema.json",
   "title": "Owners, operators and managers",
   "type": "object",
   "required": ["dataset", "records", "gaps"],

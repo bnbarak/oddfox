@@ -1,7 +1,7 @@
 {
  "dataset": "crm-accounts",
  "title": "Accounts",
- "updated": "2026-09-06",
+ "updated": "2026-09-07",
  "description": "One row per target company. Seeded from gtm.json, customers.json and the segment research. Pipeline fields (status, owner, last_touch, sequence, contacts, notes) are working state and are edited in the app, not researched. Everything else carries a source. Website URLs were verified on 2026-09-05 by fetching each one; logos in the app are derived from the URL host, so a company with no url falls back to a monogram. linkedin_url is the company page, carried only where the company publishes no website of its own.",
  "pipeline": [
   "not started",
@@ -38,9 +38,18 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "ian-trebinski",
+    "james-muir",
+    "jesper-bo-hansen",
+    "morten-wedel-jorgensen",
+    "rene-kofod-olsen",
+    "robert-desai",
+    "shubpreet-singh"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "anglo-eastern",
@@ -65,9 +74,17 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "bjorn-hojgaard",
+    "carsten-ostenfeldt",
+    "dilip-swarup",
+    "niraj-nanda",
+    "swapnodeep-mondal",
+    "vikrant-malhotra"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "bernhard-schulte-shipmanagement",
@@ -92,9 +109,25 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "andreas-solomonides",
+    "debbie-leng",
+    "fabian-reimers",
+    "frank-lasse",
+    "ian-beveridge",
+    "jeroen-deelen",
+    "martin-roolvink",
+    "nicholas-rich",
+    "nick-topham",
+    "raymond-peter",
+    "sankalp-shukla",
+    "sebastian-von-hardenberg",
+    "theophanis-theophanous",
+    "umesh-lulla"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "wilhelmsen-ship-management",
@@ -119,9 +152,18 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "daniel-reinsborg",
+    "haakon-lenz",
+    "michael-silies",
+    "panda-soumya-prakash",
+    "radoslaw-walczak",
+    "roine-ahlquist",
+    "wiebke-schutt"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "columbia-shipmanagement",
@@ -148,7 +190,8 @@
    },
    "contacts": [],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "navigation-maritime-bulgare-navibulgar",
@@ -182,7 +225,8 @@
    "notes": null,
    "source_ids": [
     "navibulgar-site"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "delta-tankers",
@@ -215,7 +259,8 @@
    "notes": null,
    "source_ids": [
     "delta-tankers-site"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "latsco-marine-management",
@@ -244,11 +289,15 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "antonis-georgantzis",
+    "christos-triantafyllou"
+   ],
    "notes": null,
    "source_ids": [
     "latsco-site"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "cosmoship-management-sa",
@@ -281,7 +330,8 @@
    "notes": null,
    "source_ids": [
     "cosmoship-site"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "nippon-yusen-kk-nyk-line",
@@ -310,11 +360,20 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "atsuhiko-kurosawa",
+    "hironobu-watanabe",
+    "katsuhiko-haruna",
+    "kenichiro-sutoh",
+    "nobuaki-sumida",
+    "shingo-mizutani",
+    "yasushi-yamamoto"
+   ],
    "notes": null,
    "source_ids": [
     "nyk-site"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "ksrm-kabir-steel-re-rolling-mills",
@@ -347,7 +406,8 @@
    "notes": null,
    "source_ids": [
     "ksrm-site"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "allseas-marine",
@@ -378,7 +438,8 @@
    },
    "contacts": [],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "evalend-shipping",
@@ -409,7 +470,8 @@
    },
    "contacts": [],
    "notes": "No company website found; Athens office, reachable by phone. LinkedIn company page only.",
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "third-january-maritime-ltd",
@@ -440,7 +502,8 @@
    },
    "contacts": [],
    "notes": "No company website found. Piraeus operator of the True Confidence; press coverage only.",
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "sr-shipping",
@@ -471,7 +534,8 @@
    },
    "contacts": [],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "oldendorff-carriers",
@@ -498,7 +562,8 @@
    },
    "contacts": [],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "pacific-basin-shipping",
@@ -523,9 +588,24 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "capt-uttam-k-jaiswal",
+    "capt-xiaofeng-bao",
+    "harshavardhan-bhave",
+    "james-chesman",
+    "justin-mulquiney",
+    "kitty-mok",
+    "kristian-helt",
+    "martin-fruergaard",
+    "morten-ingebrigtsen",
+    "richard-griffiths",
+    "sivanand-ray",
+    "vikram-dhingra",
+    "xiu-cheng"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "star-bulk-carriers",
@@ -550,9 +630,16 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "charis-plakantonaki",
+    "hamish-norton",
+    "nicos-rescos",
+    "petros-pappas",
+    "zenon-kleopas"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "western-bulk",
@@ -577,9 +664,12 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "torbjorn-gjervik"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "navios-maritime-holdings",
@@ -604,9 +694,13 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "angeliki-frangou",
+    "george-achniotis"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "hafnia",
@@ -631,9 +725,13 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "mikael-skov",
+    "sren-steenberg-jensen"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "bahri",
@@ -658,9 +756,18 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "eng-ahmed-ali-alsubaey",
+    "eng-khalid-alhammad",
+    "eng-mohammed-bin-battal",
+    "eng-mohit-sibal",
+    "mr-abdullah-bin-eid",
+    "mr-faisal-al-husseini",
+    "mr-hisham-al-nughaimish"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "frontline-plc",
@@ -685,9 +792,12 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "lars-h-barstad"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "international-seaways",
@@ -712,9 +822,14 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "derek-solon",
+    "lois-k-zabrocky",
+    "william-nugent"
+   ],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "cargill-ocean-transportation",
@@ -741,7 +856,8 @@
    },
    "contacts": [],
    "notes": null,
-   "source_ids": []
+   "source_ids": [],
+   "starred": false
   },
   {
    "id": "golden-ocean-group",
@@ -771,7 +887,8 @@
    "source_ids": [
     "marineinsight-bulk-companies",
     "fortune-drybulk-market"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "safe-bulkers",
@@ -796,12 +913,17 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "dr-loukas-barmparis",
+    "ioannis-foteinos",
+    "polys-hajioannou"
+   ],
    "notes": null,
    "source_ids": [
     "marineinsight-bulk-companies",
     "fortune-drybulk-market"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "genco-shipping-and-trading",
@@ -826,12 +948,16 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "jesper-christensen",
+    "john-c-wobensmith"
+   ],
    "notes": null,
    "source_ids": [
     "marineinsight-bulk-companies",
     "fortune-drybulk-market"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "diana-shipping",
@@ -856,12 +982,17 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "evangelos-sfakiotakis",
+    "ioannis-g-zafirakis",
+    "semiramis-paliou"
+   ],
    "notes": null,
    "source_ids": [
     "marineinsight-bulk-companies",
     "fortune-drybulk-market"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "cosco-shipping-bulk",
@@ -891,7 +1022,8 @@
    "source_ids": [
     "marineinsight-bulk-companies",
     "fortune-drybulk-market"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "cosco-shipping-energy-transportation",
@@ -920,7 +1052,8 @@
    "notes": null,
    "source_ids": [
     "gettransport-tankers-2026"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "odfjell",
@@ -945,11 +1078,17 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "bjrn-hammer",
+    "harald-fotland",
+    "istein-jensen",
+    "torger-trige"
+   ],
    "notes": null,
    "source_ids": [
     "odfjell-annual-2025"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "stolt-tankers",
@@ -974,11 +1113,16 @@
     "round_2": null,
     "round_3": null
    },
-   "contacts": [],
+   "contacts": [
+    "bjarke-nissen",
+    "maren-schroeder",
+    "udo-lange"
+   ],
    "notes": null,
    "source_ids": [
     "stolt-tankers"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "kyra-global-marine-services",
@@ -1011,7 +1155,8 @@
    "notes": null,
    "source_ids": [
     "magicport-lila-norfolk"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "avr-shipping-llc",
@@ -1044,7 +1189,8 @@
    "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed. No company website found. Appears in registry filings via Central Ship Management (DMCC), Dubai.",
    "source_ids": [
     "magicport-lila-norfolk"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "gmz-ship-management-company-s-a",
@@ -1077,7 +1223,8 @@
    "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed.",
    "source_ids": [
     "lloydslist-rubymar-insurance"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "golden-adventure-shipping-s-a",
@@ -1110,7 +1257,8 @@
    "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed. No company website found. Marshall Islands registered owner of the Rubymar; managed by GMZ.",
    "source_ids": [
     "lloydslist-rubymar-insurance"
-   ]
+   ],
+   "starred": false
   },
   {
    "id": "ma-aden-saudi-arabian-mining-company",
@@ -1143,6 +1291,1320 @@
    "notes": "Resolved 2026-09-04 via secondary source (vessel-tracking site or trade press), not yet Equasis-confirmed.",
    "source_ids": [
     "lloydslist-rubymar-insurance"
+   ],
+   "starred": false
+  },
+  {
+   "id": "berkshire-hathaway-specialty-insurance",
+   "company": "Berkshire Hathaway Specialty Insurance",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.bhspecialty.com/",
+   "linkedin_url": null,
+   "email": "info@bhspecialty.com",
+   "phone": "+1 617-936-2900",
+   "head_office": "100 Federal Street, 7th Floor, Boston, MA 02110",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": true,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "anna-spink",
+    "ben-wyatt",
+    "cathy-miller",
+    "cheryl-tan",
+    "chris-frick",
+    "dirk-flesch",
+    "jake-hesson",
+    "james-nasso",
+    "julia-joes",
+    "kevin-kempf",
+    "lewis-liem",
+    "louis-eiler",
+    "nick-holding",
+    "pedro-mairos",
+    "sanjay-godhwani",
+    "scott-miller-bhsi"
+   ],
+   "notes": "STARRED. First insurer account in the CRM. IMPORTANT COMMERCIAL FINDING, 2026-09-07: BHSI has NO marine war risk product. Its marine book is cargo and stock-throughput led, plus a large US/Canada inland marine book (which is not maritime at all). It writes commercial HULL in only two places — Australasia, entered August 2022, and Singapore, per its MAS regulatory disclosure of January 2026. Hull appears nowhere on the US or UK product pages. It holds no Joint War Committee seat and employs no war-risk underwriter. The only war exposure evidenced is cargo War & Strikes as an Institute Cargo Clauses extension. So the warm relationship is real, but a war-risk pitch cannot be routed through London — it has to go through cargo war & strikes, or through the hull book in Sydney or Singapore. Global marine sits under Cathy Miller, Global CUO Property & Marine; Ben Wyatt reports into Sanjay Godhwani, Head of North America. Berkshire Hathaway wrote $120.3m of US ocean marine in 2025, down 57%, falling from #6 to #15 (AM Best), and is one of the seven US carriers in the DFC Hormuz facility, which never wrote a policy. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first. See insurance-market.json.",
+   "source_ids": [
+    "ambest-rankings-2026",
+    "dfc-40bn"
+   ]
+  },
+  {
+   "id": "aig",
+   "company": "AIG (American International Group)",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.aig.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": "New York, New York",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "danielle-garza",
+    "francisco-campos-da-silva",
+    "gavin-spencer",
+    "joane-whitaker",
+    "ryne-slawson"
+   ],
+   "notes": "The largest US ocean marine writer — $817.7m direct premiums written in 2025, up 4.6%, ranked #1 by AM Best against an industry total of $5.71bn. Five named North America marine contacts came off AIG's own published marine brochure. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first. See insurance-market.json.",
+   "source_ids": [
+    "ambest-rankings-2026"
+   ]
+  },
+  {
+   "id": "american-club",
+   "company": "The American Club (American Steamship Owners Mutual P&I Association)",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.american-club.com/",
+   "linkedin_url": null,
+   "email": "info@american-club.com",
+   "phone": "+1 212-847-4500",
+   "head_office": "Shipowners Claims Bureau, Inc., 1 Battery Park Plaza, 31st Floor, New York, NY 10004",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "daniel-tadros",
+    "danielle-centeno",
+    "dorothea-ioannou",
+    "manny-beri",
+    "steven-ogullukian",
+    "vincent-solarino",
+    "william-moore"
+   ],
+   "notes": "The only P&I club domiciled and headquartered in the US, founded 1917 by special New York State enacting legislation and regulated by NYDFS. 25.91m GT at 31 Dec 2025. Managed by Shipowners Claims Bureau, Inc. Cancelled non-mutual Gulf war cover on 1 March 2026 (Circular 05/26) and reinstated on a buy-back basis on 10 March (Circular 06/26); cancelled Indian Ocean / Gulf of Aden / southern Red Sea war risks again on 13 August 2026 (Circular 17/26). Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first. See insurance-market.json.",
+   "source_ids": [
+    "ig-clubs",
+    "gard-circular-01-2026"
+   ]
+  },
+  {
+   "id": "gard",
+   "company": "Gard",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Norway",
+   "fleet": null,
+   "vessel_attacked": [
+    "Sounion"
+   ],
+   "url": "https://www.gard.no/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+1 646-880-9506",
+   "head_office": "Arendal, Norway; North America office in New York",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "bjornar-andresen",
+    "christen-guddal",
+    "jake-fisher",
+    "james-barth",
+    "marie-kelly",
+    "marius-schonberg",
+    "patrick-leahy",
+    "paul-grehan"
+   ],
+   "notes": "The largest P&I club in the world — 311m GT mutual, first past 300m, and $1.31bn GWP, the largest publicly disclosed marine-specific premium anywhere. Its CEO Rolf Thore Roppestad chairs the International Group and personally signed Member Circular 01/2026 of 1 March 2026, the notice that cancelled Gulf war risks after Gard's own reinsurers served notice on it. Gard was also Sounion's P&I club and carried NO exposure on that loss, because the war risk exclusion applied — the cleanest illustration in our library that a club entry tells you nothing about who pays for a missile. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first. See insurance-market.json.",
+   "source_ids": [
+    "ig-clubs",
+    "gard-circular-01-2026",
+    "ll-sounion-keel"
+   ]
+  },
+  {
+   "id": "ascot",
+   "company": "Ascot",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.ascotgroup.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7743 9600",
+   "head_office": "20 Fenchurch Street, London EC3M 3BY",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "andrew-moulton",
+    "charlotte-brotherton-farrell",
+    "neil-roberts",
+    "sophie-bugeja"
+   ],
+   "notes": "Chairs the Joint War Committee through Andrew Moulton — the committee that writes the Listed Areas circular turning a geography into a premium. Took 25% of the Galaxy Leader war slip, the largest single line. Leads Marsh's Unity Black Sea facility. In July 2026 told brokers it would not write war cargo cover for Saudi-linked ships. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "brit",
+   "company": "Brit",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.britinsurance.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": "The Leadenhall Building, 122 Leadenhall Street, London EC3V 4AB",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "deborah-shillabeer",
+    "gary-brice"
+   ],
+   "notes": "Its Keel Consortium held 100% of the Sounion war risk and both arranged and funded the 135-day salvage. Capacity $120-152.5m per risk. JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "axa-xl",
+   "company": "AXA XL",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "France",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://axaxl.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7626 0486",
+   "head_office": "20 Gracechurch Street, London EC3V 0BG",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "matthew-gysbers"
+   ],
+   "notes": "Leads the International Group's group excess-of-loss reinsurance programme — $2.25bn above a $100m pool ceiling. Reported lead on the Minervagracht war slip. Largest Lloyd's syndicate in marine kidnap and ransom. Publishes no named marine contacts; web form only. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "beazley",
+   "company": "Beazley",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.beazley.com/",
+   "linkedin_url": null,
+   "email": "info@beazley.com",
+   "phone": "+44 20 7667 0623",
+   "head_office": "22 Bishopsgate, London EC2N 4BQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "deepa-nathvani",
+    "sam-kimber"
+   ],
+   "notes": "Syndicates 2623 and 623 reinsured the Vyssos war policy. Launched a $1bn marine war consortium in April 2026 — $500m hull war plus $500m cargo war. JWC seat. Its own FY2025 report: 'the marine market is facing the double pressure of excess capacity and altered trading patterns, and this is particularly true of the marine war market.' Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "convex",
+   "company": "Convex",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Bermuda",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://convexin.com/",
+   "linkedin_url": null,
+   "email": "hello@convexin.com",
+   "phone": "+44 20 3997 1153",
+   "head_office": "52 Lime Street, London EC3M 7AF",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "john-potter",
+    "kelly-gallagher"
+   ],
+   "notes": "Reported by The Insurer as lead on the Minervagracht hull war cover, against Lloyd's List's reading that it follows behind AXA XL. JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "markel-international",
+   "company": "Markel International",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.markel.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7953 6000",
+   "head_office": "20 Fenchurch Street, London EC3M 3AZ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "daniel-mccarthy",
+    "katie-costello",
+    "paul-western"
+   ],
+   "notes": "Took 20% of the Galaxy Leader war slip; The Insurer calls it the lead of that ~$65m policy while Lloyd's List gives Ascot the larger line. JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "atrium-underwriters",
+   "company": "Atrium Underwriters",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.atrium-uw.com/",
+   "linkedin_url": null,
+   "email": "reception@atrium-uw.com",
+   "phone": "+44 207 050 3000",
+   "head_office": "Level 20, 8 Bishopsgate, London EC2N 4BQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "mike-maccoll"
+   ],
+   "notes": "JWC seat. Confirmed it still reinsures Maritime Mutual, the New Zealand club that covered almost one in six of all Western-sanctioned shadow-fleet tankers, after MS Amlin ended its own relationship. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "apollo-underwriting",
+   "company": "Apollo Underwriting",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://apollounderwriting.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 3169 1969",
+   "head_office": "1 Bishopsgate, London EC2N 3AQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "iain-henstridge",
+    "martin-jackson"
+   ],
+   "notes": "JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "qbe",
+   "company": "QBE",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Australia",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://qbeeurope.com/",
+   "linkedin_url": null,
+   "email": "enquiries@uk.qbe.com",
+   "phone": "+44 20 7105 4000",
+   "head_office": "30 Fenchurch Street, London EC3M 3BD",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "matthew-mitchell"
+   ],
+   "notes": "JWC seat. Publishes no underwriter profiles at all, so no title could be confirmed for its JWC member. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "munich-re-syndicate",
+   "company": "Munich Re Specialty - Global Markets (Syndicate)",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Germany",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.munichre.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7886 3900",
+   "head_office": "1 Fen Court, London EC3M 5BN",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "emma-russell"
+   ],
+   "notes": "JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "sompo-international",
+   "company": "Sompo International",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Japan",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.sompo-intl.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7337 2800",
+   "head_office": "40 Leadenhall, London EC3A 2BJ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "annabel-brydon"
+   ],
+   "notes": "JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "fidelis",
+   "company": "The Fidelis Partnership",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Bermuda",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://fidelispartnership.com/",
+   "linkedin_url": null,
+   "email": "londonreception@fidelispartnership.com",
+   "phone": "+44 203 846 6060",
+   "head_office": "Level 42, 22 Bishopsgate, London EC2N 4BQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "hannah-charnaud",
+    "paul-russell"
+   ],
+   "notes": "JWC seat. Reported to have provided the sidecar arrangement protecting Navium Marine on the True Confidence war risk. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "canopius",
+   "company": "Canopius",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.canopius.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7337 3700",
+   "head_office": "Floor 29, 22 Bishopsgate, London EC2N 4BQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "charles-fernandez"
+   ],
+   "notes": "JWC co-opted observer. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "everest",
+   "company": "Everest",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.everestglobal.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 203 887 2500",
+   "head_office": "40 Lime Street, London EC3M 5BS",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "edward-carpenter"
+   ],
+   "notes": "JWC seat. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "vessel-protect",
+   "company": "Vessel Protect (Pen Underwriting, Gallagher)",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.vesselprotect.com/",
+   "linkedin_url": null,
+   "email": "enquiries@vesselprotect.com",
+   "phone": null,
+   "head_office": "67 Lombard Street, London EC3V 9LJ; Lloyd's Box 393",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "tom-batterbury"
+   ],
+   "notes": "Specialist war risks MGA founded 2020, owned by Gallagher via Pen Underwriting, backed 100% by Lloyd's syndicates. Automatic capacity $250m. Held 100% of the Magic Seas war risk and wrote the Vyssos policy. At peak insured almost a third of Ukrainian grain ships. CORRECTION 2026-09-07: Chris Goddard, widely reported as CEO, left the business on 1 January 2026 along with Paul Hartley. The marine war book now sits under Tom Batterbury, Managing Director. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "navium-marine",
+   "company": "Navium Marine",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://naviummarine.com/",
+   "linkedin_url": null,
+   "email": "info@naviummarine.com",
+   "phone": "+44 20 4551 3914",
+   "head_office": "Grace Hall, 147 Leadenhall Street, London EC3V 4QT",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "clive-washbourn"
+   ],
+   "notes": "MGA writing outside the Lloyd's syndicate structure, led by Clive Washbourn. Held 100% of the True Confidence war risk. In July 2026 restricted war cargo cover for Saudi-linked ships. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "miller",
+   "company": "Miller",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.miller-insurance.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7488 2345",
+   "head_office": "70 Mark Lane, London EC3R 7NQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "andreas-bisbas",
+    "daniel-lyons",
+    "david-watson",
+    "nick-summers",
+    "phil-wheeler"
+   ],
+   "notes": "The specialist war-risk BROKER, and the deepest named war bench anywhere. Claims to be the leading maritime war risks (re)insurance broker in the world: about 10,000 breach-of-warranty voyages a year, a proprietary Breach of Warranty Online System, and it places reinsurance for some of the largest war mutuals. FY2025 revenue GBP 314m, about $5bn GWP placed. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "marsh",
+   "company": "Marsh",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.marsh.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7357 1000",
+   "head_office": "1 Tower Place West, London EC3R 5BU",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "marcus-baker"
+   ],
+   "notes": "Source of most of the public war-risk rate history in our library, including the 7.5-10% Hormuz figure of July 2026. Runs the Unity Black Sea facility with Ascot leading. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "howden",
+   "company": "Howden",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.howdengroup.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7623 3806",
+   "head_office": "One Creechurch Place, London EC3A 5AF",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "daniel-whiteside"
+   ],
+   "notes": "Runs a Red Sea cargo war facility, $50m per vessel and up to $150m quoted. Howden Re's March 2026 Hormuz analysis is a primary source in our library. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "gallagher-specialty",
+   "company": "Gallagher Specialty",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.ajg.com/",
+   "linkedin_url": null,
+   "email": "SpecialtyEnquiries@ajg.com",
+   "phone": null,
+   "head_office": "The Walbrook Building, 25 Walbrook, London EC4N 8AW",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "alex-vullo"
+   ],
+   "notes": "Owns Vessel Protect through Pen Underwriting. Publishes the P&I market reviews our library cites. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "lockton",
+   "company": "Lockton",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United States",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://global.lockton.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7933 0000",
+   "head_office": "The St Botolph Building, 138 Houndsditch, London EC3A 7AG",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "alistair-rivers"
+   ],
+   "notes": "Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "wtw",
+   "company": "WTW (Willis)",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.wtwco.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 203 124 6000",
+   "head_office": "51 Lime Street, London EC3M 7DQ",
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "ben-abraham"
+   ],
+   "notes": "Places more than $650m annually into the P&I club market and manages 600+ P&I entries in London. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "mcgill-partners",
+   "company": "McGill and Partners",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.mcgillpartners.com/",
+   "linkedin_url": null,
+   "email": "enquiries@mcgillpartners.com",
+   "phone": "+44 20 3985 1800",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "david-smith-mcgill"
+   ],
+   "notes": "Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "northstandard",
+   "company": "NorthStandard",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://north-standard.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 191 232 5221",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "colin-gillespie",
+    "jeremy-grose",
+    "sam-kendall-marsden",
+    "yves-vandenborn"
+   ],
+   "notes": "270m GT pool tonnage. Formed by the 2023 North + Standard merger. Issued a war-risk cancellation on 1 March 2026. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "uk-pi-club",
+   "company": "UK P&I Club",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.ukpandi.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7283 4646",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "akshat-arora",
+    "alan-mackinnon",
+    "andrew-taylor",
+    "ansuman-ghosh",
+    "kostas-karavasilis",
+    "stuart-edmonston"
+   ],
+   "notes": "168m owned GT, 6,952 ships, record free reserves $586m. Managed by Thomas Miller — and UK P&I / TT Club were mid-acquisition of Thomas Miller as of July 2026, so titles here will move. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "steamship-mutual",
+   "company": "Steamship Mutual",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Bermuda",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.steamshipmutual.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+44 20 7650 6651",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "jonathan-andrews",
+    "rupert-harris"
+   ],
+   "notes": "283m GT total. Writes its own hull war, K&R and war loss-of-hire covers. Announced the highest 2026 general increase at 8%. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "britannia",
+   "company": "Britannia",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://britanniapandi.com/",
+   "linkedin_url": null,
+   "email": "info@britanniapandi.com",
+   "phone": "+44 20 7407 3588",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "helen-todd"
+   ],
+   "notes": "Oldest club, 1855, 149.2m GT. Paid the State of Maryland settlement for the DALI / Baltimore bridge allision, and all twelve IG clubs funded a shortfall when one reinsurance group failed to pay its share on time. CEO is Mike Hall; Simon Williams moved from CUO to Chief Commercial Officer in June 2026 with Helen Todd now CUO. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "skuld",
+   "company": "Skuld",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Norway",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.skuld.com/",
+   "linkedin_url": null,
+   "email": "oslo@skuld.com",
+   "phone": "+47 22 00 22 00",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "lars-dueled"
+   ],
+   "notes": "126m GT. Took a 12.5% line on the Galaxy Leader hull war slip — a P&I club acting as a hull war underwriter. Issued a 72-hour war-risk cancellation on 1 March 2026 signed by CEO Stale Hansen. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "london-pi-club",
+   "company": "London P&I Club",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.londonpandi.com/",
+   "linkedin_url": null,
+   "email": "london@londonpandi.com",
+   "phone": "+44 20 7772 8000",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "carl-durow"
+   ],
+   "notes": "Writes PRIMARY hull war in its own right, with separate limits unrestricted by the ship's insured hull value and P&I war to $500m. Withdrew southern Red Sea war components in August 2026. Publishes no staff emails at all — contact form only. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "west-of-england",
+   "company": "West of England",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Luxembourg",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.westpandi.com/",
+   "linkedin_url": null,
+   "email": "mail@westpandi.com",
+   "phone": "+44 20 7716 6000",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "dean-crossley",
+    "simon-hodgkinson",
+    "tom-bowsher"
+   ],
+   "notes": "Writes 'West War', a comprehensive primary war risks product, and will lead or follow on brokers' slips with predetermined breach additional premiums. Record free reserves $376.8m, combined ratio 98%. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "swedish-club",
+   "company": "The Swedish Club",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Sweden",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.swedishclub.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+46 31 638 400",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "joakim-enstrom",
+    "lorraine-hager"
+   ],
+   "notes": "The only club found to extend standard war cover to cyber-related war risks, on a portfolio aggregate basis, per Circular 449/2025. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "shipowners-club",
+   "company": "The Shipowners' Club",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Luxembourg",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.shipownersclub.com/",
+   "linkedin_url": null,
+   "email": "info@shipownersclub.com",
+   "phone": "+44 207 488 0911",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "louise-hall"
+   ],
+   "notes": "35,378 vessels across 8,296 members — the most ships of any club. Best combined ratio in the group at 99.6%. Marcus Tarrant became CEO in June 2026. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "japan-pi-club",
+   "company": "Japan P&I Club",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Japan",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.piclub.or.jp/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": "+81 3 6687 0505",
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "ryoichi-oda",
+    "yoshiro-sakamoto"
+   ],
+   "notes": "85m GT, 3,537 vessels. Best combined ratio in the group at 82.1%. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "ig-clubs"
+   ]
+  },
+  {
+   "id": "norwegian-hull-club",
+   "company": "Norwegian Hull Club",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "Norway",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://www.norwegianhullclub.com/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "andrew-hannay"
+   ],
+   "notes": "Holds an IUA seat on the Joint War Committee through Andrew Hannay. A marine mutual, S&P A rated, which returned 12% of premium to members for a sixth consecutive year. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
+   ]
+  },
+  {
+   "id": "amphitrite-underwriting",
+   "company": "Amphitrite Underwriting",
+   "tier": 6,
+   "tier_name": "Insurers and underwriters",
+   "buying_roles": [],
+   "country": "United Kingdom",
+   "fleet": null,
+   "vessel_attacked": null,
+   "url": "https://amphitrite.co.uk/",
+   "linkedin_url": null,
+   "email": null,
+   "phone": null,
+   "head_office": null,
+   "reachable": true,
+   "status": "not started",
+   "owner": null,
+   "starred": false,
+   "last_touch": null,
+   "sequence": {
+    "round_1": null,
+    "round_2": null,
+    "round_3": null
+   },
+   "contacts": [
+    "ben-jones"
+   ],
+   "notes": "Holds an IUA seat on the Joint War Committee through Ben Jones. Tier 6 sequence copy now exists — see crm/sequences.json. Every tier 6 send is read by a human first.",
+   "source_ids": [
+    "jwc-members"
    ]
   }
  ]

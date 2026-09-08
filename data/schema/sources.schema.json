@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oddfox.ai/data/schema/sources.schema.json",
+  "$id": "https://seaworth.ai/data/schema/sources.schema.json",
   "title": "Source register",
   "type": "object",
   "required": ["dataset", "records"],
