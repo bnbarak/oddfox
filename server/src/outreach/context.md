@@ -59,13 +59,20 @@ throws at send time is invisible until someone tries.
 of the budget set two rules, and both are enforced in code because both are
 easy to break with a reasonable-looking edit:
 
-*Enrich only at campaign send time.* The single call site is `schedule()` in
-`send.ts`, and it fires only when all of this is true: the message is written
-and confirmed, the recipient is a CRM contact with no address, the round is
-1–3, `dry_run` is off, and the contact's account is in an **active campaign**.
-Do not add a "fill in the missing emails" sweep, a page-load lookup, or a
-nightly job. A sweep across the People page is a four-figure invoice and it
-buys addresses for people nobody has decided to contact.
+*Enrich at two moments and nowhere else.* **Switching a campaign on**
+(`enrichCampaign`, reached from `POST /campaigns/:id/activate` and the
+`set-campaign` tool on the transition to active) and **scheduling a message**
+to somebody in an active campaign who has no address (`schedule()` in
+`send.ts`). Nothing else may buy data. Do not add a "fill in the missing
+emails" sweep, a page-load lookup, or a nightly job: a sweep across the People
+page is a four-figure invoice and it buys addresses for people nobody has
+decided to contact.
+
+Activation was moved earlier deliberately, against the advice in this file's
+first version. It spends before any message exists, so a campaign switched on
+and then paused has already cost its money. That trade was made knowingly —
+the alternative was a first send that silently paused to shop — so do not
+"fix" it back without asking.
 
 *Emails only, never phones.* Apollo bills 1 credit for an email and **8 more**
 if a mobile number comes back, and the waterfall options fan out to vendors
@@ -77,6 +84,12 @@ free.
 
 Two more things that are load-bearing rather than tidy:
 
+- **A miss is a state, not an absence.** The panels distinguish "never looked
+  up" from "looked up, Apollo has nothing" — the second renders as *can't
+  find* (`EmailCell.tsx`). They are opposite instructions: the first is a
+  research job somebody can do, the second is closed. Collapsing them back
+  into one empty cell is what invites a retry, and retrying closed lookups is
+  the one behaviour that makes this expensive.
 - **Misses are cached exactly like hits.** `crmEnrichment/{contact_id}` is
   written whether or not an address was found. A person Apollo has nothing for
   is the most expensive record in the system if that "no" is not written down:
