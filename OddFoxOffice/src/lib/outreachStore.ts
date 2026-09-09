@@ -182,7 +182,7 @@ export const runTick = () =>
 export type ThreadMessage = {
   dir: "out" | "in"; id: string; subject: string | null; body: string | null; at: string;
   status?: string; round?: number; dry_run?: boolean; cancel_token?: string | null;
-  automated?: boolean; unsubscribe?: boolean;
+  message_id?: string | null; automated?: boolean; unsubscribe?: boolean;
 };
 export type Thread = {
   key: string; contact_id: string | null; full_name: string; title: string; company: string | null;
@@ -200,11 +200,13 @@ export const sendDirect = (
   who: { contact_id: string | null; to: string | null },
   subject: string, body: string,
   domain: string | null = null, signature: string | null = null,
+  thread: { in_reply_to: string | null; references: string[] } =
+    { in_reply_to: null, references: [] },
 ) =>
   post<{ id: string; cancel_token: string | null; scheduled_at: string; dry_run: boolean }>(
     "/schedule",
     { ...who, round: 0, subject, body, scheduled_at: null, domain,
-      written_by: "template", template_tier: null, signature });
+      written_by: "template", template_tier: null, signature, ...thread });
 
 export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
 

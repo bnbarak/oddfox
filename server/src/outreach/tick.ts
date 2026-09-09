@@ -95,8 +95,14 @@ export async function tick(): Promise<Tick> {
           notes.push(`${d.contact_id} r${d.next_round}: unresolved ${written.unresolved.join(",")}`);
           continue;
         }
+        /* Thread the follow-up onto what we already sent. A round 2 that
+           arrives as a fresh conversation reads as a second cold email; in
+           the same thread it reads as a person following up. */
+        const chain = prior.map((p) => p.message_id).filter((x): x is string => Boolean(x));
         await schedule({
           contact_id: d.contact_id, to: null, round: d.next_round,
+          in_reply_to: chain[chain.length - 1] ?? null,
+          references: chain,
           subject: written.subject, body: written.body,
           scheduled_at: null, domain: null,
           written_by: modelConfigured() ? "agent" : "template",

@@ -231,7 +231,8 @@ const t = {
           subject: input.subject, body: input.body,
           scheduled_at: input.scheduled_at ?? null, domain: null,
           written_by: modelConfigured() ? "agent" : "template", template_tier: null,
-          signature: null,   // the configured default
+          signature: null,        // the configured default
+          in_reply_to: null, references: [],
         }, cfg, await allSends());
         return { scheduled: true, send_id: r.id, cancel_token: r.cancel_token,
                  scheduled_at: r.scheduled_at, domain: r.domain, used: r.used, cap: r.cap,

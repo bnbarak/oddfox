@@ -192,8 +192,16 @@ export function CrmInbox() {
     if (!who || !subject.trim() || !body.trim()) return;
     setWorking(true);
     try {
+      /* Quote the conversation so the reply threads instead of arriving as
+         a new message. In-Reply-To points at the last message that has an
+         id; References carries the whole chain, which is what keeps long
+         threads from splitting. */
+      const chain = (composing ? [] : open?.messages ?? [])
+        .map((m) => m.message_id)
+        .filter((x): x is string => Boolean(x));
       const r = await sendDirect(who, subject.trim(), body.trim(),
-                                 fromDomain || null, signature || null);
+                                 fromDomain || null, signature || null,
+                                 { in_reply_to: chain[chain.length - 1] ?? null, references: chain });
       setSaid(r.dry_run
         ? `Queued as a dry run for ${fmt(r.scheduled_at)} — nothing was sent.`
         : `Scheduled for ${fmt(r.scheduled_at)}. Cancellable until it goes.`);

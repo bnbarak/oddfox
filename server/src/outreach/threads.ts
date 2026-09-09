@@ -27,6 +27,8 @@ export type ThreadMessage = {
   round?: number;
   dry_run?: boolean;
   cancel_token?: string | null;
+  /** RFC message id, when known — what a reply must reference to thread. */
+  message_id?: string | null;
   /** Inbound only. */
   automated?: boolean;
   unsubscribe?: boolean;
@@ -79,13 +81,13 @@ const outbound = (s: SendRecord): ThreadMessage => ({
   dir: "out", id: s.id, subject: s.subject, body: s.body,
   at: s.scheduled_at ?? s.created_at,
   sort_at: GONE.has(s.status) ? (s.scheduled_at ?? s.created_at) : s.created_at,
-  status: s.status, round: s.round,
+  status: s.status, round: s.round, message_id: s.message_id,
   dry_run: s.dry_run, cancel_token: s.resend_id,
 });
 
 const inbound = (r: ReplyRecord): ThreadMessage => ({
   dir: "in", id: r.id, subject: r.subject, body: r.excerpt,
-  at: r.received_at, sort_at: r.received_at,
+  at: r.received_at, sort_at: r.received_at, message_id: r.message_id ?? null,
   automated: r.automated, unsubscribe: r.unsubscribe,
 });
 

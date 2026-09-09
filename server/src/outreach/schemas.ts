@@ -225,6 +225,12 @@ export const ScheduleRequest = z.object({
   template_tier: z.number().int().nullable().default(null),
   /** Which sign-off to use. Omitted uses the configured default. */
   signature: z.string().nullable().default(null),
+  /** The Message-ID this answers, and the ids already in the conversation.
+      Without these a reply arrives as a brand-new conversation, because
+      In-Reply-To and References are the only thing mail clients thread on —
+      a matching subject is not enough. */
+  in_reply_to: z.string().nullable().default(null),
+  references: z.array(z.string()).default([]),
 }).strict().refine((r) => r.contact_id ?? r.to, {
   message: "either contact_id or to is required",
 });

@@ -22,6 +22,15 @@ import { dayKey, nextInWindow } from "./time.js";
 let client: Resend | null = null;
 const resend = (): Resend => (client ??= new Resend(secret("RESEND_API_KEY") ?? undefined));
 
+/** In-Reply-To and References, the headers that make a client thread a reply
+    into the conversation it answers. References carries the whole chain and
+    the message being answered, oldest first; without it long threads split. */
+function threadHeaders(inReplyTo: string | null, references: string[]): Record<string, string> {
+  if (!inReplyTo) return {};
+  const chain = [...new Set([...references, inReplyTo])].filter(Boolean);
+  return { "In-Reply-To": inReplyTo, References: chain.join(" ") };
+}
+
 export class Refused extends Error {
   constructor(readonly code: string, message: string, readonly status = 409) {
     super(message);
@@ -191,7 +200,10 @@ export async function schedule(
       from, to, subject: req.subject, text,
       ...(d.reply_to ? { replyTo: d.reply_to } : {}),
       scheduledAt: at.toISOString(),
-      headers: listHeaders(cfg, commercial),
+      headers: {
+        ...listHeaders(cfg, commercial),
+        ...threadHeaders(req.in_reply_to, req.references),
+      },
       tags: [{ name: "round", value: String(req.round) }],
     });
     if (error || !data) throw new Error(error?.message ?? "Resend returned no id");

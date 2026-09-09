@@ -109,6 +109,7 @@ export async function pollReplies(): Promise<number> {
 
     await putReply({
       id: ref.id, from: ref.from, subject: ref.subject ?? null, received_at: at,
+      message_id: ref.message_id ?? full?.data?.message_id ?? null,
       send_id, account_id, contact_id,
       excerpt: text ? text.replace(/\s+/g, " ").slice(0, 800) : null,
       unsubscribe: optOut, automated,

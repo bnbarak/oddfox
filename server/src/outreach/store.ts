@@ -139,6 +139,9 @@ export const openSends = (sends: SendRecord[]): SendRecord[] =>
 
 export type ReplyRecord = {
   id: string; from: string; subject: string | null; received_at: string;
+  /** RFC 5322 Message-ID. A reply quotes this in In-Reply-To/References,
+      which is the only thing that makes mail clients thread it. */
+  message_id?: string | null;
   send_id: string | null; account_id: string | null; contact_id: string | null;
   excerpt: string | null; unsubscribe: boolean; automated: boolean;
 };
