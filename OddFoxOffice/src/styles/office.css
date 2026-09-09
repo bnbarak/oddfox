@@ -115,6 +115,11 @@ a.co-row:hover .co-name,
 .of-acct__name { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.02em; margin: 0; }
 .of-acct__links { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .of-acct__rounds { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.of-acct__meta { margin-top: 8px; }
+/* The page-wide section rhythm assumes a long panel above it. Here the head
+   block is four short lines, so the default clamp leaves a hole between the
+   company and its first section. */
+.of-acct__meta + .of-section { margin-top: clamp(26px, 3vw, 36px); }
 .of-acct__round { display: flex; align-items: center; gap: 8px; }
 .of-matrix .co-name { font-weight: 700; letter-spacing: -.01em; font-size: 13px; }
 .of-matrix thead th { font-size: 10px; letter-spacing: .06em; padding: 7px 8px; }

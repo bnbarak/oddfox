@@ -3,7 +3,7 @@ import { TokenLimiter, ToolCallFilter } from "@mastra/core/processors";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
 import { draft, modelConfigured } from "./agent.js";
-import { enrichCampaign } from "./apollo.js";
+import { startCampaign } from "./start.js";
 import { blockers } from "./config.js";
 import * as crm from "./crm.js";
 import { heatmap } from "./heatmap.js";
@@ -133,6 +133,8 @@ export const t = {
         looked_up: z.number(), found: z.number(), missing: z.number(),
         already_known: z.number(), credits: z.number(), stopped: z.string().nullable(),
       }).nullable(),
+      queued: z.number(),
+      skipped: z.array(z.string()),
     }),
     execute: async (input) => {
       const before = (await allCampaigns()).find((x) => x.id === input.id);
@@ -141,10 +143,15 @@ export const t = {
       /* Switching a campaign on is what buys addresses. Only on the
          transition — re-saving an already-active campaign must not look like
          a reason to go shopping, though the ledger would stop it anyway. */
-      const enrichment = c.active && !before?.active
-        ? await enrichCampaign(c.account_ids)
+      const started = c.active && !before?.active
+        ? await startCampaign(c, await getConfig())
         : null;
-      return { id: c.id, active: c.active, enrichment };
+      return {
+        id: c.id, active: c.active,
+        enrichment: started?.enrichment ?? null,
+        queued: started?.queued ?? 0,
+        skipped: started?.skipped.map((s2) => `${s2.name}: ${s2.why}`) ?? [],
+      };
     },
   }),
 
@@ -330,11 +337,11 @@ How to behave:
   draft the messages, show them, and say that addresses will be looked up on
   scheduling and that a few people may turn out to have none. Never claim we
   cannot contact a campaign account for want of addresses.
-- Addresses are bought at two moments and nowhere else: when a campaign is
-  switched on, and when a message to somebody in one is scheduled. Switching a
-  campaign on therefore spends money. Say so before you do it — how many
-  people have no address and so how many credits it will cost — and do it only
-  when asked. Never propose enriching a list, filling in the gaps on the
+- Switching a campaign on does two things at once: it buys addresses for
+  everyone in it who has none, and it queues round 1 to all of them. It is the
+  one action that reaches strangers without a message-by-message yes, so say
+  what it will do — how many people, how many credits — and do it only when
+  asked plainly. Everything it queues is cancellable until it goes. Never propose enriching a list, filling in the gaps on the
   People page, or looking somebody up "to check".
 - Report what the lookup actually returned: how many were found and how many
   Apollo has no address for. "Can't find" is a real, final answer about a

@@ -51,27 +51,36 @@ export function CrmOutreach() {
   const [busy, setBusy] = useState<string | null>(null);
   const [said, setSaid] = useState<string | null>(null);
 
-  /* Activating spends money, so it asks first and says how much. The number
-     comes from the same forecast shown in the table, and the confirmation
-     names it rather than saying "this may incur charges", which nobody
-     reads. */
-  const toggle = async (id: string, name: string, on: boolean, toEnrich: number) => {
-    if (on && toEnrich > 0
-        && !window.confirm(
-          `Switching on “${name}” looks up ${toEnrich} ` +
-          `${toEnrich === 1 ? "address" : "addresses"} at Apollo now — ${toEnrich} ` +
-          `${toEnrich === 1 ? "credit" : "credits"}, charged whether or not you send anything.\n\n` +
-          "Continue?")) return;
+  /* Activating is the one button that reaches strangers, so it says exactly
+     what it is about to do — how many people, how much it costs — rather than
+     "this may incur charges", which nobody reads. The reassurance that makes
+     it a reasonable button is real and is stated: nothing sends immediately,
+     and everything it queues can be cancelled from the table below. */
+  const toggle = async (id: string, name: string, on: boolean, toEnrich: number, people: number) => {
+    if (on && !window.confirm(
+      `Switching on “${name}” will:\n\n` +
+      (toEnrich > 0
+        ? `• look up ${toEnrich} ${toEnrich === 1 ? "address" : "addresses"} at Apollo ` +
+          `(${toEnrich} ${toEnrich === 1 ? "credit" : "credits"}, charged either way)\n`
+        : "") +
+      `• write round 1 to everyone it can reach — up to ${people} ` +
+      `${people === 1 ? "person" : "people"} — and put it in the queue\n\n` +
+      "Nothing sends straight away: it is paced inside the sending window and " +
+      "every message can be cancelled until it goes.\n\nContinue?")) return;
     setBusy(id);
     try {
       const r = await setCampaignActive(id, on);
-      const e = r?.enrichment;
-      setSaid(!on ? `“${name}” paused.`
-        : e ? `“${name}” is on — ${e.found} found, ${e.missing} with no address, ` +
-              `${e.credits} ${e.credits === 1 ? "credit" : "credits"} spent.` +
-              (e.stopped ? ` ${e.stopped}` : "")
-            : `“${name}” is on.`);
-      await Promise.all([campaigns.reload(), enrichment.reload()]);
+      if (!on) setSaid(`“${name}” paused.`);
+      else {
+        const e = r?.enrichment;
+        setSaid(
+          `“${name}”: ${r?.queued ?? 0} queued`
+          + (e ? `, ${e.found} found, ${e.missing} with no address, ${e.credits} `
+                 + `${e.credits === 1 ? "credit" : "credits"} spent` : "")
+          + (r?.first_lands ? `. First lands ${new Date(r.first_lands).toLocaleString()}` : "")
+          + (r?.stopped ? `. ${r.stopped}` : "."));
+      }
+      await Promise.all([campaigns.reload(), enrichment.reload(), queue.reload(), map.reload()]);
     } catch (err) {
       setSaid(err instanceof Error ? err.message : String(err));
     } finally { setBusy(null); }
@@ -291,7 +300,7 @@ export function CrmOutreach() {
                       </td>
                       <td className="cell">
                         <button className="of-facet__b" disabled={busy === c.id}
-                                onClick={() => void toggle(c.id, c.name, !c.active, c.to_enrich)}>
+                                onClick={() => void toggle(c.id, c.name, !c.active, c.to_enrich, c.people)}>
                           {busy === c.id ? "…" : c.active ? "pause" : "activate"}
                         </button>
                       </td>

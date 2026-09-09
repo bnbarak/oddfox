@@ -208,9 +208,15 @@ export async function setCampaignActive(id: string, active: boolean) {
   const res = await fetch(
     `${BASE}/campaigns/${encodeURIComponent(id)}/${active ? "activate" : "pause"}`,
     { method: "POST", headers: authHeaders() });
-  const body = (await res.json().catch(() => null)) as
-    { error?: string; enrichment?: { looked_up: number; found: number; missing: number;
-                                     credits: number; stopped: string | null } | null } | null;
+  const body = (await res.json().catch(() => null)) as {
+    error?: string;
+    enrichment?: { looked_up: number; found: number; missing: number;
+                   credits: number; stopped: string | null } | null;
+    queued?: number;
+    skipped?: { contact_id: string; name: string; why: string }[];
+    first_lands?: string | null;
+    stopped?: string | null;
+  } | null;
   if (!res.ok) throw new Error(body?.error ?? `campaign ${active ? "activate" : "pause"} → ${res.status}`);
   return body;
 }

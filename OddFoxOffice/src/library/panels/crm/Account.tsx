@@ -73,15 +73,19 @@ function CampaignLine({ id, people, withEmail }: {
   const row = campaigns.data?.records.find((c) => c.id === here?.campaign_id);
 
   if (!here || here.state === "none") {
-    return <Note>Not in a campaign. Ask the agent to start one.</Note>;
+    return <Note style={{ marginBottom: 22 }}>Not in a campaign. Ask the agent to start one.</Note>;
   }
   return (
-    <Note>
-      <strong>{here.campaign_name}</strong> — {here.state}.{" "}
-      {withEmail} of {people} reachable now
-      {row?.to_enrich ? `, ${row.to_enrich} to look up at Apollo when the first message is scheduled` : ""}
-      {row?.unreachable ? `, ${row.unreachable} with no address to be found` : ""}.
-    </Note>
+    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
+                  marginBottom: 22 }}>
+      <strong style={{ fontSize: 13.5 }}>{here.campaign_name}</strong>
+      <CampaignChip of={here} />
+      <span className="of-note">
+        {withEmail} of {people} reachable
+        {row?.to_enrich ? ` · ${row.to_enrich} to look up at Apollo on activation` : ""}
+        {row?.unreachable ? ` · ${row.unreachable} with no address to be found` : ""}
+      </span>
+    </div>
   );
 }
 
@@ -89,7 +93,6 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
   const { rows: accounts, live, patch } = useAccounts();
   const { rows: contacts } = useContacts();
   const threadsRes = useThreads();
-  const campaigns = useCampaigns();
   const enrichment = useEnrichment();
   const looked = new Map((enrichment.data?.records ?? []).map((e) => [e.contact_id, e]));
 
@@ -123,7 +126,6 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
         <Star on={a.starred} title="Starred account" />
         <Chip tone={TONE[a.status] ?? ""}>{a.status}</Chip>
         <Chip>tier {a.tier} · {a.tier_name}</Chip>
-        <CampaignChip of={campaigns.data?.states[a.id]} />
       </div>
 
       <div className="of-acct__links">
@@ -134,7 +136,7 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
         {!href && !a.email && !a.phone ? <Chip tone="warm">no link on record</Chip> : null}
       </div>
 
-      <div className="of-note" style={{ marginTop: 8 }}>
+      <div className="of-note of-acct__meta">
         {[a.head_office, a.country,
           a.fleet ? `${a.fleet} vessels` : null,
           a.vessel_attacked?.length ? `attacked: ${a.vessel_attacked.join(", ")}` : null,

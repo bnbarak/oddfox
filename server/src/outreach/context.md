@@ -59,6 +59,15 @@ throws at send time is invisible until someone tries.
 of the budget set two rules, and both are enforced in code because both are
 easy to break with a reasonable-looking edit:
 
+*Switching a campaign on sends mail.* `startCampaign()` in `start.ts` buys the
+addresses and then writes and queues round 1 to everyone it can reach. It is
+the only action in the system that reaches strangers without a per-message
+yes, and it was asked for in those terms. What makes it defensible is that
+nothing is *sent*: every message is scheduled, paced by `nextSlot()`, charged
+against the daily cap, and cancellable from the queue until it goes. Keep all
+four of those, and keep it idempotent — it skips anyone with a live round 1,
+so a second activation is not a second mailing.
+
 *Enrich at two moments and nowhere else.* **Switching a campaign on**
 (`enrichCampaign`, reached from `POST /campaigns/:id/activate` and the
 `set-campaign` tool on the transition to active) and **scheduling a message**
@@ -155,10 +164,20 @@ outreach email depends on is known before we start: the person, the company,
 the tier template, the prior messages. They go in the prompt. A tool-calling
 loop would be three extra round trips to rediscover facts we already hold.
 
-`operator.ts` — **the operator**, the one you chat to — has eight tools,
+`operator.ts` — **the operator**, the one you chat to — has ten tools,
 deliberately. We cannot know in advance what will be asked of it.
 
 Do not "harmonise" these. They are different jobs.
+
+**The operator's tools have two callers.** `mcp.ts` exposes the same `t`
+object over MCP at `/api/mcp`, so Claude on a laptop drives the pipeline with
+the tools the panel's agent uses — one definition, two front doors, and no
+capability that exists in one and not the other. It is stateless
+(`serverless: true`) because Cloud Run has no session affinity, and it
+authenticates with an API key rather than a Google sign-in (`../apiKeys.ts`;
+keys are minted in the app under Settings → Claude access). If you add a tool
+to `operator.ts`, decide whether it belongs in `exposed` in `mcp.ts` too —
+that map is the public API and its names must stay stable.
 
 The operator runs `ToolCallFilter()` and `TokenLimiter(12_000)` as input
 processors. The filter drops tool results from *earlier* turns while keeping
@@ -204,6 +223,7 @@ manners, not a guarantee.
 | Change what the emails say | `render.ts`, and `crmMeta/sequences` in Firestore |
 | Change how the agent writes | `INSTRUCTIONS` in `agent.ts` |
 | Give the chat agent a new ability | a tool in `operator.ts`, calling an existing function |
+| Give Claude the same ability | add it to `exposed` in `mcp.ts` |
 | Change what is persisted | `store.ts` + `schemas.ts`, **same commit** |
 | Change when follow-ups go | `due()` in `tick.ts`, `cadence_days` in config |
 | Add a report | `heatmap.ts`, grouped in memory |

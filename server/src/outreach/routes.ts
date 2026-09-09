@@ -8,7 +8,8 @@ import {
   allCampaigns, allReplies, allSends, clearThread, getConfig, getThread, headroom,
   lastTick, putCampaign, putConfig, recentTicks,
 } from "./store.js";
-import { allEnrichment, enrichCampaign, spentToday } from "./apollo.js";
+import { allEnrichment, spentToday } from "./apollo.js";
+import { startCampaign } from "./start.js";
 import { statesFor } from "./campaignState.js";
 import * as crm from "./crm.js";
 import { chat } from "./operator.js";
@@ -209,17 +210,18 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
   });
 }));
 
-/** Switching a campaign on buys addresses for everyone in it who has none.
+/** Switching a campaign on buys the addresses and queues round 1 to everyone.
 
-    Deliberately eager: the owner of the budget chose paying at activation
-    over a first send that pauses to shop. The spend is bounded by the ledger
-    (nobody twice, ever) and the daily ceiling, and the response says exactly
-    what it cost. */
+    Deliberately eager on both counts: the owner chose paying at activation
+    over a first send that pauses to shop, and chose queueing everybody at
+    once over drip-feeding approvals. What makes that safe is that nothing is
+    sent — every message is scheduled, paced, capped, and cancellable from the
+    queue until it goes. The response says what it cost and what it queued. */
 outreachRouter.post("/campaigns/:id/activate", h(async (req, res) => {
   const c = (await allCampaigns()).find((x) => x.id === req.params.id);
   if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
   await putCampaign({ ...c, active: true });
-  res.json({ id: c.id, active: true, enrichment: await enrichCampaign(c.account_ids) });
+  res.json({ id: c.id, active: true, ...(await startCampaign(c, await getConfig())) });
 }));
 
 outreachRouter.post("/campaigns/:id/pause", h(async (req, res) => {

@@ -15,7 +15,10 @@ export function CampaignChip({ of }: { of?: AccountCampaign }) {
   // Chip takes no title, so the campaign's name goes on a wrapper — worth the
   // extra element: the state alone does not say which campaign it belongs to.
   return (
-    <span title={of.campaign_name ?? undefined}>
+    // inline-flex, not a bare span: as a flex item a plain inline wrapper
+    // carries its line box's descender space and the chip sits low next to
+    // its neighbours. This was visible in the account header.
+    <span title={of.campaign_name ?? undefined} style={{ display: "inline-flex" }}>
       <Chip tone={CAMPAIGN_TONE[of.state]}>{of.state}</Chip>
     </span>
   );
