@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Section, Grid, Cell, Stat, H1, Chip, Gap, Bars, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
 import { PIPE, TONE, today, link, accountsFile, contactsFile, useAccounts } from "./shared";
+import { AccountDetail, AccountLink, useAccountParam } from "./Account";
 import { ServerState } from "./ServerState";
 
 export function CrmAccounts() {
-  const { rows: seed, live, error, patch } = useAccounts();
+  const { rows: seed, live, settled, error, patch } = useAccounts();
   const [tier, setTier] = useState<number | "all">("all");
+  const [openId, setOpen] = useAccountParam();
 
   const rows = tier === "all" ? seed : seed.filter((r) => r.tier === tier);
   const byStatus = PIPE.map((s) => ({
@@ -25,11 +27,15 @@ export function CrmAccounts() {
     });
   };
 
+  // One account asked for by the URL takes the whole page: it is a different
+  // question from the pipeline, not a wider column of the same table.
+  if (openId) return <AccountDetail id={openId} onBack={() => setOpen(null)} />;
+
   return (
     <>
       <H1>Accounts</H1>
 
-      <ServerState live={live} error={error} />
+      <ServerState live={live} settled={settled} error={error} />
 
       <Section kicker="Pipeline">
         <Grid cols={4}>
@@ -64,7 +70,6 @@ export function CrmAccounts() {
             </thead>
             <tbody>
               {rows.map((r) => {
-                const href = link(r);
                 const name = (
                   <>
                     <Logo url={r.url} name={r.company} />
@@ -75,10 +80,7 @@ export function CrmAccounts() {
                 return (
                   <tr key={r.id}>
                     <td className="co">
-                      {href
-                        ? <a className="co-row" href={href} target="_blank" rel="noopener noreferrer"
-                             title={href}>{name}</a>
-                        : <span className="co-row">{name}</span>}
+                      <AccountLink id={r.id}>{name}</AccountLink>
                       {r.vessel_attacked ? <span className="co-sub">{r.vessel_attacked.join(", ")}</span>
                         : r.fleet ? <span className="co-sub">{r.fleet} vessels</span> : null}
                     </td>

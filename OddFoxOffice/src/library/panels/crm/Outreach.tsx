@@ -4,6 +4,7 @@ import {
   cancelSend, runTick, useHeatmap, useOutreachStatus, useQueue, useReplies,
   type Cell, type HeatRow,
 } from "../../../lib/outreachStore";
+import { AccountLink } from "./Account";
 import { CRM_CHANGED } from "./Operator";
 import { Toast } from "./Toast";
 
@@ -197,18 +198,10 @@ export function CrmOutreach() {
               {rows.map((r: HeatRow) => (
                 <tr key={r.account_id}>
                   <td className="co">
-                    {r.url || r.linkedin_url ? (
-                      <a className="co-row" href={r.url ?? r.linkedin_url ?? "#"}
-                         target="_blank" rel="noopener noreferrer">
-                        <Logo url={r.url} name={r.company} />
-                        <span className="co-name">{r.company}</span>
-                      </a>
-                    ) : (
-                      <span className="co-row">
-                        <Logo url={null} name={r.company} />
-                        <span className="co-name">{r.company}</span>
-                      </span>
-                    )}
+                    <AccountLink id={r.account_id}>
+                      <Logo url={r.url} name={r.company} />
+                      <span className="co-name">{r.company}</span>
+                    </AccountLink>
                     <span className="co-sub">tier {r.tier} · {r.contacts} people</span>
                   </td>
                   {r.cells.map((c, i) => (

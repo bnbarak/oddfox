@@ -1,8 +1,12 @@
 import { Note } from "../../../ui";
 
-/** Says plainly whether what you are looking at can be edited. */
-export function ServerState({ live, error }: { live: boolean; error: string | null }) {
-  if (live) return null;
+/** Says plainly whether what you are looking at can be edited — but only once
+    the server has actually answered. Saying it while the first request is
+    still in flight made every tab switch flash "read-only" for a second. */
+export function ServerState({ live, settled = true, error }: {
+  live: boolean; settled?: boolean; error: string | null;
+}) {
+  if (live || !settled) return null;
   return (
     <Note style={{ marginBottom: 16 }}>
       <strong>Read-only. </strong>

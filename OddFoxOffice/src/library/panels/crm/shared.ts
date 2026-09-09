@@ -28,17 +28,17 @@ export const sequencesFile = DB.crmSequences as unknown as Rec;
 /** Records off the server when it is up, off the bundled file when it is not.
     The panel stays readable either way; `live` gates the editing controls. */
 export function useAccounts() {
-  const { records, error, patch } = useCrmAccounts();
+  const { records, settled, error, patch } = useCrmAccounts();
   return {
     rows: records ?? (accountsFile.records as AccountRecord[]),
-    live: records !== null, error, patch,
+    live: records !== null, settled, error, patch,
   };
 }
 
 export function useContacts() {
-  const { records, error, patch } = useCrmContacts();
+  const { records, settled, error, patch } = useCrmContacts();
   return {
     rows: records ?? (contactsFile.records as ContactRecord[]),
-    live: records !== null, error, patch,
+    live: records !== null, settled, error, patch,
   };
 }

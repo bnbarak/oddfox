@@ -6,7 +6,7 @@ import { contactsFile, useAccounts, useContacts } from "./shared";
 import { ServerState } from "./ServerState";
 
 export function CrmPeople() {
-  const { rows: people, live, error } = useContacts();
+  const { rows: people, live, settled, error } = useContacts();
   const { rows: accounts } = useAccounts();
 
   // Most contact rows carry a company name but no account_id, so fall back to the name.
@@ -38,7 +38,7 @@ export function CrmPeople() {
     <>
       <H1>People</H1>
 
-      <ServerState live={live} error={error} />
+      <ServerState live={live} settled={settled} error={error} />
 
       <Section kicker="Points of contact">
         <Grid cols={4} style={{ marginBottom: 20 }}>

@@ -105,7 +105,17 @@ html, body, #root { height: auto; overflow: auto; }
   display: flex; align-items: center; gap: 7px;
   color: inherit; text-decoration: none; white-space: nowrap;
 }
-a.co-row:hover .co-name { color: var(--hot); text-decoration: underline; }
+a.co-row:hover .co-name,
+.co-row--btn:hover .co-name { color: var(--hot); text-decoration: underline; }
+/* The company cell opens the account's page; it is a button, not a link out. */
+.co-row--btn { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+
+/* ---------- one account ---------- */
+.of-acct__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 10px; }
+.of-acct__name { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.02em; margin: 0; }
+.of-acct__links { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.of-acct__rounds { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.of-acct__round { display: flex; align-items: center; gap: 8px; }
 .of-matrix .co-name { font-weight: 700; letter-spacing: -.01em; font-size: 13px; }
 .of-matrix thead th { font-size: 10px; letter-spacing: .06em; padding: 7px 8px; }
 .of-matrix td { padding: 6px 8px; }

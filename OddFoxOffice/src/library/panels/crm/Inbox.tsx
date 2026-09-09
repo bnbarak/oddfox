@@ -144,22 +144,6 @@ export function CrmInbox() {
     return () => window.removeEventListener("resize", fit);
   });
 
-  /* A conversation you cannot see gets pulled to the top of the list, so the
-     row and the thread you are reading line up. One you can already see is
-     left where it is: moving the list under someone who just clicked a row
-     that was in plain sight only makes them find their place again. The
-     browser clamps at the last screenful, so a short list never scrolls. */
-  const listEl = useRef<HTMLElement | null>(null);
-  useLayoutEffect(() => {
-    const list = listEl.current;
-    const row = list?.querySelector<HTMLElement>(".of-inbox__row.is-on");
-    if (!list || !row) return;
-    const box = list.getBoundingClientRect();
-    const at = row.getBoundingClientRect();
-    if (at.top >= box.top && at.bottom <= box.bottom) return;
-    list.scrollTop += at.top - box.top;
-  }, [open?.key]);
-
   // Only people with an address can be written to; a picker full of names
   // that cannot be selected is worse than a shorter list.
   const writable = useMemo(
@@ -361,7 +345,7 @@ export function CrmInbox() {
       <div className="of-inbox__bar">{newButton}{counts}</div>
 
       <div className="of-inbox" ref={box}>
-        <nav className="of-inbox__list" aria-label="Conversations" ref={listEl}>
+        <nav className="of-inbox__list" aria-label="Conversations">
           {threads.map((t) => {
             const preview = t.messages[t.messages.length - 1];
             return (

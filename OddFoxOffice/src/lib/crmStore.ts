@@ -116,6 +116,10 @@ function useCrmResource<Rec extends { id: string }, Patch>(resource: "accounts" 
   const url = `/api/crm/${resource}`;
   const [records, setRecords] = useState<Rec[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  /* False until the first request has come back one way or the other. Panels
+     use it to keep quiet while the answer is still in flight, instead of
+     announcing "read-only" for the second it takes the server to reply. */
+  const [settled, setSettled] = useState(false);
   const latest = useRef<Rec[] | null>(null);
 
   const load = useCallback(async () => {
@@ -126,6 +130,8 @@ function useCrmResource<Rec extends { id: string }, Patch>(resource: "accounts" 
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setSettled(true);
     }
   }, [url]);
 
@@ -157,7 +163,7 @@ function useCrmResource<Rec extends { id: string }, Patch>(resource: "accounts" 
     [url],
   );
 
-  return { records, ready: records !== null, error, patch, reload: load };
+  return { records, ready: records !== null, settled, error, patch, reload: load };
 }
 
 export function useCrmAccounts() {
