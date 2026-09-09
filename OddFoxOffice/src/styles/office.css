@@ -270,8 +270,7 @@ body[data-crm-dock="open"] .of-whoami { right: calc(min(400px, 34vw) + 12px); }
 /* Make room rather than overlap: the tables underneath are wide and being
    half-covered by the agent would make them useless. */
 body[data-crm-dock="open"] .of-main,
-body[data-crm-dock="open"] .of-head,
-body[data-crm-dock="open"] .of-foot { padding-right: min(400px, 34vw); }
+body[data-crm-dock="open"] .of-head { padding-right: min(400px, 34vw); }
 body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 
 @media (max-width: 900px) {
@@ -280,8 +279,7 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
      aside to. Collapsing the dock brings it back. */
   body[data-crm-dock="open"] .of-whoami { display: none; }
   body[data-crm-dock="open"] .of-main,
-  body[data-crm-dock="open"] .of-head,
-  body[data-crm-dock="open"] .of-foot { padding-right: 0; }
+  body[data-crm-dock="open"] .of-head { padding-right: 0; }
 }
 
 /* ---------- sequences: tiers as a sidebar ---------- */
@@ -335,7 +333,6 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .office .of-main:has(.of-inbox) { padding-top: 0; padding-bottom: 0; }
 .of-wrap:has(.of-inbox) { max-width: none; padding: 0; }
 .of-wrap:has(.of-inbox) > *:not(.of-inbox) { padding-left: 20px; padding-right: 20px; }
-.office:has(.of-inbox) .of-foot { display: none; }
 
 /* Height is set from JS to whatever the window has left; the panes scroll
    inside it so the page itself does not move. */
@@ -474,3 +471,11 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-toast__x:hover { opacity: 1; }
 @keyframes of-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .of-toast { animation: none; } }
+/* A reply belongs in the thread it answers, not in a floating window. */
+.of-reply { margin-top: 14px; border: 1px solid var(--line); border-radius: 3px;
+            background: rgba(255,255,255,.02); }
+.of-reply .of-cw__b { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.of-reply .of-cw__f { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+                      padding: 11px 14px; border-top: 1px solid var(--line-soft); }
+.of-msg__seq { color: var(--cool); border-color: var(--cool); text-decoration: none; }
+.of-msg__seq:hover { color: var(--void); background: var(--cool); }

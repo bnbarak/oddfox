@@ -87,12 +87,6 @@ function LibraryLayout() {
       {/* The agent is docked for the whole CRM section, not one panel: the
           questions worth asking it are the same on every tab. */}
       {groupOf(tab ?? "") === "crm" && <Operator />}
-      <footer className="of-foot">
-        <div className="of-wrap" style={{ display: "flex", gap: 18, flexWrap: "wrap", width: "100%" }}>
-          <span>Internal. Not deployed.</span>
-          <span style={{ marginLeft: "auto" }}>Every figure carries a source and a confidence level.</span>
-        </div>
-      </footer>
     </div>
   );
 }
