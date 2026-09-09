@@ -12,7 +12,7 @@ import { chat } from "./operator.js";
 import { threads } from "./threads.js";
 import { due, tick } from "./tick.js";
 import { z } from "zod";
-import { DraftRequest, OutreachConfig, ScheduleRequest } from "./schemas.js";
+import { configPatch, DraftRequest, ScheduleRequest } from "./schemas.js";
 
 /* HTTP surface, as its own Router so index.ts needs one import and one mount.
    Everything here is under /api, so it is already behind the Google sign-in
@@ -54,8 +54,10 @@ outreachRouter.get("/status", h(async (_req, res) => {
 outreachRouter.get("/config", h(async (_req, res) => { res.json(await getConfig()); }));
 
 outreachRouter.put("/config", h(async (req, res) => {
-  const patch = OutreachConfig.partial().parse(req.body);
-  res.json(await putConfig(patch));
+  // configPatch, not OutreachConfig.partial() — see the note on it. A partial
+  // parse fills in every absent field's default, and writing those back is
+  // indistinguishable from being asked to clear them.
+  res.json(await putConfig(configPatch(req.body)));
 }));
 
 // ---- Writing and scheduling -----------------------------------------------

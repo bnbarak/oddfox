@@ -367,7 +367,11 @@ export async function chat(message: string): Promise<{ text: string; thread: Cha
   // The whole thread goes in; TokenLimiter decides what actually fits. That
   // is a better cut than a fixed number of turns, which is either wasteful
   // for short exchanges or lossy for long ones.
-  const context = [...history, { role: "user" as const, content: message, at: now }];
+  const context = [...history, { role: "user" as const, content: message, at: now }]
+    // Blank turns already in the stored thread, from before the guard below
+    // existed. Replaying them teaches the model that saying nothing is a
+    // valid answer here.
+    .filter((m) => m.content.trim());
 
   // Mapped one at a time so each role is a literal type: a `role: string`
   // does not satisfy the SDK's message union.
@@ -376,14 +380,28 @@ export async function chat(message: string): Promise<{ text: string; thread: Cha
       ? { role: "user" as const, content: m.content }
       : { role: "assistant" as const, content: m.content });
 
-  const res = await operator(cfg.model).generate(input);
+  /* maxSteps, because the default is five and a real request spends them
+     fast: "start a campaign on Anglo-Eastern" is find-people, then
+     list-campaigns, then set-campaign, and the answer about it is a sixth.
+     Run out of steps and the turn ends on a tool call with nothing said,
+     which is what an empty bubble in the panel was. */
+  const res = await operator(cfg.model).generate(input, { maxSteps: 12 });
+
+  /* Never store an empty assistant turn. An empty one is not just a blank
+     bubble now — it goes into the thread, gets replayed as the model's own
+     words next turn, and Gemini answers a conversation containing a silent
+     assistant with more silence. One blank reply became every reply after
+     it. Say what happened instead, and keep the thread speakable. */
+  const text = res.text?.trim()
+    ? res.text
+    : "I ran out of steps before answering that. Ask me again, or in smaller pieces.";
 
   // Both turns are written together, after the model answers. A failed call
   // therefore leaves no half-turn in the thread for the next person to
   // puzzle over.
   const thread = await appendTurns([
     { role: "user", content: message, at: now },
-    { role: "assistant", content: res.text, at: new Date().toISOString() },
+    { role: "assistant", content: text, at: new Date().toISOString() },
   ]);
-  return { text: res.text, thread };
+  return { text, thread };
 }

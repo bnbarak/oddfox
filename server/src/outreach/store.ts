@@ -27,11 +27,10 @@ export async function getConfig(): Promise<OutreachConfig> {
 }
 
 export async function putConfig(patch: Partial<OutreachConfig>): Promise<OutreachConfig> {
-  // Only the keys the caller actually sent. A partial parse can hand back
-  // keys whose value is undefined, and spreading those blanks a configured
-  // field — the schema default then quietly replaces it. That is how saving
-  // a signature from the settings page erased every sending domain, the
-  // postal address and the opt-out mailbox in one write.
+  // Only the keys the caller actually sent. Callers build the patch with
+  // configPatch(), which is the part that gets this right; the filter here is
+  // a second lock on the same door, because a patch that carries a key it was
+  // never given silently erases whatever that key held.
   const given = Object.fromEntries(
     Object.entries(patch).filter(([, v]) => v !== undefined));
   const merged = OutreachConfig.parse({

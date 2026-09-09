@@ -5,7 +5,7 @@
 import {
   fill, footer, listHeaders, readsAsAutomated, readsAsOptOut, varsFor, withFooter,
 } from "../src/outreach/render.js";
-import { OutreachConfig } from "../src/outreach/schemas.js";
+import { configPatch, OutreachConfig } from "../src/outreach/schemas.js";
 import type { AccountRecord, ContactRecord } from "../src/schemas.js";
 
 let failed = 0;
@@ -96,33 +96,48 @@ ok("a real person is not automated", !readsAsAutomated("Ana <ana@vgroup.com>", "
 /* ---- config merge -------------------------------------------------------
 
    A partial patch must never blank a field it did not mention. Regression
-   test for a real incident: saving a signature from the settings page erased
-   every sending domain, the postal address and the opt-out mailbox, because
-   the patch carried those keys as undefined and the schema defaults filled
-   the holes it left. */
+   test for the same incident twice: saving a signature from the settings
+   page erased every sending domain, the postal address and the opt-out
+   mailbox, and turned dry_run back on.
+
+   The first fix dropped keys whose value was undefined, and the first
+   version of this test built its patch by hand with `domains: undefined` —
+   so it passed while the live path kept failing. `.partial()` does not strip
+   `.default()`: it makes the key optional and then supplies the default for
+   the absent one, so the patch arrives carrying `domains: []`, not
+   `domains: undefined`. The test now starts from the raw JSON body, which is
+   the only thing that knows what was actually asked for. */
 
 const current = OutreachConfig.parse({
   domains: [{ domain: "seaworth.io", from_local: "barak", from_name: "B" }],
   postal_address: "1 Example Street",
   unsubscribe_mailbox: "optout@seaworth.io",
+  dry_run: false,
 });
 
-const patch: Record<string, unknown> = {
+// Exactly what the settings page PUTs.
+const patchBody = {
   signatures: [{ id: "s", name: "S", body: "B" }],
-  domains: undefined,
-  postal_address: undefined,
+  default_signature: "s",
+  tracked_addresses: ["barak@seaworth.ai"],
 };
-const given = Object.fromEntries(Object.entries(patch).filter(([, v]) => v !== undefined));
-const merged = OutreachConfig.parse({ ...current, ...given });
+
+const filled = OutreachConfig.partial().parse(patchBody) as Record<string, unknown>;
+ok("a partial parse fills in defaults rather than leaving keys out",
+   Array.isArray(filled.domains) && (filled.domains as unknown[]).length === 0 && filled.dry_run === true);
+
+const merged = OutreachConfig.parse({ ...current, ...configPatch(patchBody) });
 
 ok("a patch that omits domains keeps them", merged.domains.length === 1,
    `${merged.domains.length} domains`);
 ok("and keeps the postal address", merged.postal_address === "1 Example Street");
 ok("and keeps the opt-out mailbox", merged.unsubscribe_mailbox === "optout@seaworth.io");
+ok("and does not turn dry_run back on", merged.dry_run === false);
 ok("while applying what it did send", merged.signatures.length === 1);
 
-const naive = OutreachConfig.parse({ ...current, ...patch });
-ok("the naive spread is what broke it", naive.domains.length === 0 && naive.postal_address === null);
+const naive = OutreachConfig.parse({ ...current, ...OutreachConfig.partial().parse(patchBody) });
+ok("the naive spread is what broke it",
+   naive.domains.length === 0 && naive.postal_address === null && naive.dry_run === true);
 
 
 /* ---- threading ---------------------------------------------------------

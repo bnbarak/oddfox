@@ -104,6 +104,27 @@ export const OutreachConfig = z.object({
 });
 export type OutreachConfig = z.infer<typeof OutreachConfig>;
 
+/** The subset of the config a request actually asked to change.
+
+    `OutreachConfig.partial()` is NOT that subset. Every field here carries a
+    `.default()`, and `.partial()` does not strip defaults — it makes the key
+    optional and then fills the absent one in. Parsing `{signatures: [...]}`
+    therefore hands back a complete object in which `domains` is `[]`,
+    `dry_run` is `true` and `postal_address` is `null`, which spread over the
+    stored config erases all three. That is how saving a signature twice took
+    the whole system offline.
+
+    So the raw body decides which keys count. Only the keys the caller
+    actually sent survive; the parse still validates their values. */
+export function configPatch(raw: unknown): Partial<OutreachConfig> {
+  const parsed = OutreachConfig.partial().parse(raw);
+  const sent = new Set(Object.keys((raw ?? {}) as Record<string, unknown>));
+  return Object.fromEntries(
+    Object.entries(parsed).filter(([k, v]) => sent.has(k) && v !== undefined),
+  ) as Partial<OutreachConfig>;
+}
+
+
 // ---- The send ledger ------------------------------------------------------
 
 export const SEND_STATUSES = [

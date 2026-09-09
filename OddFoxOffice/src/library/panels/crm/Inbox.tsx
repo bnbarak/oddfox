@@ -254,6 +254,15 @@ export function CrmInbox() {
         </div>
       )}
 
+
+      <input className="of-chat__in" placeholder="Subject" value={subject}
+             disabled={working} onChange={(e) => setSubject(e.target.value)} />
+      <textarea className="of-chat__in of-cw__body" rows={composing ? 10 : 7}
+                placeholder="Write a message…" value={body} disabled={working}
+                onChange={(e) => setBody(e.target.value)} />
+
+      {/* Below the body, where it reads in the order the message does: you
+          write, then you choose how to sign off. */}
       {signatures.length > 0 && (
         <label className="of-cw__row">
           <span className="of-cw__k">Sign</span>
@@ -268,12 +277,6 @@ export function CrmInbox() {
           </select>
         </label>
       )}
-
-      <input className="of-chat__in" placeholder="Subject" value={subject}
-             disabled={working} onChange={(e) => setSubject(e.target.value)} />
-      <textarea className="of-chat__in of-cw__body" rows={composing ? 10 : 7}
-                placeholder="Write a message…" value={body} disabled={working}
-                onChange={(e) => setBody(e.target.value)} />
     </>
   );
 
