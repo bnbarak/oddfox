@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
-  cancelSend, runTick, useCampaigns, useHeatmap, useOutreachStatus, useQueue,
+  cancelSend, runTick, setCampaignActive, useCampaigns, useEnrichment, useHeatmap, useOutreachStatus, useQueue,
   useReplies,
   type Cell, type HeatRow,
 } from "../../../lib/outreachStore";
@@ -45,9 +45,37 @@ export function CrmOutreach() {
   const map = useHeatmap(weeks);
   const queue = useQueue();
   const campaigns = useCampaigns();
+  const enrichment = useEnrichment();
+
   const replies = useReplies();
   const [busy, setBusy] = useState<string | null>(null);
   const [said, setSaid] = useState<string | null>(null);
+
+  /* Activating spends money, so it asks first and says how much. The number
+     comes from the same forecast shown in the table, and the confirmation
+     names it rather than saying "this may incur charges", which nobody
+     reads. */
+  const toggle = async (id: string, name: string, on: boolean, toEnrich: number) => {
+    if (on && toEnrich > 0
+        && !window.confirm(
+          `Switching on “${name}” looks up ${toEnrich} ` +
+          `${toEnrich === 1 ? "address" : "addresses"} at Apollo now — ${toEnrich} ` +
+          `${toEnrich === 1 ? "credit" : "credits"}, charged whether or not you send anything.\n\n` +
+          "Continue?")) return;
+    setBusy(id);
+    try {
+      const r = await setCampaignActive(id, on);
+      const e = r?.enrichment;
+      setSaid(!on ? `“${name}” paused.`
+        : e ? `“${name}” is on — ${e.found} found, ${e.missing} with no address, ` +
+              `${e.credits} ${e.credits === 1 ? "credit" : "credits"} spent.` +
+              (e.stopped ? ` ${e.stopped}` : "")
+            : `“${name}” is on.`);
+      await Promise.all([campaigns.reload(), enrichment.reload()]);
+    } catch (err) {
+      setSaid(err instanceof Error ? err.message : String(err));
+    } finally { setBusy(null); }
+  };
 
   const s = status.data;
 
@@ -238,7 +266,7 @@ export function CrmOutreach() {
                   <tr>
                     <th className="co">Campaign</th><th>Companies</th><th>Tier</th>
                     <th>People</th><th>Reachable</th><th>To look up</th><th>No address</th>
-                    <th>Sent</th><th></th>
+                    <th>Sent</th><th></th><th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -260,6 +288,12 @@ export function CrmOutreach() {
                       <td className="val">{c.sent}</td>
                       <td className="cell">
                         <Chip tone={c.active ? "calm" : ""}>{c.active ? "active" : "paused"}</Chip>
+                      </td>
+                      <td className="cell">
+                        <button className="of-facet__b" disabled={busy === c.id}
+                                onClick={() => void toggle(c.id, c.name, !c.active, c.to_enrich)}>
+                          {busy === c.id ? "…" : c.active ? "pause" : "activate"}
+                        </button>
                       </td>
                     </tr>
                   ))}

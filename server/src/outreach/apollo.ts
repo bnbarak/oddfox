@@ -1,5 +1,6 @@
 import { db } from "../firebaseApp.js";
 import { secret } from "./config.js";
+import * as crm from "./crm.js";
 import type { ContactRecord } from "../schemas.js";
 
 /* Apollo people enrichment: finding a work email for somebody we are about to
@@ -163,6 +164,58 @@ export async function findEmail(contact: ContactRecord): Promise<Enrichment> {
     request_id: data.request_id != null ? String(data.request_id) : null,
     note: email ? null : "Apollo has no work email for this person",
   });
+}
+
+export type CampaignEnrichment = {
+  looked_up: number; found: number; missing: number; already_known: number;
+  credits: number; stopped: string | null;
+};
+
+/** Buys addresses for everyone in a campaign who has none.
+
+    This runs when a campaign is switched on, which is earlier than the rest
+    of this file is built for: it spends before any message exists, so a
+    campaign activated and then paused has already cost its money. That is a
+    deliberate call by the owner of the budget — the alternative was a first
+    send that silently paused to shop, and he would rather pay up front and
+    see the addresses.
+
+    The guards that still hold: the ledger means nobody is looked up twice
+    across every activation ever, the daily cap stops a runaway, and it is
+    sequential so it stops *at* the cap rather than after firing everything. */
+export async function enrichCampaign(accountIds: string[]): Promise<CampaignEnrichment> {
+  const people = (await crm.contacts()).filter(
+    (c) => c.account_id && accountIds.includes(c.account_id) && !c.email);
+
+  const out: CampaignEnrichment = {
+    looked_up: 0, found: 0, missing: 0, already_known: 0, credits: 0, stopped: null,
+  };
+
+  for (const person of people) {
+    if (await known(person.id)) { out.already_known++; continue; }
+    if ((await spentToday()) >= DAILY_CREDIT_CAP) {
+      out.stopped = `stopped at the daily ceiling of ${DAILY_CREDIT_CAP} credits; ` +
+                    "the rest will be looked up when their message is scheduled";
+      break;
+    }
+    let got;
+    try {
+      got = await findEmail(person);
+    } catch (e) {
+      // One bad lookup is not a reason to abandon the other five.
+      out.stopped = e instanceof Error ? e.message : String(e);
+      break;
+    }
+    out.looked_up++;
+    out.credits += got.credits;
+    if (got.email) {
+      out.found++;
+      await crm.setEmail(person.id, got.email).catch(() => undefined);
+    } else {
+      out.missing++;
+    }
+  }
+  return out;
 }
 
 export { DAILY_CREDIT_CAP, REFUSED };

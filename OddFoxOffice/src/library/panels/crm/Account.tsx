@@ -1,8 +1,9 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Section, Grid, Cell, Stat, Note, Chip, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { useCampaigns, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
+import { useCampaigns, useEnrichment, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
 import { CampaignChip } from "./CampaignChip";
+import { EmailCell } from "./EmailCell";
 import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
 /* One account, end to end: where the company is, who we know there, and every
@@ -89,6 +90,8 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
   const { rows: contacts } = useContacts();
   const threadsRes = useThreads();
   const campaigns = useCampaigns();
+  const enrichment = useEnrichment();
+  const looked = new Map((enrichment.data?.records ?? []).map((e) => [e.contact_id, e]));
 
   const a = accounts.find((r) => r.id === id);
   if (!a) {
@@ -191,9 +194,9 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
                       </td>
                       <td className="cell"><span className="of-note">{c.title}</span></td>
                       <td className="cell"><Chip>{c.buying_role}</Chip></td>
-                      <td className="cell">{c.email
-                        ? <a className="of-link of-site" href={`mailto:${c.email}`}>{c.email}</a>
-                        : <span className="of-dot-off" title="no address on record" />}</td>
+                      <td className="cell">
+                        <EmailCell email={c.email} found={looked.get(c.id)} />
+                      </td>
                       <td className="cell">{c.linkedin_url
                         ? <Site url={c.linkedin_url} label="profile" />
                         : <span className="of-dot-off" title="no public profile found" />}</td>

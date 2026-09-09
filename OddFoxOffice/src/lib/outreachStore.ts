@@ -194,6 +194,27 @@ export const CAMPAIGN_TONE: Record<CampaignState, Tone> = {
   running: "calm", queued: "cool", paused: "warm", "not started": "", none: "",
 };
 
+export type EnrichmentRow = {
+  contact_id: string; matched: boolean; email: string | null; at: string; note: string | null;
+};
+
+/** What Apollo has already told us about each person. The panels need the
+    difference between "never asked" and "asked, and there is nothing" — both
+    look like a missing address otherwise, but only the first is fillable. */
+export const useEnrichment = () =>
+  useResource<{ records: EnrichmentRow[]; credits_today: number }>("/enrichment");
+
+export async function setCampaignActive(id: string, active: boolean) {
+  const res = await fetch(
+    `${BASE}/campaigns/${encodeURIComponent(id)}/${active ? "activate" : "pause"}`,
+    { method: "POST", headers: authHeaders() });
+  const body = (await res.json().catch(() => null)) as
+    { error?: string; enrichment?: { looked_up: number; found: number; missing: number;
+                                     credits: number; stopped: string | null } | null } | null;
+  if (!res.ok) throw new Error(body?.error ?? `campaign ${active ? "activate" : "pause"} → ${res.status}`);
+  return body;
+}
+
 export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
 export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");
 

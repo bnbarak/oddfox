@@ -3,11 +3,15 @@ import { Section, Grid, Cell, Stat, Note, H1, Card, Chip, Site, Logo, Star } fro
 import type { Rec } from "../../../data";
 import type { ContactRecord } from "../../../lib/crmStore";
 import { contactsFile, useAccounts, useContacts } from "./shared";
+import { EmailCell } from "./EmailCell";
+import { useEnrichment } from "../../../lib/outreachStore";
 import { ServerState } from "./ServerState";
 
 export function CrmPeople() {
   const { rows: people, live, settled, error } = useContacts();
   const { rows: accounts } = useAccounts();
+  const enrichment = useEnrichment();
+  const looked = new Map((enrichment.data?.records ?? []).map((e) => [e.contact_id, e]));
 
   // Most contact rows carry a company name but no account_id, so fall back to the name.
   const byName = new Map(accounts.map((r) => [r.company, r]));
@@ -23,6 +27,8 @@ export function CrmPeople() {
   const FILTERS = [
     { id: "all", label: "All", fn: () => true },
     { id: "no-email", label: "No email", fn: (x: ContactRecord) => !x.email },
+    { id: "cant-find", label: "Can’t find",
+      fn: (x: ContactRecord) => !x.email && looked.get(x.id)?.matched === false },
     { id: "no-linkedin", label: "No LinkedIn", fn: (x: ContactRecord) => !x.linkedin_url },
     { id: "neither", label: "Neither", fn: (x: ContactRecord) => !x.email && !x.linkedin_url },
     { id: "both", label: "Both", fn: (x: ContactRecord) => Boolean(x.email && x.linkedin_url) },
@@ -92,9 +98,9 @@ export function CrmPeople() {
                       <td className="val">{x.priority ?? "—"}</td>
                       <td className="cell">{x.connection_degree === 1
                         ? <Chip tone="calm">1st</Chip> : <span className="of-dot-off" />}</td>
-                      <td className="cell">{x.email
-                        ? <a className="of-link of-site" href={`mailto:${x.email}`}>{x.email}</a>
-                        : <span className="of-dot-off" title="no address on record" />}</td>
+                      <td className="cell">
+                        <EmailCell email={x.email} found={looked.get(x.id)} />
+                      </td>
                       <td className="cell">{x.linkedin_url
                         ? <Site url={x.linkedin_url} label="profile" />
                         : <span className="of-dot-off" title="no public profile found" />}</td>

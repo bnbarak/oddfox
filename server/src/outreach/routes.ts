@@ -6,9 +6,9 @@ import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule } from "./send.js";
 import {
   allCampaigns, allReplies, allSends, clearThread, getConfig, getThread, headroom,
-  lastTick, putConfig, recentTicks,
+  lastTick, putCampaign, putConfig, recentTicks,
 } from "./store.js";
-import { allEnrichment, spentToday } from "./apollo.js";
+import { allEnrichment, enrichCampaign, spentToday } from "./apollo.js";
 import { statesFor } from "./campaignState.js";
 import * as crm from "./crm.js";
 import { chat } from "./operator.js";
@@ -206,6 +206,41 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
                                   && s.status !== "canceled").length,
       };
     }),
+  });
+}));
+
+/** Switching a campaign on buys addresses for everyone in it who has none.
+
+    Deliberately eager: the owner of the budget chose paying at activation
+    over a first send that pauses to shop. The spend is bounded by the ledger
+    (nobody twice, ever) and the daily ceiling, and the response says exactly
+    what it cost. */
+outreachRouter.post("/campaigns/:id/activate", h(async (req, res) => {
+  const c = (await allCampaigns()).find((x) => x.id === req.params.id);
+  if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
+  await putCampaign({ ...c, active: true });
+  res.json({ id: c.id, active: true, enrichment: await enrichCampaign(c.account_ids) });
+}));
+
+outreachRouter.post("/campaigns/:id/pause", h(async (req, res) => {
+  const c = (await allCampaigns()).find((x) => x.id === req.params.id);
+  if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
+  await putCampaign({ ...c, active: false });
+  res.json({ id: c.id, active: false });
+}));
+
+/** Who we have looked up and what came back, keyed by contact.
+
+    The panels need the difference between "we have never asked about this
+    person" and "we asked and Apollo has nothing", because the first is a
+    gap somebody can fill and the second is closed. Both look like a missing
+    address without this. */
+outreachRouter.get("/enrichment", h(async (_req, res) => {
+  const records = await allEnrichment();
+  res.json({
+    credits_today: await spentToday(),
+    records: records.map(({ contact_id, matched, email, at, note }) =>
+      ({ contact_id, matched, email, at, note })),
   });
 }));
 

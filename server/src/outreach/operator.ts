@@ -3,6 +3,7 @@ import { TokenLimiter, ToolCallFilter } from "@mastra/core/processors";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
 import { draft, modelConfigured } from "./agent.js";
+import { enrichCampaign } from "./apollo.js";
 import { blockers } from "./config.js";
 import * as crm from "./crm.js";
 import { heatmap } from "./heatmap.js";
@@ -27,7 +28,11 @@ import { due } from "./tick.js";
    the blocker list are enforced in send.ts, not here, so no amount of
    confused instruction-following can talk its way past them. */
 
-const t = {
+/** The operator's tools, exported so the MCP endpoint can hand the same ones
+    to Claude on a laptop. One definition, two front doors: anything added
+    here appears in both, and no capability can exist in one and not the
+    other by accident. */
+export const t = {
   status: createTool({
     id: "outreach-status",
     description:
@@ -122,11 +127,24 @@ const t = {
       account_ids: z.array(z.string()).describe("Account ids in this campaign, any tier, from find-people or the CRM"),
       active: z.boolean().nullish(),
     }),
-    outputSchema: z.object({ id: z.string(), active: z.boolean() }),
+    outputSchema: z.object({
+      id: z.string(), active: z.boolean(),
+      enrichment: z.object({
+        looked_up: z.number(), found: z.number(), missing: z.number(),
+        already_known: z.number(), credits: z.number(), stopped: z.string().nullable(),
+      }).nullable(),
+    }),
     execute: async (input) => {
+      const before = (await allCampaigns()).find((x) => x.id === input.id);
       const c = Campaign.parse({ ...input, active: input.active ?? true, created_at: new Date().toISOString() });
       await putCampaign(c);
-      return { id: c.id, active: c.active };
+      /* Switching a campaign on is what buys addresses. Only on the
+         transition — re-saving an already-active campaign must not look like
+         a reason to go shopping, though the ledger would stop it anyway. */
+      const enrichment = c.active && !before?.active
+        ? await enrichCampaign(c.account_ids)
+        : null;
+      return { id: c.id, active: c.active, enrichment };
     },
   }),
 
@@ -312,11 +330,15 @@ How to behave:
   draft the messages, show them, and say that addresses will be looked up on
   scheduling and that a few people may turn out to have none. Never claim we
   cannot contact a campaign account for want of addresses.
-- That lookup costs money, so it happens only where it already does — inside
-  scheduling, for an active campaign. You have no tool for it and must not ask
-  for one. Never propose enriching a list, filling in the gaps on the People
-  page, or looking somebody up "to check": those are the expensive patterns
-  this system is built to avoid.
+- Addresses are bought at two moments and nowhere else: when a campaign is
+  switched on, and when a message to somebody in one is scheduled. Switching a
+  campaign on therefore spends money. Say so before you do it — how many
+  people have no address and so how many credits it will cost — and do it only
+  when asked. Never propose enriching a list, filling in the gaps on the
+  People page, or looking somebody up "to check".
+- Report what the lookup actually returned: how many were found and how many
+  Apollo has no address for. "Can't find" is a real, final answer about a
+  person, not a failure to retry.
 - Report what actually happened. If four of six were scheduled and two were
   refused, say that, and say which.
 - Cancelling is cheap and safe while a message is scheduled. Offer it when
