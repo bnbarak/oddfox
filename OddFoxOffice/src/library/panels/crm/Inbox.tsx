@@ -144,16 +144,20 @@ export function CrmInbox() {
     return () => window.removeEventListener("resize", fit);
   });
 
-  /* Selecting a conversation pulls its row up towards the top of the list, so
-     the row and the thread you are reading line up — but only as far as the
-     list really scrolls. The browser clamps to the last screenful, which is
-     what keeps a short list from scrolling its other rows out of sight. */
+  /* A conversation you cannot see gets pulled to the top of the list, so the
+     row and the thread you are reading line up. One you can already see is
+     left where it is: moving the list under someone who just clicked a row
+     that was in plain sight only makes them find their place again. The
+     browser clamps at the last screenful, so a short list never scrolls. */
   const listEl = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => {
     const list = listEl.current;
     const row = list?.querySelector<HTMLElement>(".of-inbox__row.is-on");
     if (!list || !row) return;
-    list.scrollTop += row.getBoundingClientRect().top - list.getBoundingClientRect().top;
+    const box = list.getBoundingClientRect();
+    const at = row.getBoundingClientRect();
+    if (at.top >= box.top && at.bottom <= box.bottom) return;
+    list.scrollTop += at.top - box.top;
   }, [open?.key]);
 
   // Only people with an address can be written to; a picker full of names
