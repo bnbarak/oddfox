@@ -45,8 +45,15 @@ function Message({ m, open, onToggle, onCancel, busy }: {
               onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle(); } }}>
         <span className="of-msg__who">{m.dir === "out" ? "Seaworth" : "them"}</span>
         {!open && <span className="of-msg__peek">{snippet(m)}</span>}
-        {m.dir === "out" && m.round === 0 ? <span className="of-msg__tag">one-off</span> : null}
-        {m.round ? <span className="of-msg__tag">round {m.round}</span> : null}
+        {/* A message somebody typed needs no label — that is the default.
+            Only sequence mail is worth marking, and then it should say what
+            it came from and let you go read it. */}
+        {m.dir === "out" && m.round ? (
+          <a className="of-msg__tag of-msg__seq" href="/library/crm-sequences"
+             title={`Automated — round ${m.round} of the sequence`}>
+            Automated · round {m.round}
+          </a>
+        ) : null}
         {m.dry_run ? <Chip tone="warm">dry run</Chip> : null}
         {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
         {m.unsubscribe ? <Chip tone="hot">opted out</Chip> : null}
@@ -201,105 +208,113 @@ export function CrmInbox() {
     return <><H1>Inbox</H1><Note><strong>The CRM server is not answering. </strong>{error}</Note></>;
   }
 
-  const composer = !(composing || replying) ? null : (
-    <div className="of-cw" role="dialog" aria-label="Compose">
-      <header className="of-cw__h">
-        <span>{composing ? "New message" : `Reply to ${open?.full_name ?? ""}`}</span>
-        <button className="of-cw__x" onClick={() => { setComposing(false); setReplying(false); }}
-                title="Close">×</button>
-      </header>
-      <div className="of-cw__b">
+  /* One set of fields, two frames. New email is a popup you can move away
+     from; a reply belongs at the bottom of the thread it answers, where you
+     can still read what you are replying to. */
+  const fields = (
+    <>
+      <label className="of-cw__row">
+        <span className="of-cw__k">From</span>
+        <select className="of-sel of-cw__v" value={fromDomain} disabled={working}
+                onChange={(e) => setFromDomain(e.target.value)}>
+          {senders.map((x) => (
+            <option key={x.domain} value={x.domain}>
+              {x.address}{x.manual_only ? "  (personal — by hand only)" : ""}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      {composing ? (
         <label className="of-cw__row">
-          <span className="of-cw__k">From</span>
-          <select className="of-sel of-cw__v" value={fromDomain} disabled={working}
-                  onChange={(e) => setFromDomain(e.target.value)}>
-            {senders.map((x) => (
-              <option key={x.domain} value={x.domain}>
-                {x.address}{x.manual_only ? "  (personal — by hand only)" : ""}
+          <span className="of-cw__k">To</span>
+          <input className="of-cw__v of-chat__in" placeholder="Search name, company or role"
+                 value={find} disabled={working}
+                 onChange={(e) => { setFind(e.target.value); setTo(""); }} />
+        </label>
+      ) : (
+        <div className="of-cw__row">
+          <span className="of-cw__k">To</span>
+          <span className="of-cw__v of-note">{open?.email ?? "no address on record"}</span>
+        </div>
+      )}
+
+      {composing && !to && find.trim() && !typedEmail && (
+        <div className="of-to">
+          {writable.length === 0 && (
+            <span className="of-note">
+              Nobody matches. Type a full email address to write to someone outside the CRM.
+            </span>
+          )}
+          {writable.map((c) => (
+            <button key={c.id} className="of-to__b"
+                    onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
+              <strong>{c.full_name}</strong>
+              <span className="of-note"> · {c.title || "role unknown"} · {c.company ?? "—"}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {signatures.length > 0 && (
+        <label className="of-cw__row">
+          <span className="of-cw__k">Sign</span>
+          <select className="of-sel of-cw__v"
+                  value={signature || conf.data?.default_signature || ""}
+                  disabled={working} onChange={(e) => setSignature(e.target.value)}>
+            {signatures.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.name}{x.id === conf.data?.default_signature ? " (default)" : ""}
               </option>
             ))}
           </select>
         </label>
+      )}
 
-        {composing ? (
-          <label className="of-cw__row">
-            <span className="of-cw__k">To</span>
-            <input className="of-cw__v of-chat__in" placeholder="Search name, company or role"
-                   value={find} disabled={working}
-                   onChange={(e) => { setFind(e.target.value); setTo(""); }} />
-          </label>
-        ) : (
-          <div className="of-cw__row">
-            <span className="of-cw__k">To</span>
-            <span className="of-cw__v of-note">{open?.email ?? "no address on record"}</span>
-          </div>
-        )}
+      <input className="of-chat__in" placeholder="Subject" value={subject}
+             disabled={working} onChange={(e) => setSubject(e.target.value)} />
+      <textarea className="of-chat__in of-cw__body" rows={composing ? 10 : 7}
+                placeholder="Write a message…" value={body} disabled={working}
+                onChange={(e) => setBody(e.target.value)} />
+    </>
+  );
 
-        {composing && !to && find.trim() && !typedEmail && (
-          <div className="of-to">
-            {writable.length === 0 && (
-              <span className="of-note">
-                Nobody matches. Type a full email address to write to someone outside the CRM.
-              </span>
-            )}
-            {writable.map((c) => (
-              <button key={c.id} className="of-to__b"
-                      onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
-                <strong>{c.full_name}</strong>
-                <span className="of-note"> · {c.title || "role unknown"} · {c.company ?? "—"}</span>
-              </button>
-            ))}
-          </div>
-        )}
+  const actions = (() => {
+    // Say why the button is dead rather than leaving it greyed and
+    // unexplained — "no recipient picked" is not obvious when the search box
+    // already has text in it.
+    const missing = composing && !to && !typedEmail
+      ? "pick someone from the list, or type a full email address"
+      : !subject.trim() ? "add a subject"
+      : !body.trim() ? "write a message"
+      : null;
+    return (
+      <>
+        <button className="of-facet__b" onClick={() => void doSend()}
+                disabled={working || Boolean(missing)}>
+          {working ? "…" : "Send"}
+        </button>
+        <button className="of-dock__x"
+                onClick={() => { setComposing(false); setReplying(false); }}>discard</button>
+        <span className="of-note">
+          {missing ?? "Signature added for you."}
+        </span>
+      </>
+    );
+  })();
 
-        {signatures.length > 0 && (
-          <label className="of-cw__row">
-            <span className="of-cw__k">Sign</span>
-            <select className="of-sel of-cw__v"
-                    value={signature || conf.data?.default_signature || ""}
-                    disabled={working} onChange={(e) => setSignature(e.target.value)}>
-              {signatures.map((x) => (
-                <option key={x.id} value={x.id}>
-                  {x.name}{x.id === conf.data?.default_signature ? " (default)" : ""}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
-        <input className="of-chat__in" placeholder="Subject" value={subject}
-               disabled={working} onChange={(e) => setSubject(e.target.value)} />
-        <textarea className="of-chat__in of-cw__body" rows={10} placeholder="Write a message…"
-                  value={body} disabled={working} onChange={(e) => setBody(e.target.value)} />
-      </div>
-      <footer className="of-cw__f">
-        {(() => {
-          // Say why the button is dead rather than leaving it greyed and
-          // unexplained — "no recipient picked" is not obvious when the
-          // search box already has text in it.
-          const missing = composing && !to && !typedEmail
-            ? "pick someone from the list, or type a full email address"
-            : !subject.trim() ? "add a subject"
-            : !body.trim() ? "write a message"
-            : null;
-          return (
-            <>
-              <button className="of-facet__b" onClick={() => void doSend()}
-                      disabled={working || Boolean(missing)}>
-                {working ? "…" : "Send"}
-              </button>
-              <span className="of-note">
-                {missing ?? "Signature, address and opt-out line are added for you."}
-              </span>
-            </>
-          );
-        })()}
-      </footer>
+  /* New email only. A reply renders inside the thread, below. */
+  const composer = !composing ? null : (
+    <div className="of-cw" role="dialog" aria-label="Compose">
+      <header className="of-cw__h">
+        <span>New message</span>
+        <button className="of-cw__x" onClick={() => setComposing(false)} title="Close">×</button>
+      </header>
+      <div className="of-cw__b">{fields}</div>
+      <footer className="of-cw__f">{actions}</footer>
     </div>
   );
 
-  /* Always rendered, zeros included. "0 conversations" says the system is
-     working and there is nothing there; a blank space says nothing at all,
-     and you cannot tell it from a page that failed to load. */
   const counts = (
     <span className="of-inbox__counts">
       <strong>{threads.length}</strong> conversation{threads.length === 1 ? "" : "s"}
@@ -384,11 +399,18 @@ export function CrmInbox() {
                 );
               })}
 
-              <button className="of-facet__b" style={{ marginTop: 14 }}
-                      disabled={!open.email} onClick={startReply}
-                      title={open.email ? "Write to this person" : "No address on record"}>
-                Reply
-              </button>
+              {replying ? (
+                <div className="of-reply">
+                  <div className="of-cw__b">{fields}</div>
+                  <div className="of-cw__f">{actions}</div>
+                </div>
+              ) : (
+                <button className="of-facet__b" style={{ marginTop: 14 }}
+                        disabled={!open.email} onClick={startReply}
+                        title={open.email ? "Write to this person" : "No address on record"}>
+                  Reply
+                </button>
+              )}
             </>
           )}
         </div>

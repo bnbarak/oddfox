@@ -110,6 +110,11 @@ export type ReplyRow = {
     explanation when this fails rather than an empty table, because "the
     outreach API is not configured yet" is the expected state until the keys
     arrive, not a bug. */
+/** How often an open page re-checks. Not faster on purpose: the server only
+    learns about new mail when the heartbeat polls Resend, once a minute, so
+    anything quicker just adds requests without seeing anything sooner. */
+const POLL_MS = 20_000;
+
 function useResource<T>(path: string) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -129,15 +134,30 @@ function useResource<T>(path: string) {
 
   useEffect(() => { void load(); }, [load]);
 
-  /* Come back to the tab and the page should be current. Mail arrives while
-     you are elsewhere — that is the normal case, not the exception — and a
-     stale inbox is worse than a slow one because it looks authoritative. */
+  /* Keep an open page current, and refresh the moment you come back to it.
+     Mail arriving while you are looking elsewhere is the normal case, not the
+     exception, and a stale inbox is worse than a slow one because it looks
+     authoritative.
+
+     Polling rather than a stream: an SSE connection would hold a Cloud Run
+     instance open per viewer, and the server has nothing new to say between
+     heartbeats anyway. The timer stops while the tab is hidden — the focus
+     handler covers coming back. */
   useEffect(() => {
     const refresh = () => { if (document.visibilityState === "visible") void load(); };
-    document.addEventListener("visibilitychange", refresh);
+    let timer = window.setInterval(refresh, POLL_MS);
+    const onVisibility = () => {
+      window.clearInterval(timer);
+      if (document.visibilityState === "visible") {
+        void load();
+        timer = window.setInterval(refresh, POLL_MS);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("focus", refresh);
     return () => {
-      document.removeEventListener("visibilitychange", refresh);
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("focus", refresh);
     };
   }, [load]);
