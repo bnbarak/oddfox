@@ -3,6 +3,7 @@ import { FirestoreCrmRepository } from "../firestoreRepository.js";
 import * as crm from "./crm.js";
 import { secret } from "./config.js";
 import { getConfig } from "./store.js";
+import { optOut } from "./optout.js";
 import { readsAsAutomated, readsAsOptOut } from "./render.js";
 import {
   allSends, haveReply, openSends, putReply, setCursor, setStatus,
@@ -104,7 +105,7 @@ export async function pollReplies(): Promise<number> {
     const full = await resend().emails.receiving.get(ref.id).catch(() => null);
     const text = full?.data?.text ?? null;
     const automated = readsAsAutomated(ref.from, ref.subject ?? null);
-    const optOut = readsAsOptOut(text) || readsAsOptOut(ref.subject ?? null);
+    const isOptOut = readsAsOptOut(text) || readsAsOptOut(ref.subject ?? null);
     const { addr, send_id, contact_id, account_id } = await attribute(ref.from);
 
     await putReply({
@@ -112,20 +113,23 @@ export async function pollReplies(): Promise<number> {
       message_id: ref.message_id ?? full?.data?.message_id ?? null,
       send_id, account_id, contact_id,
       excerpt: text ? text.replace(/\s+/g, " ").slice(0, 800) : null,
-      unsubscribe: optOut, automated,
+      unsubscribe: isOptOut, automated,
     });
     stored++;
 
     // The one thing Resend cannot infer: somebody typed "unsubscribe" in a
-    // reply. Its suppression list is the right home for it, so it applies
-    // everywhere and there is no second list to disagree with the first.
-    if (optOut) {
-      await resend().suppressions.add({ email: addr }).catch(() => undefined);
+    // reply. It goes through exactly the same path as a click on the link, so
+    // a typed opt-out and a clicked one are the same event with a different
+    // `source` — recorded, suppressed at Resend, queued mail pulled back, and
+    // the contact marked. Typing it used to only write the suppression, which
+    // left the rest of their sequence to keep landing.
+    if (isOptOut) {
+      await optOut(addr, "reply", `reply ${ref.id}`).catch(() => undefined);
     }
 
     // A real human reply ends the sequence. An out-of-office does not — that
     // is the whole reason the automated check exists.
-    if (!automated && !optOut && contact_id) {
+    if (!automated && !isOptOut && contact_id) {
       await repo.patchContact(contact_id, { replied: true, status: "replied" }).catch(() => undefined);
       if (account_id) {
         await repo.patchAccount(account_id, { status: "replied", last_touch: at.slice(0, 10) })

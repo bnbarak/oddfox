@@ -40,13 +40,48 @@ holds it and hands back an id that will cancel it. That id *is* the cancel
 token. Removing the delay to "send now" would remove the only window in which
 a mistake is free.
 
-**4. Resend owns the suppression list. Do not build a second one.** It adds to
-it automatically on every bounce and complaint and skips sending to anything
-on it, across the whole team. We push to it in exactly one place — when an
-inbound reply reads as an opt-out (`poll.ts`) — because that is the one thing
-Resend cannot infer. A local list would be a second source of truth that
-eventually disagrees with the first, and the failure mode is emailing someone
-who asked you not to.
+**4. Resend owns delivery suppression. We own the opt-out record.** Resend
+adds to its suppression list automatically on every bounce and complaint and
+skips sending to anything on it, across the whole team — that is enforcement,
+and there is no second copy of it. `crmOptOuts` is a different thing: the
+record of people who *asked*, with who, when, and how they told us. An
+exported suppression list is mostly bounces and cannot say "clicked the link
+in round 2 on the ninth", which is the only answer to somebody claiming they
+were emailed after opting out. It is also what `send.ts` checks by address
+before it uses one, without a round trip.
+
+**4b. There is one opt-out path and everything goes through it.** `optOut()`
+in `optout.ts` does four things, and doing three of them is the same as doing
+none: record it, suppress at Resend, **cancel what is already queued**, mark
+the contact dead. A click, a mail client's one-click button, a typed reply and
+somebody adding an address by hand in the panel all call it — the only
+difference is `source`. The cancel step is the one that gets forgotten:
+suppressing an address stops the *next* message, while a sequence already
+scheduled keeps landing for another week, which is precisely what the person
+clicking unsubscribe was trying to end. Verified against a real Firestore:
+
+```bash
+UNSUBSCRIBE_SECRET=anything \
+GOOGLE_APPLICATION_CREDENTIALS=~/.config/gcloud/legacy_credentials/<account>/adc.json \
+  npx tsx scripts/outreach-optout-test.ts maine-507401
+```
+
+**4c. The link is public, so the token is what makes it safe.**
+`unsubToken.ts` signs `base64url(address).hmac` with `UNSUBSCRIBE_SECRET`. No
+database lookup and no stored random id: the token is derived from the
+address, so the same person always gets the same link and one printed in a
+message sent last month still works after any redeploy. That also means the
+secret must be **stable** — rotating it silently breaks every link already in
+somebody's inbox. Without it set, `canLink()` is false and messages fall back
+to the reply-to-unsubscribe wording, which is lawful but has no one-click.
+
+`GET /u/:token` acts immediately rather than showing a confirmation button.
+That means a link prefetched by a scanner can opt somebody out who never
+clicked, and that is the same deliberate trade `readsAsOptOut()` makes: a
+false opt-out costs one lead, a missed one costs a complaint. It also has to
+be this way for `List-Unsubscribe-Post: List-Unsubscribe=One-Click` to be
+honest — RFC 8058 promises no confirmation step. A `HEAD` is a scanner
+checking the link resolves and is answered without acting.
 
 **5. It fails closed, and that is the shipped default.** No domains, no keys,
 no postal address, `dry_run: true`. `blockers()` in `config.ts` lists every
@@ -140,6 +175,15 @@ Tuesday fills Tuesday.
 **Cancelling returns the slot.** `cancel()` releases the reservation. If you
 add another way for a scheduled message to die, release it there too or the
 day quietly loses capacity.
+
+**Every commercial message has both a text and an HTML part, built together.**
+`compose()` in `render.ts` returns the two from one call so they cannot drift;
+two parts of a multipart message disagreeing is itself a spam signal. The HTML
+is inline-styled, table-free and image-free on purpose — cold mail that looks
+like a newsletter gets filed like a newsletter — and the only thing it adds is
+that the opt-out is clickable. The HTML is stored on the send record verbatim,
+not regenerated on read, so a message shows the footer it actually went out
+with rather than today's.
 
 **An out-of-office is not a reply.** `readsAsAutomated()` keeps holiday
 responders out of the pipeline; `readsAsOptOut()` is deliberately generous,

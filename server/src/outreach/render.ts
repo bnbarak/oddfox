@@ -1,5 +1,6 @@
 import type { AccountRecord, ContactRecord } from "../schemas.js";
 import type { OutreachConfig } from "./schemas.js";
+import { linkFor } from "./unsubToken.js";
 
 /* Turning a template in crmMeta/sequences into the exact text that will be
    sent. Two rules matter here:
@@ -51,9 +52,24 @@ export function fill(template: string, vars: Vars): { text: string; unresolved: 
   return { text, unresolved: [...missing] };
 }
 
-/** The opt-out sentence, and the marker for where an appended footer
-    begins in a rendered body. */
+/** The opt-out sentence used when there is no working link — no signing key
+    configured, or a recipient we cannot build one for. Replying is still a
+    lawful opt-out; poll.ts reads inbound mail for it. */
 export const OPT_OUT_LINE = `Reply "unsubscribe" and you will not hear from me again.`;
+
+/** The same sentence when there IS a link. One click beats composing a reply,
+    and an opt-out somebody actually completes is the only kind that counts. */
+export const optOutLine = (url: string | null): string =>
+  url ? `Don't want these? Unsubscribe: ${url}` : OPT_OUT_LINE;
+
+/** Splits a rendered body at the point the appended footer begins.
+
+    Used by the panels to show just the human-written part. Matches whichever
+    opt-out sentence was used, which footer() always emits last and which no
+    hand-written message contains. Exported as a pattern rather than a string
+    because there are now two wordings and callers must not have to know
+    which one a given message got. */
+export const FOOTER_START = /\n+(?=Don't want these\? Unsubscribe:|Reply "unsubscribe")/;
 
 /** The block that closes a message: a sign-off, and for marketing mail the
     postal address and opt-out line as well.
@@ -73,13 +89,14 @@ export const OPT_OUT_LINE = `Reply "unsubscribe" and you will not hear from me a
     message that needs them. */
 export function footer(
   cfg: OutreachConfig, signatureId?: string | null, commercial = true,
+  to?: string | null,
 ): string {
   const id = signatureId ?? cfg.default_signature;
   const sig = cfg.signatures.find((x) => x.id === id);
   const lines = [sig ? sig.body.trimEnd() : cfg.sender_name];
   if (commercial) {
     if (cfg.postal_address) lines.push(cfg.postal_address);
-    if (cfg.unsubscribe_mailbox) lines.push(OPT_OUT_LINE);
+    if (cfg.unsubscribe_mailbox) lines.push(optOutLine(to ? linkFor(to) : null));
   }
   return lines.join("\n");
 }
@@ -91,24 +108,106 @@ export function footer(
     machine-generated, which is the opposite of what this outreach is going
     for. The footer is still appended unconditionally — see footer() — so
     dropping the marker costs nothing legally. Anything that needs to find
-    where the body ends should use footerStart() rather than matching "--". */
+    where the body ends should use FOOTER_START rather than matching "--". */
 export const withFooter = (
   body: string, cfg: OutreachConfig, signatureId?: string | null, commercial = true,
-): string => `${body.trimEnd()}\n\n${footer(cfg, signatureId, commercial)}\n`;
+  to?: string | null,
+): string => `${body.trimEnd()}\n\n${footer(cfg, signatureId, commercial, to)}\n`;
 
-/** Where the appended footer begins in a rendered body, or -1. Used to show
-    just the human-written part. Matches the opt-out line, which footer()
-    always emits last and which no hand-written message would contain. */
+// ---- The HTML half --------------------------------------------------------
+
+const ESC: Record<string, string> = {
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+};
+const esc = (s: string): string => s.replace(/[&<>"']/g, (c) => ESC[c]!);
+
+/* Deliberately plain HTML.
+
+   Everything here is inline-styled, table-free, image-free and one column,
+   because that is the shape that survives every mail client and because the
+   message is supposed to look like one person writing to another. A branded
+   template with a header image would render worse AND read worse: cold mail
+   that looks like a newsletter gets filed like a newsletter.
+
+   The HTML is a faithful rendering of the same text, not a second version of
+   it — the two parts of a multipart message disagreeing is itself a spam
+   signal. The only thing HTML adds is that the opt-out is clickable. */
+
+const FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
+
+/** Blank-line-separated blocks become paragraphs; single newlines inside a
+    block become <br>, which is what keeps a signature's line breaks. */
+const paragraphs = (text: string, style: string): string =>
+  text.trimEnd().split(/\n{2,}/).map((block) =>
+    `<p style="${style}">${esc(block.trimEnd()).replace(/\n/g, "<br>")}</p>`).join("\n");
+
+/** The message as HTML: the written body, then the footer, with the opt-out
+    rendered as a real link when we have one. */
+export function htmlBody(
+  body: string, cfg: OutreachConfig, signatureId?: string | null, commercial = true,
+  to?: string | null,
+): string {
+  const url = commercial && cfg.unsubscribe_mailbox && to ? linkFor(to) : null;
+  const p = `margin:0 0 1em;font-family:${FONT};font-size:15px;line-height:1.55;color:#111`;
+  const small = `margin:0 0 .5em;font-family:${FONT};font-size:12px;line-height:1.5;color:#767676`;
+
+  const id = signatureId ?? cfg.default_signature;
+  const sig = cfg.signatures.find((x) => x.id === id);
+
+  const parts = [paragraphs(body, p), paragraphs(sig ? sig.body : cfg.sender_name, p)];
+  if (commercial) {
+    // The compliance block, visually quieter than the message but present in
+    // the same place every time. Small and grey is convention, not evasion —
+    // it stays selectable, real text, and above the fold of the footer.
+    const tail: string[] = [];
+    if (cfg.postal_address) tail.push(esc(cfg.postal_address));
+    if (cfg.unsubscribe_mailbox) {
+      tail.push(url
+        ? `Don't want these? <a href="${esc(url)}" style="color:#767676">Unsubscribe</a>.`
+        : esc(OPT_OUT_LINE));
+    }
+    if (tail.length) parts.push(`<p style="${small}">${tail.join("<br>")}</p>`);
+  }
+
+  return `<div style="font-family:${FONT};font-size:15px;line-height:1.55;color:#111">\n${
+    parts.join("\n")}\n</div>`;
+}
+
+/** Both halves of the message from one call, so the text and the HTML can
+    never drift out of step — they are built from the same inputs here and
+    nowhere else. */
+export function compose(
+  body: string, cfg: OutreachConfig, signatureId?: string | null, commercial = true,
+  to?: string | null,
+): { text: string; html: string } {
+  return {
+    text: withFooter(body, cfg, signatureId, commercial, to),
+    html: htmlBody(body, cfg, signatureId, commercial, to),
+  };
+}
 
 /** Headers that make an opt-out one action in the recipient's mail client
-    rather than a hunt through the text. mailto rather than a URL because the
-    API has no public unencrypted surface to host a click endpoint on, and a
-    mailto target is honoured by every major client. */
-export function listHeaders(cfg: OutreachConfig, commercial = true): Record<string, string> {
+    rather than a hunt through the text.
+
+    Both targets when we have a link: the URL first, because Gmail and Yahoo
+    only show their own one-click control for a URL, and the mailto after it
+    as the fallback for clients that prefer one. `List-Unsubscribe-Post` is
+    RFC 8058 — it is what promises the provider that a POST to that URL is
+    the whole opt-out, with no confirmation page — and it is only honest to
+    send it because the endpoint really does accept POST. */
+export function listHeaders(
+  cfg: OutreachConfig, commercial = true, to?: string | null,
+): Record<string, string> {
   // Same rule as the footer: a personal note does not carry an unsubscribe
   // header, because it is not a mailing list.
   if (!commercial || !cfg.unsubscribe_mailbox) return {};
-  return { "List-Unsubscribe": `<mailto:${cfg.unsubscribe_mailbox}?subject=unsubscribe>` };
+  const url = to ? linkFor(to) : null;
+  const mailto = `<mailto:${cfg.unsubscribe_mailbox}?subject=unsubscribe>`;
+  if (!url) return { "List-Unsubscribe": mailto };
+  return {
+    "List-Unsubscribe": `<${url}>, ${mailto}`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
 }
 
 /** True when the text of an inbound reply reads as an opt-out. Deliberately

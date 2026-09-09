@@ -16,6 +16,7 @@ const REPLIES = "crmReplies";
 const TICKS = "crmTicks";
 const META = "crmOutreachMeta";
 const CAMPAIGNS = "crmCampaigns";
+const OPTOUTS = "crmOptOuts";
 
 // ---- Config ---------------------------------------------------------------
 
@@ -157,6 +158,60 @@ export async function allReplies(): Promise<ReplyRecord[]> {
   return snap.docs
     .map((d) => d.data() as ReplyRecord)
     .sort((a, b) => b.received_at.localeCompare(a.received_at));
+}
+
+// ---- Opt-outs -------------------------------------------------------------
+
+/** One row per address that has asked to be left alone.
+
+    Resend keeps a suppression list too, and it is still written to — it is
+    what actually stops a send at the provider, across every domain and every
+    key. This collection is the *record*: who, when, and how they told us.
+    Resend's list can be exported but it does not say "clicked the link in
+    round 2 on the ninth", and an opt-out you cannot evidence is one you
+    cannot defend if somebody complains. It is also the copy send.ts can
+    check for itself, without a round trip to Resend, before it uses an
+    address for anything. */
+export type OptOut = {
+  /** Lowercased address. Also the document id, so recording twice is a no-op. */
+  email: string;
+  contact_id: string | null;
+  account_id: string | null;
+  /** How they told us: a click, a one-click header POST, a typed reply, or
+      somebody adding them by hand from the panel. */
+  source: "link" | "one-click" | "reply" | "manual";
+  at: string;
+  /** Whatever we could see of the request, for the same reason the access log
+      exists: an opt-out is a thing people dispute. */
+  note: string | null;
+  /** How many queued messages were pulled back as a result. */
+  canceled: number;
+};
+
+const addrKey = (email: string): string =>
+  email.trim().toLowerCase().replace(/\//g, "_");
+
+export async function recordOptOut(o: OptOut): Promise<void> {
+  const ref = db().collection(OPTOUTS).doc(addrKey(o.email));
+  // First writer wins on the how-and-when: the click that actually opted them
+  // out is the event, and a later duplicate must not rewrite its history.
+  await db().runTransaction(async (t) => {
+    const snap = await t.get(ref);
+    if (snap.exists) {
+      t.set(ref, { seen_again_at: o.at, canceled: o.canceled }, { merge: true });
+      return;
+    }
+    t.set(ref, { ...o, email: o.email.trim().toLowerCase() });
+  });
+}
+
+export async function isOptedOut(email: string): Promise<boolean> {
+  return (await db().collection(OPTOUTS).doc(addrKey(email)).get()).exists;
+}
+
+export async function allOptOuts(): Promise<OptOut[]> {
+  const snap = await db().collection(OPTOUTS).get();
+  return snap.docs.map((d) => d.data() as OptOut).sort((a, b) => b.at.localeCompare(a.at));
 }
 
 // ---- Heartbeat ------------------------------------------------------------

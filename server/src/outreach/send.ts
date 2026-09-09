@@ -3,8 +3,10 @@ import { Resend } from "resend";
 import * as apollo from "./apollo.js";
 import * as crm from "./crm.js";
 import { capOf, domainOf, fromAddress, secret } from "./config.js";
-import { listHeaders, withFooter } from "./render.js";
-import { allCampaigns, getSend, pickDomain, putSend, release, reserve, setStatus } from "./store.js";
+import { compose, listHeaders } from "./render.js";
+import {
+  allCampaigns, allSends, getSend, isOptedOut, pickDomain, putSend, release, reserve, setStatus,
+} from "./store.js";
 import type { OutreachConfig, ScheduleRequest, SendRecord } from "./schemas.js";
 import { dayKey, nextInWindow } from "./time.js";
 
@@ -15,10 +17,12 @@ import { dayKey, nextInWindow } from "./time.js";
    returns an id that will cancel it. That id is the whole reason a mistake
    caught in the next twenty minutes costs nothing.
 
-   Note what is NOT here: an opt-out list. Resend keeps one, adds to it
-   automatically on every bounce and complaint, and skips sending to anything
-   on it across the whole team. Reimplementing that would only give us a
-   second list to disagree with the first. */
+   Bounces and complaints are still Resend's list to keep: it adds to it by
+   itself and skips sending to anything on it, across the whole team, and a
+   second copy would only give us something to disagree with. What we do keep
+   is the opt-out list — see store.ts — because a person who clicked
+   unsubscribe is a fact about our relationship with them, not a delivery
+   event, and it has to be checkable before an address is ever used. */
 
 let client: Resend | null = null;
 const resend = (): Resend => (client ??= new Resend(secret("RESEND_API_KEY") ?? undefined));
@@ -137,6 +141,16 @@ export async function schedule(
   if (contact?.email_status === "bounced") {
     throw new Refused("bounced", `${to} has already bounced`);
   }
+  /* The opt-out check is on the address, not on the contact.
+
+     Resend's suppression list would stop this too, and it is still written
+     to — but only for messages that reach Resend, and only once we have paid
+     for whatever enrichment produced the address. Checking here means an
+     opted-out person cannot be written to at all, including by hand, including
+     from a second contact record that happens to carry the same address. */
+  if (await isOptedOut(to)) {
+    throw new Refused("opted-out", `${to} has asked not to be contacted again`);
+  }
   if (/\{\{|\}\}/.test(`${req.subject}${req.body}`)) {
     throw new Refused("unresolved-placeholder",
       "The message still contains a {{placeholder}}. Fix it before scheduling.");
@@ -187,7 +201,7 @@ export async function schedule(
     throw new Refused("unknown-sender",
       `${domain} has no sender defined in SENDERS — adding one is a code change.`);
   }
-  const text = withFooter(req.body, cfg, req.signature, commercial);
+  const { text, html } = compose(req.body, cfg, req.signature, commercial, to);
   const account = contact ? await crm.account(contact.account_id) : null;
   const now = new Date().toISOString();
 
@@ -203,6 +217,7 @@ export async function schedule(
     round: req.round,
     subject: req.subject,
     body: text,
+    html,
     template_tier: req.template_tier,
     written_by: req.written_by,
     resend_id: null,
@@ -239,11 +254,11 @@ export async function schedule(
 
   try {
     const { data, error } = await resend().emails.send({
-      from, to, subject: req.subject, text,
+      from, to, subject: req.subject, text, html,
       ...(d.reply_to ? { replyTo: d.reply_to } : {}),
       scheduledAt: at.toISOString(),
       headers: {
-        ...listHeaders(cfg, commercial),
+        ...listHeaders(cfg, commercial, to),
         ...threadHeaders(req.in_reply_to, req.references),
       },
       tags: [{ name: "round", value: String(req.round) }],
@@ -282,4 +297,78 @@ export async function cancel(id: string): Promise<{ id: string; note: string }> 
   return { id, note: row.resend_id
     ? "cancelled at Resend and the day's slot returned"
     : "dry-run message; nothing was sent" };
+}
+
+/** Brings a scheduled message forward to a minute from now.
+
+    Resend has no "reschedule": the id you hold is for a message it is
+    holding, and changing when it goes means cancelling that one and handing
+    it a new one. So this re-sends the stored record rather than editing it,
+    and the record keeps its own id — the thread, the heat map and the
+    contact's history all point at that, and rewriting them to chase a new
+    Resend id would be a much larger blast radius than this deserves.
+
+    Still scheduled, not sent. Sixty seconds is what keeps cancel working, and
+    on cold mail that undo is worth more than the minute. */
+export async function sendNow(
+  id: string, cfg: OutreachConfig,
+): Promise<{ id: string; scheduled_at: string; note: string }> {
+  const row = await getSend(id);
+  if (!row) throw new Refused("no-send", `no send with id ${id}`, 404);
+  if (row.status !== "scheduled" && row.status !== "draft") {
+    throw new Refused("too-late",
+      `this message is ${row.status}; only a scheduled message can be brought forward`);
+  }
+  const at = new Date(Date.now() + 60 * 1000);
+  const now = new Date().toISOString();
+
+  if (row.dry_run) {
+    await putSend({ ...row, scheduled_at: at.toISOString(), updated_at: now });
+    return { id, scheduled_at: at.toISOString(), note: "dry run — nothing will actually be sent" };
+  }
+
+  // Cancel first. If the re-send then fails we have stopped a message rather
+  // than sent it twice, which is the right way round to fail.
+  if (row.resend_id) {
+    const { error } = await resend().emails.cancel(row.resend_id);
+    if (error) throw new Refused("resend-refused", error.message);
+  }
+
+  const commercial = row.round >= 1;
+  const { data, error } = await resend().emails.send({
+    from: row.from_address, to: row.to, subject: row.subject,
+    text: row.body, ...(row.html ? { html: row.html } : {}),
+    ...(row.reply_to ? { replyTo: row.reply_to } : {}),
+    scheduledAt: at.toISOString(),
+    headers: listHeaders(cfg, commercial, row.to),
+    tags: [{ name: "round", value: String(row.round) }],
+  });
+  if (error || !data) {
+    await putSend({ ...row, status: "failed", error: error?.message ?? "Resend returned no id",
+                    updated_at: now });
+    throw new Refused("resend-refused", error?.message ?? "Resend returned no id");
+  }
+
+  await putSend({ ...row, resend_id: data.id, status: "scheduled",
+                  scheduled_at: at.toISOString(), error: null, updated_at: now });
+  return { id, scheduled_at: at.toISOString(), note: "going out in about a minute" };
+}
+
+/** Pulls back everything still queued for one address.
+
+    The opt-out path's other half: suppressing an address stops the *next*
+    message, but a sequence that is already scheduled would keep landing for
+    another week, which is precisely the experience somebody clicking
+    unsubscribe is trying to end. Failures are counted, not thrown — one
+    message Resend has already released must not stop the rest being pulled. */
+export async function cancelAllTo(email: string): Promise<{ canceled: number; failed: number }> {
+  const addr = email.trim().toLowerCase();
+  const bare = (a: string) => (a.match(/<([^>]+)>/)?.[1] ?? a).trim().toLowerCase();
+  const queued = (await allSends()).filter(
+    (s) => bare(s.to) === addr && (s.status === "scheduled" || s.status === "draft"));
+  let canceled = 0, failed = 0;
+  for (const row of queued) {
+    try { await cancel(row.id); canceled++; } catch { failed++; }
+  }
+  return { canceled, failed };
 }

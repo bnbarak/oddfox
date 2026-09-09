@@ -1,9 +1,11 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Chip, H1, Note } from "../../../ui";
 import {
-  cancelSend, sendDirect, useOutreachConfig, useOutreachStatus, useThreads,
+  cancelSend, sendDirect, sendNow, useOutreachConfig, useOutreachStatus, useThreads,
   type Thread, type ThreadMessage,
 } from "../../../lib/outreachStore";
+import { EmailBody } from "./EmailBody";
+import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";
 import { Toast } from "./Toast";
 import { useContacts } from "./shared";
@@ -29,14 +31,18 @@ const snippet = (m: ThreadMessage | undefined): string => {
   if (!m) return "";
   // Drop our own appended footer. There is no "--" marker any more, so cut at
   // the opt-out line, which the server always emits last and which no
-  // hand-written message contains.
-  const body = (m.body ?? "").split(/\n+(?=Reply "unsubscribe")/)[0] ?? "";
+  // hand-written message contains. Two wordings, because a message carries a
+  // link when one can be minted and the reply instruction when it cannot —
+  // see FOOTER_START in the server's render.ts, which this mirrors.
+  const body = (m.body ?? "")
+    .split(/\n+(?=Don't want these\? Unsubscribe:|Reply "unsubscribe")/)[0] ?? "";
   return body.replace(/\s+/g, " ").trim().slice(0, 120);
 };
 
-function Message({ m, open, onToggle, onCancel, busy }: {
+function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
   m: ThreadMessage; open: boolean; onToggle: () => void;
-  onCancel: (id: string) => void; busy: boolean;
+  onCancel: (id: string) => void; onNow: (id: string) => void;
+  onSequence?: () => void; busy: boolean;
 }) {
   const pullable = m.dir === "out" && (m.status === "scheduled" || m.status === "draft");
   return (
@@ -49,10 +55,16 @@ function Message({ m, open, onToggle, onCancel, busy }: {
             Only sequence mail is worth marking, and then it should say what
             it came from and let you go read it. */}
         {m.dir === "out" && m.round ? (
-          <a className="of-msg__tag of-msg__seq" href="/library/crm-sequences"
-             title={`Automated — round ${m.round} of the sequence`}>
-            Automated · round {m.round}
-          </a>
+          <span className="of-msg__tag of-msg__seq"
+                title={`Automated — round ${m.round} of the sequence`}
+                onClick={(e) => e.stopPropagation()}>
+            <SequenceLink tier={m.template_tier ?? 1} round={m.round} />
+          </span>
+        ) : null}
+        {m.dir === "out" && m.round && onSequence ? (
+          <button className="of-msg__tag of-msg__tag--btn"
+                  onClick={(e) => { e.stopPropagation(); onSequence(); }}
+                  title="See this person's whole sequence">sequence</button>
         ) : null}
         {m.dry_run ? <Chip tone="warm">dry run</Chip> : null}
         {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
@@ -63,11 +75,18 @@ function Message({ m, open, onToggle, onCancel, busy }: {
       {open && (
         <div className="of-msg__open">
           {m.subject && <div className="of-msg__subj">{m.subject}</div>}
-          {m.body && <pre className="of-msg__body">{m.body}</pre>}
+          <EmailBody html={m.html} text={m.body} />
           {pullable && (
-            <button className="of-dock__x" disabled={busy} onClick={() => onCancel(m.id)}>
-              cancel this message
-            </button>
+            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+              {/* Brings it forward rather than sending outright: it goes a
+                  minute from now, which keeps cancel working. */}
+              <button className="of-facet__b" disabled={busy} onClick={() => onNow(m.id)}>
+                send now
+              </button>
+              <button className="of-dock__x" disabled={busy} onClick={() => onCancel(m.id)}>
+                cancel this message
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -85,6 +104,7 @@ export function CrmInbox() {
   const [body, setBody] = useState("");
   const [working, setWorking] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
+  const [seqFor, setSeqFor] = useState<Thread | null>(null);
   // Composing to someone with no thread yet — the only way to start one.
   const [composing, setComposing] = useState(false);
   const [to, setTo] = useState<string>("");
@@ -172,6 +192,20 @@ export function CrmInbox() {
     setWorking(true);
     try { setSaid((await cancelSend(id)).note); await reload(); }
     catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
+    finally { setWorking(false); }
+  };
+
+  /* Brings a queued message forward. Same shape as cancel — one call, one
+     toast — because from here they are the two halves of the same decision:
+     this one is wrong and should stop, or this one is right and should not
+     wait for the window. */
+  const doNow = async (id: string) => {
+    setWorking(true);
+    try {
+      const r = await sendNow(id);
+      setSaid(r?.note ?? "on its way");
+      await reload();
+    } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
     finally { setWorking(false); }
   };
 
@@ -396,7 +430,9 @@ export function CrmInbox() {
                              if (next.has(key)) next.delete(key); else next.add(key);
                              return next;
                            })}
-                           onCancel={(id) => void doCancel(id)} />
+                           onCancel={(id) => void doCancel(id)}
+                           onNow={(id) => void doNow(id)}
+                           onSequence={() => setSeqFor(open)} />
                 );
               })}
 
@@ -417,6 +453,7 @@ export function CrmInbox() {
         </div>
       </div>
       {composer}
+      {seqFor ? <SequenceModal thread={seqFor} onClose={() => setSeqFor(null)} /> : null}
       <Toast message={said} onDone={() => setSaid(null)} />
     </>
   );

@@ -15,6 +15,17 @@ const ALLOWED_EMAILS = new Set<string>(["bn.barak@gmail.com", "ofer.rogers@gmail
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
+/** Who the request turned out to be. Set once, by the check below, so a
+    route that needs to record an author does not verify the token again. */
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      userEmail?: string;
+    }
+  }
+}
+
 /** Every *valid* Google sign-in is recorded — allowed or not — so there's a
     record of who has tried to reach the CRM. This never blocks the
     request; a write failure here must not take the API down. */
@@ -55,6 +66,7 @@ export function requireGoogleUser(req: Request, res: Response, next: NextFunctio
         res.status(403).json({ error: "account not allowed" });
         return;
       }
+      req.userEmail = email;
       next();
     })
     .catch(() => {

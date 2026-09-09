@@ -4,7 +4,10 @@ import { AccountPatch, ContactPatch } from "./schemas.js";
 import { JsonFileCrmRepository, type CrmRepository } from "./repository.js";
 import { FirestoreCrmRepository } from "./firestoreRepository.js";
 import { requireGoogleUser } from "./auth.js";
+import { keysRouter, requireApiKey } from "./apiKeys.js";
+import { handleMcp } from "./outreach/mcp.js";
 import { outreachRouter } from "./outreach/routes.js";
+import { unsubscribeRouter } from "./outreach/unsubscribe.js";
 import { requireScheduler } from "./outreach/tickAuth.js";
 import { tick } from "./outreach/tick.js";
 
@@ -29,6 +32,15 @@ function h(fn: (req: Request, res: Response) => Promise<void>) {
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
+// The unsubscribe link in every commercial message, on its own hostname
+// (unsubscribe.seaworth.ai) which Firebase Hosting rewrites here wholesale.
+// It is public and unauthenticated because the recipient has no account and
+// never will; what makes that safe is that the only thing it accepts is a
+// token this server signed, carrying the one address it is allowed to act on.
+// Above the /api check for the same reason /tasks/tick is: it cannot present
+// a Google ID token. See outreach/unsubscribe.ts.
+app.use(unsubscribeRouter);
+
 // The outreach heartbeat, called once a minute by Cloud Scheduler. It sits
 // outside /api on purpose: Cloud Scheduler has no Google ID token for our
 // OAuth client. It signs each call with an OIDC token for its own service
@@ -38,9 +50,20 @@ app.post("/tasks/tick", requireScheduler, h(async (_req, res) => {
   res.json(await tick());
 }));
 
-// Every API route, present or future, requires a signed-in, allow-listed
-// Google account. Mounted broad on purpose — a new route added under /api
-// later is covered automatically, no separate opt-in required.
+// The outreach agent's tools, over MCP, for Claude on somebody's laptop. It
+// sits under /api because that is the only prefix Firebase Hosting forwards
+// to this service — but it cannot use the Google check below, because an MCP
+// client has no sign-in page and no ID token. It carries an API key instead,
+// minted from the app.
+//
+// This is the one route mounted ahead of that check, and being ahead of it is
+// the whole mechanism: Express matches in order. Anything added below stays
+// covered. Nothing else should be added above.
+app.all("/api/mcp", requireApiKey, h(handleMcp));
+
+// Every other API route, present or future, requires a signed-in,
+// allow-listed Google account. Mounted broad on purpose — a new route added
+// under /api later is covered automatically, no separate opt-in required.
 app.use("/api", requireGoogleUser);
 
 // ---- Accounts -------------------------------------------------------------
@@ -90,6 +113,10 @@ app.patch(
 // ---- Outreach (Mastra agent, Resend sending, heat map) --------------------
 
 app.use("/api/crm/outreach", outreachRouter);
+
+// ---- API keys (what an MCP client authenticates with) ---------------------
+
+app.use("/api/crm/keys", keysRouter);
 
 // ---- Sequences (read-only content library) --------------------------------
 

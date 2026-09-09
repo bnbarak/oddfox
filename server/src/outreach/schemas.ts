@@ -157,7 +157,13 @@ export const SendRecord = z.object({
       it never advances the cadence and never triggers a follow-up. */
   round: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
   subject: z.string(),
+  /** The plain-text part, footer included: exactly what was handed to Resend. */
   body: z.string(),
+  /** The HTML part, likewise verbatim. Nullable because every message written
+      before there was an HTML part has none, and because a record is what was
+      actually sent — regenerating it from `body` on read would show today's
+      footer on a message that went out with last month's. */
+  html: z.string().nullable().default(null),
   /** How the copy was produced — which template, and whether the agent wrote it. */
   template_tier: z.number().int().nullable(),
   written_by: z.enum(["template", "agent"]),

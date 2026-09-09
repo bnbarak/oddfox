@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
-  cancelSend, runTick, setCampaignActive, useCampaigns, useEnrichment, useHeatmap, useOutreachStatus, useQueue,
+  cancelSend, runTick, sendNow, setCampaignActive, useCampaigns, useEnrichment, useThreads, useHeatmap, useOutreachStatus, useQueue,
   useReplies,
-  type Cell, type HeatRow,
+  type Cell, type HeatRow, type Thread,
 } from "../../../lib/outreachStore";
 import { AccountLink } from "./Account";
 import { CampaignChip } from "./CampaignChip";
+import { CampaignSequenceModal, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";
 import { Toast } from "./Toast";
 
@@ -49,6 +50,14 @@ export function CrmOutreach() {
 
   const replies = useReplies();
   const [busy, setBusy] = useState<string | null>(null);
+  const threads = useThreads();
+  const [seqCampaign, setSeqCampaign] =
+    useState<{ name: string; ids: string[] } | null>(null);
+  const [seqPerson, setSeqPerson] = useState<Thread | null>(null);
+
+  // The heat rows already carry every account's logo, so the campaigns table
+  // borrows them rather than fetching the accounts a second time.
+  const byAccount = new Map((map.data?.rows ?? []).map((r) => [r.account_id, r]));
   const [said, setSaid] = useState<string | null>(null);
 
   /* Activating is the one button that reaches strangers, so it says exactly
@@ -98,6 +107,19 @@ export function CrmOutreach() {
     window.addEventListener(CRM_CHANGED, refresh);
     return () => window.removeEventListener(CRM_CHANGED, refresh);
   }, [queue, map, status, replies, campaigns]);
+
+  const doNow = async (id: string) => {
+    setBusy(id);
+    try {
+      const r = await sendNow(id);
+      setSaid(r?.note ?? "on its way");
+      await Promise.all([queue.reload(), map.reload(), status.reload()]);
+    } catch (e) {
+      setSaid(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(null);
+    }
+  };
 
   const doCancel = async (id: string) => {
     setBusy(id);
@@ -277,14 +299,35 @@ export function CrmOutreach() {
                   <tr>
                     <th className="co">Campaign</th><th>Companies</th><th>Tier</th>
                     <th>People</th><th>Reachable</th><th>To look up</th><th>No address</th>
-                    <th>Sent</th><th></th><th></th>
+                    <th>Sent</th><th></th><th></th><th></th>
                   </tr>
                 </thead>
                 <tbody>
                   {campaigns.data.records.map((c) => (
                     <tr key={c.id}>
-                      <td className="co"><span className="co-name">{c.name}</span></td>
-                      <td className="cell">{c.companies.join(", ") || "—"}</td>
+                      {/* The campaign name opens its account when it has
+                          exactly one, which is the common case and saves a
+                          hop through the companies column. */}
+                      <td className="co">
+                        {c.account_ids.length === 1 && c.account_ids[0] ? (
+                          <AccountLink id={c.account_ids[0]} title={`Open ${c.companies[0] ?? c.name}`}>
+                            <span className="co-name">{c.name}</span>
+                          </AccountLink>
+                        ) : <span className="co-name">{c.name}</span>}
+                      </td>
+                      <td className="cell">
+                        {c.account_ids.length ? (
+                          <span className="of-camp__cos">
+                            {c.account_ids.map((aid, i) => (
+                              <AccountLink key={aid} id={aid}>
+                                <Logo url={byAccount.get(aid)?.url ?? null}
+                                      name={c.companies[i] ?? aid} size={16} />
+                                <span className="co-name">{c.companies[i] ?? aid}</span>
+                              </AccountLink>
+                            ))}
+                          </span>
+                        ) : "—"}
+                      </td>
                       <td className="val">{c.template_tier}</td>
                       <td className="val">{c.people}</td>
                       <td className="val">{c.with_email}</td>
@@ -299,6 +342,11 @@ export function CrmOutreach() {
                       <td className="val">{c.sent}</td>
                       <td className="cell">
                         <Chip tone={c.active ? "calm" : ""}>{c.active ? "active" : "paused"}</Chip>
+                      </td>
+                      <td className="cell">
+                        <button className="of-facet__b"
+                                onClick={() => setSeqCampaign({ name: c.name, ids: c.account_ids })}
+                                title="Where is everyone in this campaign">sequence</button>
                       </td>
                       <td className="cell">
                         <button className="of-facet__b" disabled={busy === c.id}
@@ -330,7 +378,7 @@ export function CrmOutreach() {
               <thead>
                 <tr>
                   <th className="co">To</th><th>Company</th><th>R</th><th>Subject</th>
-                  <th>Domain</th><th>Lands</th><th>Token</th><th></th>
+                  <th>Domain</th><th>Lands</th><th>Token</th><th></th><th></th>
                 </tr>
               </thead>
               <tbody>
@@ -349,6 +397,18 @@ export function CrmOutreach() {
                       <span className="of-note" title={q.resend_id ?? "never handed to Resend"}>
                         {q.resend_id ? `${q.resend_id.slice(0, 8)}…` : "—"}
                       </span>
+                    </td>
+                    <td className="cell">
+                      {/* Forward, not immediate: it re-schedules a minute out
+                          so cancel keeps working. */}
+                      <button className="of-rnd" style={{ width: "auto", padding: "0 8px" }}
+                              disabled={busy !== null || q.status !== "scheduled"}
+                              title={q.status === "scheduled"
+                                ? "skip the wait — goes in about a minute, still cancellable"
+                                : `this message is ${q.status}`}
+                              onClick={() => void doNow(q.id)}>
+                        {busy === q.id ? "…" : "send now"}
+                      </button>
                     </td>
                     <td className="cell">
                       <button className="of-rnd" style={{ width: "auto", padding: "0 8px" }}
@@ -398,6 +458,17 @@ export function CrmOutreach() {
           <Note>Nothing has come back yet.</Note>
         )}
       </Section>
+      {/* Campaign first, person on top of it: clicking a name in the campaign
+          grid should open that person without losing the grid behind it. */}
+      {seqCampaign ? (
+        <CampaignSequenceModal name={seqCampaign.name} accountIds={seqCampaign.ids}
+                               threads={threads.data?.threads ?? []}
+                               onPerson={setSeqPerson}
+                               onClose={() => setSeqCampaign(null)} />
+      ) : null}
+      {seqPerson ? (
+        <SequenceModal thread={seqPerson} onClose={() => setSeqPerson(null)} />
+      ) : null}
       <Toast message={said} onDone={() => setSaid(null)} />
     </>
   );

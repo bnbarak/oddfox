@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Section, Note, H1, H2, Card, Chip, Gap } from "../../../ui";
 import type { Rec } from "../../../data";
+import { EmailBody } from "./EmailBody";
 import { sequencesFile } from "./shared";
 
 /** The cadence as an actual timeline rather than three equal boxes.
@@ -43,7 +45,12 @@ function Cadence({ rounds, cadence }: { rounds: Rec[]; cadence: Rec }) {
 
 export function CrmSequences() {
   const seq = sequencesFile;
-  const [openSeq, setOpenSeq] = useState<number>(1);
+  /* ?tier= so a message can link to the script it is following. Read once as
+     the initial value rather than watched: the sidebar is the owner of this
+     after the page opens, and syncing both ways would fight the click. */
+  const [params] = useSearchParams();
+  const asked = Number(params.get("tier"));
+  const [openSeq, setOpenSeq] = useState<number>(Number.isFinite(asked) && asked ? asked : 1);
   const [copied, setCopied] = useState<string | null>(null);
 
   return (
@@ -78,7 +85,7 @@ export function CrmSequences() {
                   <Chip tone="solid">Round {rd.round as number}</Chip>
                   <H2>{rd.subject as string}</H2>
                 </div>
-                <pre className="of-mail">{rd.body as string}</pre>
+                <EmailBody text={rd.body as string} />
                 <button className="of-facet__b" onClick={() => {
                   navigator.clipboard?.writeText(`Subject: ${rd.subject}\n\n${rd.body}`);
                   setCopied(`Round ${rd.round} copied`); setTimeout(() => setCopied(null), 2500);

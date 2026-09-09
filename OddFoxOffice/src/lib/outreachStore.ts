@@ -71,7 +71,14 @@ export async function putOutreachConfig(patch: Partial<OutreachConfig>): Promise
 }
 
 export type Status = {
-  configured: { resend: boolean; model: boolean };
+  configured: {
+    resend: boolean; model: boolean;
+    /** Whether the server can mint signed unsubscribe links. False means
+        commercial mail falls back to asking people to reply — lawful, but a
+        worse opt-out and no one-click header. */
+    unsubscribe_link: boolean;
+    unsubscribe_host: string | null;
+  };
   senders: Sender[];
   blockers: Blocker[];
   dry_run: boolean;
@@ -221,8 +228,28 @@ export async function setCampaignActive(id: string, active: boolean) {
   return body;
 }
 
+export async function sendNow(id: string) {
+  const res = await fetch(`${BASE}/sends/${encodeURIComponent(id)}/send-now`,
+                          { method: "POST", headers: authHeaders() });
+  const body = (await res.json().catch(() => null)) as
+    { error?: string; detail?: string; note?: string; scheduled_at?: string } | null;
+  if (!res.ok) throw new Error(body?.detail ?? body?.error ?? `send now → ${res.status}`);
+  return body;
+}
+
 export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
 export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");
+
+/** Everyone who asked to be left alone, and how they told us. Our own record,
+    not Resend's suppression list: that one is the enforcement and is mostly
+    bounces, this one is only people who actually asked. */
+export type OptOutRow = {
+  email: string; contact_id: string | null; account_id: string | null;
+  source: "link" | "one-click" | "reply" | "manual";
+  at: string; note: string | null; canceled: number;
+};
+
+export const useOptOuts = () => useResource<{ records: OptOutRow[] }>("/optouts");
 
 // ---- Actions --------------------------------------------------------------
 
@@ -234,8 +261,14 @@ export const runTick = () =>
          ms: number; blocked: string[]; notes: string[] }>("/tick");
 
 export type ThreadMessage = {
-  dir: "out" | "in"; id: string; subject: string | null; body: string | null; at: string;
-  status?: string; round?: number; dry_run?: boolean; cancel_token?: string | null;
+  dir: "out" | "in"; id: string; subject: string | null; body: string | null;
+  /** The HTML part of an outbound message, when it has one. Panels render
+      this in preference to `body` — see EmailBody — so what a surface shows
+      is what the recipient saw, not a re-derivation of it. */
+  html?: string | null;
+  at: string;
+  status?: string; round?: number; template_tier?: number | null;
+  dry_run?: boolean; cancel_token?: string | null;
   message_id?: string | null; automated?: boolean; unsubscribe?: boolean;
 };
 export type Thread = {

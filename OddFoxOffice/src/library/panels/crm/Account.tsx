@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Section, Grid, Cell, Stat, Note, Chip, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
 import { useCampaigns, useEnrichment, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
 import { CampaignChip } from "./CampaignChip";
+import { EmailBody } from "./EmailBody";
 import { EmailCell } from "./EmailCell";
+import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
 /* One account, end to end: where the company is, who we know there, and every
@@ -44,19 +47,29 @@ const fmt = (iso: string) => new Date(iso).toLocaleString([], {
 });
 
 /** What went out, newest last, with the reply that came back next to it. */
-function Message({ m }: { m: ThreadMessage }) {
+function Message({ m, onSequence }: { m: ThreadMessage; onSequence?: () => void }) {
   return (
     <article className={`of-msg is-${m.dir} is-open`}>
       <header className="of-msg__h">
         <span className="of-msg__who">{m.dir === "out" ? "Seaworth" : "them"}</span>
-        {m.round ? <span className="of-msg__tag">round {m.round}</span> : null}
+        {/* Which script this message is following, and a way into it. A round
+            number alone does not say which tier's copy it came from. */}
+        {m.round ? (
+          <span className="of-msg__tag">
+            <SequenceLink tier={m.template_tier ?? 1} round={m.round} />
+          </span>
+        ) : null}
+        {m.round && onSequence ? (
+          <button className="of-msg__tag of-msg__tag--btn" onClick={onSequence}
+                  title="See this person's whole sequence">sequence</button>
+        ) : null}
         {m.dry_run ? <span className="of-msg__tag">dry run</span> : null}
         {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
         <span className="of-msg__at">{fmt(m.at)}</span>
       </header>
       <div className="of-msg__open">
         {m.subject && <div className="of-msg__subj">{m.subject}</div>}
-        {m.body && <pre className="of-msg__body">{m.body}</pre>}
+        <EmailBody html={m.html} text={m.body} />
       </div>
     </article>
   );
@@ -94,6 +107,7 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
   const { rows: contacts } = useContacts();
   const threadsRes = useThreads();
   const enrichment = useEnrichment();
+  const [seqFor, setSeqFor] = useState<Thread | null>(null);
   const looked = new Map((enrichment.data?.records ?? []).map((e) => [e.contact_id, e]));
 
   const a = accounts.find((r) => r.id === id);
@@ -223,7 +237,7 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
                 <div className="of-src" style={{ margin: "14px 0 4px" }}>
                   {t.full_name}{t.email ? ` · ${t.email}` : ""}
                 </div>
-                <Message m={m} />
+                <Message m={m} onSequence={() => setSeqFor(t)} />
               </div>
             ))}
           </>
@@ -231,6 +245,8 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
           <Note>{threadsRes.busy ? "Loading…" : "Nothing has been sent to this account."}</Note>
         )}
       </Section>
+
+      {seqFor ? <SequenceModal thread={seqFor} onClose={() => setSeqFor(null)} /> : null}
     </>
   );
 }

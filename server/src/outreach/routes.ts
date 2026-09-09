@@ -3,11 +3,13 @@ import { Resend } from "resend";
 import { draft, modelConfigured } from "./agent.js";
 import { blockers, fromAddress, secret } from "./config.js";
 import { heatmap } from "./heatmap.js";
-import { cancel, nextSlot, Refused, schedule } from "./send.js";
+import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
-  allCampaigns, allReplies, allSends, clearThread, getConfig, getThread, headroom,
+  allCampaigns, allOptOuts, allReplies, allSends, clearThread, getConfig, getThread, headroom,
   lastTick, putCampaign, putConfig, recentTicks,
 } from "./store.js";
+import { optOut } from "./optout.js";
+import { canLink, UNSUB_BASE } from "./unsubToken.js";
 import { allEnrichment, spentToday } from "./apollo.js";
 import { startCampaign } from "./start.js";
 import { statesFor } from "./campaignState.js";
@@ -37,7 +39,15 @@ outreachRouter.get("/status", h(async (_req, res) => {
   const cfg = await getConfig();
   const [domains, beat] = await Promise.all([headroom(cfg), lastTick()]);
   res.json({
-    configured: { resend: Boolean(secret("RESEND_API_KEY")), model: modelConfigured() },
+    configured: {
+      resend: Boolean(secret("RESEND_API_KEY")),
+      model: modelConfigured(),
+      /** Whether commercial mail can carry a one-click unsubscribe link, or
+          has to fall back to asking people to reply. Not a blocker — the
+          reply wording is lawful on its own — but it is worth seeing. */
+      unsubscribe_link: canLink(),
+      unsubscribe_host: canLink() ? UNSUB_BASE() : null,
+    },
     blockers: blockers(cfg),
     dry_run: cfg.dry_run,
     auto_followups: cfg.auto_followups,
@@ -94,6 +104,16 @@ outreachRouter.post("/sends/:id/cancel", h(async (req, res) => {
   res.json(await cancel(req.params.id as string));
 }));
 
+/** Brings a scheduled message forward to now.
+
+    Cancels it at Resend and re-schedules it a minute out, which is the same
+    shape as everything else here: still scheduled, so still cancellable, just
+    without the wait. Deliberately not a direct send — losing the undo window
+    to save sixty seconds is a bad trade on cold mail. */
+outreachRouter.post("/sends/:id/send-now", h(async (req, res) => {
+  res.json(await sendNow(req.params.id as string, await getConfig()));
+}));
+
 outreachRouter.get("/sends", h(async (_req, res) => {
   res.json({ records: await allSends() });
 }));
@@ -130,14 +150,24 @@ outreachRouter.get("/suppressions", h(async (_req, res) => {
   res.json({ records: data?.data ?? [] });
 }));
 
+/** Adding somebody by hand — a phone call, a LinkedIn message, a forwarded
+    complaint. Goes through the same path as a click on the link rather than
+    writing the Resend list directly, so a hand-added opt-out also cancels
+    what is queued and marks the contact. There was one way to opt out that
+    did everything and one that did a quarter of it, which is one too many. */
 outreachRouter.post("/suppressions", h(async (req, res) => {
   const email = (req.body as { email?: string }).email;
   if (!email) { res.status(400).json({ error: "email is required" }); return; }
-  const key = secret("RESEND_API_KEY");
-  if (!key) { res.status(409).json({ error: "no RESEND_API_KEY" }); return; }
-  const { error } = await new Resend(key).suppressions.add({ email });
-  if (error) { res.status(502).json({ error: error.message }); return; }
-  res.json({ email, suppressed: true });
+  res.json({ ...(await optOut(email, "manual", "added from the panel")), suppressed: true });
+}));
+
+/** Our own record of who asked to be left alone, and how they told us.
+
+    Separate from /suppressions, which is Resend's list: that one is the
+    enforcement and includes every bounce and spam complaint; this one is the
+    evidence, and only contains people who actually asked. */
+outreachRouter.get("/optouts", h(async (_req, res) => {
+  res.json({ records: await allOptOuts() });
 }));
 
 // ---- The operator agent ---------------------------------------------------
