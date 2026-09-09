@@ -167,6 +167,15 @@ function useResource<T>(path: string) {
 
 export const useOutreachStatus = () => useResource<Status>("/status");
 export const useHeatmap = (weeks: number) => useResource<Heatmap>(`/heatmap?weeks=${weeks}`);
+export type CampaignRow = {
+  id: string; name: string; persona: string; template_tier: number;
+  account_ids: string[]; active: boolean; companies: string[];
+  people: number; with_email: number; to_enrich: number; unreachable: number; sent: number;
+};
+
+export const useCampaigns = () =>
+  useResource<{ records: CampaignRow[]; credits_today: number }>("/campaigns");
+
 export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
 export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");
 

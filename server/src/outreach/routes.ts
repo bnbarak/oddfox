@@ -5,9 +5,11 @@ import { blockers, fromAddress, secret } from "./config.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule } from "./send.js";
 import {
-  allReplies, allSends, clearThread, getConfig, getThread, headroom, lastTick,
-  putConfig, recentTicks,
+  allCampaigns, allReplies, allSends, clearThread, getConfig, getThread, headroom,
+  lastTick, putConfig, recentTicks,
 } from "./store.js";
+import { allEnrichment, spentToday } from "./apollo.js";
+import * as crm from "./crm.js";
 import { chat } from "./operator.js";
 import { threads } from "./threads.js";
 import { due, tick } from "./tick.js";
@@ -169,6 +171,38 @@ outreachRouter.post("/chat", h(async (req, res) => {
     in order. What the Inbox renders. */
 outreachRouter.get("/threads", h(async (_req, res) => {
   res.json({ threads: await threads() });
+}));
+
+/** Campaigns, with the one number that decides whether one can start: how
+    many of its people we can actually reach. Addresses we do not have are
+    bought at send time for a campaign account, so "missing" is a forecast of
+    spend rather than a blocker — and "no address, already looked up" is
+    neither, because that lookup will not happen twice. */
+outreachRouter.get("/campaigns", h(async (_req, res) => {
+  const [records, accounts, contacts, sends, ledger] = await Promise.all([
+    allCampaigns(), crm.accounts(), crm.contacts(), allSends(), allEnrichment(),
+  ]);
+  const looked = new Map(ledger.map((e) => [e.contact_id, e]));
+
+  res.json({
+    credits_today: await spentToday(),
+    records: records.map((c) => {
+      const people = contacts.filter((p) => p.account_id && c.account_ids.includes(p.account_id));
+      const exhausted = people.filter((p) => !p.email && looked.get(p.id)?.matched === false);
+      return {
+        ...c,
+        companies: c.account_ids.map((id) => accounts.find((a) => a.id === id)?.company ?? id),
+        people: people.length,
+        with_email: people.filter((p) => p.email).length,
+        // People we would pay to look up if this campaign ran now.
+        to_enrich: people.filter((p) => !p.email && !looked.has(p.id)).length,
+        // Looked up already and Apollo had nothing. Not reachable, not billable.
+        unreachable: exhausted.length,
+        sent: sends.filter((s) => s.account_id && c.account_ids.includes(s.account_id)
+                                  && s.status !== "canceled").length,
+      };
+    }),
+  });
 }));
 
 // ---- Reporting ------------------------------------------------------------

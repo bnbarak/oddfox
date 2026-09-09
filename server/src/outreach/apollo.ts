@@ -81,6 +81,14 @@ export const known = async (contactId: string): Promise<Enrichment | null> => {
   return snap.exists ? (snap.data() as Enrichment) : null;
 };
 
+/** The whole ledger, for reporting. Small by construction — one document per
+    contact we have ever looked up, and we only look somebody up when a
+    campaign is about to write to them. */
+export async function allEnrichment(): Promise<Enrichment[]> {
+  const snap = await db().collection(LEDGER).get();
+  return snap.docs.map((d) => d.data() as Enrichment);
+}
+
 /** Credits spent today, and the ledger that records them. Kept per day so the
     cap above means something and so the spend is visible without adding up
     the whole collection. */

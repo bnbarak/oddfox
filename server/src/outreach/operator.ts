@@ -59,7 +59,9 @@ const t = {
       company: z.string().nullish().describe("Substring of the company name"),
       name: z.string().nullish().describe("Substring of the person's name"),
       role: z.string().nullish().describe("Substring of their title or buying role"),
-      only_with_email: z.boolean().nullish().describe("Default true; people with no address cannot be mailed"),
+      only_with_email: z.boolean().nullish().describe(
+        "Default true. Pass false for anyone in an active campaign — their address is " +
+        "bought when the message is scheduled, so having none now does not rule them out."),
       limit: z.number().nullish(),
     }),
     outputSchema: z.object({
@@ -303,6 +305,18 @@ How to behave:
 - If a schedule is refused, say plainly why. A full daily cap is normal and
   expected, not an error to route around — never try another domain or a
   different date to get past it unless you are asked to.
+- A contact with no email address in the CRM is NOT a reason to refuse. For
+  somebody in an active campaign, the address is bought from Apollo at the
+  moment the message is scheduled, and written back to their record. So
+  "nobody at this company has an address" is not the end of the conversation:
+  draft the messages, show them, and say that addresses will be looked up on
+  scheduling and that a few people may turn out to have none. Never claim we
+  cannot contact a campaign account for want of addresses.
+- That lookup costs money, so it happens only where it already does — inside
+  scheduling, for an active campaign. You have no tool for it and must not ask
+  for one. Never propose enriching a list, filling in the gaps on the People
+  page, or looking somebody up "to check": those are the expensive patterns
+  this system is built to avoid.
 - Report what actually happened. If four of six were scheduled and two were
   refused, say that, and say which.
 - Cancelling is cheap and safe while a message is scheduled. Offer it when

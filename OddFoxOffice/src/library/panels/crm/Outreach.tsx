@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
-  cancelSend, runTick, useHeatmap, useOutreachStatus, useQueue, useReplies,
+  cancelSend, runTick, useCampaigns, useHeatmap, useOutreachStatus, useQueue, useReplies,
   type Cell, type HeatRow,
 } from "../../../lib/outreachStore";
 import { AccountLink } from "./Account";
@@ -42,6 +42,7 @@ export function CrmOutreach() {
   const status = useOutreachStatus();
   const map = useHeatmap(weeks);
   const queue = useQueue();
+  const campaigns = useCampaigns();
   const replies = useReplies();
   const [busy, setBusy] = useState<string | null>(null);
   const [said, setSaid] = useState<string | null>(null);
@@ -53,10 +54,11 @@ export function CrmOutreach() {
   useEffect(() => {
     const refresh = () => {
       void queue.reload(); void map.reload(); void status.reload(); void replies.reload();
+      void campaigns.reload();
     };
     window.addEventListener(CRM_CHANGED, refresh);
     return () => window.removeEventListener(CRM_CHANGED, refresh);
-  }, [queue, map, status, replies]);
+  }, [queue, map, status, replies, campaigns]);
 
   const doCancel = async (id: string) => {
     setBusy(id);
@@ -221,6 +223,55 @@ export function CrmOutreach() {
         <Note style={{ marginTop: 14 }}>
           Blue is volume, green a reply, red a bounce. Newest week on the right.
         </Note>
+      </Section>
+
+      <Section kicker="Campaigns">
+        {campaigns.data?.records.length ? (
+          <>
+            <div className="of-matrix-wrap">
+              <table className="of-matrix of-crm">
+                <thead>
+                  <tr>
+                    <th className="co">Campaign</th><th>Companies</th><th>Tier</th>
+                    <th>People</th><th>Reachable</th><th>To look up</th><th>No address</th>
+                    <th>Sent</th><th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {campaigns.data.records.map((c) => (
+                    <tr key={c.id}>
+                      <td className="co"><span className="co-name">{c.name}</span></td>
+                      <td className="cell">{c.companies.join(", ") || "—"}</td>
+                      <td className="val">{c.template_tier}</td>
+                      <td className="val">{c.people}</td>
+                      <td className="val">{c.with_email}</td>
+                      {/* Each of these costs one Apollo credit the first time
+                          a message to them is scheduled, and never again. */}
+                      <td className="val">
+                        {c.to_enrich ? <Chip tone="warm">{c.to_enrich}</Chip> : 0}
+                      </td>
+                      <td className="val">
+                        {c.unreachable ? <Chip tone="hot">{c.unreachable}</Chip> : 0}
+                      </td>
+                      <td className="val">{c.sent}</td>
+                      <td className="cell">
+                        <Chip tone={c.active ? "calm" : ""}>{c.active ? "active" : "paused"}</Chip>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Note style={{ marginTop: 14 }}>
+              “To look up” is what this campaign would spend at Apollo if it ran now — one
+              credit each, charged when the message is scheduled, never charged twice for the
+              same person. “No address” is people already looked up who have none; they cost
+              nothing further. {campaigns.data.credits_today} credits spent today.
+            </Note>
+          </>
+        ) : (
+          <Note>No campaigns yet. Ask the agent to start one.</Note>
+        )}
       </Section>
 
       <Section kicker="Scheduled — still cancellable">
