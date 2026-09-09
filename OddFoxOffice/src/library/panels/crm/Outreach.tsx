@@ -246,7 +246,7 @@ export function CrmOutreach() {
                     </AccountLink>
                     <span className="co-sub">tier {r.tier} · {r.contacts} people</span>
                   </td>
-                  <td className="cell"><CampaignChip of={campaigns.data?.states[r.account_id]} /></td>
+                  <td className="val"><CampaignChip square of={campaigns.data?.states[r.account_id]} /></td>
                   {r.cells.map((c, i) => (
                     <HeatCell key={axis[i] ?? i} c={c} week={axis[i] ?? ""} company={r.company} />
                   ))}
@@ -263,6 +263,8 @@ export function CrmOutreach() {
         </div>
         <Note style={{ marginTop: 14 }}>
           Blue is volume, green a reply, red a bounce. Newest week on the right.
+          The campaign square is green while a campaign is running, blue with mail in the
+          queue, amber when paused, grey before it starts — hover it for the name.
         </Note>
       </Section>
 
