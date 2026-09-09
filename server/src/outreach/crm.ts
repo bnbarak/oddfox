@@ -5,9 +5,9 @@ import type { AccountRecord, ContactRecord } from "../schemas.js";
 
    The split is deliberate: accounts, contacts and sequence copy are edited by
    people and by research passes, and Firestore is where the rest of the app
-   already reads them. Postgres holds only what this engine generates. Nothing
-   here writes — pipeline status changes go through the existing PATCH routes
-   so there is one code path for them. */
+   already reads them. Postgres holds only what this engine generates. This file is read-only
+   apart from setEmail below — pipeline status changes go through the existing
+   PATCH routes so there is one code path for them. */
 
 const repo = new FirestoreCrmRepository();
 
@@ -25,6 +25,19 @@ export async function contact(id: string): Promise<ContactRecord | null> {
 export async function account(id: string | null): Promise<AccountRecord | null> {
   if (!id) return null;
   return (await accounts()).find((a) => a.id === id) ?? null;
+}
+
+/** Writes back an address we did not have before.
+
+    The one exception to "nothing here writes". Pipeline status changes go
+    through the PATCH routes so there is a single code path for them, but an
+    address discovered mid-send is different: we have already paid for it, and
+    if it is not written down here it is invisible to every person looking at
+    the People page and gets looked up again by the next thing that needs it.
+    `email_status` stays untouched — found is not the same as verified, and
+    only a bounce or a delivery should move it. */
+export async function setEmail(id: string, email: string): Promise<void> {
+  await repo.patchContact(id, { email });
 }
 
 /** The template for one tier and round. Falls back to tier 1 when a tier has

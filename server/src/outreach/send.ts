@@ -1,9 +1,10 @@
 import { randomUUID } from "node:crypto";
 import { Resend } from "resend";
+import * as apollo from "./apollo.js";
 import * as crm from "./crm.js";
 import { capOf, domainOf, fromAddress, secret } from "./config.js";
 import { listHeaders, withFooter } from "./render.js";
-import { getSend, pickDomain, putSend, release, reserve, setStatus } from "./store.js";
+import { allCampaigns, getSend, pickDomain, putSend, release, reserve, setStatus } from "./store.js";
 import type { OutreachConfig, ScheduleRequest, SendRecord } from "./schemas.js";
 import { dayKey, nextInWindow } from "./time.js";
 
@@ -29,6 +30,17 @@ function threadHeaders(inReplyTo: string | null, references: string[]): Record<s
   if (!inReplyTo) return {};
   const chain = [...new Set([...references, inReplyTo])].filter(Boolean);
   return { "In-Reply-To": inReplyTo, References: chain.join(" ") };
+}
+
+/** Whether this contact's account is in a campaign that is switched on.
+
+    Enrichment is gated on this rather than on "is a sequence round", because
+    a campaign is the thing a person deliberately started. An automated
+    follow-up to somebody outside every campaign must not quietly buy data. */
+async function inActiveCampaign(contact: { account_id: string | null }): Promise<boolean> {
+  if (!contact.account_id) return false;
+  const live = (await allCampaigns()).filter((c) => c.active);
+  return live.some((c) => c.account_ids.includes(contact.account_id!));
 }
 
 export class Refused extends Error {
@@ -83,14 +95,44 @@ export async function schedule(
      state; a plain address is somebody outside the CRM entirely — a personal
      note, an introduction, a reply to a stranger. Both go through every rule
      below; only the record-keeping differs. */
+  let enrichNote: string | null = null;
   const contact = req.contact_id ? await crm.contact(req.contact_id) : null;
   if (req.contact_id && !contact) {
     throw new Refused("no-contact", `no contact with id ${req.contact_id}`, 404);
   }
-  const to = contact?.email ?? req.to;
+  /* The one place enrichment is allowed to spend money.
+
+     Not a research sweep and not a background job: we are here because a
+     message has been written and confirmed, the recipient is a contact in an
+     active campaign, and there is nowhere to send it. That is the moment the
+     owner of the budget agreed to pay for, and every other moment is not.
+
+     Everything else about the cost lives in apollo.ts. What lives here is the
+     trigger, because the trigger is the expensive part. */
+  let to = contact?.email ?? req.to;
+  if (!to && contact && req.round >= 1 && !cfg.dry_run && await inActiveCampaign(contact)) {
+    const found = await apollo.findEmail(contact).catch((e: unknown) => {
+      // A lookup that failed is not a reason to lose the message. Fall
+      // through to the ordinary no-address refusal and say what happened.
+      enrichNote = e instanceof Error ? e.message : String(e);
+      return null;
+    });
+    if (found?.email) {
+      to = found.email;
+      // Write it back so the next round, and every panel, has it without a
+      // second lookup. The ledger already guarantees we would not pay twice;
+      // this makes the address visible to people as well.
+      await crm.setEmail(contact.id, found.email).catch(() => undefined);
+    } else if (found) {
+      enrichNote = found.note;
+    }
+  }
   if (!to) {
     throw new Refused("no-address",
-      contact ? `${contact.full_name} has no email address on record` : "no recipient given");
+      contact
+        ? `${contact.full_name} has no email address on record` +
+          (enrichNote ? ` — ${enrichNote}` : "")
+        : "no recipient given");
   }
   if (contact?.email_status === "bounced") {
     throw new Refused("bounced", `${to} has already bounced`);

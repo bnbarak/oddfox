@@ -9,7 +9,7 @@ How it is deployed and run: [context.md](../../../context.md) at the repo root.
 
 ---
 
-## The five things you must not break
+## The six things you must not break
 
 **1. `schedule()` in `send.ts` is the only path to Resend.** Every rule that
 protects a stranger from us lives on it: the daily cap, the dry-run switch,
@@ -53,6 +53,44 @@ no postal address, `dry_run: true`. `blockers()` in `config.ts` lists every
 reason sending is impossible, and the panel shows all of them at once. If you
 add a precondition for sending, add it to `blockers()` too — a check that only
 throws at send time is invisible until someone tries.
+
+**6. Apollo enrichment costs money, and the trigger is the expensive part.**
+`apollo.ts` buys a work email for somebody we are about to write to. The owner
+of the budget set two rules, and both are enforced in code because both are
+easy to break with a reasonable-looking edit:
+
+*Enrich only at campaign send time.* The single call site is `schedule()` in
+`send.ts`, and it fires only when all of this is true: the message is written
+and confirmed, the recipient is a CRM contact with no address, the round is
+1–3, `dry_run` is off, and the contact's account is in an **active campaign**.
+Do not add a "fill in the missing emails" sweep, a page-load lookup, or a
+nightly job. A sweep across the People page is a four-figure invoice and it
+buys addresses for people nobody has decided to contact.
+
+*Emails only, never phones.* Apollo bills 1 credit for an email and **8 more**
+if a mobile number comes back, and the waterfall options fan out to vendors
+who charge per lookup even when they find nothing. `REFUSED` in `apollo.ts`
+names those four parameters and `outreach-render-test.ts` asserts none of them
+appears in the request body. If you find yourself adding one to "get more
+data", the cost is nine times what you are expecting and a miss stops being
+free.
+
+Two more things that are load-bearing rather than tidy:
+
+- **Misses are cached exactly like hits.** `crmEnrichment/{contact_id}` is
+  written whether or not an address was found. A person Apollo has nothing for
+  is the most expensive record in the system if that "no" is not written down:
+  the campaign stays active, the message still has nowhere to go, and every
+  retry asks and pays again. One lookup per contact, ever.
+- **A found address is written back to the contact.** `crm.setEmail()` — the
+  one write in an otherwise read-only file. We have already paid for it; if it
+  lives only in the ledger it is invisible on the People page and the next
+  thing that needs it looks it up again. `email_status` is deliberately not
+  touched: found is not verified, and only a bounce or a delivery moves it.
+
+`DAILY_CREDIT_CAP` is a backstop, not a budget. Nothing should approach 25
+credits a day. If it trips, something is calling enrichment in a loop — find
+it rather than raising the number. Spend so far is in `crmEnrichSpend/{day}`.
 
 ---
 

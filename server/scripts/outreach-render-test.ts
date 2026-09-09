@@ -6,6 +6,7 @@ import {
   fill, footer, listHeaders, readsAsAutomated, readsAsOptOut, varsFor, withFooter,
 } from "../src/outreach/render.js";
 import { configPatch, OutreachConfig } from "../src/outreach/schemas.js";
+import { matchBody, REFUSED } from "../src/outreach/apollo.js";
 import type { AccountRecord, ContactRecord } from "../src/schemas.js";
 
 let failed = 0;
@@ -156,5 +157,34 @@ ok("the naive spread is what broke it",
 }
 
 // eslint-disable-next-line no-console
+
+/* ---- enrichment cost ----------------------------------------------------
+
+   Apollo charges 1 credit for an email and 8 more if a mobile comes back,
+   and the waterfall options bill through third-party vendors even when they
+   find nothing. The request must therefore carry identifying fields and
+   nothing else. This is a cost assertion, not a behaviour one: the failure it
+   catches shows up on an invoice, not in the product. */
+
+const asked = matchBody({
+  full_name: "Vikrant Malhotra",
+  linkedin_url: "https://www.linkedin.com/in/example",
+  company: "Anglo-Eastern",
+});
+
+ok("enrichment asks by name, profile and employer",
+   asked.name === "Vikrant Malhotra" && asked.linkedin_url !== undefined
+   && asked.organization_name === "Anglo-Eastern");
+
+for (const p of REFUSED) {
+  ok(`enrichment never sends ${p}`, !(p in asked));
+}
+ok("enrichment never asks for personal emails", !("reveal_personal_emails" in asked));
+ok("enrichment sends nothing but identifying fields",
+   Object.keys(asked).every((k) =>
+     ["name", "first_name", "last_name", "email", "linkedin_url", "organization_name", "domain"]
+       .includes(k)),
+   Object.keys(asked).join(","));
+
 console.log(failed ? `\n${failed} failed` : "\nall passed");
 process.exitCode = failed ? 1 : 0;
