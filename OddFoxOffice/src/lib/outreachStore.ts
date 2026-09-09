@@ -1,3 +1,4 @@
+import type { Tone } from "../ui/tokens";
 import { useCallback, useEffect, useState } from "react";
 import { getIdToken } from "./googleAuth";
 
@@ -173,8 +174,25 @@ export type CampaignRow = {
   people: number; with_email: number; to_enrich: number; unreachable: number; sent: number;
 };
 
+export type CampaignState = "none" | "paused" | "not started" | "queued" | "running";
+export type AccountCampaign = {
+  state: CampaignState; campaign_id: string | null; campaign_name: string | null;
+};
+
 export const useCampaigns = () =>
-  useResource<{ records: CampaignRow[]; credits_today: number }>("/campaigns");
+  useResource<{
+    records: CampaignRow[];
+    credits_today: number;
+    /** Keyed by account id — one derivation, shared by every surface. */
+    states: Record<string, AccountCampaign>;
+  }>("/campaigns");
+
+/** The four states are four different actions, so they do not share a colour:
+    running is working, queued is about to happen, paused was stopped on
+    purpose, and not-started is waiting for somebody. */
+export const CAMPAIGN_TONE: Record<CampaignState, Tone> = {
+  running: "calm", queued: "cool", paused: "warm", "not started": "", none: "",
+};
 
 export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
 export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");

@@ -1,7 +1,8 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Section, Grid, Cell, Stat, Note, Chip, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
+import { useCampaigns, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
+import { CampaignChip } from "./CampaignChip";
 import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
 /* One account, end to end: where the company is, who we know there, and every
@@ -60,10 +61,34 @@ function Message({ m }: { m: ThreadMessage }) {
   );
 }
 
+/** What the campaign is and what it would cost to run — the two things you
+    want before deciding to write to this company. Enrichment is charged when
+    a message is scheduled, so "to look up" is a forecast, not a debt. */
+function CampaignLine({ id, people, withEmail }: {
+  id: string; people: number; withEmail: number;
+}) {
+  const campaigns = useCampaigns();
+  const here = campaigns.data?.states[id];
+  const row = campaigns.data?.records.find((c) => c.id === here?.campaign_id);
+
+  if (!here || here.state === "none") {
+    return <Note>Not in a campaign. Ask the agent to start one.</Note>;
+  }
+  return (
+    <Note>
+      <strong>{here.campaign_name}</strong> — {here.state}.{" "}
+      {withEmail} of {people} reachable now
+      {row?.to_enrich ? `, ${row.to_enrich} to look up at Apollo when the first message is scheduled` : ""}
+      {row?.unreachable ? `, ${row.unreachable} with no address to be found` : ""}.
+    </Note>
+  );
+}
+
 export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }) {
   const { rows: accounts, live, patch } = useAccounts();
   const { rows: contacts } = useContacts();
   const threadsRes = useThreads();
+  const campaigns = useCampaigns();
 
   const a = accounts.find((r) => r.id === id);
   if (!a) {
@@ -95,6 +120,7 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
         <Star on={a.starred} title="Starred account" />
         <Chip tone={TONE[a.status] ?? ""}>{a.status}</Chip>
         <Chip>tier {a.tier} · {a.tier_name}</Chip>
+        <CampaignChip of={campaigns.data?.states[a.id]} />
       </div>
 
       <div className="of-acct__links">
@@ -114,6 +140,9 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
       </div>
 
       <Section kicker="Campaign">
+        <CampaignLine id={a.id} people={people.length}
+                      withEmail={people.filter((c) => c.email).length} />
+
         <Grid cols={4}>
           <Cell><Stat value={sent} label="messages sent" /></Cell>
           <Cell><Stat value={back} label="replies in" /></Cell>

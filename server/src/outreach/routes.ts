@@ -9,6 +9,7 @@ import {
   lastTick, putConfig, recentTicks,
 } from "./store.js";
 import { allEnrichment, spentToday } from "./apollo.js";
+import { statesFor } from "./campaignState.js";
 import * as crm from "./crm.js";
 import { chat } from "./operator.js";
 import { threads } from "./threads.js";
@@ -186,6 +187,9 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
 
   res.json({
     credits_today: await spentToday(),
+    /** Every account's campaign state, so the account page and the outreach
+        table read it from one place rather than each deriving it. */
+    states: statesFor(accounts.map((a) => a.id), records, sends),
     records: records.map((c) => {
       const people = contacts.filter((p) => p.account_id && c.account_ids.includes(p.account_id));
       const exhausted = people.filter((p) => !p.email && looked.get(p.id)?.matched === false);

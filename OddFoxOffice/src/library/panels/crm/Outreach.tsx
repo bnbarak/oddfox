@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
-  cancelSend, runTick, useCampaigns, useHeatmap, useOutreachStatus, useQueue, useReplies,
+  cancelSend, runTick, useCampaigns, useHeatmap, useOutreachStatus, useQueue,
+  useReplies,
   type Cell, type HeatRow,
 } from "../../../lib/outreachStore";
 import { AccountLink } from "./Account";
+import { CampaignChip } from "./CampaignChip";
 import { CRM_CHANGED } from "./Operator";
 import { Toast } from "./Toast";
 
@@ -190,6 +192,7 @@ export function CrmOutreach() {
             <thead>
               <tr>
                 <th className="co">Account</th>
+                <th>Campaign</th>
                 {axis.map((w) => (
                   <th key={w} className="of-heat__h" title={`week of ${w}`}>{w.slice(5)}</th>
                 ))}
@@ -206,6 +209,7 @@ export function CrmOutreach() {
                     </AccountLink>
                     <span className="co-sub">tier {r.tier} · {r.contacts} people</span>
                   </td>
+                  <td className="cell"><CampaignChip of={campaigns.data?.states[r.account_id]} /></td>
                   {r.cells.map((c, i) => (
                     <HeatCell key={axis[i] ?? i} c={c} week={axis[i] ?? ""} company={r.company} />
                   ))}
