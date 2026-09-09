@@ -144,8 +144,10 @@ export function CrmInbox() {
     return () => window.removeEventListener("resize", fit);
   });
 
-  /* Selecting a conversation pulls it to the top of the list, so the thread
-     you are reading and the row it came from line up. */
+  /* Selecting a conversation pulls its row up towards the top of the list, so
+     the row and the thread you are reading line up — but only as far as the
+     list really scrolls. The browser clamps to the last screenful, which is
+     what keeps a short list from scrolling its other rows out of sight. */
   const listEl = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => {
     const list = listEl.current;

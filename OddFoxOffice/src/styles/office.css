@@ -341,8 +341,6 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
             border-top: 1px solid var(--line-soft); overflow: hidden; }
 .of-inbox__list { display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
                   border-right: 1px solid var(--line-soft); }
-/* Room to scroll the last conversation up to the top, like any mail client. */
-.of-inbox__list::after { content: ""; flex: 0 0 60vh; }
 .of-inbox__row {
   text-align: left; cursor: pointer; font: inherit; background: transparent;
   border: 0; border-bottom: 1px solid var(--line-soft); border-left: 3px solid transparent;
