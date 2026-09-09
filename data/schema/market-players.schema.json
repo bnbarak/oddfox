@@ -96,6 +96,10 @@
           },
           "confidence": {
             "$ref": "common.schema.json#/$defs/confidence"
+          },
+          "starred": {
+            "type": "boolean",
+            "description": "Marked as a company that matters to us. Editorial, not a claim about the company."
           }
         }
       }

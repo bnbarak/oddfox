@@ -58,7 +58,9 @@ export type Scheduled = {
       with it right up until it goes. Null on a dry run. */
   cancel_token: string | null;
   scheduled_at: string;
-  quota_day: string;
+  /** The day this send is charged to, or null for a one-off that is not
+      charged to any day's budget. */
+  quota_day: string | null;
   domain: string;
   used: number;
   cap: number;
@@ -124,7 +126,11 @@ export async function schedule(
       : new Date(Date.now() + 60 * 1000);
   if (Number.isNaN(at.getTime())) throw new Refused("bad-date", `${req.scheduled_at} is not a date`);
 
-  const day = dayKey(at, cfg.timezone);
+  /* The daily cap is a warm-up budget for cold outreach, so only cold
+     outreach spends it. A note somebody typed is not what the mailbox
+     providers are judging the domain on, and letting fifteen personal
+     replies exhaust the day would stop the sequence for no reason. */
+  const day = commercial ? dayKey(at, cfg.timezone) : null;
   const from = fromAddress(cfg, domain);
   if (!from) {
     throw new Refused("unknown-sender",
@@ -153,7 +159,7 @@ export async function schedule(
     status: "draft",
     last_event: null,
     scheduled_at: at.toISOString(),
-    quota_day: day,
+    quota_day: day,          // null for a one-off: it was never charged
     created_at: now,
     updated_at: now,
     dry_run: true,
@@ -171,9 +177,13 @@ export async function schedule(
   }
 
   const cap = capOf(cfg, domain);
-  const used = await reserve(domain, day, cap);
-  if (used === null) {
-    throw new Refused("cap-reached", `${domain} has already used its ${cap} sends for ${day}.`, 429);
+  let used = 0;
+  if (day) {
+    const claimed = await reserve(domain, day, cap);
+    if (claimed === null) {
+      throw new Refused("cap-reached", `${domain} has already used its ${cap} sends for ${day}.`, 429);
+    }
+    used = claimed;
   }
 
   try {
@@ -190,8 +200,9 @@ export async function schedule(
              quota_day: day, domain, used, cap, dry_run: false };
   } catch (err) {
     // The slot was claimed before the call, so hand it back — otherwise a
-    // Resend outage silently eats the day's budget.
-    await release(domain, day);
+    // Resend outage silently eats the day's budget. Nothing to return for a
+    // one-off, which never took one.
+    if (day) await release(domain, day);
     await putSend({ ...record, status: "failed", dry_run: false,
                     error: err instanceof Error ? err.message : String(err) });
     throw err;

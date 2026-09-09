@@ -25,17 +25,9 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div style={{
-        position: "fixed", top: 8, right: 12, zIndex: 1000,
-        fontSize: 12, opacity: 0.7, display: "flex", gap: 8, alignItems: "center",
-      }}>
+      <div className="of-whoami">
         <span>{email}</span>
-        <button onClick={signOut} style={{
-          background: "none", border: "1px solid currentColor", borderRadius: 4,
-          padding: "2px 8px", opacity: 0.8, cursor: "pointer", color: "inherit",
-        }}>
-          sign out
-        </button>
+        <button className="of-whoami__out" onClick={signOut}>sign out</button>
       </div>
       {children}
     </>

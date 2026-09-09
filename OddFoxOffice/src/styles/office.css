@@ -227,6 +227,9 @@ a.co-row:hover .co-name { color: var(--hot); text-decoration: underline; }
   border: 1px solid currentColor; border-radius: 4px; padding: 2px 8px; opacity: .8;
 }
 body[data-crm-dock="open"] .of-whoami { right: calc(min(400px, 34vw) + 12px); }
+/* The chip floats above the sticky header, so the header's meta line stops
+   short of it instead of running underneath. */
+.office .of-head-meta { padding-right: 210px; }
 
 /* ---------- outreach: the agent, a rail down the right of the CRM ---------- */
 .of-dock {
@@ -325,15 +328,20 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 }
 
 /* ---------- inbox: a mail client ---------- */
-/* The inbox sizes itself to what the window has left, so the page's usual
-   tall bottom padding would come straight out of the reading area. */
-.office .of-main:has(.of-inbox) { padding-bottom: 24px; }
+/* The inbox is full-bleed: it takes everything the window has left beside the
+   agent rail, wall to wall, and sizes its own height to match. The page's
+   gutters, bottom padding and footer would all come out of reading area, so
+   on this page they go. Everything else in the column keeps its gutters. */
+.office .of-main:has(.of-inbox) { padding-top: 0; padding-bottom: 0; }
+.of-wrap:has(.of-inbox) { max-width: none; padding: 0; }
+.of-wrap:has(.of-inbox) > *:not(.of-inbox) { padding-left: 20px; padding-right: 20px; }
+.office:has(.of-inbox) .of-foot { display: none; }
 
 /* Height is set from JS to whatever the window has left; the panes scroll
    inside it so the page itself does not move. */
 .of-inbox { display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: 0;
             align-items: stretch; min-height: 0;
-            border: 1px solid var(--line-soft); border-radius: 3px; overflow: hidden; }
+            border-top: 1px solid var(--line-soft); overflow: hidden; }
 .of-inbox__list { display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
                   border-right: 1px solid var(--line-soft); }
 /* Room to scroll the last conversation up to the top, like any mail client. */
@@ -393,7 +401,8 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 }
 
 /* ---------- inbox: compose ---------- */
-.of-inbox__bar { display: flex; align-items: baseline; gap: 16px; margin-bottom: 14px; }
+.of-inbox__bar { display: flex; align-items: baseline; gap: 16px;
+                 padding-top: 14px; padding-bottom: 14px; margin-bottom: 0; }
 .of-to { border: 1px solid var(--line-soft); border-radius: 3px; max-height: 240px; overflow-y: auto; }
 .of-to__b {
   display: block; width: 100%; text-align: left; font: inherit; font-size: 13px; cursor: pointer;

@@ -189,6 +189,10 @@ table.of-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:56
 /* ---------- toggle ---------- */
 .of-toggle{display:flex;gap:2px;flex-wrap:wrap;margin-bottom:18px}
 .of-toggle-v{flex-direction:column;flex-wrap:nowrap;gap:4px;margin-bottom:0}
+.of-search{width:100%;font:inherit;font-size:13px;color:var(--paper);background:#0a1015;
+  border:1px solid var(--line-soft);border-radius:2px;padding:8px 10px;margin-bottom:10px}
+.of-search::placeholder{color:var(--fog)}
+.of-search:focus{outline:none;border-color:var(--line)}
 .of-toggle-v .of-opt{width:100%;text-align:left;line-height:1.4}
 
 /* ---------- split: picker rail on the left, matter on the right ---------- */

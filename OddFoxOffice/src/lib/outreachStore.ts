@@ -128,6 +128,20 @@ function useResource<T>(path: string) {
   }, [path]);
 
   useEffect(() => { void load(); }, [load]);
+
+  /* Come back to the tab and the page should be current. Mail arrives while
+     you are elsewhere — that is the normal case, not the exception — and a
+     stale inbox is worse than a slow one because it looks authoritative. */
+  useEffect(() => {
+    const refresh = () => { if (document.visibilityState === "visible") void load(); };
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("focus", refresh);
+    return () => {
+      document.removeEventListener("visibilitychange", refresh);
+      window.removeEventListener("focus", refresh);
+    };
+  }, [load]);
+
   return { data, error, busy, reload: load };
 }
 

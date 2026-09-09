@@ -901,6 +901,7 @@
   },
   {
    "id": "saronic",
+   "starred": true,
    "name": "Saronic Technologies",
    "country": "United States",
    "country_iso": "US",
@@ -962,6 +963,7 @@
   },
   {
    "id": "blacksea-tech",
+   "starred": true,
    "name": "BlackSea Technologies",
    "country": "United States",
    "country_iso": "US",
@@ -1163,6 +1165,7 @@
   },
   {
    "id": "blue-ops",
+   "starred": true,
    "name": "Blue Ops (Red Cat)",
    "country": "United States",
    "country_iso": "US",
@@ -2690,6 +2693,7 @@
   },
   {
    "id": "seasats",
+   "starred": true,
    "name": "Seasats",
    "country": "United States",
    "country_iso": "US",

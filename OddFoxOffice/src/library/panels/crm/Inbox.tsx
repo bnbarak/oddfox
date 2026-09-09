@@ -127,7 +127,7 @@ export function CrmInbox() {
       // page overflow by. Measuring the correction beats predicting it: what
       // sits below — page padding, the footer — is not this panel's business.
       const top = el.getBoundingClientRect().top;
-      const h = Math.max(320, window.innerHeight - top - 8);
+      const h = Math.max(320, window.innerHeight - top);
       el.style.height = `${h}px`;
       const over = document.documentElement.scrollHeight - window.innerHeight;
       if (over > 0) el.style.height = `${Math.max(320, h - over)}px`;
