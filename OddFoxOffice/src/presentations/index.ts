@@ -1,5 +1,6 @@
 import type { SlideMeta } from "../presentation/types";
 import { slides as oddfoxSlides } from "./oddfox";
+import { slides as insuranceSlides } from "./insurance";
 
 export interface Presentation {
   id: string;
@@ -10,6 +11,7 @@ export interface Presentation {
 
 export const presentations: Presentation[] = [
   { id: "oddfox", title: "Where the gap is", slides: oddfoxSlides, watermark: "Internal" },
+  { id: "insurance", title: "How insurance works", slides: insuranceSlides, watermark: "Internal" },
 ];
 
 export const defaultPresentationId = "oddfox";
