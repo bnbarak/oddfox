@@ -513,7 +513,44 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
   border-bottom: 1px solid var(--line-soft); padding: 9px 12px;
 }
 .of-to__b:last-child { border-bottom: 0; }
-.of-to__b:hover { background: rgba(255,255,255,.05); }
+.of-to__b:hover, .of-to__b.is-hi { background: rgba(255,255,255,.05); }
+.of-to__none { display: block; padding: 9px 12px; }
+
+/* ---------- compose: recipients as chips ---------- */
+.of-rcpt-wrap { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+/* Scrolls rather than growing without end: a pasted list of forty should not
+   push the message itself off the bottom of the window. */
+.of-rcpt {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+  min-height: 36px; max-height: 128px; overflow-y: auto; padding: 4px 6px; cursor: text;
+  background: #0a1015; border: 1px solid var(--line-soft); border-radius: 2px;
+}
+.of-rcpt:focus-within { border-color: var(--line); }
+.of-rcpt.is-off { opacity: .5; }
+.of-rcpt__c {
+  display: inline-flex; align-items: center; max-width: 100%;
+  border: 1px solid var(--line-soft); border-radius: 12px; background: rgba(255,255,255,.06);
+}
+.of-rcpt__t {
+  font: inherit; font-size: 12.5px; line-height: 1.4; color: var(--paper); cursor: pointer;
+  background: transparent; border: 0; padding: 2px 2px 2px 9px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+.of-rcpt__x {
+  font: inherit; font-size: 14px; line-height: 1; cursor: pointer; color: var(--fog);
+  background: transparent; border: 0; padding: 2px 7px 2px 4px;
+}
+.of-rcpt__x:hover { color: var(--paper); }
+.of-rcpt__c.is-bad { border-color: rgba(255,77,61,.6); background: rgba(255,77,61,.1); }
+.of-rcpt__c.is-bad .of-rcpt__t { color: #ff8577; }
+.of-rcpt__c.is-armed { border-color: var(--paper); background: rgba(255,255,255,.16); }
+.of-rcpt__in, .of-rcpt__edit {
+  font: inherit; font-size: 13.5px; line-height: 1.5; color: var(--paper);
+  background: transparent; border: 0; padding: 2px 4px;
+}
+.of-rcpt__in { flex: 1 1 140px; min-width: 140px; }
+.of-rcpt__edit { border-bottom: 1px solid var(--line); max-width: 100%; }
+.of-rcpt__in:focus, .of-rcpt__edit:focus { outline: none; }
 
 /* ---------- compose: a popup, not a page ---------- */
 .of-cw {
@@ -538,6 +575,11 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-cw__b { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px;
             overflow-y: auto; flex: 1 1 auto; min-height: 0; }
 .of-cw__row { display: flex; align-items: center; gap: 10px; }
+.of-cw__row--top { align-items: flex-start; }
+.of-cw__row--top .of-cw__k { padding-top: 11px; }
+.of-cw__tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.of-cw__tools .of-cw__x { margin-left: 0; display: inline-flex; align-items: center; }
+.of-cw__x[disabled] { opacity: .4; cursor: default; }
 .of-cw__k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
             text-transform: uppercase; color: var(--fog); width: 44px; flex-shrink: 0; }
 .of-cw__v { flex: 1; min-width: 0; }
@@ -583,6 +625,18 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-reply .of-cw__b { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
 .of-reply .of-cw__f { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
                       padding: 11px 14px; border-top: 1px solid var(--line-soft); }
+.of-reply__h {
+  display: flex; align-items: center; gap: 10px; padding: 8px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--fog);
+}
+
+/* The composer at full size: the same header, fields and footer as the docked
+   one, in the modal frame, with the body taking whatever height is left. */
+.of-cwfull { width: min(980px, 100%); height: min(88vh, 960px); max-height: none; }
+.of-cwfull .of-cw__body { flex: 1 1 auto; min-height: 220px; resize: none; }
+.of-cwfull .of-rcpt { max-height: 200px; }
 .of-msg__seq { color: var(--cool); border-color: var(--cool); text-decoration: none; }
 .of-msg__seq:hover { color: var(--void); background: var(--cool); }
 
