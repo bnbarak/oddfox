@@ -32,52 +32,16 @@ export const SENDERS = [
   // automated path by manual_only, and out of the CRM's reply store by
   // listen_inbound: false.
   { domain: "seaworth.ai", from_local: "barak", from_name: "Barak Ben Noon" },
+  // The two newest. An address exists for each so they can be seen and picked;
+  // whether either may actually send is the config document's business, and
+  // Resend's — neither is warmed, and a domain sends nothing until it is
+  // enabled there.
+  { domain: "seaworthhq.com", from_local: "barak", from_name: "Barak Ben Noon" },
+  { domain: "tryseaworth.com", from_local: "barak", from_name: "Barak Ben Noon" },
 ] as const;
 
 export const senderFor = (domain: string) =>
   SENDERS.find((x) => x.domain === domain.toLowerCase()) ?? null;
-
-/** Domains we own that are not sending identities.
-
-    Deliberately separate from SENDERS and from the config document's
-    `domains`, because these are a different kind of fact. A sending domain
-    is an operational setting — it has a cap, it gets picked, it warms. One
-    of these is a *property record*: something registered, renewing, pointed
-    somewhere, and easy to forget we are paying for. Nothing here can send.
-
-    A domain graduating to a sending identity is not an edit to this list —
-    it is DNS, Resend verification, a SENDERS entry and a warm-up, and until
-    all four exist it belongs here and nowhere else. Kept in the server for
-    the same reason SENDERS is: a record of what we own should not change
-    because a page was edited. */
-export const MARKETING_DOMAINS = [
-  {
-    domain: "seaworthhq.com",
-    purpose: "Reserved as a second outreach sending domain — not yet warmed.",
-    registrar: "Google Cloud Domains",
-    dns_zone: "seaworthhq-com",
-    /* The point of registering it early: a sending domain wants age before
-       it wants traffic, and the registration clock starts now rather than on
-       the day we decide to use it. */
-    note: "Added to Resend with sending and receiving on; DKIM/SPF/DMARC and MX go in its " +
-      "Cloud DNS zone. Verification is DNS — Resend polls for the records, nothing is emailed. " +
-      "Still needs a warm-up before it earns a SENDERS entry.",
-  },
-  {
-    domain: "tryseaworth.com",
-    purpose: "Campaign landing pages.",
-    registrar: "Google Cloud Domains",
-    dns_zone: "tryseaworth-com",
-    /* Set up in Resend for mail as well as web. Worth knowing rather than
-       arguing with: an MX record is at the apex, so every address here is a
-       mailbox Resend receives, and a landing-page domain that also carries
-       mail has two reputations to keep rather than one. */
-    note: "In Resend with sending and receiving on, so it carries mail as well as the pages. " +
-      "Not a sending identity: no SENDERS entry, so the engine still cannot send as it.",
-  },
-] as const;
-
-export type MarketingDomain = (typeof MARKETING_DOMAINS)[number];
 
 export type Blocker = { code: string; detail: string };
 

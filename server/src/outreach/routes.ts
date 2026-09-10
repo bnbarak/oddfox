@@ -1,7 +1,7 @@
 import { Router, type NextFunction, type Request, type Response } from "express";
 import { Resend } from "resend";
 import { draft, modelConfigured } from "./agent.js";
-import { blockers, fromAddress, MARKETING_DOMAINS, secret } from "./config.js";
+import { blockers, fromAddress, SENDERS, secret } from "./config.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
@@ -65,17 +65,24 @@ outreachRouter.get("/status", h(async (_req, res) => {
     timezone: cfg.timezone,
     send_window: cfg.send_window,
     domains,
-    /** Which addresses a person may send from by hand, and which of those
-        the automation is forbidden to use. */
-    senders: cfg.domains.filter((d) => d.enabled).map((d) => ({
-      domain: d.domain,
-      address: fromAddress(cfg, d.domain),
-      manual_only: d.manual_only,
-    })).filter((x) => x.address),
-    /** Domains we own but do not send from. Here rather than in the config
-        document because they are a record of what is registered, not a
-        setting: nothing the panel does can change what we own. */
-    marketing_domains: MARKETING_DOMAINS,
+    /** Every address this system has, and what each one is allowed to do.
+
+        Driven from SENDERS rather than from the config document, so a domain
+        that exists but has not been switched on is still visible. Leaving it
+        out was how a domain could be bought, set up, and then quietly missing
+        from the only page that lists what we send as. */
+    senders: SENDERS.map((x) => {
+      const d = cfg.domains.find((y) => y.domain === x.domain);
+      return {
+        domain: x.domain,
+        address: fromAddress(cfg, x.domain),
+        manual_only: Boolean(d?.manual_only),
+        /** Whether it can send at all today: configured and switched on. */
+        sends: Boolean(d?.enabled),
+        listen_inbound: Boolean(d?.listen_inbound),
+        daily_cap: d ? (d.daily_cap ?? cfg.default_daily_cap) : null,
+      };
+    }).filter((x) => x.address),
     last_tick: beat,
   });
 }));

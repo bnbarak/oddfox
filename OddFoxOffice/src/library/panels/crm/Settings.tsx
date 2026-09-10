@@ -205,7 +205,6 @@ export function CrmSettings() {
     { id: "claude", label: "Claude access" },
     { id: "inbound", label: "Mail we watch" },
     { id: "senders", label: "Addresses" },
-    { id: "domains", label: "Domains" },
     { id: "optouts", label: "Opted out" },
   ] as const;
   type Page = (typeof PAGES)[number]["id"];
@@ -389,84 +388,39 @@ ${linkOn
             )}
           </Section>)}
 
-        {page === "senders" && (dead ?? <Section kicker="Addresses you can send from">
+        {page === "senders" && (dead ?? <Section kicker="Every address we have">
           <div className="of-matrix-wrap">
             <table className="of-matrix of-crm">
               <thead>
                 <tr><th className="co">Address</th><th>Used by</th><th>Inbound</th><th>Cap/day</th></tr>
               </thead>
               <tbody>
-                {(status.data?.senders ?? []).map((x) => {
-                  const d = cfg.data?.domains.find((y) => y.domain === x.domain);
-                  return (
-                    <tr key={x.domain}>
-                      <td className="co"><span className="co-name">{x.address}</span></td>
-                      <td className="cell">
-                        {x.manual_only
+                {(status.data?.senders ?? []).map((x) => (
+                  <tr key={x.domain}>
+                    <td className="co"><span className="co-name">{x.address}</span></td>
+                    <td className="cell">
+                      {/* Three states, not two. A domain we own and have set
+                          up but not switched on sends nothing at all, and
+                          saying so plainly is the point of listing it. */}
+                      {!x.sends
+                        ? <Chip>not sending yet</Chip>
+                        : x.manual_only
                           ? <Chip tone="warm">by hand only</Chip>
                           : <Chip tone="cool">automated + by hand</Chip>}
-                      </td>
-                      <td className="cell">
-                        {d?.listen_inbound
-                          ? <span className="of-note">replies come into the CRM</span>
-                          : <span className="of-note">not captured</span>}
-                      </td>
-                      <td className="val">{d?.daily_cap ?? "—"}</td>
-                    </tr>
-                  );
-                })}
+                    </td>
+                    <td className="cell">
+                      <span className="of-note">
+                        {!x.sends ? "—"
+                          : x.listen_inbound ? "replies come into the CRM" : "not captured"}
+                      </span>
+                    </td>
+                    <td className="val">{x.daily_cap ?? "—"}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </Section>)}
-
-        {page === "domains" && (
-          <Section kicker="Domains we own that do not send">
-            {/* Kept apart from Addresses on purpose. Everything on that page
-                has a reputation to protect; nothing on this one does yet.
-                Confusing the two is how a landing-page domain ends up with
-                MX records and a cold campaign on it. */}
-            <div className="of-matrix-wrap">
-              <table className="of-matrix of-crm">
-                <thead>
-                  <tr><th className="co">Domain</th><th>What it is for</th><th>DNS</th></tr>
-                </thead>
-                <tbody>
-                  {(status.data?.marketing_domains ?? []).map((d) => (
-                    <tr key={d.domain}>
-                      <td className="co">
-                        <span className="co-name">{d.domain}</span>
-                        <Sub> {d.registrar}</Sub>
-                      </td>
-                      <td className="cell">
-                        <span className="of-note">{d.purpose}</span>
-                      </td>
-                      <td className="cell">
-                        <span className="of-note">{d.dns_zone}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {(status.data?.marketing_domains ?? []).length === 0 && (
-              <Note>{status.busy ? "Loading…" : "No marketing domains recorded."}</Note>
-            )}
-
-            {(status.data?.marketing_domains ?? []).map((d) => (
-              <Note key={d.domain} style={{ marginTop: 12 }}>
-                <strong>{d.domain} — </strong>{d.note}
-              </Note>
-            ))}
-
-            <Note style={{ marginTop: 16 }}>
-              None of these can send mail: they are not in the server's sender list, so there is
-              no address to send as and the engine refuses rather than inventing one. Moving one
-              onto the sending side is DNS, Resend verification and a warm-up — a code change,
-              not an edit here. What we send from is under <strong>Addresses</strong>.
-            </Note>
-          </Section>)}
 
       </Split>
     </>

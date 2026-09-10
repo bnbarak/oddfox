@@ -45,7 +45,15 @@ export type TickRow = {
   note: string | null; error: string | null;
 };
 
-export type Sender = { domain: string; address: string | null; manual_only: boolean };
+export type Sender = {
+  domain: string; address: string | null; manual_only: boolean;
+  /** Whether it may send today. False for a domain we own and have set up
+      but not switched on — still listed, because "we own this and it sends
+      nothing" is the thing you came to the page to find out. */
+  sends: boolean;
+  listen_inbound: boolean;
+  daily_cap: number | null;
+};
 export type Signature = { id: string; name: string; body: string };
 export type OutreachConfig = {
   signatures: Signature[]; default_signature: string | null;
@@ -70,10 +78,6 @@ export async function putOutreachConfig(patch: Partial<OutreachConfig>): Promise
   return body as OutreachConfig;
 }
 
-export type MarketingDomain = {
-  domain: string; purpose: string; registrar: string; dns_zone: string; note: string;
-};
-
 export type Status = {
   configured: {
     resend: boolean; model: boolean;
@@ -84,9 +88,6 @@ export type Status = {
     unsubscribe_host: string | null;
   };
   senders: Sender[];
-  /** Domains we own that cannot send — landing pages, and names held for
-      later. Fixed in the server; the panel only reads them. */
-  marketing_domains: MarketingDomain[];
   blockers: Blocker[];
   dry_run: boolean;
   auto_followups: boolean;
