@@ -9,6 +9,10 @@ import { EmailBody } from "./EmailBody";
 import { CampaignTag } from "./CampaignChip";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";
+import { RecipientField } from "./RecipientField";
+import {
+  isEmail, mergeRecipients, recipientFor, splitAddresses, type Recipient,
+} from "./recipients";
 import { Toast } from "./Toast";
 import { SEND_TONE, useContacts } from "./shared";
 
@@ -40,6 +44,40 @@ const snippet = (m: ThreadMessage | undefined): string => {
     .split(/\n+(?=Don't want these\? Unsubscribe:|Reply "unsubscribe")/)[0] ?? "";
   return body.replace(/\s+/g, " ").trim().slice(0, 120);
 };
+
+type Sent = { r: Recipient; at: string; dry: boolean };
+type Refused = { r: Recipient; why: string };
+
+/** One toast for a whole batch. Every refusal is named with its reason — a
+    full cap or an opt-out is normal, but you need to know who it was. */
+const summarize = (done: Sent[], refused: Refused[]): string => {
+  const d = done[0];
+  if (d && done.length === 1 && !refused.length) {
+    return d.dry
+      ? `Queued as a dry run for ${fmt(d.at)} — nothing was sent.`
+      : `Scheduled for ${fmt(d.at)}. Cancellable until it goes.`;
+  }
+  const parts: string[] = [];
+  if (d) {
+    const first = done.map((x) => x.at).sort()[0]!;
+    parts.push(done.every((x) => x.dry)
+      ? `Queued ${done.length} as a dry run from ${fmt(first)} — nothing was sent.`
+      : `Scheduled ${done.length} messages, one per person, from ${fmt(first)}. Each is cancellable until it goes.`);
+  }
+  if (refused.length) {
+    parts.push(`${refused.length === 1 ? "Not sent" : `${refused.length} not sent`}: `
+      + refused.map((x) => `${x.r.name ?? x.r.email} — ${x.why}`).join("; "));
+  }
+  return parts.join(" ");
+};
+
+/** Grow and shrink, in the two corners Gmail uses, so they read at a glance. */
+const SizeIcon = ({ full }: { full: boolean }) => (
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor"
+       strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d={full ? "M11 1 7 5M7 2v3h3M1 11l4-4M5 10V7H2" : "M7 5l4-4M8 1h3v3M5 7l-4 4M1 8v3h3"} />
+  </svg>
+);
 
 function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
   m: ThreadMessage; open: boolean; onToggle: () => void;
@@ -97,21 +135,25 @@ function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
   );
 }
 
+/** What is being written, and in which frame. A new message starts docked in
+    the corner and a reply starts inline under its thread; either can be
+    blown up to a full window and shrunk back without losing a word. */
+type Draft = { kind: "new" | "reply"; full: boolean };
+
 export function CrmInbox() {
   const { data, error, busy, reload } = useThreads();
   const threads = useMemo(() => data?.threads ?? [], [data]);
   const [openId, setOpenId] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const [replying, setReplying] = useState(false);
+  const [draft, setDraft] = useState<Draft | null>(null);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [working, setWorking] = useState(false);
+  const [progress, setProgress] = useState<string | null>(null);
   const [said, setSaid] = useState<string | null>(null);
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
   const campaigns = useCampaigns();
-  // Composing to someone with no thread yet — the only way to start one.
-  const [composing, setComposing] = useState(false);
-  const [to, setTo] = useState<string>("");
+  const [to, setTo] = useState<Recipient[]>([]);
   const [find, setFind] = useState("");
   const { rows: contacts } = useContacts();
   const status = useOutreachStatus();
@@ -121,11 +163,14 @@ export function CrmInbox() {
   const signatures = useMemo(() => conf.data?.signatures ?? [], [conf.data]);
   const [signature, setSignature] = useState<string>("");
 
-  /* A recipient is either a CRM contact picked from the list, or a plain
-     address typed in. Requiring the former made it impossible to write to
-     anyone outside the CRM, which is most of the point of the personal
-     sending domain. */
-  const typedEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(find.trim()) ? find.trim() : null;
+  /* Who it goes to: the chips, plus any finished address still sitting in
+     the box. Somebody who types an address and goes straight to Send means
+     it, and a dead button that wants a comma first is not a mail client. */
+  const recipients = useMemo(
+    () => mergeRecipients(to, splitAddresses(find).filter(isEmail)
+      .map((e) => recipientFor(e, contacts))),
+    [to, find, contacts]);
+  const bad = recipients.filter((r) => !isEmail(r.email));
 
   // Default to an outreach domain, never the personal one — picking that has
   // to be a deliberate choice, not what happens if you do not look.
@@ -140,6 +185,18 @@ export function CrmInbox() {
     window.addEventListener(CRM_CHANGED, r);
     return () => window.removeEventListener(CRM_CHANGED, r);
   }, [reload]);
+
+  // Escape shrinks the full window back to where it came from. It never
+  // discards: a draft is too easy to lose to a reflex.
+  const full = draft?.full ?? false;
+  useEffect(() => {
+    if (!full) return;
+    const k = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDraft((d) => d && { ...d, full: false });
+    };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [full]);
 
   const open: Thread | null = threads.find((t) => t.key === openId) ?? threads[0] ?? null;
   const last = open?.messages[open.messages.length - 1];
@@ -168,29 +225,21 @@ export function CrmInbox() {
     return () => window.removeEventListener("resize", fit);
   });
 
-  // Only people with an address can be written to; a picker full of names
-  // that cannot be selected is worse than a shorter list.
-  const writable = useMemo(
-    () => contacts.filter((c) => c.email)
-      .filter((c) => {
-        const q = find.trim().toLowerCase();
-        if (!q) return true;
-        return `${c.full_name} ${c.company ?? ""} ${c.title}`.toLowerCase().includes(q);
-      })
-      .slice(0, 60),
-    [contacts, find]);
-
   const startCompose = () => {
-    setComposing(true); setReplying(false);
-    setTo(""); setFind(""); setSubject(""); setBody("");
+    setDraft({ kind: "new", full: false });
+    setTo([]); setFind(""); setSubject(""); setBody("");
   };
 
   const startReply = () => {
     const s = last?.subject ?? "";
     setSubject(s.toLowerCase().startsWith("re:") ? s : s ? `Re: ${s}` : "");
-    setBody("");
-    setReplying(true);
+    setBody(""); setFind("");
+    setTo(open?.email
+      ? [{ email: open.email, contact_id: open.contact_id, name: open.full_name }] : []);
+    setDraft({ kind: "reply", full: false });
   };
+
+  const resize = () => setDraft((d) => d && { ...d, full: !d.full });
 
   const doCancel = async (id: string) => {
     setWorking(true);
@@ -214,39 +263,62 @@ export function CrmInbox() {
   };
 
   const doSend = async () => {
-    const who = composing
-      ? (to ? { contact_id: to, to: null } : typedEmail ? { contact_id: null, to: typedEmail } : null)
-      : (open ? { contact_id: open.contact_id, to: open.contact_id ? null : open.email } : null);
-    if (!who || !subject.trim() || !body.trim()) return;
+    if (!draft || !recipients.length || bad.length || !subject.trim() || !body.trim()) return;
+    /* Quote the conversation so the reply threads instead of arriving as a
+       new message. In-Reply-To points at the last message that has an id;
+       References carries the whole chain, which is what keeps long threads
+       from splitting. Only the person whose thread it is gets the chain:
+       anyone added alongside them never had those messages, and their copy
+       would thread onto nothing. */
+    const chain = (draft.kind === "reply" ? open?.messages ?? [] : [])
+      .map((m) => m.message_id)
+      .filter((x): x is string => Boolean(x));
+    const ofThread = (r: Recipient) => draft.kind === "reply" && open !== null
+      && (r.contact_id ? r.contact_id === open.contact_id
+                       : r.email.toLowerCase() === open.email?.toLowerCase());
+
     setWorking(true);
+    const done: Sent[] = [];
+    const refused: Refused[] = [];
     try {
-      /* Quote the conversation so the reply threads instead of arriving as
-         a new message. In-Reply-To points at the last message that has an
-         id; References carries the whole chain, which is what keeps long
-         threads from splitting. */
-      const chain = (composing ? [] : open?.messages ?? [])
-        .map((m) => m.message_id)
-        .filter((x): x is string => Boolean(x));
-      const r = await sendDirect(who, subject.trim(), body.trim(),
-                                 fromDomain || null, signature || null,
-                                 { in_reply_to: chain[chain.length - 1] ?? null, references: chain });
-      setSaid(r.dry_run
-        ? `Queued as a dry run for ${fmt(r.scheduled_at)} — nothing was sent.`
-        : `Scheduled for ${fmt(r.scheduled_at)}. Cancellable until it goes.`);
-      setReplying(false); setComposing(false); setSubject(""); setBody("");
-      if (composing) setOpenId(to ?? typedEmail ?? null);
+      /* One after another, not all at once: the server picks each message's
+         slot by reading what is already queued, so parallel calls would all
+         land on the same one. */
+      for (const [i, r] of recipients.entries()) {
+        if (recipients.length > 1) setProgress(`${i + 1}/${recipients.length}`);
+        const mine = ofThread(r) ? chain : [];
+        try {
+          const res = await sendDirect(
+            r.contact_id ? { contact_id: r.contact_id, to: null } : { contact_id: null, to: r.email },
+            subject.trim(), body.trim(), fromDomain || null, signature || null,
+            { in_reply_to: mine[mine.length - 1] ?? null, references: mine });
+          done.push({ r, at: res.scheduled_at, dry: res.dry_run });
+        } catch (e) {
+          refused.push({ r, why: e instanceof Error ? e.message : String(e) });
+        }
+      }
+      setSaid(summarize(done, refused));
+      if (refused.length) {
+        // Keep the draft, holding only who it did not reach, so whatever
+        // needs fixing is right there and a second Send cannot double up.
+        setTo(refused.map((x) => x.r)); setFind("");
+      } else {
+        setDraft(null); setTo([]); setFind(""); setSubject(""); setBody("");
+      }
+      if (draft.kind === "new" && done[0]) setOpenId(done[0].r.contact_id ?? done[0].r.email);
       await reload();
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
-    finally { setWorking(false); }
+    finally { setWorking(false); setProgress(null); }
   };
 
   if (error) {
     return <><H1>Inbox</H1><Note><strong>The CRM server is not answering. </strong>{error}</Note></>;
   }
 
-  /* One set of fields, two frames. New email is a popup you can move away
+  /* One set of fields, three frames. New email is a popup you can move away
      from; a reply belongs at the bottom of the thread it answers, where you
-     can still read what you are replying to. */
+     can still read what you are replying to; and either can take the whole
+     window when the message is long enough to want it. */
   const fields = (
     <>
       <label className="of-cw__row">
@@ -261,41 +333,18 @@ export function CrmInbox() {
         </select>
       </label>
 
-      {composing ? (
-        <label className="of-cw__row">
-          <span className="of-cw__k">To</span>
-          <input className="of-cw__v of-chat__in" placeholder="Search name, company or role"
-                 value={find} disabled={working}
-                 onChange={(e) => { setFind(e.target.value); setTo(""); }} />
-        </label>
-      ) : (
-        <div className="of-cw__row">
-          <span className="of-cw__k">To</span>
-          <span className="of-cw__v of-note">{open?.email ?? "no address on record"}</span>
+      <div className="of-cw__row of-cw__row--top">
+        <span className="of-cw__k">To</span>
+        <div className="of-cw__v">
+          <RecipientField value={to} onChange={setTo} text={find} onText={setFind}
+                          people={contacts} disabled={working} />
         </div>
-      )}
-
-      {composing && !to && find.trim() && !typedEmail && (
-        <div className="of-to">
-          {writable.length === 0 && (
-            <span className="of-note">
-              Nobody matches. Type a full email address to write to someone outside the CRM.
-            </span>
-          )}
-          {writable.map((c) => (
-            <button key={c.id} className="of-to__b"
-                    onClick={() => { setTo(c.id); setFind(`${c.full_name} — ${c.company ?? ""}`); }}>
-              <strong>{c.full_name}</strong>
-              <span className="of-note"> · {c.title || "role unknown"} · {c.company ?? "—"}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
+      </div>
 
       <input className="of-chat__in" placeholder="Subject" value={subject}
              disabled={working} onChange={(e) => setSubject(e.target.value)} />
-      <textarea className="of-chat__in of-cw__body" rows={composing ? 10 : 7}
+      <textarea className="of-chat__in of-cw__body"
+                rows={full ? 18 : draft?.kind === "new" ? 10 : 7}
                 placeholder="Write a message…" value={body} disabled={working}
                 onChange={(e) => setBody(e.target.value)} />
 
@@ -322,37 +371,64 @@ export function CrmInbox() {
     // Say why the button is dead rather than leaving it greyed and
     // unexplained — "no recipient picked" is not obvious when the search box
     // already has text in it.
-    const missing = composing && !to && !typedEmail
-      ? "pick someone from the list, or type a full email address"
+    const missing = !recipients.length
+      ? "pick someone from the list, or type or paste email addresses"
+      : bad.length
+        ? `${bad.length === 1 ? "one address isn't" : `${bad.length} addresses aren't`} valid — click to fix, or × to drop`
       : !subject.trim() ? "add a subject"
       : !body.trim() ? "write a message"
       : null;
+    const n = recipients.length;
     return (
       <>
         <button className="of-facet__b" onClick={() => void doSend()}
                 disabled={working || Boolean(missing)}>
-          {working ? "…" : "Send"}
+          {working ? (progress ?? "…") : n > 1 ? `Send ${n}` : "Send"}
         </button>
-        <button className="of-dock__x"
-                onClick={() => { setComposing(false); setReplying(false); }}>discard</button>
+        <button className="of-dock__x" disabled={working}
+                onClick={() => setDraft(null)}>discard</button>
         <span className="of-note">
-          {missing ?? "Signature added for you."}
+          {missing ?? (n > 1
+            ? `Goes as ${n} separate messages, one per person. Signature added for you.`
+            : "Signature added for you.")}
         </span>
       </>
     );
   })();
 
-  /* New email only. A reply renders inside the thread, below. */
-  const composer = !composing ? null : (
+  const title = draft?.kind === "reply" ? `Reply to ${open?.full_name ?? "them"}` : "New message";
+  const tools = (
+    <span className="of-cw__tools">
+      <button className="of-cw__x" onClick={resize}
+              title={full ? "Shrink back" : "Open full size"}
+              aria-label={full ? "Shrink back" : "Open full size"}>
+        <SizeIcon full={full} />
+      </button>
+      <button className="of-cw__x" onClick={() => setDraft(null)} disabled={working}
+              title="Discard" aria-label="Discard">×</button>
+    </span>
+  );
+
+  /* The full-size window, for either kind. A click on the backdrop shrinks
+     it rather than closing it, for the same reason Escape does. Mouse-down
+     rather than click, so a text selection dragged out of the box and let go
+     over the backdrop does not count. */
+  const composer = !draft ? null : full ? (
+    <div className="of-modal" role="dialog" aria-modal="true" aria-label={title}
+         onMouseDown={(e) => { if (e.target === e.currentTarget) resize(); }}>
+      <div className="of-modal__box of-cwfull">
+        <header className="of-cw__h"><span>{title}</span>{tools}</header>
+        <div className="of-cw__b">{fields}</div>
+        <footer className="of-cw__f">{actions}</footer>
+      </div>
+    </div>
+  ) : draft.kind === "new" ? (
     <div className="of-cw" role="dialog" aria-label="Compose">
-      <header className="of-cw__h">
-        <span>New message</span>
-        <button className="of-cw__x" onClick={() => setComposing(false)} title="Close">×</button>
-      </header>
+      <header className="of-cw__h"><span>New message</span>{tools}</header>
       <div className="of-cw__b">{fields}</div>
       <footer className="of-cw__f">{actions}</footer>
     </div>
-  );
+  ) : null;
 
   const counts = (
     <span className="of-inbox__counts">
@@ -365,10 +441,14 @@ export function CrmInbox() {
   );
 
   const newButton = (
-    <button className="of-facet__b" onClick={startCompose} disabled={composing}>
+    <button className="of-facet__b" onClick={startCompose} disabled={draft?.kind === "new"}>
       New email
     </button>
   );
+
+  // A refusal list for thirty addresses takes longer than six seconds to read.
+  const toast = <Toast message={said} onDone={() => setSaid(null)}
+                       ms={Math.max(6000, (said?.length ?? 0) * 60)} />;
 
   if (threads.length === 0) {
     return (
@@ -376,7 +456,7 @@ export function CrmInbox() {
         <div className="of-inbox__bar">{newButton}{counts}</div>
         <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
         {composer}
-        <Toast message={said} onDone={() => setSaid(null)} />
+        {toast}
       </>
     );
   }
@@ -392,7 +472,10 @@ export function CrmInbox() {
             return (
               <button key={t.key}
                       className={`of-inbox__row${open?.key === t.key ? " is-on" : ""}${t.replied ? " is-unread" : ""}`}
-                      onClick={() => { setOpenId(t.key); setExpanded(new Set()); setReplying(false); }}>
+                      onClick={() => {
+                        setOpenId(t.key); setExpanded(new Set());
+                        if (draft?.kind === "reply") setDraft(null);
+                      }}>
                 <span className="of-inbox__l1">
                   <span className="of-inbox__who">{t.full_name}</span>
                   <span className="of-inbox__at">{fmt(t.last_at)}</span>
@@ -447,15 +530,31 @@ export function CrmInbox() {
                 );
               })}
 
-              {replying ? (
-                <div className="of-reply">
-                  <div className="of-cw__b">{fields}</div>
-                  <div className="of-cw__f">{actions}</div>
-                </div>
+              {draft?.kind === "reply" ? (
+                // Popped out, the reply lives in the window; nothing here
+                // should look like a second, empty copy of it.
+                !full && (
+                  <div className="of-reply">
+                    <header className="of-reply__h">
+                      <span>Reply</span>
+                      <span className="of-cw__tools">
+                        <button className="of-cw__x" onClick={resize}
+                                title="Open in a full-size window"
+                                aria-label="Open in a full-size window">
+                          <SizeIcon full={false} />
+                        </button>
+                      </span>
+                    </header>
+                    <div className="of-cw__b">{fields}</div>
+                    <div className="of-cw__f">{actions}</div>
+                  </div>
+                )
               ) : (
                 <button className="of-facet__b" style={{ marginTop: 14 }}
-                        disabled={!open.email} onClick={startReply}
-                        title={open.email ? "Write to this person" : "No address on record"}>
+                        disabled={!open.email || draft?.kind === "new"} onClick={startReply}
+                        title={!open.email ? "No address on record"
+                          : draft ? "Send or discard the new message first"
+                          : "Write to this person"}>
                   Reply
                 </button>
               )}
@@ -465,7 +564,7 @@ export function CrmInbox() {
       </div>
       {composer}
       {seqFor ? <SequenceModal thread={seqFor} onClose={() => setSeqFor(null)} /> : null}
-      <Toast message={said} onDone={() => setSaid(null)} />
+      {toast}
     </>
   );
 }
