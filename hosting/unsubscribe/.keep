@@ -1,0 +1,5 @@
+Deliberately empty.
+
+Firebase Hosting needs a public directory per site, and this site serves no
+static files at all: every request is rewritten to the Cloud Run service,
+which renders the unsubscribe page itself. See firebase.json.

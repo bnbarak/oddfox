@@ -194,18 +194,28 @@ Roughly 1,400 lines. What it is *for*, in plain English with no tech, is
 [OUTREACH.md](OUTREACH.md).
 
 **One database.** Everything persists in the same Firestore the CRM already
-uses: `crmSends`, `crmQuota`, `crmReplies`, `crmTicks`, `crmOutreachMeta`.
+uses: `crmSends`, `crmQuota`, `crmReplies`, `crmTicks`, `crmOutreachMeta`,
+`crmOptOuts`.
 There was briefly a Cloud SQL Postgres for this; it was deleted. At fifteen
 messages a day the reports are built by reading the documents and grouping in
 memory, which is cheaper in every sense than running an instance to `GROUP BY`.
 
 **Resend owns everything Resend already does.** Scheduling is `scheduledAt` on
 the send, and the email id it returns *is* the cancel token — that is why
-nothing is ever sent immediately, even two minutes out. Opt-outs are Resend's
-suppression list, which it adds to automatically on every bounce and complaint
-and skips sending to across the whole team; we only push to it when a human
-types "unsubscribe" in a reply, because that is the one thing Resend cannot
-infer. We keep no second list.
+nothing is ever sent immediately, even two minutes out. Delivery suppression
+is Resend's list, which it adds to automatically on every bounce and complaint
+and skips sending to across the whole team; there is no second copy of it.
+
+**Unsubscribing is ours, because it is more than a suppression.** Every
+commercial message carries a signed one-click link on
+`unsubscribe.seaworth.ai`, plus the `List-Unsubscribe` and
+`List-Unsubscribe-Post` headers that make Gmail and Yahoo show their own
+button. Clicking it — or writing back "unsubscribe", or being added by hand —
+runs one path, `optOut()` in `server/src/outreach/optout.ts`: it records who
+asked and when in `crmOptOuts`, suppresses the address at Resend, **cancels
+every message already queued for them**, and marks the contact dead. `send.ts`
+then refuses that address by *address*, so a second contact record carrying it
+cannot be written to either. See `server/src/outreach/context.md`.
 
 **The daily cap is the one real invariant.** Fifteen a day per sending domain,
 enforced in a Firestore transaction, because two requests that both read 14
@@ -268,9 +278,97 @@ node tools/hosting-deploy.mjs seaworth        --project maine-507401
 
 gcloud run deploy seaworth-crm-server --project maine-507401 --region us-central1 \
   --source server \
-  --set-secrets TICK_TOKEN=oddfox-crm-tick-token:latest \
-  --update-env-vars GOOGLE_CLOUD_PROJECT=maine-507401
+  --update-env-vars GOOGLE_CLOUD_PROJECT=maine-507401 \
+  --no-invoker-iam-check
 ```
+
+Note what is NOT in that command: secrets. `RESEND_API_KEY`, `GOOGLE_API_KEY`,
+`APOLLO_API_KEY` and `UNSUBSCRIBE_SECRET` are already attached to the service
+and survive a deploy that does not mention them. That is also why
+`.github/workflows/deploy.yml` can deploy on every push without holding any of
+them.
+
+**`--set-secrets` REPLACES the whole set. It does not add to it.** This
+document used to carry a `--set-secrets TICK_TOKEN=oddfox-crm-tick-token:latest`
+line, left over from before the heartbeat moved to OIDC — that secret does not
+exist in this project. Running it silently dropped Resend, Gemini and Apollo
+from the service template and then failed on the missing secret, which is a
+service that starts fine and cannot send, draft or enrich. To add one secret,
+use `--update-secrets`:
+
+```bash
+gcloud run deploy seaworth-crm-server --project maine-507401 --region us-central1 \
+  --source server --update-secrets NEW_THING=new-thing:latest --no-invoker-iam-check
+```
+
+To check what the *next* deploy will ship — not what is currently serving,
+which is a different thing and the one that hides this mistake:
+
+```bash
+gcloud run services describe seaworth-crm-server --project maine-507401 \
+  --region us-central1 --format="value(spec.template.spec.containers[0].env)" | tr ';' '\n'
+```
+
+### unsubscribe.seaworth.ai
+
+The unsubscribe link in every commercial message. Its own hostname rather than
+a path on the office app, because the office app is behind a Google sign-in
+check and this cannot be — keeping them on separate hosts makes that
+impossible to get wrong by accident. The site serves no files of its own:
+`hosting/unsubscribe` is empty and every request is rewritten to
+`seaworth-crm-server`, which renders the page (`outreach/unsubscribe.ts`).
+
+One-time setup, in order:
+
+```bash
+# 1. The signing key. Must be STABLE — rotating it breaks every link already
+#    sitting in somebody's inbox, because a token is derived from the address
+#    rather than stored.
+openssl rand -base64 32 | gcloud secrets create seaworth-unsubscribe-secret \
+  --project maine-507401 --data-file=-
+
+# 2. The hosting site, then deploy it.
+firebase hosting:sites:create seaworth-unsubscribe --project maine-507401
+node tools/hosting-deploy.mjs seaworth-unsubscribe --project maine-507401
+```
+
+3. Register the custom domain. The console works, but the CLI's credentials
+   expire constantly on this machine and the REST API is what
+   `tools/hosting-deploy.mjs` already uses:
+
+```bash
+TOK=$(gcloud auth print-access-token)
+curl -s -X POST -H "authorization: Bearer $TOK" \
+  -H "x-goog-user-project: maine-507401" -H "content-type: application/json" -d '{}' \
+  "https://firebasehosting.googleapis.com/v1beta1/projects/maine-507401/sites/seaworth-unsubscribe/customDomains?customDomainId=unsubscribe.seaworth.ai"
+
+# then read requiredDnsUpdates and cert.verification.dns off:
+curl -s -H "authorization: Bearer $TOK" -H "x-goog-user-project: maine-507401" \
+  "https://firebasehosting.googleapis.com/v1beta1/projects/maine-507401/sites/seaworth-unsubscribe/customDomains/unsubscribe.seaworth.ai"
+```
+
+4. **seaworth.ai is on Squarespace, not Cloud DNS** — the other domains are in
+   `costseg-507001` but this one is edited by hand, so the records go in
+   Squarespace's DNS panel. Firebase issued a CNAME here, not the pair of A
+   records its older documentation describes:
+
+   | Host (relative — Squarespace appends the domain) | Type | Data |
+   |---|---|---|
+   | `unsubscribe` | CNAME | `seaworth-unsubscribe.web.app` |
+   | `_acme-challenge.unsubscribe` | TXT | the Let's Encrypt token from `cert.verification.dns.desired` |
+
+   The TXT is only needed until the certificate issues, but leaving it costs
+   nothing and helps on renewal. Poll the GET above until `ownershipState` is
+   `OWNERSHIP_ACTIVE` and `hostState` is `HOST_ACTIVE`.
+
+   Until DNS resolves and the certificate is issued, `canLink()` is still true
+   and messages will carry links that 404 — so do this **before** the secret
+   exists, and before turning `dry_run` off.
+
+Until `UNSUBSCRIBE_SECRET` exists the system is not broken: `canLink()` is
+false, no links are minted, and commercial mail falls back to asking people to
+reply — which `poll.ts` reads and acts on. Settings → Signatures says which of
+the two is live.
 
 Cloud Run in Maine cannot be made public with an `allUsers` IAM binding — an
 org policy on permitted domains refuses it. It uses
@@ -278,6 +376,25 @@ org policy on permitted domains refuses it. It uses
 too. Firebase Hosting rewrites need anonymous access to reach the service; the
 real access boundary is `server/src/auth.ts`, which checks a Google ID token on
 every `/api` route, and `TICK_TOKEN` on `/tasks/tick`.
+
+There is exactly one exception, `/api/mcp`, and it is deliberate.
+`server/src/index.ts` mounts it **above** the blanket `requireGoogleUser` line,
+because Express matches routes in order — anything added below that line is
+still covered, and nothing else belongs above it. It authenticates with an API
+key instead (`server/src/apiKeys.ts`): 32 random bytes, stored only as a
+SHA-256 which is also the document id, so a read of `crmApiKeys` yields nothing
+usable. Keys are minted in the office app under Settings → Claude access, shown
+once, and revoked by deleting the document. The endpoint itself is the outreach
+agent's ten tools over MCP (`server/src/outreach/mcp.ts`) — the same
+`operator.ts` tool objects the onsite agent uses, so `send.ts` still enforces
+the cap, dry-run and placeholder checks underneath Claude exactly as it does
+underneath the panel.
+
+To connect Claude Code to it:
+
+```bash
+claude mcp add --transport http seaworth https://seaworth-office.web.app/api/mcp --header "Authorization: Bearer sw_..."
+```
 
 Re-seeding Firestore from `data/json/crm/*.json` needs no ADC:
 
