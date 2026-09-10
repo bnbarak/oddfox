@@ -53,9 +53,11 @@ export function RecipientField({ value, onChange, text, onText, people, disabled
   const add = (emails: string[]) =>
     onChange(mergeRecipients(value, emails.map((e) => recipientFor(e, people))));
 
-  const pick = (p: Person) => {
+  /** `rest` is whatever came after the separator that finished this one,
+      which stays in the box to become the next. */
+  const pick = (p: Person, rest = "") => {
     onChange(mergeRecipients(value, [{ email: p.email!, contact_id: p.id, name: p.full_name }]));
-    onText(""); setHi(0);
+    onText(rest); setHi(0);
     input.current?.focus();
   };
 
@@ -63,14 +65,24 @@ export function RecipientField({ value, onChange, text, onText, people, disabled
       and finishing it picks the highlighted person — "Sebastian," means
       Sebastian. Anything else becomes chips as written, bad ones included,
       so an address that did not parse shows up red where you can fix it. */
-  const commit = (raw: string) => {
+  const commit = (raw: string, rest = "") => {
     const trimmed = raw.trim();
-    if (!trimmed) { onText(""); return; }
+    if (!trimmed) { onText(rest); return; }
     if (!trimmed.includes("@")) {
-      if (cur) pick(cur); else { add([trimmed]); onText(""); }
+      if (cur) pick(cur, rest); else { add([trimmed]); onText(rest); }
       return;
     }
-    add(splitAddresses(trimmed)); onText(""); setHi(0);
+    add(splitAddresses(trimmed)); onText(rest); setHi(0);
+  };
+
+  /* A separator that arrives without a key press — a phone keyboard, an
+     IME, autocomplete, a dictated comma — finishes an address all the same.
+     The keydown handler catches the ordinary case first; this is the rest. */
+  const onType = (v: string) => {
+    setHi(0); setArmed(null);
+    const m = /^([\s\S]*)[,;\n]([^,;\n]*)$/.exec(v);
+    if (m && !openQuote(m[1]!)) { commit(m[1]!, m[2]!.trimStart()); return; }
+    onText(v);
   };
 
   const onKey = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -126,8 +138,11 @@ export function RecipientField({ value, onChange, text, onText, people, disabled
   };
 
   /** Puts the edited address back where it was, not at the end. An edit that
-      turns into two addresses becomes two chips; one emptied out goes away. */
-  const finishEdit = (keep: boolean) => {
+      turns into two addresses becomes two chips; one emptied out goes away.
+      Focus goes back to the box only when the edit was ended from the
+      keyboard. Ended by clicking into the subject, it belongs in the subject —
+      pulling it back sends the next thing typed into the wrong field. */
+  const finishEdit = (keep: boolean, refocus: boolean) => {
     const i = editingRef.current;
     if (i === null) return;
     editingRef.current = null;
@@ -136,15 +151,15 @@ export function RecipientField({ value, onChange, text, onText, people, disabled
       const fixed = splitAddresses(editText).map((e) => recipientFor(e, people));
       onChange(mergeRecipients(value.slice(0, i), [...fixed, ...value.slice(i + 1)]));
     }
-    input.current?.focus();
+    if (refocus) input.current?.focus();
   };
 
   const onEditKey = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || ((e.key === "," || e.key === ";") && !openQuote(editText))) {
-      e.preventDefault(); finishEdit(true);
+      e.preventDefault(); finishEdit(true, true);
     } else if (e.key === "Escape") {
       // Stop it here, or the window hears it too and shrinks the composer.
-      e.preventDefault(); e.stopPropagation(); finishEdit(false);
+      e.preventDefault(); e.stopPropagation(); finishEdit(false, true);
     }
   };
 
@@ -160,7 +175,7 @@ export function RecipientField({ value, onChange, text, onText, people, disabled
               <input key={`edit-${i}`} className="of-rcpt__edit" autoFocus value={editText}
                      size={Math.max(6, editText.length + 1)} aria-label="Edit address"
                      onChange={(e) => setEditText(e.target.value)}
-                     onKeyDown={onEditKey} onBlur={() => finishEdit(true)} />
+                     onKeyDown={onEditKey} onBlur={() => finishEdit(true, false)} />
             );
           }
           const bad = !isEmail(r.email);
@@ -185,7 +200,7 @@ export function RecipientField({ value, onChange, text, onText, people, disabled
         <input ref={input} className="of-rcpt__in" value={text} disabled={disabled}
                placeholder={value.length ? "" : "Name, company or role — or paste addresses"}
                aria-label="Recipients"
-               onChange={(e) => { onText(e.target.value); setHi(0); setArmed(null); }}
+               onChange={(e) => onType(e.target.value)}
                onKeyDown={onKey} onPaste={onPaste} onBlur={onBlur} />
       </div>
 
