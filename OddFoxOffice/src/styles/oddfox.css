@@ -113,7 +113,7 @@ table.of-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:56
 
 /* ---------- chips ---------- */
 .of-chips{display:flex;gap:6px;flex-wrap:wrap}
-.of-chip{
+.of-chip{white-space:nowrap;
   font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
   padding:3px 8px;border:1px solid var(--line);border-radius:2px;color:var(--paper);
   /* short chips sit on one line naturally; long ones must wrap rather than

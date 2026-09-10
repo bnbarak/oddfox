@@ -17,15 +17,6 @@ export function CrmAccounts() {
   const touched = seed.filter((r) => r.status !== "not started").length;
   const linked = seed.filter((r) => link(r)).length;
 
-  const markRound = (r: AccountRecord, n: 1 | 2 | 3) => {
-    const key = `round_${n}` as const;
-    const already = r.sequence?.[key];
-    void patch(r.id, {
-      sequence: { ...r.sequence, [key]: already ? null : today() },
-      status: already ? r.status : (`round ${n} sent` as AccountRecord["status"]),
-      last_touch: already ? r.last_touch : today(),
-    });
-  };
 
   // One account asked for by the URL takes the whole page: it is a different
   // question from the pipeline, not a wider column of the same table.
@@ -65,7 +56,7 @@ export function CrmAccounts() {
               <tr>
                 <th className="co">Account</th>
                 <th>Tier</th><th>Roles</th><th>Contact</th>
-                <th>R1</th><th>R2</th><th>R3</th><th>Status</th><th>People</th>
+                <th>Status</th><th>People</th>
               </tr>
             </thead>
             <tbody>
@@ -92,18 +83,6 @@ export function CrmAccounts() {
                         : r.linkedin_url ? <Site url={r.linkedin_url} label="LinkedIn page" />
                         : <Chip tone="warm">no link on record</Chip>}
                     </td>
-                    {([1, 2, 3] as const).map((n) => {
-                      const d = r.sequence?.[`round_${n}`];
-                      return (
-                        <td key={n} className="cell">
-                          <button className={`of-rnd${d ? " is-on" : ""}`} disabled={!live}
-                                  title={d ? `sent ${d}` : live ? "mark sent" : "server offline"}
-                                  onClick={() => markRound(r, n)}>
-                            {d ? "✓" : "·"}
-                          </button>
-                        </td>
-                      );
-                    })}
                     <td className="cell">
                       <select className="of-sel" value={r.status} disabled={!live}
                               onChange={(e) => void patch(r.id,

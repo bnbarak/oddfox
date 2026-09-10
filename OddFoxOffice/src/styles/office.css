@@ -121,6 +121,17 @@ a.co-row:hover .co-name,
 /* Several accounts in one cell: each is its own link, wrapping rather than
    stretching the column. */
 .of-camp__cos { display: inline-flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+/* Colour comes from the campaign's own id; only the shape is here. */
+.of-camp__tag {
+  display: inline-block; border: 1px solid; border-radius: 2px;
+  padding: 0 6px; font-family: var(--mono); font-size: 10px;
+  letter-spacing: .04em; max-width: 22ch; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; vertical-align: middle;
+}
+.of-camp__sw {
+  display: inline-block; width: 9px; height: 9px; border-radius: 2px;
+  border: 1px solid; margin-right: 7px; vertical-align: middle;
+}
 .of-camp__sq {
   display: inline-block; width: 11px; height: 11px; border-radius: 2px;
   vertical-align: middle; opacity: .85;

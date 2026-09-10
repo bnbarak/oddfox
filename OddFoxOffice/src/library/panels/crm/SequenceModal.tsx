@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Chip, Note } from "../../../ui";
 import type { Rec } from "../../../data";
-import { sequencesFile } from "./shared";
+import { SEND_TONE, sequencesFile } from "./shared";
 import { EmailBody } from "./EmailBody";
 import type { Thread, ThreadMessage } from "../../../lib/outreachStore";
 
@@ -67,10 +67,12 @@ export function CampaignSequenceModal({ name, accountIds, threads, onClose, onPe
     const m = t.messages.find(
       (x) => x.dir === "out" && x.round === n && x.status !== "canceled");
     if (!m) return <span className="of-dot-off" title={`round ${n} not written yet`} />;
-    const done = m.status !== "scheduled" && m.status !== "draft";
+    /* The real status word, not a summary of it. "queued" hid the
+       difference between something Resend is holding and something that
+       failed, and scheduled is exactly what you want to see here. */
     return (
       <span title={`round ${n} — ${m.status ?? "sent"} · ${new Date(m.at).toLocaleString()}`}>
-        <Chip tone={done ? "calm" : "cool"}>{done ? (m.status ?? "sent") : "queued"}</Chip>
+        <Chip tone={SEND_TONE[m.status ?? "sent"] ?? ""}>{m.status ?? "sent"}</Chip>
       </span>
     );
   };
@@ -161,9 +163,7 @@ export function SequenceModal({ thread, onClose }: { thread: Thread; onClose: ()
                   <strong>Round {n}</strong>
                   <span className="of-note">{cadence(n)}</span>
                   {sent
-                    ? <Chip tone={sent.status === "scheduled" ? "cool" : "calm"}>
-                        {sent.status ?? "sent"}
-                      </Chip>
+                    ? <Chip tone={SEND_TONE[sent.status ?? "sent"] ?? ""}>{sent.status ?? "sent"}</Chip>
                     : <Chip>not yet</Chip>}
                   {sent ? <span className="of-note">
                     {new Date(sent.at).toLocaleString()}</span> : null}

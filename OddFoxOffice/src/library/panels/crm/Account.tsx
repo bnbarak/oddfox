@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Section, Grid, Cell, Stat, Note, Chip, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { cancelSend, sendNow, useCampaigns, useEnrichment, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
-import { CampaignChip } from "./CampaignChip";
+import { cancelSend, sendNow, useCampaigns, useEnrichment, useThreads, type AccountCampaign, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
+import { CampaignChip, CampaignTag } from "./CampaignChip";
 import { EmailBody } from "./EmailBody";
 import { EmailCell } from "./EmailCell";
 import { Toast } from "./Toast";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
-import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
+import { PIPE, SEND_TONE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
 /* One account, end to end: where the company is, who we know there, and every
    message that has gone out to them. It exists because the tables answer "how
@@ -43,6 +43,11 @@ export function AccountLink({ id, children, title }: {
   );
 }
 
+/** A contact with no name on record has their address as their name, and
+    printing both reads as a bug. */
+const who = (t: Thread) =>
+  t.email && t.full_name !== t.email ? `${t.full_name} · ${t.email}` : (t.full_name || t.email || "—");
+
 const fmt = (iso: string) => new Date(iso).toLocaleString([], {
   month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
 });
@@ -53,10 +58,12 @@ const fmt = (iso: string) => new Date(iso).toLocaleString([], {
    it, and the subject floating over the body — three separate places for the
    header of one email. Now the subject leads, because that is what you are
    looking for, and everything else is one meta line under it. */
-function Message({ m, who, onSequence, onCancel, onNow, busy }: {
+function Message({ m, who, campaign, onSequence, onCancel, onNow, busy }: {
   m: ThreadMessage;
   /** Who this was to, or from — the counterparty either way. */
   who: string;
+  /** The campaign this account is in, if any. */
+  campaign?: AccountCampaign;
   onSequence?: () => void;
   onCancel?: (id: string) => void;
   onNow?: (id: string) => void;
@@ -70,6 +77,7 @@ function Message({ m, who, onSequence, onCancel, onNow, busy }: {
 
         <div className="of-msg__meta">
           <span>{m.dir === "out" ? "to" : "from"} {who}</span>
+          {m.round ? <CampaignTag of={campaign} /> : null}
           {m.round ? (
             <SequenceLink tier={m.template_tier ?? 1} round={m.round} />
           ) : null}
@@ -78,7 +86,8 @@ function Message({ m, who, onSequence, onCancel, onNow, busy }: {
                     title="See this person's whole sequence">sequence</button>
           ) : null}
           {m.dry_run ? <span className="of-msg__tag">dry run</span> : null}
-          {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
+          {m.status && !m.dry_run
+            ? <Chip tone={SEND_TONE[m.status] ?? ""}>{m.status}</Chip> : null}
           <span className="of-msg__at">{fmt(m.at)}</span>
         </div>
 
@@ -133,6 +142,7 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
   const { rows: accounts, live, patch } = useAccounts();
   const { rows: contacts } = useContacts();
   const threadsRes = useThreads();
+  const campaigns = useCampaigns();
   const enrichment = useEnrichment();
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
   const [busy, setBusy] = useState(false);
@@ -281,7 +291,8 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
           <>
             {messages.map(({ m, t }) => (
               <Message key={`${t.key}-${m.dir}-${m.id}`} m={m} busy={busy}
-                       who={`${t.full_name}${t.email ? ` · ${t.email}` : ""}`}
+                       who={who(t)}
+                       campaign={campaigns.data?.states[a.id]}
                        onSequence={() => setSeqFor(t)}
                        onCancel={(id) => void act(id, "cancel")}
                        onNow={(id) => void act(id, "now")} />

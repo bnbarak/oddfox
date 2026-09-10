@@ -1,6 +1,7 @@
 import { Chip } from "../../../ui";
 import { TONE_VAR } from "../../../ui/tokens";
 import { CAMPAIGN_TONE, type AccountCampaign } from "../../../lib/outreachStore";
+import { campaignColors } from "./campaignColors";
 
 /* An account's campaign state.
 
@@ -14,6 +15,19 @@ import { CAMPAIGN_TONE, type AccountCampaign } from "../../../lib/outreachStore"
    week cells wrapped onto two lines and pushed the row out of shape. The
    square carries the same information in the tooltip, which is how the rest
    of this table already works. */
+
+/** The campaign's name, in its own colour. Where the state chip answers
+    "what is it doing", this answers "which one is it" — in a list of
+    conversations that is the faster question. */
+export function CampaignTag({ of }: { of?: AccountCampaign }) {
+  if (!of || of.state === "none" || !of.campaign_id) return null;
+  return (
+    <span className="of-camp__tag" style={campaignColors(of.campaign_id)}
+          title={`${of.campaign_name} — ${of.state}`}>
+      {of.campaign_name}
+    </span>
+  );
+}
 
 const LABEL = (of: AccountCampaign) =>
   of.campaign_name ? `${of.campaign_name} — ${of.state}` : of.state;

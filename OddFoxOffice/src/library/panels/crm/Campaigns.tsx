@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 import { Chip, Grid, Cell, H1, Logo, Note, Section, Stat } from "../../../ui";
 import {
-  setCampaignActive, useCampaigns, useEnrichment, useHeatmap, useThreads,
+  deleteCampaign, setCampaignActive, useCampaigns, useEnrichment, useHeatmap, useThreads,
   type CampaignRow, type Thread,
 } from "../../../lib/outreachStore";
 import { AccountLink } from "./Account";
+import { campaignColors } from "./campaignColors";
 import { CampaignSequenceModal, SequenceModal } from "./SequenceModal";
 import { ServerState } from "./ServerState";
 import { Toast } from "./Toast";
@@ -60,6 +61,20 @@ export function CrmCampaigns() {
       || `${c.name} ${c.persona} ${c.companies.join(" ")}`.toLowerCase().includes(needle)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows, q, filter]);
+
+  const remove = async (c: CampaignRow) => {
+    if (!window.confirm(
+      `Delete “${c.name}”?\n\nIt is hidden, not erased. Messages already sent keep pointing at `
+      + "it, because the record of what was written to a stranger outlives the reason for it.")) return;
+    setBusy(c.id);
+    try {
+      await deleteCampaign(c.id);
+      setSaid(`“${c.name}” deleted.`);
+      await campaigns.reload();
+    } catch (err) {
+      setSaid(err instanceof Error ? err.message : String(err));
+    } finally { setBusy(null); }
+  };
 
   const toggle = async (c: CampaignRow) => {
     const on = !c.active;
@@ -125,7 +140,8 @@ export function CrmCampaigns() {
                 <tr>
                   <th className="co">Campaign</th><th>Companies</th><th>Persona</th>
                   <th>Tier</th><th>People</th><th>Reachable</th><th>To look up</th>
-                  <th>Queued</th><th>Sent</th><th>In</th><th>State</th><th></th><th></th>
+                  <th>Queued</th><th>Sent</th><th>In</th><th>State</th>
+                  <th></th><th></th><th></th>
                 </tr>
               </thead>
               <tbody>
@@ -134,11 +150,16 @@ export function CrmCampaigns() {
                   return (
                     <tr key={c.id}>
                       <td className="co">
+                        {/* The campaign's own colour, the same one its pill
+                            carries in the inbox — a swatch rather than a pill
+                            because the name is already right here. */}
+                        <span className="of-camp__sw" style={campaignColors(c.id)} />
                         {c.account_ids.length === 1 && c.account_ids[0] ? (
                           <AccountLink id={c.account_ids[0]}>
                             <span className="co-name">{c.name}</span>
                           </AccountLink>
                         ) : <span className="co-name">{c.name}</span>}
+
                         {c.last_at ? (
                           <span className="co-sub">last {new Date(c.last_at).toLocaleDateString()}</span>
                         ) : null}
@@ -180,6 +201,16 @@ export function CrmCampaigns() {
                           {busy === c.id ? "…" : c.active ? "pause" : "activate"}
                         </button>
                       </td>
+                      <td className="cell">
+                        {/* Only once it is switched off. The server refuses
+                            either way; disabling it here says why before you
+                            click rather than after. */}
+                        <button className="of-dock__x" disabled={busy === c.id || c.active}
+                                title={c.active
+                                  ? "pause it first — deleting a running campaign would leave mail queued with nothing to explain it"
+                                  : "forget this campaign; messages already sent are kept"}
+                                onClick={() => void remove(c)}>delete</button>
+                      </td>
                     </tr>
                   );
                 })}
@@ -192,11 +223,6 @@ export function CrmCampaigns() {
             : "Nothing matches that."}</Note>
         )}
 
-        <Note style={{ marginTop: 14 }}>
-          “To look up” is what a campaign would spend at Apollo if switched on now — one credit
-          each, never charged twice for the same person. Activating also writes round 1 to
-          everyone it can reach and queues it; nothing sends immediately.
-        </Note>
       </Section>
 
       {seqCampaign ? (

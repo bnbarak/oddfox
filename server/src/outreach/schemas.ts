@@ -281,5 +281,10 @@ export const Campaign = z.object({
   account_ids: z.array(z.string()).default([]),
   active: z.boolean().default(true),
   created_at: z.string().default(""),
+  /** Soft delete. The row stays because the sends it produced point back at
+      it: a message in someone's thread with a campaign id that resolves to
+      nothing is worse than a campaign nobody can see. Set means hidden
+      everywhere; the drafting path and the panels both filter on it. */
+  deleted_at: z.string().nullable().default(null),
 }).strict();
 export type Campaign = z.infer<typeof Campaign>;

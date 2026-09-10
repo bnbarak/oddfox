@@ -6,12 +6,12 @@ import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
   allCampaigns, allOptOuts, allReplies, allSends, clearThread, getConfig, getThread, headroom,
-  lastTick, putCampaign, putConfig, recentTicks,
+  lastTick, deleteCampaign, putCampaign, putConfig, recentTicks,
 } from "./store.js";
 import { optOut } from "./optout.js";
 import { canLink, UNSUB_BASE } from "./unsubToken.js";
 import { allEnrichment, spentToday } from "./apollo.js";
-import { startCampaign } from "./start.js";
+import { endCampaign, startCampaign } from "./start.js";
 import { statesFor } from "./campaignState.js";
 import * as crm from "./crm.js";
 import { chat } from "./operator.js";
@@ -268,6 +268,31 @@ outreachRouter.post("/campaigns/:id/pause", h(async (req, res) => {
   if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
   await putCampaign({ ...c, active: false });
   res.json({ id: c.id, active: false });
+}));
+
+/** Pause, and pull the queue back with it — for when the campaign itself was
+    the mistake, not the timing. Messages already sent stay sent; one-offs
+    written by hand to these accounts are left alone. */
+outreachRouter.post("/campaigns/:id/end", h(async (req, res) => {
+  const c = (await allCampaigns()).find((x) => x.id === req.params.id);
+  if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
+  await putCampaign({ ...c, active: false });
+  res.json({ id: c.id, active: false, ...(await endCampaign(c)) });
+}));
+
+/** Refuses while the campaign is running. Deleting is the one campaign
+    action that cannot be undone, and it must never be the thing that leaves
+    mail in the queue with nothing left to explain why it was written. */
+outreachRouter.delete("/campaigns/:id", h(async (req, res) => {
+  const c = (await allCampaigns()).find((x) => x.id === req.params.id);
+  if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
+  if (c.active) {
+    res.status(409).json({ error: "still-running",
+                           detail: "End or pause this campaign before deleting it." });
+    return;
+  }
+  await deleteCampaign(c.id);
+  res.json({ id: c.id, deleted: true });
 }));
 
 /** Who we have looked up and what came back, keyed by contact.

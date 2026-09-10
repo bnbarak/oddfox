@@ -1,14 +1,16 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Chip, H1, Note } from "../../../ui";
 import {
-  cancelSend, sendDirect, sendNow, useOutreachConfig, useOutreachStatus, useThreads,
+  cancelSend, sendDirect, sendNow, useCampaigns, useOutreachConfig, useOutreachStatus,
+  useThreads,
   type Thread, type ThreadMessage,
 } from "../../../lib/outreachStore";
 import { EmailBody } from "./EmailBody";
+import { CampaignTag } from "./CampaignChip";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";
 import { Toast } from "./Toast";
-import { useContacts } from "./shared";
+import { SEND_TONE, useContacts } from "./shared";
 
 /* The inbox. One conversation per person: what we sent, what came back.
 
@@ -67,7 +69,8 @@ function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
                   title="See this person's whole sequence">sequence</button>
         ) : null}
         {m.dry_run ? <Chip tone="warm">dry run</Chip> : null}
-        {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
+        {m.status && !m.dry_run
+          ? <Chip tone={SEND_TONE[m.status] ?? ""}>{m.status}</Chip> : null}
         {m.unsubscribe ? <Chip tone="hot">opted out</Chip> : null}
         {m.automated ? <Chip tone="warm">auto</Chip> : null}
         <span className="of-msg__at">{fmt(m.at)}</span>
@@ -105,6 +108,7 @@ export function CrmInbox() {
   const [working, setWorking] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
+  const campaigns = useCampaigns();
   // Composing to someone with no thread yet — the only way to start one.
   const [composing, setComposing] = useState(false);
   const [to, setTo] = useState<string>("");
@@ -397,8 +401,15 @@ export function CrmInbox() {
                   <span className="of-inbox__subj">{preview?.subject ?? "(no subject)"}</span>
                   <span className="of-inbox__peek"> — {snippet(preview)}</span>
                 </span>
+                {/* Which campaign this person is in, not how much they have
+                    had. In a list of conversations "1 sent" is noise; the
+                    campaign is the thing that groups them. */}
                 <span className="of-inbox__l3">
-                  {t.company ?? "—"} · {t.sent} sent{t.replies ? ` · ${t.replies} in` : ""}
+                  {t.company ?? "—"}
+                  {t.account_id && campaigns.data?.states[t.account_id] ? (
+                    <> · <CampaignTag of={campaigns.data.states[t.account_id]} /></>
+                  ) : null}
+                  {t.replies ? ` · ${t.replies} in` : ""}
                 </span>
               </button>
             );

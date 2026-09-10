@@ -238,6 +238,15 @@ export async function sendNow(id: string) {
   return body;
 }
 
+export async function deleteCampaign(id: string) {
+  const res = await fetch(`${BASE}/campaigns/${encodeURIComponent(id)}`,
+                          { method: "DELETE", headers: authHeaders() });
+  const body = (await res.json().catch(() => null)) as
+    { error?: string; detail?: string } | null;
+  if (!res.ok) throw new Error(body?.detail ?? body?.error ?? `delete → ${res.status}`);
+  return body;
+}
+
 export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
 export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");
 

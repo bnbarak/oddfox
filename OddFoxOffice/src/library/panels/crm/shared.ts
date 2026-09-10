@@ -42,3 +42,14 @@ export function useContacts() {
     live: records !== null, settled, error, patch,
   };
 }
+
+/** How a message's delivery state should read at a glance.
+
+    Cancelled and bounced are not neutral facts to be listed in grey next to
+    "delivered" — they mean the message did not arrive, which is the one thing
+    you want to catch while scanning a thread. */
+export const SEND_TONE: Record<string, Tone> = {
+  canceled: "hot", bounced: "hot", complained: "hot", failed: "hot",
+  delivered: "calm", opened: "calm", clicked: "calm",
+  scheduled: "cool", draft: "cool", sent: "",
+};

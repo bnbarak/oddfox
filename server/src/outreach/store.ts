@@ -282,7 +282,17 @@ export const clearThread = (): Promise<unknown> =>
 
 export async function allCampaigns(): Promise<Campaign[]> {
   const snap = await db().collection(CAMPAIGNS).get();
-  return snap.docs.map((d) => d.data() as Campaign);
+  return snap.docs.map((d) => d.data() as Campaign).filter((c) => !c.deleted_at);
+}
+
+/** Hides a campaign. A soft delete on purpose: the sends it produced point
+    back at it, and a message in somebody's thread whose campaign id resolves
+    to nothing is worse than a campaign nobody can see. The row stays, marked;
+    `allCampaigns` filters it out, so every reader — the panels, the drafting
+    path, the operator's tools — stops seeing it at once. */
+export async function deleteCampaign(id: string): Promise<void> {
+  await db().collection(CAMPAIGNS).doc(id)
+    .set({ deleted_at: new Date().toISOString() }, { merge: true });
 }
 
 export async function putCampaign(c: Campaign): Promise<Campaign> {
