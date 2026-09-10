@@ -72,17 +72,17 @@
         {
           "round": 1,
           "subject": "Autonomous escort for commercial ships",
-          "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{company}} manages around {{fleet}} hulls. Every one that goes through the southern Red Sea is a decision that lands on your desk, not the owner's.\n\nIf any of them are still making that transit, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{company}} manages around {{fleet}} hulls. Every one that goes through the southern Red Sea is a decision that lands on your desk, not the owner's.\n\nIf any of them are still making that transit, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
         },
         {
           "round": 2,
           "subject": "Re: Escort cover across the {{company}} managed fleet",
-          "body": "{{first_name}},\n\nOne follow-up, with the number that made us take this seriously.\n\nThere were 38 reported attacks worldwide in the first half of 2026, the fewest since 1992. But 84% of them ended with the ship boarded or hijacked, and 67 seafarers were taken. Fewer attacks, higher consequence each time.\n\nIf protection is not your desk, just point me at the right one.\n\nStill happy to walk you through the record. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nOne follow-up, with the number that made us take this seriously.\n\nThere were 38 reported attacks worldwide in the first half of 2026, the fewest since 1992. But 84% of them ended with the ship boarded or hijacked, and 67 seafarers were taken. Fewer attacks, higher consequence each time.\n\nIf protection is not your desk, just point me at the right one.\n\nStill happy to walk you through the record. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
           "subject": "Last note",
-          "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
         }
       ]
     },
@@ -95,17 +95,17 @@
         {
           "round": 1,
           "subject": "Autonomous escort for commercial ships",
-          "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{vessel}} is why you are on a very short list. Most owners have read about these attacks. You have had one.\n\nIf {{company}} still has ships on that route, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\n{{vessel}} is why you are on a very short list. Most owners have read about these attacks. You have had one.\n\nIf {{company}} still has ships on that route, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
         },
         {
           "round": 2,
           "subject": "Re: Marine security, autonomous escort vessels",
-          "body": "{{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort. About half the successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nWe think the case is strongest against drones and small boats on a moving hull in a defined passage, and weakest at anchor. Whether that narrow case is worth paying for is your call, not ours.\n\nThe offer stands: twenty minutes, and you get the incident record regardless. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort. About half the successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nWe think the case is strongest against drones and small boats on a moving hull in a defined passage, and weakest at anchor. Whether that narrow case is worth paying for is your call, not ours.\n\nThe offer stands: twenty minutes, and you get the incident record regardless. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
           "subject": "Last note",
-          "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
         }
       ]
     },
@@ -117,17 +117,17 @@
         {
           "round": 1,
           "subject": "Autonomous escort for commercial ships",
-          "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nDry bulk was the most-attacked vessel type in the first half of 2026. Bulk and container together were about 60% of targeted tonnage. Your ships are the ones being hit.\n\nIf {{company}} is still routing through the Red Sea or the Gulf of Aden, we can escort those transits.\n\nThursday or Friday?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nDry bulk was the most-attacked vessel type in the first half of 2026. Bulk and container together were about 60% of targeted tonnage. Your ships are the ones being hit.\n\nIf {{company}} is still routing through the Red Sea or the Gulf of Aden, we can escort those transits.\n\nThursday or Friday?\n\n{{sender}}"
         },
         {
           "round": 2,
           "subject": "Re: Dry bulk was the most-targeted type in H1 2026",
-          "body": "{{first_name}},\n\nShort follow-up with the number that made us take this seriously.\n\nWar risk cover in the Strait of Hormuz reached 7.5 to 10% of hull value in July 2026, against a peacetime baseline of 0.125%. On a hundred million dollar vessel that is a real line item, and it is already being paid.\n\nThe question we are chasing is whether any of it can be moved. If the answer at {{company}} is no, that is a useful answer too.\n\nTwenty minutes and the route data is yours. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nShort follow-up with the number that made us take this seriously.\n\nWar risk cover in the Strait of Hormuz reached 7.5 to 10% of hull value in July 2026, against a peacetime baseline of 0.125%. On a hundred million dollar vessel that is a real line item, and it is already being paid.\n\nThe question we are chasing is whether any of it can be moved. If the answer at {{company}} is no, that is a useful answer too.\n\nTwenty minutes and the route data is yours. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
           "subject": "Last note",
-          "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
         }
       ]
     },
@@ -139,17 +139,17 @@
         {
           "round": 1,
           "subject": "Autonomous escort for commercial ships",
-          "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nTankers carry the highest hull values through the worst water. The Red Sea attacks have been drone and missile led, and a hull your size is the target that justifies the missile.\n\nIf your tankers are still making that passage, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nTankers carry the highest hull values through the worst water. The Red Sea attacks have been drone and missile led, and a hull your size is the target that justifies the missile.\n\nIf your tankers are still making that passage, we can escort them.\n\nThursday or Friday?\n\n{{sender}}"
         },
         {
           "round": 2,
           "subject": "Re: War risk on tanker transits",
-          "body": "{{first_name}},\n\nOne more, with the honest caveat attached.\n\nThe only published escort pricing we can find is from 2012: a convoy escort operation charged roughly $30,000 for one boat covering about four vessels for three to four days. That works out near $7,500 a vessel against $50,000 to $60,000 for an embarked armed team. Those are old numbers and the per-vessel split is our arithmetic, not a published finding.\n\nWhich is exactly why we want a current view from an owner rather than another report.\n\nWhich is exactly why I want a current read from an owner rather than another report. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nOne more, with the honest caveat attached.\n\nThe only published escort pricing we can find is from 2012: a convoy escort operation charged roughly $30,000 for one boat covering about four vessels for three to four days. That works out near $7,500 a vessel against $50,000 to $60,000 for an embarked armed team. Those are old numbers and the per-vessel split is our arithmetic, not a published finding.\n\nWhich is exactly why we want a current view from an owner rather than another report.\n\nWhich is exactly why I want a current read from an owner rather than another report. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
           "subject": "Last note",
-          "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
         }
       ]
     },
@@ -161,17 +161,17 @@
         {
           "round": 1,
           "subject": "Autonomous escort for commercial ships",
-          "body": "{{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nOn voyage and time charters the war risk premium sits with you, not the owner. When a passage lights up it is your money.\n\nYou can specify an escort in the fixture. If {{company}} moves cargo through the Red Sea, we can cover it.\n\nThursday or Friday?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nOn voyage and time charters the war risk premium sits with you, not the owner. When a passage lights up it is your money.\n\nYou can specify an escort in the fixture. If {{company}} moves cargo through the Red Sea, we can cover it.\n\nThursday or Friday?\n\n{{sender}}"
         },
         {
           "round": 2,
           "subject": "Re: Who pays for war risk on your fixtures",
-          "body": "{{first_name}},\n\nFollowing up once.\n\nThe reason I am asking you rather than an owner: if the charterer carries the premium, the charterer has the incentive to reduce it, but almost nothing in this market is sold to charterers. That looks like a gap to us and we may be wrong about it.\n\nIf you can tell me we are wrong, that is worth the email.\n\nIf you can tell me we are wrong about that, it is worth the twenty minutes. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nFollowing up once.\n\nThe reason I am asking you rather than an owner: if the charterer carries the premium, the charterer has the incentive to reduce it, but almost nothing in this market is sold to charterers. That looks like a gap to us and we may be wrong about it.\n\nIf you can tell me we are wrong, that is worth the email.\n\nIf you can tell me we are wrong about that, it is worth the twenty minutes. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
           "subject": "Last note",
-          "body": "{{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nLast note from me.\n\nWe keep a sourced record of every reported attack, who actually owns and manages the ships that were hit, and what each platform in this market can really do. It is yours if it is useful, with nothing attached.\n\n{{sender}}"
         }
       ]
     },
@@ -187,19 +187,19 @@
           "round": 1,
           "variant": "underwriting — CUO, head of marine, war-risk underwriter",
           "subject": "Autonomous escort — does it change what you can quote?",
-          "body": "{{first_name}},\n\nI have an autonomous vessel that can help you write more premium. It reduces the risk from drones and small boats against a moving hull in a defined passage.\n\nThat is the whole pitch. The part I cannot answer is yours: does a verified escort change what you are willing to quote in a listed area, or is it worth nothing at the desk?\n\nFifteen minutes?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nI have an autonomous vessel that can help you write more premium. It reduces the risk from drones and small boats against a moving hull in a defined passage.\n\nThat is the whole pitch. The part I cannot answer is yours: does a verified escort change what you are willing to quote in a listed area, or is it worth nothing at the desk?\n\nFifteen minutes?\n\n{{sender}}"
         },
         {
           "round": 2,
           "variant": "the limitation, stated first",
           "subject": "Re: autonomous escort",
-          "body": "{{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort, and roughly half the successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nSo the honest claim is narrow: drones and small boats, moving hull, defined passage. If that narrow claim is still worth something to you, there is a conversation.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort, and roughly half the successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nSo the honest claim is narrow: drones and small boats, moving hull, defined passage. If that narrow claim is still worth something to you, there is a conversation.\n\n{{sender}}"
         },
         {
           "round": 3,
           "variant": "close, and a real question",
           "subject": "Closing the file?",
-          "body": "{{first_name}},\n\nLast one.\n\nIf a verified escort is not something you would ever rate for, say so and I will close the file. That answer is genuinely useful to us — we would rather know than keep guessing.\n\nIf it might be, I will send operating data rather than a deck.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nLast one.\n\nIf a verified escort is not something you would ever rate for, say so and I will close the file. That answer is genuinely useful to us — we would rather know than keep guessing.\n\nIf it might be, I will send operating data rather than a deck.\n\n{{sender}}"
         }
       ],
       "why_this_tier_is_different": [
@@ -221,7 +221,7 @@
           "why": "Loss prevention does not price anything, so asking them what they would quote is the wrong question. They are the seat that decides whether a measure demonstrably works, which is the gate before pricing. Fifteen of the tier 6 contacts sit in this role class.",
           "how_to_run": "Do NOT add this as a second round 1 — the engine resolves a round by number and would silently ignore it, and the cadence timeline would draw two nodes on day 0. Run it as a campaign instead: the Campaign schema in server/src/outreach/schemas.ts exists for exactly this, a persona and message aimed at a chosen set of accounts independent of their tier. Set template_tier 6 and select the loss-prevention contacts.",
           "subject": "What evidence would you need?",
-          "body": "{{first_name}},\n\nI have an autonomous vessel that can help you write more premium. It reduces the risk from drones and small boats against a moving hull in a defined passage.\n\nYou are the person who would have to be satisfied it actually reduces risk before anyone prices it differently. So I would rather ask what evidence you would need than send you a deck.\n\nFifteen minutes?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nI have an autonomous vessel that can help you write more premium. It reduces the risk from drones and small boats against a moving hull in a defined passage.\n\nYou are the person who would have to be satisfied it actually reduces risk before anyone prices it differently. So I would rather ask what evidence you would need than send you a deck.\n\nFifteen minutes?\n\n{{sender}}"
         }
       ]
     }

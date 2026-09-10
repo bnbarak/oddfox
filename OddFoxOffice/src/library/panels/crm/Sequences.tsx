@@ -81,7 +81,8 @@ export function CrmSequences() {
             <Cadence rounds={s.rounds as Rec[]} cadence={seq.cadence as Rec} />
             {(s.rounds as Rec[]).map((rd) => (
               <Card key={rd.round as number} style={{ marginBottom: 16 }}>
-                <div style={{ display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: 10, alignItems: "baseline",
+                              flexWrap: "wrap", marginBottom: 12 }}>
                   <Chip tone="solid">Round {rd.round as number}</Chip>
                   <H2>{rd.subject as string}</H2>
                 </div>
