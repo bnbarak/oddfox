@@ -40,9 +40,23 @@ export function weekAxis(weeks: number, now = new Date()): string[] {
 }
 
 const empty = (): Cell => ({ sent: 0, planned: 0, replies: 0, bounces: 0 });
+const busy = (c: Cell) => c.sent + c.planned + c.replies + c.bounces > 0;
+
+/** How far past this week the axis may run for mail already queued. A guard
+    against one bad date stretching the grid by years, not a real limit. */
+const AHEAD = 26;
 
 export async function heatmap(sends: SendRecord[], replies: ReplyRecord[], weeks = 12, now = new Date()) {
-  const axis = weekAxis(weeks, now);
+  // Back `weeks` from this week, and forward to the last week anything queued
+  // is due to land — a follow-up booked for next Tuesday belongs on the grid.
+  let ahead = 0;
+  const thisWeek = new Date(`${monday(now)}T00:00:00Z`).getTime();
+  for (const s of sends) {
+    if (s.status === "canceled") continue;
+    const w = new Date(`${monday(new Date(s.scheduled_at ?? s.created_at))}T00:00:00Z`).getTime();
+    ahead = Math.max(ahead, Math.min(AHEAD, Math.round((w - thisWeek) / (7 * 86_400_000))));
+  }
+  const axis = weekAxis(weeks + ahead, new Date(thisWeek + ahead * 7 * 86_400_000));
   const col = new Map(axis.map((w, i) => [w, i]));
 
   const rows: HeatRow[] = (await crm.accounts()).map((a) => ({
@@ -87,5 +101,10 @@ export async function heatmap(sends: SendRecord[], replies: ReplyRecord[], weeks
     b.total.sent + b.total.planned - (a.total.sent + a.total.planned)
     || a.tier - b.tier || a.company.localeCompare(b.company));
 
-  return { weeks: axis, rows, totals };
+  // A week nobody was sent anything in is a column of empty squares that
+  // pushes the weeks that matter off the right edge. Drop it.
+  const keep = axis.map((_, i) => rows.some((r) => busy(r.cells[i]!)));
+  for (const r of rows) r.cells = r.cells.filter((_, i) => keep[i]);
+
+  return { weeks: axis.filter((_, i) => keep[i]), rows, totals };
 }
