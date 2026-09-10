@@ -28,7 +28,7 @@ initializeApp({ projectId: project, credential: applicationDefault() });
 
 const { db } = await import("../src/firebaseApp.js");
 const { isOptedOut, putSend, getSend } = await import("../src/outreach/store.js");
-const { optOut } = await import("../src/outreach/optout.js");
+const { optBackIn, optOut } = await import("../src/outreach/optout.js");
 const { schedule, Refused } = await import("../src/outreach/send.js");
 const { addressIn, canLink, tokenFor } = await import("../src/outreach/unsubToken.js");
 const { OutreachConfig } = await import("../src/outreach/schemas.js");
@@ -110,6 +110,45 @@ const again = await optOut(ADDR, "reply", "second time");
 ok("a repeat opt-out is not a new one", !again.first_time);
 ok("and the record keeps how they first told us",
    (await optDoc().get()).data()?.source === "link");
+
+// ---- opting somebody back in -----------------------------------------
+
+/* People do ask to be put back on: they changed roles, they unsubscribed by
+   accident, they said yes on a call. Undoing it must lift the block without
+   destroying the evidence that they once asked. */
+const back = await optBackIn(ADDR, "test restore");
+ok("a restore reports the address it found", back.found && back.email === ADDR);
+ok("the address is sendable again", !(await isOptedOut(ADDR)));
+
+const restoredDoc = (await optDoc().get()).data();
+ok("the row is kept, not deleted", restoredDoc !== undefined);
+ok("and marked with when it was reversed",
+   typeof restoredDoc?.restored_at === "string", JSON.stringify(restoredDoc?.restored_at));
+ok("while still showing they originally asked by clicking",
+   restoredDoc?.source === "link");
+
+const missing = await optBackIn("never-asked@example.invalid", null);
+ok("restoring somebody who never opted out reports not-found", !missing.found);
+
+/* The failure this must never have: somebody opted back in, who then asks
+   again, staying sendable because the second request merged into the old
+   row as "seen it before". */
+await optOut(ADDR, "reply", "asked again after being restored");
+ok("asking again after a restore opts them out once more", await isOptedOut(ADDR));
+const reDoc = (await optDoc().get()).data();
+ok("and the restoration is cleared, not left standing",
+   reDoc?.restored_at === null, JSON.stringify(reDoc?.restored_at));
+ok("and the new request is recorded as how they asked this time",
+   reDoc?.source === "reply", String(reDoc?.source));
+
+const refusedAgain = await schedule(
+  { contact_id: null, to: ADDR, round: 1, subject: "again", body: "hello",
+    domain: "seaworth.io", signature: null, template_tier: null, written_by: "template",
+    scheduled_at: null, in_reply_to: null, references: [] } as never,
+  cfg, []).then(() => null, (e: unknown) => e);
+ok("and sending to them is refused again",
+   refusedAgain instanceof Refused && refusedAgain.code === "opted-out",
+   refusedAgain instanceof Refused ? refusedAgain.code : String(refusedAgain));
 
 await cleanup();
 // eslint-disable-next-line no-console
