@@ -254,22 +254,25 @@ export async function schedule(
   }
 
   /* Sequence mail is paced: inside the sending window, spaced out, because
-     that is what protects a young domain. A message somebody just typed is
-     not paced — they pressed send and it should go.
+     that is what protects a young domain. A message somebody just typed —
+     New email or Reply — is not paced at all: they pressed send, so it goes
+     now, with no scheduledAt for Resend to hold it on.
 
-     It is still scheduled, a minute out, rather than sent outright: Resend
-     will only cancel a message it has not released yet, so that minute is
-     the undo. Same reason a mail client waits a few seconds before it
-     actually sends. */
+     That costs the undo. Resend can only cancel a message it has not
+     released, and this one is released at once, so it is stored as "sent"
+     and the panels offer no cancel on it. An earlier version waited a
+     minute to keep that window; the operator chose immediate delivery over
+     it, for hand-written mail only. */
   // Rounds 1-3 are unsolicited marketing: paced, and carrying the compliance
   // block. round 0 is a note somebody typed to a person, and is neither.
   const commercial = req.round >= 1;
 
+  const immediate = !commercial && !req.scheduled_at;
   const at = req.scheduled_at
     ? new Date(req.scheduled_at)
     : commercial
       ? nextSlot(cfg, domain, queued)
-      : new Date(Date.now() + 60 * 1000);
+      : new Date();
   if (Number.isNaN(at.getTime())) throw new Refused("bad-date", `${req.scheduled_at} is not a date`);
 
   /* The daily cap is a warm-up budget for cold outreach, so only cold
@@ -353,7 +356,7 @@ export async function schedule(
       ...(bcc.length ? { bcc } : {}),
       subject: req.subject, text, html,
       ...(d.reply_to ? { replyTo: d.reply_to } : {}),
-      scheduledAt: at.toISOString(),
+      ...(immediate ? {} : { scheduledAt: at.toISOString() }),
       headers: {
         ...listHeaders(cfg, commercial, to),
         ...threadHeaders(req.in_reply_to, req.references),
@@ -361,7 +364,8 @@ export async function schedule(
       tags: [{ name: "round", value: String(req.round) }],
     });
     if (error || !data) throw new Error(error?.message ?? "Resend returned no id");
-    await putSend({ ...record, resend_id: data.id, status: "scheduled", dry_run: false });
+    await putSend({ ...record, resend_id: data.id,
+                    status: immediate ? "sent" : "scheduled", dry_run: false });
     return { id: record.id, cancel_token: data.id, scheduled_at: record.scheduled_at!,
              quota_day: day, domain, used, cap, dry_run: false };
   } catch (err) {
