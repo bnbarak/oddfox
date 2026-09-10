@@ -439,9 +439,27 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 }
 .of-inbox__row:hover { background: rgba(255,255,255,.03); }
 .of-inbox__row.is-on { background: rgba(255,255,255,.07); border-left-color: var(--hot); }
-/* A thread with a human reply reads as unread: it is the one owed an answer. */
+/* Unread is Gmail's: mail in the thread this person has not opened. Bold
+   name, subject and time on a slightly lifted row, plus a mark at the edge so
+   it still shows down a long list at a glance. */
+.of-inbox__row.is-unread { background: rgba(255,255,255,.025); }
+.of-inbox__row.is-unread:not(.is-on) { border-left-color: var(--cool); }
 .of-inbox__row.is-unread .of-inbox__who,
-.of-inbox__row.is-unread .of-inbox__subj { color: var(--paper); font-weight: 600; }
+.of-inbox__row.is-unread .of-inbox__subj,
+.of-inbox__row.is-unread .of-inbox__at { color: var(--paper); font-weight: 600; }
+.of-inbox__none { padding: 14px; color: var(--fog); font-size: 12.5px; }
+.of-inbox__empty { height: 100%; display: flex; align-items: center; justify-content: center;
+                   color: var(--fog); font-size: 13px; text-align: center; }
+.of-inbox__empty strong { color: var(--paper); font-weight: 600; }
+.of-inbox__tools { display: flex; justify-content: flex-end; gap: 14px; margin-bottom: 6px; }
+.of-inbox__counts strong.of-inbox__new { color: var(--cool); font-weight: 600; }
+.of-facet__b[aria-pressed="true"] { color: var(--void); background: var(--paper); border-color: var(--paper); }
+/* Gmail's count beside Inbox. */
+.of-badge {
+  display: inline-block; margin-left: 6px; min-width: 16px; padding: 0 5px; border-radius: 8px;
+  font-family: var(--mono); font-size: 10px; font-weight: 600; line-height: 16px; text-align: center;
+  color: var(--void); background: var(--cool);
+}
 
 .of-inbox__l1 { display: flex; align-items: baseline; gap: 8px; }
 .of-inbox__who { color: var(--mist); font-size: 13px; flex: 1; overflow: hidden;
@@ -464,6 +482,8 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
              padding: 9px 12px; cursor: pointer; min-width: 0; }
 .of-msg__h:hover { background: rgba(255,255,255,.03); }
 .of-msg.is-open > .of-msg__h { border-bottom: 1px solid var(--line-soft); }
+.of-msg.is-unread > .of-msg__h .of-msg__who,
+.of-msg.is-unread > .of-msg__h .of-msg__peek { color: var(--paper); font-weight: 600; }
 .of-msg__who  { font-family: var(--mono); font-size: 10px; letter-spacing: .07em;
                 text-transform: uppercase; color: var(--fog); flex-shrink: 0; }
 .of-msg__peek { color: var(--fog); font-size: 12px; flex: 1; overflow: hidden;

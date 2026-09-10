@@ -317,17 +317,39 @@ export type ThreadMessage = {
       is what the recipient saw, not a re-derivation of it. */
   html?: string | null;
   at: string;
+  /** When it counts as having happened; for incoming mail, when it arrived.
+      What "read through" is measured against. */
+  sort_at: string;
   status?: string; round?: number; template_tier?: number | null;
   dry_run?: boolean; cancel_token?: string | null;
   message_id?: string | null; automated?: boolean; unsubscribe?: boolean;
+  /** Incoming only: the signed-in person has not seen this one yet. */
+  unread?: boolean;
 };
 export type Thread = {
   key: string; contact_id: string | null; full_name: string; title: string; company: string | null;
   account_id: string | null; email: string | null; last_at: string;
   sent: number; replies: number; replied: boolean; messages: ThreadMessage[];
+  /** Incoming messages the signed-in person has not seen. Per person. */
+  unread: number;
 };
 
-export const useThreads = () => useResource<{ threads: Thread[] }>("/threads");
+export const useThreads = () => useResource<{ threads: Thread[]; unread: number }>("/threads");
+
+/** Conversations holding mail the signed-in person has not opened — the
+    number Gmail puts beside Inbox. */
+export const useUnread = () => useResource<{ unread: number }>("/unread");
+
+/** Fired after marking, so the tab badge moves now rather than at its next
+    poll. */
+export const UNREAD_CHANGED = "oddfox:unread-changed";
+
+/** Marks threads read up to a message (`through` is that message's sort_at),
+    or unread again (`through: null`). */
+export async function markThreads(marks: { key: string; through: string | null }[]): Promise<void> {
+  await post<{ ok: boolean }>("/threads/read", { marks });
+  window.dispatchEvent(new Event(UNREAD_CHANGED));
+}
 
 /** A one-off, written by hand. round 0 keeps it out of the sequence, so it
     never triggers a follow-up — but it still goes through the same schedule

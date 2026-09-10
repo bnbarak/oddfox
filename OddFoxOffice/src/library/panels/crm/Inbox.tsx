@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Chip, H1, Note } from "../../../ui";
 import {
-  cancelSend, sendDirect, sendNow, useCampaigns, useOutreachConfig, useOutreachStatus,
-  useThreads,
+  cancelSend, markThreads, sendDirect, sendNow, useCampaigns, useOutreachConfig,
+  useOutreachStatus, useThreads,
   type Thread, type ThreadMessage,
 } from "../../../lib/outreachStore";
 import { EmailBody } from "./EmailBody";
@@ -86,7 +86,7 @@ function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
 }) {
   const pullable = m.dir === "out" && (m.status === "scheduled" || m.status === "draft");
   return (
-    <article className={`of-msg is-${m.dir}${open ? " is-open" : ""}`}>
+    <article className={`of-msg is-${m.dir}${open ? " is-open" : ""}${m.unread ? " is-unread" : ""}`}>
       <header className="of-msg__h" onClick={onToggle} role="button" tabIndex={0}
               onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle(); } }}>
         <span className="of-msg__who">{m.dir === "out" ? "Seaworth" : "them"}</span>
@@ -162,6 +162,11 @@ export function CrmInbox() {
   const conf = useOutreachConfig();
   const signatures = useMemo(() => conf.data?.signatures ?? [], [conf.data]);
   const [signature, setSignature] = useState<string>("");
+  /* Read state as the server last reported it, with whatever this tab has
+     marked since laid over the top, so a click shows at once rather than at
+     the next poll. An entry goes once the server has caught up. */
+  const [marked, setMarked] = useState<Map<string, boolean>>(new Map());
+  const [onlyUnread, setOnlyUnread] = useState(false);
 
   /* Who it goes to: the chips, plus any finished address still sitting in
      the box. Somebody who types an address and goes straight to Send means
@@ -198,7 +203,17 @@ export function CrmInbox() {
     return () => window.removeEventListener("keydown", k);
   }, [full]);
 
-  const open: Thread | null = threads.find((t) => t.key === openId) ?? threads[0] ?? null;
+  const isUnread = (t: Thread) => (marked.has(t.key) ? !marked.get(t.key) : t.unread > 0);
+  const unreadCount = threads.filter(isUnread).length;
+  // The thread you are reading stays in the Unread view after it is read, as
+  // it does in Gmail — vanishing from under the cursor is disorienting.
+  const shown = onlyUnread ? threads.filter((t) => isUnread(t) || t.key === openId) : threads;
+
+  /* Nothing is open until you open it. Showing the newest thread by default
+     is what Gmail's reading pane declines to do, and for the same reason:
+     opening is reading, so an inbox that opened its top thread on load would
+     mark your newest mail read before you had looked at it. */
+  const open: Thread | null = threads.find((t) => t.key === openId) ?? null;
   const last = open?.messages[open.messages.length - 1];
 
   /* The mail client fills what is left of the window and scrolls inside
@@ -310,6 +325,68 @@ export function CrmInbox() {
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
     finally { setWorking(false); setProgress(null); }
   };
+
+  /** How far opening a thread has read: its newest incoming message. */
+  const latestIn = (t: Thread): string | null => t.messages.reduce<string | null>(
+    (acc, m) => (m.dir === "in" && (!acc || m.sort_at > acc) ? m.sort_at : acc), null);
+
+  const mark = async (ts: Thread[], read: boolean) => {
+    const marks = ts.map((t) => ({ key: t.key, through: read ? latestIn(t) : null }))
+      .filter((x) => !read || x.through);
+    if (!marks.length) return;
+    setMarked((prev) => {
+      const next = new Map(prev);
+      for (const x of marks) next.set(x.key, read);
+      return next;
+    });
+    try {
+      await markThreads(marks);
+      await reload();
+    } catch (e) {
+      setSaid(e instanceof Error ? e.message : String(e));
+    } finally {
+      // The server's answer wins either way: on success it now agrees, and
+      // on failure the override would be showing something that is not so.
+      setMarked((prev) => {
+        const next = new Map(prev);
+        for (const x of marks) next.delete(x.key);
+        return next;
+      });
+    }
+  };
+
+  /* Mail that arrives while a thread is open is read too — you are looking
+     at it. Only while the tab is in front, though: a thread left open in a
+     background tab has been read by nobody. Mark as unread closes the thread
+     for the same reason this exists: left open, it would be read straight
+     back. */
+  const openUnread = open ? isUnread(open) : false;
+  useEffect(() => {
+    if (open && openUnread && document.visibilityState === "visible") void mark([open], true);
+  });
+
+  const openThread = (t: Thread) => {
+    setOpenId(t.key);
+    // Show what is new, the way Gmail unfolds the unread messages and the
+    // last one and leaves the rest folded. Read threads open as before.
+    const unread = isUnread(t);
+    const fresh = unread ? t.messages.filter((m) => m.unread).map((m) => `${m.dir}-${m.id}`) : [];
+    const end = t.messages[t.messages.length - 1];
+    setExpanded(fresh.length && end ? new Set([...fresh, `${end.dir}-${end.id}`]) : new Set());
+    if (draft?.kind === "reply") setDraft(null);
+    // A click is proof somebody is looking, whatever the tab reports, so
+    // opening marks it here rather than waiting on the effect above.
+    if (unread) void mark([t], true);
+  };
+
+  const markUnread = (t: Thread) => { setOpenId(null); void mark([t], false); };
+
+  // Gmail's "(3)" in the browser tab, so new mail shows from another tab too.
+  useEffect(() => {
+    const base = document.title;
+    if (unreadCount > 0) document.title = `(${unreadCount}) ${base}`;
+    return () => { document.title = base; };
+  }, [unreadCount]);
 
   if (error) {
     return <><H1>Inbox</H1><Note><strong>The CRM server is not answering. </strong>{error}</Note></>;
@@ -432,12 +509,31 @@ export function CrmInbox() {
 
   const counts = (
     <span className="of-inbox__counts">
+      {unreadCount > 0 && (
+        <><strong className="of-inbox__new">{unreadCount}</strong> unread
+          <span className="of-inbox__sep">·</span></>
+      )}
       <strong>{threads.length}</strong> conversation{threads.length === 1 ? "" : "s"}
       <span className="of-inbox__sep">·</span>
       <strong>{threads.reduce((n, t) => n + t.replies, 0)}</strong> replied
       <span className="of-inbox__sep">·</span>
       <strong>{threads.reduce((n, t) => n + t.sent, 0)}</strong> sent
     </span>
+  );
+
+  const filters = (
+    <>
+      <button className="of-facet__b" aria-pressed={onlyUnread}
+              onClick={() => setOnlyUnread((x) => !x)}
+              title={onlyUnread ? "Show every conversation" : "Show only conversations with mail you have not opened"}>
+        Unread
+      </button>
+      {unreadCount > 0 && (
+        <button className="of-dock__x" onClick={() => void mark(threads.filter(isUnread), true)}>
+          mark all read
+        </button>
+      )}
+    </>
   );
 
   const newButton = (
@@ -453,7 +549,7 @@ export function CrmInbox() {
   if (threads.length === 0) {
     return (
       <>
-        <div className="of-inbox__bar">{newButton}{counts}</div>
+        <div className="of-inbox__bar">{newButton}{filters}{counts}</div>
         <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
         {composer}
         {toast}
@@ -463,19 +559,16 @@ export function CrmInbox() {
 
   return (
     <>
-      <div className="of-inbox__bar">{newButton}{counts}</div>
+      <div className="of-inbox__bar">{newButton}{filters}{counts}</div>
 
       <div className="of-inbox" ref={box}>
         <nav className="of-inbox__list" aria-label="Conversations">
-          {threads.map((t) => {
+          {shown.map((t) => {
             const preview = t.messages[t.messages.length - 1];
             return (
               <button key={t.key}
-                      className={`of-inbox__row${open?.key === t.key ? " is-on" : ""}${t.replied ? " is-unread" : ""}`}
-                      onClick={() => {
-                        setOpenId(t.key); setExpanded(new Set());
-                        if (draft?.kind === "reply") setDraft(null);
-                      }}>
+                      className={`of-inbox__row${open?.key === t.key ? " is-on" : ""}${isUnread(t) ? " is-unread" : ""}`}
+                      onClick={() => openThread(t)}>
                 <span className="of-inbox__l1">
                   <span className="of-inbox__who">{t.full_name}</span>
                   <span className="of-inbox__at">{fmt(t.last_at)}</span>
@@ -497,12 +590,27 @@ export function CrmInbox() {
               </button>
             );
           })}
+          {onlyUnread && shown.length === 0 && (
+            <div className="of-inbox__none">Nothing unread.</div>
+          )}
         </nav>
 
         <div className="of-inbox__thread">
-          {open && (
+          {open ? (
             <>
               <header className="of-inbox__head">
+                <div className="of-inbox__tools">
+                  <button className="of-dock__x" onClick={() => setOpenId(null)}
+                          title="Close this conversation">close</button>
+                  {open.messages.some((m) => m.dir === "in") && (
+                    <button className="of-dock__x" onClick={() => markUnread(open)}
+                            disabled={draft?.kind === "reply"}
+                            title={draft?.kind === "reply" ? "Send or discard the reply first"
+                              : "Mark as unread and close it"}>
+                      mark as unread
+                    </button>
+                  )}
+                </div>
                 <div className="of-inbox__title">{last?.subject ?? open.full_name}</div>
                 <div className="of-note">
                   {open.full_name} · {open.title || "role unknown"} · {open.company ?? "—"}
@@ -559,6 +667,12 @@ export function CrmInbox() {
                 </button>
               )}
             </>
+          ) : (
+            <div className="of-inbox__empty">
+              {unreadCount > 0
+                ? <span><strong>{unreadCount}</strong> unread conversation{unreadCount === 1 ? "" : "s"}. Pick one to read it.</span>
+                : <span>No conversation selected.</span>}
+            </div>
           )}
         </div>
       </div>
