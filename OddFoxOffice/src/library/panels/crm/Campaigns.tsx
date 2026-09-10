@@ -141,9 +141,9 @@ export function CrmCampaigns() {
             <table className="of-matrix of-crm">
               <thead>
                 <tr>
-                  <th className="co">Campaign</th><th>Companies</th><th>Persona</th>
+                  <th className="co">Campaign</th><th>State</th><th>Companies</th><th>Persona</th>
                   <th>Tier</th><th>People</th><th>Reachable</th><th>To look up</th>
-                  <th>Queued</th><th>Sent</th><th>In</th><th>State</th>
+                  <th>Queued</th><th>Sent</th><th>In</th>
                   <th></th><th></th><th></th>
                 </tr>
               </thead>
@@ -167,6 +167,7 @@ export function CrmCampaigns() {
                           <span className="co-sub">last {new Date(c.last_at).toLocaleDateString()}</span>
                         ) : null}
                       </td>
+                      <td className="cell"><Chip tone={TONE[state]}>{state}</Chip></td>
                       <td className="cell">
                         <span className="of-camp__cos">
                           {c.account_ids.map((aid, i) => (
@@ -192,7 +193,6 @@ export function CrmCampaigns() {
                       <td className="val">
                         {c.replies ? <Chip tone="calm">{c.replies}</Chip> : ""}
                       </td>
-                      <td className="cell"><Chip tone={TONE[state]}>{state}</Chip></td>
                       <td className="cell">
                         <button className="of-facet__b"
                                 onClick={() => setSeqCampaign({ name: c.name, ids: c.account_ids })}
