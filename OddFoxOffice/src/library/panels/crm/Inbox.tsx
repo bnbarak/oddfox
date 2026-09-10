@@ -50,7 +50,7 @@ const sentNote = (at: string, dry: boolean, people: number): string => {
   const who = people > 1 ? ` to ${people} people` : "";
   return dry
     ? `Queued${who} as a dry run for ${fmt(at)} — nothing was sent.`
-    : `Scheduled${who} for ${fmt(at)}. Cancellable until it goes.`;
+    : `Sent${who}.`;
 };
 
 /** "to A, B · cc C · bcc D", for a message that went to a group. */
