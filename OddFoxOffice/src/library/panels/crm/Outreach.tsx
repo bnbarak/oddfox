@@ -168,12 +168,20 @@ export function CrmOutreach() {
             {s.domains.map((d) => (
               <div key={d.domain} className="of-quota__row">
                 <span className="of-quota__name">{d.domain}</span>
-                <span className="of-quota__bar" title={`${d.used} of ${d.cap} used on ${d.day}`}>
-                  {Array.from({ length: d.cap }, (_, i) => (
-                    <span key={i} className={`of-quota__pip${i < d.used ? " is-used" : ""}`} />
-                  ))}
-                </span>
-                <span className="of-quota__n">{d.left} left today</span>
+                {/* A domain that is not switched on has no quota to draw;
+                    an empty bar reading "0 left" would look like a full day. */}
+                {d.sends ? (
+                  <>
+                    <span className="of-quota__bar" title={`${d.used} of ${d.cap} used on ${d.day}`}>
+                      {Array.from({ length: d.cap }, (_, i) => (
+                        <span key={i} className={`of-quota__pip${i < d.used ? " is-used" : ""}`} />
+                      ))}
+                    </span>
+                    <span className="of-quota__n">{d.left} left today</span>
+                  </>
+                ) : (
+                  <span className="of-note">not sending yet</span>
+                )}
               </div>
             ))}
           </div>
