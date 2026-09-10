@@ -19,9 +19,8 @@ export function FlagSlide() {
       <Eyebrow>03 — The flag</Eyebrow>
       <Title>The flag is a legal choice, not a nationality</Title>
       <Body>
-        The flag is the country whose law applies on board and whose certificates the ship
-        carries. Owners choose it, and most choose an open registry — one that accepts a ship
-        owned by anyone, anywhere.
+        The flag is the country whose law applies on board. Owners choose it, and most choose
+        an open registry — one that accepts a ship owned by anyone, anywhere.
       </Body>
       <div className="slide__grid">
         {items.map((i) => (

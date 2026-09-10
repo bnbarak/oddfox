@@ -31,7 +31,7 @@ export function ClubDiagram() {
   const barH = 58;
 
   return (
-    <svg viewBox="0 0 1180 340" style={{ width: "100%", height: "auto", marginTop: "0.5rem" }}
+    <svg viewBox="0 0 1180 340" style={{ width: "100%", height: "auto", maxHeight: "56vh", marginTop: "0.5rem" }}
          role="img" aria-label="Left: eight shipowners forming the ring of a club, paying calls in and receiving claims out. Right: a five step ladder showing who pays as one claim grows, from the club alone up to a call on members.">
       <circle cx={CX} cy={CY} r={R} fill="none" stroke="var(--color-border)" strokeWidth={2} />
       {Array.from({ length: MEMBERS }).map((_, i) => {

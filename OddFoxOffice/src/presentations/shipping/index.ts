@@ -27,7 +27,7 @@ export const slides: SlideMeta[] = [
   { id: "one-ship", title: "A ship is its own company", kind: "content", Component: OneShipSlide,
     notes: "The IMO number is the join key for everything in our library. Names match the wrong ship — our own Tutor lookup matched an unrelated vessel moving in the North Sea." },
   { id: "flag", title: "The flag", kind: "content", Component: FlagSlide,
-    notes: "A flag is a legal choice, not a nationality. Most tonnage sits on open registries, so the flag tells you almost nothing about who to call." },
+    notes: "A flag is a legal choice, not a nationality. It decides whose law applies on board and whose certificates the ship carries. Most tonnage sits on open registries, so the flag tells you almost nothing about who to call." },
   { id: "owners", title: "Two owners", kind: "content", Component: OwnersSlide,
     notes: "The registered owner is usually a one-ship company with no staff. The beneficial owner — the family or group everyone actually names — is the one that signs a contract, and it is not in any free registry." },
   { id: "managers", title: "Who runs it", kind: "content", Component: ManagersSlide,
