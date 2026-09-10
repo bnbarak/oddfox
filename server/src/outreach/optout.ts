@@ -7,20 +7,21 @@ import { isOptedOut, recordOptOut, restoreOptOut, type OptOut } from "./store.js
 
 /* What "unsubscribe" actually has to do.
 
-   Four things, and doing three of them is the same as doing none:
+   Three things, and doing two of them is the same as doing none:
 
-     1. Write it down. crmOptOuts is the evidence — who, when, how.
-     2. Suppress the address at Resend, so nothing on any domain, from any
-        key, can reach it again.
-     3. Pull back what is already queued. A sequence booked a week out would
+     1. Write it down. crmOptOuts is the evidence — who, when, how — and, for
+        campaign rounds, the enforcement: send.ts refuses the address.
+     2. Pull back what is already queued. A sequence booked a week out would
         otherwise keep landing after they asked it to stop, which is exactly
         the experience they clicked the link to end.
-     4. Mark the CRM record, so a person looking at the pipeline sees it too
-        and does not go write to them by hand.
+     3. Mark the CRM record, so a person looking at the pipeline sees it too.
+
+   What it does not do is suppress the address at Resend. The opt-out list
+   is a marketing list, and Resend's suppression list is account-wide — it
+   would drop a note somebody typed by hand as well. See optOut() below.
 
    Every step is idempotent and every step tolerates the others failing. A
-   Resend outage must not stop us recording the request, and a contact we
-   cannot find must not stop us suppressing the address. */
+   contact we cannot find must not stop us recording the request. */
 
 const repo = new FirestoreCrmRepository();
 
