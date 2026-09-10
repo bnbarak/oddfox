@@ -439,13 +439,15 @@ otherwise be one more commit landing on `main` at 3am with no context.
 
 ### Traps found the hard way
 
-- **A worktree inside the repo gets published.** The marketing site's `public`
-  is the repo root, so `lw/` — a worktree of `land-domain-note` sitting at the
-  root — puts a second copy of the entire site on the public internet:
-  `node tools/hosting-deploy.mjs seaworth --dry` lists 28 files, half of them
-  under `/lw/`, `https://oddfox.ai/lw/brief.html` among them. Worktrees belong
-  in `/Users/barak/oddfox-wt/`, outside the repo. Read the dry-run file list
-  before any deploy from the root.
+- **A worktree inside the repo ships with the site.** The marketing site's
+  Firebase `public` is the repo root, so `dep/` — a worktree sitting there —
+  doubles the deploy: `node tools/hosting-deploy.mjs seaworth --dry` lists 28
+  files for a 14-file site, the rest a second copy of everything under `/dep/`,
+  `oddfox.ai/dep/brief.html` included. It is not live only because the deploy
+  that runs is CI's, from a clean checkout with no worktrees in it — a deploy
+  from this machine would publish it. Worktrees belong in
+  `/Users/barak/oddfox-wt/`; read the dry-run file list before deploying the
+  root by hand.
 - **"Commit only your own files" is retired.** It was the rule when everyone
   shared one checkout; in your own worktree every dirty file is yours and
   `git add -A` is correct. If you find yourself picking paths out of a mixed

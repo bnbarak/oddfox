@@ -40,14 +40,19 @@ the same name (a `/` in the branch just makes a subdirectory, which is fine).
 
 **Worktrees live outside the repo, in `/Users/barak/oddfox-wt/`.** This is not
 tidiness. The marketing site's Firebase `public` is the repo root, so a worktree
-checked out *inside* it is published to the public internet. It is doing that
-right now — `node tools/hosting-deploy.mjs seaworth --dry` lists 28 files, and
-14 of them are a second copy of the whole site under `/lw/`, including
-`https://oddfox.ai/lw/brief.html`. Read the dry-run file list before any deploy
-from the root, and if `lw/` is still there when you touch this, move it:
+checked out *inside* it ships with the site. There is usually one squatting
+there — `node tools/hosting-deploy.mjs seaworth --dry` lists 28 files for a site
+that has 14, the other half being a second copy of everything under `/dep/`,
+`oddfox.ai/dep/brief.html` included.
+
+None of it is live, and the reason matters: the deploy that actually runs is
+`.github/workflows/deploy.yml`, from a clean CI checkout that has no worktrees
+in it. It is a deploy **from this machine** that would publish them. So read the
+dry-run file list before any local deploy from the root, and move a worktree you
+find there:
 
 ```bash
-git -C /Users/barak/oddfox worktree move lw /Users/barak/oddfox-wt/land-domain-note
+git -C /Users/barak/oddfox worktree move dep /Users/barak/oddfox-wt/<name>
 ```
 
 `git worktree list` shows who is where. A branch can only be checked out in one
