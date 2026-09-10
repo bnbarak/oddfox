@@ -128,9 +128,10 @@ also deploys: `.github/workflows/deploy.yml` runs on every push to `main`.
 
 Two things worth knowing before the first `worktree add`. Worktrees go in
 `/Users/barak/oddfox-wt/`, **outside** the repo — the marketing site publishes
-the repo root, so a worktree inside it ends up on the public internet. And
-`node_modules` doesn't come along; that's 189 MB for `OddFoxOffice` and 269 MB
-for `server`, so install only the one you need.
+the repo root, so a worktree inside it doubles a hand-run deploy and ends up
+served under its own directory name. And `node_modules` doesn't come along;
+that's 189 MB for `OddFoxOffice` and 269 MB for `server`, so install only the
+one you need.
 
 Full mechanics, cleanup and the traps: `.claude/skills/worktree-workflow/` and
 the "Working alongside other agents" section of [context.md](context.md).
