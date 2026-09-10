@@ -2,7 +2,7 @@ import { draft, modelConfigured } from "./agent.js";
 import { enrichCampaign, type CampaignEnrichment } from "./apollo.js";
 import { blockers } from "./config.js";
 import * as crm from "./crm.js";
-import { Refused, schedule } from "./send.js";
+import { cancel, Refused, schedule } from "./send.js";
 import { allSends } from "./store.js";
 import type { Campaign, OutreachConfig } from "./schemas.js";
 
@@ -90,4 +90,40 @@ export async function startCampaign(c: Campaign, cfg: OutreachConfig): Promise<S
     }
   }
   return out;
+}
+
+/* Switching a campaign off, and meaning it.
+
+   Pausing sets `active: false` and stops there — anything already in the
+   queue still goes. That is usually right: you paused because you want to
+   think, not because the six messages you already approved became wrong.
+
+   Ending is the other answer. It pauses *and* pulls back everything of this
+   campaign's that has not gone yet, which is the thing you want when the
+   campaign itself was the mistake. There is no third state stored for it:
+   an ended campaign is a paused one with an empty queue, and inventing an
+   `ended` flag would be a second source of truth about the same fact.
+
+   Round 0 is deliberately spared. Those are one-offs somebody wrote by hand
+   to a person who happens to sit at one of these accounts, and they are not
+   the campaign's to cancel. */
+export type Ended = {
+  canceled: number;
+  /** Messages that refused to cancel — already sent, or Resend said no. Kept
+      as a count rather than swallowed, so "ended" never overstates itself. */
+  failed: number;
+};
+
+export async function endCampaign(c: Campaign): Promise<Ended> {
+  const queued = (await allSends()).filter(
+    (s) => s.account_id && c.account_ids.includes(s.account_id)
+        && s.round !== 0
+        && (s.status === "scheduled" || s.status === "draft"));
+  let canceled = 0, failed = 0;
+  for (const row of queued) {
+    // One at a time and never throwing: a message that cannot be pulled back
+    // must not strand the twenty behind it that can.
+    try { await cancel(row.id); canceled++; } catch { failed++; }
+  }
+  return { canceled, failed };
 }
