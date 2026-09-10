@@ -238,6 +238,25 @@ export async function sendNow(id: string) {
   return body;
 }
 
+export type NewCampaign = {
+  id: string; name: string; persona: string; template_tier: number; account_ids: string[];
+};
+
+export async function saveCampaign(c: NewCampaign) {
+  const res = await fetch(`${BASE}/campaigns`, {
+    method: "POST",
+    headers: { "content-type": "application/json", ...authHeaders() },
+    body: JSON.stringify(c),
+  });
+  const body = (await res.json().catch(() => null)) as
+    { error?: string; detail?: string; issues?: { message: string }[] } | null;
+  if (!res.ok) {
+    throw new Error(body?.detail ?? body?.issues?.[0]?.message ?? body?.error
+                    ?? `save campaign → ${res.status}`);
+  }
+  return body;
+}
+
 export async function deleteCampaign(id: string) {
   const res = await fetch(`${BASE}/campaigns/${encodeURIComponent(id)}`,
                           { method: "DELETE", headers: authHeaders() });

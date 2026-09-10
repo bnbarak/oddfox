@@ -128,6 +128,27 @@ a.co-row:hover .co-name,
   letter-spacing: .04em; max-width: 22ch; overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap; vertical-align: middle;
 }
+/* Chips wrap by design — several carry a whole sentence. Inside a table they
+   must not: a one-word status broken across two lines ("QUE/UED") reads as a
+   rendering fault, and the column can simply be wider. */
+.of-matrix .of-chip { white-space: nowrap; overflow-wrap: normal; }
+/* Company picker: a scrolling list of toggles, so a campaign over twenty
+   accounts is still one glance rather than a multi-select nobody can read. */
+.of-pick {
+  margin-top: 8px; max-height: 240px; overflow-y: auto;
+  border: 1px solid var(--line-soft); border-radius: 3px;
+}
+.of-pick__b {
+  display: flex; align-items: center; gap: 8px; width: 100%; text-align: left;
+  font: inherit; font-size: 12.5px; color: var(--paper); cursor: pointer;
+  background: none; border: 0; border-bottom: 1px solid var(--line-soft);
+  padding: 7px 10px;
+}
+.of-pick__b:hover { background: rgba(255,255,255,.04); }
+.of-pick__b.is-on { background: rgba(255,255,255,.09); }
+.of-pick__b.is-on::after { content: "✓"; margin-left: auto; font-family: var(--mono); }
+.of-pick__b .of-note { margin-left: auto; }
+.of-pick__b.is-on .of-note { margin-left: 0; }
 .of-camp__sw {
   display: inline-block; width: 9px; height: 9px; border-radius: 2px;
   border: 1px solid; margin-right: 7px; vertical-align: middle;

@@ -6,6 +6,7 @@ import {
 } from "../../../lib/outreachStore";
 import { AccountLink } from "./Account";
 import { campaignColors } from "./campaignColors";
+import { NewCampaignModal } from "./NewCampaign";
 import { CampaignSequenceModal, SequenceModal } from "./SequenceModal";
 import { ServerState } from "./ServerState";
 import { Toast } from "./Toast";
@@ -37,6 +38,7 @@ export function CrmCampaigns() {
   const [said, setSaid] = useState<string | null>(null);
   const [seqCampaign, setSeqCampaign] = useState<{ name: string; ids: string[] } | null>(null);
   const [seqPerson, setSeqPerson] = useState<Thread | null>(null);
+  const [making, setMaking] = useState(false);
 
   const rows = useMemo(() => campaigns.data?.records ?? [], [campaigns.data]);
   const byAccount = new Map((map.data?.rows ?? []).map((r) => [r.account_id, r]));
@@ -122,6 +124,7 @@ export function CrmCampaigns() {
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center",
                       marginBottom: 16 }}>
+          <button className="of-facet__b" onClick={() => setMaking(true)}>+ New campaign</button>
           <input className="of-chat__in" style={{ maxWidth: 280 }}
                  placeholder="Search name, persona or company"
                  value={q} onChange={(e) => setQ(e.target.value)} />
@@ -225,6 +228,11 @@ export function CrmCampaigns() {
 
       </Section>
 
+      {making ? (
+        <NewCampaignModal onClose={() => setMaking(false)}
+                          onSaved={(n) => { setSaid(`“${n}” created — switched off.`);
+                                            void campaigns.reload(); }} />
+      ) : null}
       {seqCampaign ? (
         <CampaignSequenceModal name={seqCampaign.name} accountIds={seqCampaign.ids}
                                threads={threads.data?.threads ?? []}

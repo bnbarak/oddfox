@@ -18,7 +18,18 @@ import { chat } from "./operator.js";
 import { threads } from "./threads.js";
 import { due, tick } from "./tick.js";
 import { z } from "zod";
-import { configPatch, DraftRequest, ScheduleRequest } from "./schemas.js";
+import { Campaign, configPatch, DraftRequest, ScheduleRequest } from "./schemas.js";
+
+/** What the panel may send. Narrower than Campaign on purpose: `active`,
+    `created_at` and `deleted_at` are the server's to decide. */
+const NewCampaign = z.object({
+  id: z.string().min(1).regex(/^[a-z0-9-]+$/,
+    "an id is lower-case letters, digits and hyphens"),
+  name: z.string().min(1),
+  persona: z.string().min(1),
+  template_tier: z.number().int().min(1),
+  account_ids: z.array(z.string()).min(1, "a campaign needs at least one account"),
+}).strict();
 
 /* HTTP surface, as its own Router so index.ts needs one import and one mount.
    Everything here is under /api, so it is already behind the Google sign-in
@@ -256,6 +267,31 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
     once over drip-feeding approvals. What makes that safe is that nothing is
     sent — every message is scheduled, paced, capped, and cancellable from the
     queue until it goes. The response says what it cost and what it queued. */
+/** Creates a campaign, or edits one that exists.
+
+    Always lands switched off, whatever the body says. Creating a campaign and
+    starting one are different decisions — the second spends Apollo credits
+    and writes to strangers — and collapsing them into one form would make a
+    typo in the accounts field expensive. Activation is its own button. */
+outreachRouter.post("/campaigns", h(async (req, res) => {
+  const body = NewCampaign.parse(req.body);
+  const existing = (await allCampaigns()).find((c) => c.id === body.id);
+  if (!existing && (await allCampaigns()).some((c) => c.name === body.name)) {
+    res.status(409).json({ error: "duplicate-name",
+                           detail: `A campaign called “${body.name}” already exists.` });
+    return;
+  }
+  const c = Campaign.parse({
+    ...body,
+    // Editing keeps whatever it was; a new one is always off.
+    active: existing?.active ?? false,
+    created_at: existing?.created_at || new Date().toISOString(),
+    deleted_at: null,
+  });
+  await putCampaign(c);
+  res.json(c);
+}));
+
 outreachRouter.post("/campaigns/:id/activate", h(async (req, res) => {
   const c = (await allCampaigns()).find((x) => x.id === req.params.id);
   if (!c) { res.status(404).json({ error: `no campaign with id ${req.params.id}` }); return; }
