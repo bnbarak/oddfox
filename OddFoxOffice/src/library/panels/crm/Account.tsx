@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Section, Grid, Cell, Stat, Note, Chip, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { useCampaigns, useEnrichment, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
+import { cancelSend, sendNow, useCampaigns, useEnrichment, useThreads, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
 import { CampaignChip } from "./CampaignChip";
 import { EmailBody } from "./EmailBody";
 import { EmailCell } from "./EmailCell";
+import { Toast } from "./Toast";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
@@ -46,30 +47,56 @@ const fmt = (iso: string) => new Date(iso).toLocaleString([], {
   month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
 });
 
-/** What went out, newest last, with the reply that came back next to it. */
-function Message({ m, onSequence }: { m: ThreadMessage; onSequence?: () => void }) {
+/* One message, read like an email rather than like a log line.
+
+   It used to put the recipient above the card, the sender and status inside
+   it, and the subject floating over the body — three separate places for the
+   header of one email. Now the subject leads, because that is what you are
+   looking for, and everything else is one meta line under it. */
+function Message({ m, who, onSequence, onCancel, onNow, busy }: {
+  m: ThreadMessage;
+  /** Who this was to, or from — the counterparty either way. */
+  who: string;
+  onSequence?: () => void;
+  onCancel?: (id: string) => void;
+  onNow?: (id: string) => void;
+  busy?: boolean;
+}) {
+  const pullable = m.dir === "out" && (m.status === "scheduled" || m.status === "draft");
   return (
     <article className={`of-msg is-${m.dir} is-open`}>
-      <header className="of-msg__h">
-        <span className="of-msg__who">{m.dir === "out" ? "Seaworth" : "them"}</span>
-        {/* Which script this message is following, and a way into it. A round
-            number alone does not say which tier's copy it came from. */}
-        {m.round ? (
-          <span className="of-msg__tag">
-            <SequenceLink tier={m.template_tier ?? 1} round={m.round} />
-          </span>
-        ) : null}
-        {m.round && onSequence ? (
-          <button className="of-msg__tag of-msg__tag--btn" onClick={onSequence}
-                  title="See this person's whole sequence">sequence</button>
-        ) : null}
-        {m.dry_run ? <span className="of-msg__tag">dry run</span> : null}
-        {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
-        <span className="of-msg__at">{fmt(m.at)}</span>
-      </header>
       <div className="of-msg__open">
-        {m.subject && <div className="of-msg__subj">{m.subject}</div>}
+        {m.subject ? <div className="of-msg__subj">{m.subject}</div> : null}
+
+        <div className="of-msg__meta">
+          <span>{m.dir === "out" ? "to" : "from"} {who}</span>
+          {m.round ? (
+            <SequenceLink tier={m.template_tier ?? 1} round={m.round} />
+          ) : null}
+          {m.round && onSequence ? (
+            <button className="of-msg__tag of-msg__tag--btn" onClick={onSequence}
+                    title="See this person's whole sequence">sequence</button>
+          ) : null}
+          {m.dry_run ? <span className="of-msg__tag">dry run</span> : null}
+          {m.status && !m.dry_run ? <span className="of-msg__tag">{m.status}</span> : null}
+          <span className="of-msg__at">{fmt(m.at)}</span>
+        </div>
+
         <EmailBody html={m.html} text={m.body} />
+
+        {pullable && (onNow || onCancel) ? (
+          <div className="of-msg__acts">
+            {onNow ? (
+              <button className="of-facet__b" disabled={busy}
+                      title="skip the wait — goes in about a minute, still cancellable"
+                      onClick={() => onNow(m.id)}>send now</button>
+            ) : null}
+            {onCancel ? (
+              <button className="of-dock__x" disabled={busy}
+                      onClick={() => onCancel(m.id)}>cancel this message</button>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </article>
   );
@@ -86,11 +113,11 @@ function CampaignLine({ id, people, withEmail }: {
   const row = campaigns.data?.records.find((c) => c.id === here?.campaign_id);
 
   if (!here || here.state === "none") {
-    return <Note style={{ marginBottom: 22 }}>Not in a campaign. Ask the agent to start one.</Note>;
+    return <Note style={{ margin: "16px 0 4px" }}>Not in a campaign. Ask the agent to start one.</Note>;
   }
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
-                  marginBottom: 22 }}>
+                  margin: "16px 0 4px" }}>
       <strong style={{ fontSize: 13.5 }}>{here.campaign_name}</strong>
       <CampaignChip of={here} />
       <span className="of-note">
@@ -108,6 +135,21 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
   const threadsRes = useThreads();
   const enrichment = useEnrichment();
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [said, setSaid] = useState<string | null>(null);
+
+  /* Cancel and send-now are the two halves of one decision — this message is
+     wrong and should stop, or it is right and should not wait for the window
+     — so they share a call site and a toast. */
+  const act = async (id: string, what: "cancel" | "now") => {
+    setBusy(true);
+    try {
+      const r = what === "cancel" ? await cancelSend(id) : await sendNow(id);
+      setSaid(r?.note ?? "done");
+      await threadsRes.reload();
+    } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
+    finally { setBusy(false); }
+  };
   const looked = new Map((enrichment.data?.records ?? []).map((e) => [e.contact_id, e]));
 
   const a = accounts.find((r) => r.id === id);
@@ -135,9 +177,14 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
       <button className="of-facet__b" onClick={onBack}>← Accounts</button>
 
       <div className="of-acct__head">
-        <Logo url={a.url} name={a.company} size={32} />
+        {/* Only a real logo. The initials fallback is useful in a table of
+            forty rows; next to the company's own name in 44px it is noise. */}
+        {a.url ? <Logo url={a.url} name={a.company} size={32} /> : null}
         <h1 className="of-acct__name">{a.company}</h1>
         <Star on={a.starred} title="Starred account" />
+      </div>
+
+      <div className="of-acct__tags">
         <Chip tone={TONE[a.status] ?? ""}>{a.status}</Chip>
         <Chip>tier {a.tier} · {a.tier_name}</Chip>
       </div>
@@ -159,15 +206,15 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
       </div>
 
       <Section kicker="Campaign">
-        <CampaignLine id={a.id} people={people.length}
-                      withEmail={people.filter((c) => c.email).length} />
-
         <Grid cols={4}>
           <Cell><Stat value={sent} label="messages sent" /></Cell>
           <Cell><Stat value={back} label="replies in" /></Cell>
           <Cell><Stat value={people.length} label="people on record" /></Cell>
           <Cell><Stat value={a.last_touch ?? "—"} label="last touch" /></Cell>
         </Grid>
+
+        <CampaignLine id={a.id} people={people.length}
+                      withEmail={people.filter((c) => c.email).length} />
 
         <div className="of-acct__rounds">
           {([1, 2, 3] as const).map((n) => {
@@ -233,12 +280,11 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
         {messages.length ? (
           <>
             {messages.map(({ m, t }) => (
-              <div key={`${t.key}-${m.dir}-${m.id}`}>
-                <div className="of-src" style={{ margin: "14px 0 4px" }}>
-                  {t.full_name}{t.email ? ` · ${t.email}` : ""}
-                </div>
-                <Message m={m} onSequence={() => setSeqFor(t)} />
-              </div>
+              <Message key={`${t.key}-${m.dir}-${m.id}`} m={m} busy={busy}
+                       who={`${t.full_name}${t.email ? ` · ${t.email}` : ""}`}
+                       onSequence={() => setSeqFor(t)}
+                       onCancel={(id) => void act(id, "cancel")}
+                       onNow={(id) => void act(id, "now")} />
             ))}
           </>
         ) : (
@@ -247,6 +293,7 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
       </Section>
 
       {seqFor ? <SequenceModal thread={seqFor} onClose={() => setSeqFor(null)} /> : null}
+      <Toast message={said} onDone={() => setSaid(null)} />
     </>
   );
 }

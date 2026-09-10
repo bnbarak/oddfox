@@ -111,7 +111,10 @@ a.co-row:hover .co-name,
 .co-row--btn { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
 
 /* ---------- one account ---------- */
-.of-acct__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 10px; }
+.of-acct__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 8px; }
+/* Chips on their own line under the name. Beside a 44px title they competed
+   with it for the eye and pushed a long tier name off to the right. */
+.of-acct__tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .of-acct__name { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.02em; margin: 0; }
 .of-acct__links { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .of-acct__rounds { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
@@ -407,6 +410,14 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-msg__at   { margin-left: auto; font-family: var(--mono); font-size: 10.5px;
                 color: var(--fog); flex-shrink: 0; }
 .of-msg__open { padding: 12px 14px 14px; }
+/* The whole header of a message in one row under its subject: who, which
+   sequence, what state, when. */
+.of-msg__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+                margin: 2px 0 12px; font-family: var(--mono); font-size: 10.5px;
+                color: var(--fog); }
+.of-msg__meta .of-msg__at { margin-left: auto; }
+.of-msg__acts { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+                margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-soft); }
 .of-msg__subj { color: var(--paper); font-size: 13.5px; margin-bottom: 8px; }
 .of-msg__body { white-space: pre-wrap; word-break: break-word; margin: 0 0 10px;
                 font-family: var(--mono); font-size: 12px; line-height: 1.65; color: var(--mist); }
