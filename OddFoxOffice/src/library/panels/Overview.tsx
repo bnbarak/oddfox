@@ -1,4 +1,4 @@
-import { DB, point, pctChange, sum, type Rec } from "../../data";
+import { DB, point, sum, type Rec } from "../../data";
 import { Section, Grid, Cell, Stat, Table, Note, Cite, ConfChip, H1, Toggle,
          Bars, WorldMap, Columns, Split } from "../../ui";
 
@@ -23,12 +23,9 @@ export function Overview({ geoSeries, setGeoSeries }: {
 
       <Section kicker="Headline counts">
         <Grid cols={4}>
-          <Cell><Stat value={imb} label="IMB incidents worldwide, 2025" sub="IMB annual"
-                      delta={pctChange(point("imb-global-annual", "2024")!, imb)} /></Cell>
-          <Cell><Stat value={h1} label="IMB incidents worldwide, H1 2026" sub="lowest H1 since 1992"
-                      delta={pctChange(point("imb-global-halfyear", "2025-H1")!, h1)} /></Cell>
-          <Cell><Stat value={soms} label="Malacca & Singapore, H1 2026" sub="ReCAAP"
-                      delta={pctChange(point("soms-halfyear", "2025-H1")!, soms)} /></Cell>
+          <Cell><Stat value={imb} label="IMB incidents worldwide, 2025" sub="IMB annual" /></Cell>
+          <Cell><Stat value={h1} label="IMB incidents worldwide, H1 2026" sub="lowest H1 since 1992" /></Cell>
+          <Cell><Stat value={soms} label="Malacca & Singapore, H1 2026" sub="ReCAAP" /></Cell>
           <Cell><Stat value={hormuz.label} label="Hormuz war risk, July 2026" sub="% of hull value" /></Cell>
         </Grid>
       </Section>
