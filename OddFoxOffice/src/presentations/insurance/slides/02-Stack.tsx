@@ -9,7 +9,7 @@ export function StackSlide() {
     <Slide align="start" tone="dim">
       <Eyebrow>02 — Before the insurance</Eyebrow>
       <Title>There is no such thing as &ldquo;the shipowner&rdquo;</Title>
-      <div className="slide__grid slide__grid--4">
+      <div className="slide__grid slide__grid--5">
         {parties.map((p, i) => (
           <FadeItem key={p.id}>
             <div style={card}>

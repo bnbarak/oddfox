@@ -27,8 +27,8 @@ import { CloseSlide } from "./slides/19-Close";
 export const slides: SlideMeta[] = [
   { id: "title", title: "How a ship gets insured", kind: "title", Component: TitleSlide,
     notes: "Reference deck. The point of the first half is that there is no single policy and no single owner." },
-  { id: "stack", title: "Eight parties", kind: "content", Component: StackSlide,
-    notes: "Eight parties sit behind one hull, and two of them are insurers. Before anyone argues about cover, they argue about who the assured actually is — which is why attributing a loss takes weeks." },
+  { id: "stack", title: "Nine parties", kind: "content", Component: StackSlide,
+    notes: "Nine parties sit behind one hull, and two of them are insurers. Before anyone argues about cover, they argue about who the assured actually is — which is why attributing a loss takes weeks." },
   { id: "charter", title: "Who pays", kind: "content", Component: CharterSlide,
     notes: "The charterer usually bears the war risk premium. We have one charterer account in the CRM." },
   { id: "cover-stack", title: "Eight covers", kind: "content", Component: CoverStackSlide },
