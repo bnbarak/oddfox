@@ -30,7 +30,7 @@
    "file": "ownership-model.json",
    "title": "Who owns a ship",
    "kind": "model",
-   "blurb": "The eight-party stack behind any hull, the four charter types, and the cheapest path from a ship sighting to a named buyer."
+   "blurb": "The nine-party stack behind any hull, from flag state to cargo owner, the four charter types, and the cheapest path from a ship sighting to a named buyer."
   },
   {
    "id": "threat-stats",

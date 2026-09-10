@@ -106,11 +106,28 @@
       ]
     },
     {
+      "id": "beneficial-cargo-owner",
+      "role": "Beneficial cargo owner",
+      "layer": "cargo",
+      "definition": "The company that owns the goods on board — the shipper or the receiver, not the ship. It carries the risk of the cargo and buys cargo insurance separately from anything the shipowner holds.",
+      "who_it_usually_is": "In container shipping, the retailers and manufacturers whose boxes are aboard. In tankers and dry bulk, often the charterer itself — an oil major, a commodity trader or a miner moving its own cargo.",
+      "buys_security": true,
+      "found_in": [
+        "bills of lading",
+        "customs import records",
+        "trade data vendors"
+      ],
+      "notes": "Not in any ship registry: the cargo owner belongs to the voyage, not the vessel, and changes every trip. The bill of lading names it. Cargo insurance is the largest line in marine insurance — 56.7% of global marine premium in 2024 — and it is bought here, not by the shipowner.",
+      "source_ids": [
+        "iumi-stats-2025"
+      ]
+    },
+    {
       "id": "p-and-i-club",
       "role": "P&I club",
       "layer": "risk",
       "definition": "Mutual insurer covering third-party liabilities, including crew injury, kidnap and ransom exposure.",
-      "who_it_usually_is": "One of the thirteen International Group clubs — Gard, UK Club, Steamship, North Standard.",
+      "who_it_usually_is": "One of the twelve International Group clubs — Gard, UK P&I Club, Steamship Mutual, NorthStandard.",
       "buys_security": false,
       "influences_purchase": true,
       "found_in": [

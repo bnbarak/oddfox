@@ -5,9 +5,9 @@ import { ClubDiagram } from "../../shared/ClubDiagram";
 
 export function PoolSlide() {
   return (
-    <Slide align="start">
-      <Eyebrow>07 — Mutuality</Eyebrow>
-      <Title>The members are the club</Title>
+    <Slide align="start" tone="dim">
+      <Eyebrow>13 — The Pool</Eyebrow>
+      <Title>Past $10m, your claim becomes everyone&rsquo;s</Title>
       <ClubDiagram />
       <div style={source}>Source: International Group of P&amp;I Clubs, 2026/27 structure</div>
     </Slide>
