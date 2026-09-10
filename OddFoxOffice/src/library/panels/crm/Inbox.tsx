@@ -45,31 +45,20 @@ const snippet = (m: ThreadMessage | undefined): string => {
   return body.replace(/\s+/g, " ").trim().slice(0, 120);
 };
 
-type Sent = { r: Recipient; at: string; dry: boolean };
-type Refused = { r: Recipient; why: string };
-
-/** One toast for a whole batch. Every refusal is named with its reason — a
-    full cap or an opt-out is normal, but you need to know who it was. */
-const summarize = (done: Sent[], refused: Refused[]): string => {
-  const d = done[0];
-  if (d && done.length === 1 && !refused.length) {
-    return d.dry
-      ? `Queued as a dry run for ${fmt(d.at)} — nothing was sent.`
-      : `Scheduled for ${fmt(d.at)}. Cancellable until it goes.`;
-  }
-  const parts: string[] = [];
-  if (d) {
-    const first = done.map((x) => x.at).sort()[0]!;
-    parts.push(done.every((x) => x.dry)
-      ? `Queued ${done.length} as a dry run from ${fmt(first)} — nothing was sent.`
-      : `Scheduled ${done.length} messages, one per person, from ${fmt(first)}. Each is cancellable until it goes.`);
-  }
-  if (refused.length) {
-    parts.push(`${refused.length === 1 ? "Not sent" : `${refused.length} not sent`}: `
-      + refused.map((x) => `${x.r.name ?? x.r.email} — ${x.why}`).join("; "));
-  }
-  return parts.join(" ");
+/** What the toast says once a message is on its way. */
+const sentNote = (at: string, dry: boolean, people: number): string => {
+  const who = people > 1 ? ` to ${people} people` : "";
+  return dry
+    ? `Queued${who} as a dry run for ${fmt(at)} — nothing was sent.`
+    : `Scheduled${who} for ${fmt(at)}. Cancellable until it goes.`;
 };
+
+/** "to A, B · cc C · bcc D", for a message that went to a group. */
+const rcptLine = (m: ThreadMessage): string => [
+  `to ${[m.to, ...(m.also_to ?? [])].filter(Boolean).join(", ")}`,
+  m.cc?.length ? `cc ${m.cc.join(", ")}` : null,
+  m.bcc?.length ? `bcc ${m.bcc.join(", ")}` : null,
+].filter(Boolean).join(" · ");
 
 /** Grow and shrink, in the two corners Gmail uses, so they read at a glance. */
 const SizeIcon = ({ full }: { full: boolean }) => (
@@ -116,6 +105,9 @@ function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
       {open && (
         <div className="of-msg__open">
           {m.subject && <div className="of-msg__subj">{m.subject}</div>}
+          {m.dir === "out" && (m.also_to?.length || m.cc?.length || m.bcc?.length) ? (
+            <div className="of-msg__rcpt">{rcptLine(m)}</div>
+          ) : null}
           <EmailBody html={m.html} text={m.body} />
           {pullable && (
             <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
@@ -149,12 +141,18 @@ export function CrmInbox() {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [working, setWorking] = useState(false);
-  const [progress, setProgress] = useState<string | null>(null);
   const [said, setSaid] = useState<string | null>(null);
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
   const campaigns = useCampaigns();
   const [to, setTo] = useState<Recipient[]>([]);
   const [find, setFind] = useState("");
+  const [cc, setCc] = useState<Recipient[]>([]);
+  const [findCc, setFindCc] = useState("");
+  const [bcc, setBcc] = useState<Recipient[]>([]);
+  const [findBcc, setFindBcc] = useState("");
+  // Cc and Bcc stay out of the way until asked for, as in Gmail.
+  const [showCc, setShowCc] = useState(false);
+  const [showBcc, setShowBcc] = useState(false);
   const { rows: contacts } = useContacts();
   const status = useOutreachStatus();
   const senders = useMemo(() => status.data?.senders ?? [], [status.data]);
@@ -168,14 +166,21 @@ export function CrmInbox() {
   const [marked, setMarked] = useState<Map<string, boolean>>(new Map());
   const [onlyUnread, setOnlyUnread] = useState(false);
 
-  /* Who it goes to: the chips, plus any finished address still sitting in
-     the box. Somebody who types an address and goes straight to Send means
-     it, and a dead button that wants a comma first is not a mail client. */
-  const recipients = useMemo(
-    () => mergeRecipients(to, splitAddresses(find).filter(isEmail)
-      .map((e) => recipientFor(e, contacts))),
-    [to, find, contacts]);
-  const bad = recipients.filter((r) => !isEmail(r.email));
+  /* Who it goes to, field by field: the chips, plus any finished address
+     still sitting in the box — somebody who types an address and goes
+     straight to Send means it. Somebody already on To is dropped from Cc,
+     and from Bcc if on either, as mail clients do: nobody gets it twice. */
+  const typed = (chips: Recipient[], text: string) => mergeRecipients(
+    chips, splitAddresses(text).filter(isEmail).map((e) => recipientFor(e, contacts)));
+  const toList = typed(to, find);
+  const onEarlier = new Set(toList.map((r) => r.email.toLowerCase()));
+  const ccList = typed(cc, findCc).filter((r) => !onEarlier.has(r.email.toLowerCase()));
+  for (const r of ccList) onEarlier.add(r.email.toLowerCase());
+  const bccList = typed(bcc, findBcc).filter((r) => !onEarlier.has(r.email.toLowerCase()));
+  const everyone = [...toList, ...ccList, ...bccList];
+  const bad = everyone.filter((r) => !isEmail(r.email));
+  const ccOpen = showCc || cc.length > 0 || findCc !== "";
+  const bccOpen = showBcc || bcc.length > 0 || findBcc !== "";
 
   // Default to an outreach domain, never the personal one — picking that has
   // to be a deliberate choice, not what happens if you do not look.
@@ -240,17 +245,36 @@ export function CrmInbox() {
     return () => window.removeEventListener("resize", fit);
   });
 
-  const startCompose = () => {
-    setDraft({ kind: "new", full: false });
-    setTo([]); setFind(""); setSubject(""); setBody("");
+  const clearPeople = (ccPeople: Recipient[] = []) => {
+    setFind(""); setCc(ccPeople); setFindCc(""); setBcc([]); setFindBcc("");
+    setShowCc(ccPeople.length > 0); setShowBcc(false);
   };
 
-  const startReply = () => {
+  const startCompose = () => {
+    setDraft({ kind: "new", full: false });
+    setTo([]); clearPeople(); setSubject(""); setBody("");
+  };
+
+  /* The last message we sent this thread that had other people on it —
+     what Reply all answers. */
+  const lastGroup = [...(open?.messages ?? [])].reverse()
+    .find((m) => m.dir === "out" && (m.also_to?.length || m.cc?.length));
+
+  /* Reply goes to the person whose thread it is. Reply all puts everyone
+     else from our last group message back on Cc, the way Gmail's reply all
+     does. Bcc never carries over: that is what Bcc means. */
+  const startReply = (all: boolean) => {
     const s = last?.subject ?? "";
     setSubject(s.toLowerCase().startsWith("re:") ? s : s ? `Re: ${s}` : "");
-    setBody(""); setFind("");
+    setBody("");
     setTo(open?.email
       ? [{ email: open.email, contact_id: open.contact_id, name: open.full_name }] : []);
+    const others = all && lastGroup
+      ? [...(lastGroup.also_to ?? []), ...(lastGroup.cc ?? [])]
+          .filter((e) => e.toLowerCase() !== open?.email?.toLowerCase())
+          .map((e) => recipientFor(e, contacts))
+      : [];
+    clearPeople(others);
     setDraft({ kind: "reply", full: false });
   };
 
@@ -278,52 +302,34 @@ export function CrmInbox() {
   };
 
   const doSend = async () => {
-    if (!draft || !recipients.length || bad.length || !subject.trim() || !body.trim()) return;
+    const lead = toList[0];
+    if (!draft || !lead || bad.length || !subject.trim() || !body.trim()) return;
     /* Quote the conversation so the reply threads instead of arriving as a
        new message. In-Reply-To points at the last message that has an id;
        References carries the whole chain, which is what keeps long threads
-       from splitting. Only the person whose thread it is gets the chain:
-       anyone added alongside them never had those messages, and their copy
-       would thread onto nothing. */
+       from splitting. */
     const chain = (draft.kind === "reply" ? open?.messages ?? [] : [])
       .map((m) => m.message_id)
       .filter((x): x is string => Boolean(x));
-    const ofThread = (r: Recipient) => draft.kind === "reply" && open !== null
-      && (r.contact_id ? r.contact_id === open.contact_id
-                       : r.email.toLowerCase() === open.email?.toLowerCase());
 
     setWorking(true);
-    const done: Sent[] = [];
-    const refused: Refused[] = [];
     try {
-      /* One after another, not all at once: the server picks each message's
-         slot by reading what is already queued, so parallel calls would all
-         land on the same one. */
-      for (const [i, r] of recipients.entries()) {
-        if (recipients.length > 1) setProgress(`${i + 1}/${recipients.length}`);
-        const mine = ofThread(r) ? chain : [];
-        try {
-          const res = await sendDirect(
-            r.contact_id ? { contact_id: r.contact_id, to: null } : { contact_id: null, to: r.email },
-            subject.trim(), body.trim(), fromDomain || null, signature || null,
-            { in_reply_to: mine[mine.length - 1] ?? null, references: mine });
-          done.push({ r, at: res.scheduled_at, dry: res.dry_run });
-        } catch (e) {
-          refused.push({ r, why: e instanceof Error ? e.message : String(e) });
-        }
-      }
-      setSaid(summarize(done, refused));
-      if (refused.length) {
-        // Keep the draft, holding only who it did not reach, so whatever
-        // needs fixing is right there and a second Send cannot double up.
-        setTo(refused.map((x) => x.r)); setFind("");
-      } else {
-        setDraft(null); setTo([]); setFind(""); setSubject(""); setBody("");
-      }
-      if (draft.kind === "new" && done[0]) setOpenId(done[0].r.contact_id ?? done[0].r.email);
+      /* One message, whoever is on it. The first person on To is who the
+         conversation is filed under — the thread, the history, their
+         contact record — and everyone else is on the same message, so a
+         reply all from any of them reaches the whole group. If the server
+         refuses it, nothing went, and the draft stays as it was to fix. */
+      const res = await sendDirect(
+        lead.contact_id ? { contact_id: lead.contact_id, to: null } : { contact_id: null, to: lead.email },
+        subject.trim(), body.trim(), fromDomain || null, signature || null,
+        { in_reply_to: chain[chain.length - 1] ?? null, references: chain },
+        { also_to: toList.slice(1).map((r) => r.email),
+          cc: ccList.map((r) => r.email), bcc: bccList.map((r) => r.email) });
+      setSaid(sentNote(res.scheduled_at, res.dry_run, everyone.length));
+      setDraft(null); setTo([]); clearPeople(); setSubject(""); setBody("");
       await reload();
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
-    finally { setWorking(false); setProgress(null); }
+    finally { setWorking(false); }
   };
 
   /** How far opening a thread has read: its newest incoming message. */
@@ -416,7 +422,31 @@ export function CrmInbox() {
           <RecipientField value={to} onChange={setTo} text={find} onText={setFind}
                           people={contacts} disabled={working} />
         </div>
+        {(!ccOpen || !bccOpen) && (
+          <span className="of-cw__cc">
+            {!ccOpen && <button type="button" disabled={working} onClick={() => setShowCc(true)}>Cc</button>}
+            {!bccOpen && <button type="button" disabled={working} onClick={() => setShowBcc(true)}>Bcc</button>}
+          </span>
+        )}
       </div>
+      {ccOpen && (
+        <div className="of-cw__row of-cw__row--top">
+          <span className="of-cw__k">Cc</span>
+          <div className="of-cw__v">
+            <RecipientField value={cc} onChange={setCc} text={findCc} onText={setFindCc}
+                            people={contacts} disabled={working} />
+          </div>
+        </div>
+      )}
+      {bccOpen && (
+        <div className="of-cw__row of-cw__row--top">
+          <span className="of-cw__k">Bcc</span>
+          <div className="of-cw__v">
+            <RecipientField value={bcc} onChange={setBcc} text={findBcc} onText={setFindBcc}
+                            people={contacts} disabled={working} />
+          </div>
+        </div>
+      )}
 
       <input className="of-chat__in" placeholder="Subject" value={subject}
              disabled={working} onChange={(e) => setSubject(e.target.value)} />
@@ -448,25 +478,27 @@ export function CrmInbox() {
     // Say why the button is dead rather than leaving it greyed and
     // unexplained — "no recipient picked" is not obvious when the search box
     // already has text in it.
-    const missing = !recipients.length
-      ? "pick someone from the list, or type or paste email addresses"
+    const missing = !toList.length
+      ? (ccList.length || bccList.length
+          ? "add someone to To — Cc and Bcc go alongside them"
+          : "pick someone from the list, or type or paste email addresses")
       : bad.length
         ? `${bad.length === 1 ? "one address isn't" : `${bad.length} addresses aren't`} valid — click to fix, or × to drop`
       : !subject.trim() ? "add a subject"
       : !body.trim() ? "write a message"
       : null;
-    const n = recipients.length;
+    const n = everyone.length;
     return (
       <>
         <button className="of-facet__b" onClick={() => void doSend()}
                 disabled={working || Boolean(missing)}>
-          {working ? (progress ?? "…") : n > 1 ? `Send ${n}` : "Send"}
+          {working ? "…" : "Send"}
         </button>
         <button className="of-dock__x" disabled={working}
                 onClick={() => setDraft(null)}>discard</button>
         <span className="of-note">
           {missing ?? (n > 1
-            ? `Goes as ${n} separate messages, one per person. Signature added for you.`
+            ? `One message to ${n} people${bccList.length ? `, ${bccList.length} of them on Bcc` : ""}. Signature added for you.`
             : "Signature added for you.")}
         </span>
       </>
@@ -658,13 +690,23 @@ export function CrmInbox() {
                   </div>
                 )
               ) : (
-                <button className="of-facet__b" style={{ marginTop: 14 }}
-                        disabled={!open.email || draft?.kind === "new"} onClick={startReply}
-                        title={!open.email ? "No address on record"
-                          : draft ? "Send or discard the new message first"
-                          : "Write to this person"}>
-                  Reply
-                </button>
+                <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                  <button className="of-facet__b"
+                          disabled={!open.email || draft?.kind === "new"} onClick={() => startReply(false)}
+                          title={!open.email ? "No address on record"
+                            : draft ? "Send or discard the new message first"
+                            : "Write to this person"}>
+                    Reply
+                  </button>
+                  {lastGroup && (
+                    <button className="of-facet__b"
+                            disabled={!open.email || draft?.kind === "new"} onClick={() => startReply(true)}
+                            title={draft ? "Send or discard the new message first"
+                              : "Reply to everyone who was on our last group message"}>
+                      Reply all
+                    </button>
+                  )}
+                </div>
               )}
             </>
           ) : (

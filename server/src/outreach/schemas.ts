@@ -163,6 +163,13 @@ export const SendRecord = z.object({
   campaign_id: z.string().nullable().default(null),
   company: z.string().nullable(),
   to: z.string().email(),
+  /** The rest of a group message written by hand: further To addresses, Cc
+      and Bcc. `to` stays the first person, which is who the thread, the
+      history and the contact record are filed under. Optional because no
+      record written before group mail has them. */
+  also_to: z.array(z.string()).optional(),
+  cc: z.array(z.string()).optional(),
+  bcc: z.array(z.string()).optional(),
   from_domain: z.string(),
   from_address: z.string(),
   reply_to: z.string().nullable(),
@@ -252,6 +259,12 @@ export const ScheduleRequest = z.object({
   /** A plain address, for someone not in the CRM. Ignored when contact_id
       is given. One of the two is required. */
   to: z.string().email().nullable().default(null),
+  /** Group mail, written by hand only (round 0): further people on To, and
+      Cc and Bcc. The first recipient above stays the one the conversation is
+      filed under. Every address here is checked against the opt-out list. */
+  also_to: z.array(z.string().email()).optional(),
+  cc: z.array(z.string().email()).optional(),
+  bcc: z.array(z.string().email()).optional(),
   /** 0 for a one-off message written by hand; 1–3 for a sequence round. */
   round: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
   /** Which campaign this message belongs to. Null for a one-off. Callers on
@@ -277,6 +290,9 @@ export const ScheduleRequest = z.object({
   references: z.array(z.string()).default([]),
 }).strict().refine((r) => r.contact_id ?? r.to, {
   message: "either contact_id or to is required",
+}).refine((r) => 1 + (r.also_to?.length ?? 0) + (r.cc?.length ?? 0) + (r.bcc?.length ?? 0) <= 50, {
+  // Resend's own limit for one message.
+  message: "at most 50 recipients on one message",
 });
 export type ScheduleRequest = z.infer<typeof ScheduleRequest>;
 

@@ -182,6 +182,40 @@ export async function schedule(
   if (await isOptedOut(to)) {
     throw new Refused("opted-out", `${to} has asked not to be contacted again`);
   }
+
+  /* A message written by hand can go to a group: more people on To, and Cc
+     and Bcc. Only by hand. A sequence round is a cold message to one person,
+     and a cold message to several who can all see each other is exactly what
+     the pacing and the footer exist to prevent.
+
+     Duplicates go the way a mail client drops them — somebody already on To
+     is not also Cc'd, nor Bcc'd if already on either — so nobody gets it
+     twice. Everyone left goes through the same opt-out check as the first
+     person, and one of them failing refuses the whole message, naming them,
+     rather than quietly sending it to the rest: somebody chose that group,
+     and the message without one of them in it is a different message. */
+  const taken = new Set([to.toLowerCase()]);
+  const take = (list: string[] | undefined) => (list ?? []).map((a) => a.trim()).filter((a) => {
+    const k = a.toLowerCase();
+    if (!a || taken.has(k)) return false;
+    taken.add(k);
+    return true;
+  });
+  const alsoTo = take(req.also_to);
+  const cc = take(req.cc);
+  const bcc = take(req.bcc);
+  const group = [...alsoTo, ...cc, ...bcc];
+  if (group.length && req.round !== 0) {
+    throw new Refused("group-is-by-hand",
+      "Cc, Bcc and extra To are for mail written by hand; a sequence round goes to one person.");
+  }
+  const gone: string[] = [];
+  for (const a of group) if (await isOptedOut(a)) gone.push(a);
+  if (gone.length) {
+    throw new Refused("opted-out",
+      `${gone.join(", ")} ${gone.length === 1 ? "has" : "have"} asked not to be contacted again. ` +
+      "Take them off and send it again.");
+  }
   if (/\{\{|\}\}/.test(`${req.subject}${req.body}`)) {
     throw new Refused("unresolved-placeholder",
       "The message still contains a {{placeholder}}. Fix it before scheduling.");
@@ -259,6 +293,9 @@ export async function schedule(
     campaign_id: req.campaign_id,
     company: contact?.company ?? account?.company ?? null,
     to,
+    also_to: alsoTo,
+    cc,
+    bcc,
     from_domain: domain,
     from_address: from,
     reply_to: d.reply_to,
@@ -311,7 +348,10 @@ export async function schedule(
 
   try {
     const { data, error } = await resend().emails.send({
-      from, to, subject: req.subject, text, html,
+      from, to: alsoTo.length ? [to, ...alsoTo] : to,
+      ...(cc.length ? { cc } : {}),
+      ...(bcc.length ? { bcc } : {}),
+      subject: req.subject, text, html,
       ...(d.reply_to ? { replyTo: d.reply_to } : {}),
       scheduledAt: at.toISOString(),
       headers: {
@@ -393,7 +433,11 @@ export async function sendNow(
 
   const commercial = row.round >= 1;
   const { data, error } = await resend().emails.send({
-    from: row.from_address, to: row.to, subject: row.subject,
+    // The whole group again: the re-send replaces the message, not one copy.
+    from: row.from_address, to: row.also_to?.length ? [row.to, ...row.also_to] : row.to,
+    ...(row.cc?.length ? { cc: row.cc } : {}),
+    ...(row.bcc?.length ? { bcc: row.bcc } : {}),
+    subject: row.subject,
     text: row.body, ...(row.html ? { html: row.html } : {}),
     ...(row.reply_to ? { replyTo: row.reply_to } : {}),
     scheduledAt: at.toISOString(),
@@ -417,12 +461,18 @@ export async function sendNow(
     message, but a sequence that is already scheduled would keep landing for
     another week, which is precisely the experience somebody clicking
     unsubscribe is trying to end. Failures are counted, not thrown — one
-    message Resend has already released must not stop the rest being pulled. */
+    message Resend has already released must not stop the rest being pulled.
+
+    A queued group message with them anywhere on it — To, Cc or Bcc — is
+    pulled whole. A scheduled message cannot be edited, only cancelled, and
+    the alternative is sending it to somebody who just asked us not to. */
 export async function cancelAllTo(email: string): Promise<{ canceled: number; failed: number }> {
   const addr = email.trim().toLowerCase();
   const bare = (a: string) => (a.match(/<([^>]+)>/)?.[1] ?? a).trim().toLowerCase();
+  const on = (s: SendRecord) =>
+    [s.to, ...(s.also_to ?? []), ...(s.cc ?? []), ...(s.bcc ?? [])].some((a) => bare(a) === addr);
   const queued = (await allSends()).filter(
-    (s) => bare(s.to) === addr && (s.status === "scheduled" || s.status === "draft"));
+    (s) => on(s) && (s.status === "scheduled" || s.status === "draft"));
   let canceled = 0, failed = 0;
   for (const row of queued) {
     try { await cancel(row.id); canceled++; } catch { failed++; }
