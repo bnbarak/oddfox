@@ -188,24 +188,6 @@ export function CrmOutreach() {
         ) : (
           <Note style={{ marginTop: 14 }}>No sending domain configured.</Note>
         )}
-
-        <div className="of-heartbeat">
-          <button className="of-facet__b" disabled={busy !== null} onClick={() => void doTick()}>
-            {busy === "tick" ? "running…" : "Run a heartbeat now"}
-          </button>
-          {s?.last_tick ? (
-            <span className="of-note">
-              last beat {new Date(s.last_tick.at).toLocaleString()} — {s.last_tick.due} due,{" "}
-              {s.last_tick.sent} scheduled, {s.last_tick.replies} in, {s.last_tick.ms}ms
-              {s.last_tick.error ? ` (${s.last_tick.error})` : ""}
-            </span>
-          ) : (
-            <span className="of-note">no heartbeat has run yet</span>
-          )}
-          {s && <Chip tone={s.auto_followups ? "cool" : ""}>
-            {s.auto_followups ? "auto follow-ups on" : "follow-ups need a person"}
-          </Chip>}
-        </div>
       </Section>
 
       <Section kicker="Heat by account">
@@ -348,6 +330,28 @@ export function CrmOutreach() {
         ) : (
           <Note>Nothing has come back yet.</Note>
         )}
+      </Section>
+
+      {/* Last on the page: it is machinery. You come here to see what went
+          out and what came back; forcing a beat is the occasional exception. */}
+      <Section kicker="Heartbeat">
+        <div className="of-heartbeat">
+          <button className="of-facet__b" disabled={busy !== null} onClick={() => void doTick()}>
+            {busy === "tick" ? "running…" : "Run a heartbeat now"}
+          </button>
+          {s?.last_tick ? (
+            <span className="of-note">
+              last beat {new Date(s.last_tick.at).toLocaleString()} — {s.last_tick.due} due,{" "}
+              {s.last_tick.sent} scheduled, {s.last_tick.replies} in, {s.last_tick.ms}ms
+              {s.last_tick.error ? ` (${s.last_tick.error})` : ""}
+            </span>
+          ) : (
+            <span className="of-note">no heartbeat has run yet</span>
+          )}
+          {s && <Chip tone={s.auto_followups ? "cool" : ""}>
+            {s.auto_followups ? "auto follow-ups on" : "follow-ups need a person"}
+          </Chip>}
+        </div>
       </Section>
       {/* Campaign first, person on top of it: clicking a name in the campaign
           grid should open that person without losing the grid behind it. */}
