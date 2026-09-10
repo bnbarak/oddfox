@@ -31,8 +31,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const asDocument = (html: string): string => `<!doctype html>
 <html><head><meta charset="utf-8"><base target="_blank">
 <style>
-  html,body { margin:0; padding:0; background:#fff; color:#111; }
-  body { padding:14px 16px; font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  html,body { margin:0; padding:0; background:#fff; color:#222; }
+  body { padding:14px 16px; font:small Arial,Helvetica,sans-serif;
          overflow-wrap:anywhere; }
   img { max-width:100%; height:auto; }
 </style></head><body>${html}</body></html>`;

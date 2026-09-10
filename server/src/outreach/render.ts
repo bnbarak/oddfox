@@ -133,7 +133,13 @@ const esc = (s: string): string => s.replace(/[&<>"']/g, (c) => ESC[c]!);
    it — the two parts of a multipart message disagreeing is itself a spam
    signal. The only thing HTML adds is that the opt-out is clickable. */
 
-const FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
+/* Gmail's own defaults — "Sans Serif" at "Normal" size — so a message from
+   here looks like one typed in Gmail, down to the letterforms. No line-height
+   and no colour for the same reason: Gmail sets neither. The footer uses
+   Gmail's "Small". */
+const FONT = "Arial,Helvetica,sans-serif";
+const SIZE = "small";
+const SIZE_SMALL = "x-small";
 
 /** Blank-line-separated blocks become paragraphs; single newlines inside a
     block become <br>, which is what keeps a signature's line breaks. */
@@ -148,8 +154,8 @@ export function htmlBody(
   to?: string | null,
 ): string {
   const url = commercial && cfg.unsubscribe_mailbox && to ? linkFor(to) : null;
-  const p = `margin:0 0 1em;font-family:${FONT};font-size:15px;line-height:1.55;color:#111`;
-  const small = `margin:0 0 .5em;font-family:${FONT};font-size:12px;line-height:1.5;color:#767676`;
+  const p = `margin:0 0 1em;font-family:${FONT};font-size:${SIZE}`;
+  const small = `margin:0 0 .5em;font-family:${FONT};font-size:${SIZE_SMALL};color:#767676`;
 
   const id = signatureId ?? cfg.default_signature;
   const sig = cfg.signatures.find((x) => x.id === id);
@@ -169,7 +175,7 @@ export function htmlBody(
     if (tail.length) parts.push(`<p style="${small}">${tail.join("<br>")}</p>`);
   }
 
-  return `<div style="font-family:${FONT};font-size:15px;line-height:1.55;color:#111">\n${
+  return `<div style="font-family:${FONT};font-size:${SIZE}">\n${
     parts.join("\n")}\n</div>`;
 }
 
