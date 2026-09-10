@@ -252,7 +252,7 @@ a.co-row:hover .co-name,
 .of-quota__pip.is-used { background: var(--cool); border-color: var(--cool); }
 .of-quota__n { font-family: var(--mono); font-size: 11px; color: var(--fog); }
 
-.of-heartbeat { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.of-heartbeat { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
 .of-heat__h { font-family: var(--mono); font-size: 10px; opacity: .7; }
 .of-heat { padding: 0 2px !important; }

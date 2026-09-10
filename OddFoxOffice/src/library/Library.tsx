@@ -57,10 +57,11 @@ export const TABS = [
   { id: "segments",   label: "Segments",   group: "customers" },
   { id: "owners",     label: "Buying chain", group: "customers" },
 
-  // Outreach is first because it is the CRM's landing page: the group nav
-  // links to tabsIn(group)[0], so order here decides where "CRM" goes.
-  { id: "crm-outreach",  label: "Outreach",  group: "crm" },
+  // Inbox is first because it is the CRM's landing page: the group nav
+  // links to tabsIn(group)[0], so order here decides where "CRM" goes. Mail
+  // waiting to be read is the first thing worth seeing on the way in.
   { id: "crm-inbox",     label: "Inbox",     group: "crm" },
+  { id: "crm-outreach",  label: "Outreach",  group: "crm" },
   { id: "crm-campaigns", label: "Campaigns", group: "crm" },
   { id: "crm",           label: "Accounts",  group: "crm" },
   { id: "crm-people",    label: "People",    group: "crm" },
