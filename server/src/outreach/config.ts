@@ -59,14 +59,21 @@ export const MARKETING_DOMAINS = [
     /* The point of registering it early: a sending domain wants age before
        it wants traffic, and the registration clock starts now rather than on
        the day we decide to use it. */
-    note: "Needs Resend verification, SPF/DMARC and a warm-up before it can be added to SENDERS.",
+    note: "Added to Resend with sending and receiving on; DKIM/SPF/DMARC and MX go in its " +
+      "Cloud DNS zone. Verification is DNS — Resend polls for the records, nothing is emailed. " +
+      "Still needs a warm-up before it earns a SENDERS entry.",
   },
   {
     domain: "tryseaworth.com",
     purpose: "Campaign landing pages.",
     registrar: "Google Cloud Domains",
     dns_zone: "tryseaworth-com",
-    note: "No mail. Web only — do not add MX records here.",
+    /* Set up in Resend for mail as well as web. Worth knowing rather than
+       arguing with: an MX record is at the apex, so every address here is a
+       mailbox Resend receives, and a landing-page domain that also carries
+       mail has two reputations to keep rather than one. */
+    note: "In Resend with sending and receiving on, so it carries mail as well as the pages. " +
+      "Not a sending identity: no SENDERS entry, so the engine still cannot send as it.",
   },
 ] as const;
 
