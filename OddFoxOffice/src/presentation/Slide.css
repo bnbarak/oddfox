@@ -84,3 +84,10 @@
   gap: var(--space-3);
   margin-top: var(--space-3);
 }
+
+/* Column-count modifiers. The base grid auto-fits, which is right for three or
+   four stat cards but packs eight explanatory cards into slivers. These pin the
+   count and let the cards get shorter instead of narrower. */
+.slide__grid--2 { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+.slide__grid--4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.slide__grid--5 { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
