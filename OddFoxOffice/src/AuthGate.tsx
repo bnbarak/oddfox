@@ -1,4 +1,5 @@
 import { useGoogleAuth } from "./lib/googleAuth";
+import { Whoami } from "./Whoami";
 
 /** Gates the entire app behind Google Sign-In — every tab, every deck, not
     just the CRM. The bundled JSON datasets still ship inside the JS bundle
@@ -8,7 +9,7 @@ import { useGoogleAuth } from "./lib/googleAuth";
     with a real server-side gate (see server/src/auth.ts) — this is the
     client-side counterpart for everything else. */
 export function AuthGate({ children }: { children: React.ReactNode }) {
-  const { token, email, ready, buttonRef, signOut } = useGoogleAuth();
+  const { token, email, name, picture, ready, buttonRef, signOut } = useGoogleAuth();
 
   if (!token) {
     return (
@@ -25,10 +26,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="of-whoami">
-        <span>{email}</span>
-        <button className="of-whoami__out" onClick={signOut}>sign out</button>
-      </div>
+      <Whoami email={email} name={name} picture={picture} onSignOut={signOut} />
       {children}
     </>
   );

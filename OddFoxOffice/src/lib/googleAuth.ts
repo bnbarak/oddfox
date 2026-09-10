@@ -130,5 +130,11 @@ export function useGoogleAuth() {
   }, []);
 
   const claims = token ? decodeClaims(token) : null;
-  return { token, email: claims?.email ?? null, name: claims?.name ?? null, ready, buttonRef, signOut };
+  return {
+    token, email: claims?.email ?? null, name: claims?.name ?? null,
+    // Google puts a real avatar in the id token; use it rather than drawing
+    // initials for somebody who has a picture.
+    picture: claims?.picture ?? null,
+    ready, buttonRef, signOut,
+  };
 }

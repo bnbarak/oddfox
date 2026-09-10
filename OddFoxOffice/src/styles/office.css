@@ -253,19 +253,32 @@ a.co-row:hover .co-name,
 /* ---------- who is signed in ---------- */
 /* Floats over the top right of every page. The agent dock is also pinned to
    that edge, so the chip steps aside for it rather than sitting on its head. */
-.of-whoami {
-  position: fixed; top: 8px; right: 12px; z-index: 1000;
-  display: flex; gap: 8px; align-items: center;
-  font-size: 12px; opacity: .7;
+.of-whoami { position: fixed; top: 8px; right: 12px; z-index: 1000; }
+.of-avatar {
+  width: 30px; height: 30px; border-radius: 50%; padding: 0; cursor: pointer;
+  border: 1px solid var(--line); background: #10171d; color: var(--paper);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .04em;
+  display: grid; place-items: center; overflow: hidden;
 }
-.of-whoami__out {
-  font: inherit; color: inherit; background: none; cursor: pointer;
-  border: 1px solid currentColor; border-radius: 4px; padding: 2px 8px; opacity: .8;
+.of-avatar:hover { border-color: var(--fog); }
+.of-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.of-avatar__menu {
+  position: absolute; top: 36px; right: 0; min-width: 210px;
+  background: #0a1015; border: 1px solid var(--line); border-radius: 4px;
+  padding: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.5);
 }
+.of-avatar__who {
+  display: flex; flex-direction: column; gap: 2px; padding: 8px 10px;
+  border-bottom: 1px solid var(--line-soft); font-size: 12px;
+}
+.of-avatar__who span { color: var(--fog); font-family: var(--mono); font-size: 10.5px; }
+.of-avatar__item {
+  display: block; width: 100%; text-align: left; font: inherit; font-size: 12.5px;
+  background: none; border: 0; color: var(--paper); cursor: pointer;
+  padding: 9px 10px; border-radius: 3px;
+}
+.of-avatar__item:hover { background: rgba(255,255,255,.06); }
 body[data-crm-dock="open"] .of-whoami { right: calc(min(400px, 34vw) + 12px); }
-/* The chip floats above the sticky header, so the header's meta line stops
-   short of it instead of running underneath. */
-.office .of-head-meta { padding-right: 210px; }
 
 /* ---------- outreach: the agent, a rail down the right of the CRM ---------- */
 .of-dock {

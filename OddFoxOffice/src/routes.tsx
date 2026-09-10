@@ -6,7 +6,6 @@ import {
 import { SlideDeck } from "./presentation/SlideDeck";
 import { presentations } from "./presentations";
 import { Library, TABS, GROUPS, groupOf, tabsIn, type TabId, type ViewState } from "./library/Library";
-import { DB } from "./data";
 import { AuthGate } from "./AuthGate";
 import { Operator } from "./library/panels/crm/Operator";
 
@@ -51,9 +50,6 @@ function LibraryLayout() {
       <header className="of-head">
         <div className="of-head-in">
           <div className="of-mark">Seaworth <span>/ office</span></div>
-          <div className="of-head-meta">
-            v{DB.manifest.version} · {DB.manifest.datasets.length} datasets · updated {DB.manifest.updated}
-          </div>
         </div>
         <nav className="of-nav of-nav--groups" aria-label="Sections">
           {GROUPS.map((g) => {
