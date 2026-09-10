@@ -70,6 +70,10 @@ export async function putOutreachConfig(patch: Partial<OutreachConfig>): Promise
   return body as OutreachConfig;
 }
 
+export type MarketingDomain = {
+  domain: string; purpose: string; registrar: string; dns_zone: string; note: string;
+};
+
 export type Status = {
   configured: {
     resend: boolean; model: boolean;
@@ -80,6 +84,9 @@ export type Status = {
     unsubscribe_host: string | null;
   };
   senders: Sender[];
+  /** Domains we own that cannot send — landing pages, and names held for
+      later. Fixed in the server; the panel only reads them. */
+  marketing_domains: MarketingDomain[];
   blockers: Blocker[];
   dry_run: boolean;
   auto_followups: boolean;

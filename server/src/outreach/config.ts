@@ -37,6 +37,41 @@ export const SENDERS = [
 export const senderFor = (domain: string) =>
   SENDERS.find((x) => x.domain === domain.toLowerCase()) ?? null;
 
+/** Domains we own that are not sending identities.
+
+    Deliberately separate from SENDERS and from the config document's
+    `domains`, because these are a different kind of fact. A sending domain
+    is an operational setting — it has a cap, it gets picked, it warms. One
+    of these is a *property record*: something registered, renewing, pointed
+    somewhere, and easy to forget we are paying for. Nothing here can send.
+
+    A domain graduating to a sending identity is not an edit to this list —
+    it is DNS, Resend verification, a SENDERS entry and a warm-up, and until
+    all four exist it belongs here and nowhere else. Kept in the server for
+    the same reason SENDERS is: a record of what we own should not change
+    because a page was edited. */
+export const MARKETING_DOMAINS = [
+  {
+    domain: "seaworthhq.com",
+    purpose: "Reserved as a second outreach sending domain — not yet warmed.",
+    registrar: "Google Cloud Domains",
+    dns_zone: "seaworthhq-com",
+    /* The point of registering it early: a sending domain wants age before
+       it wants traffic, and the registration clock starts now rather than on
+       the day we decide to use it. */
+    note: "Needs Resend verification, SPF/DMARC and a warm-up before it can be added to SENDERS.",
+  },
+  {
+    domain: "tryseaworth.com",
+    purpose: "Campaign landing pages.",
+    registrar: "Google Cloud Domains",
+    dns_zone: "tryseaworth-com",
+    note: "No mail. Web only — do not add MX records here.",
+  },
+] as const;
+
+export type MarketingDomain = (typeof MARKETING_DOMAINS)[number];
+
 export type Blocker = { code: string; detail: string };
 
 /** Everything standing between the current configuration and a live send, as

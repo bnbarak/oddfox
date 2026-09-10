@@ -1,7 +1,7 @@
 import { Router, type NextFunction, type Request, type Response } from "express";
 import { Resend } from "resend";
 import { draft, modelConfigured } from "./agent.js";
-import { blockers, fromAddress, secret } from "./config.js";
+import { blockers, fromAddress, MARKETING_DOMAINS, secret } from "./config.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
@@ -72,6 +72,10 @@ outreachRouter.get("/status", h(async (_req, res) => {
       address: fromAddress(cfg, d.domain),
       manual_only: d.manual_only,
     })).filter((x) => x.address),
+    /** Domains we own but do not send from. Here rather than in the config
+        document because they are a record of what is registered, not a
+        setting: nothing the panel does can change what we own. */
+    marketing_domains: MARKETING_DOMAINS,
     last_tick: beat,
   });
 }));
