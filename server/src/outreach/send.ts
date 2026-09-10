@@ -77,6 +77,37 @@ export function nextSlot(cfg: OutreachConfig, domain: string, queued: SendRecord
                       cfg.send_window.start_hour, cfg.send_window.end_hour);
 }
 
+/** The domain a sequence began on, if it has one.
+
+    Keyed on the campaign as well as the person, because due() groups the
+    same way: two campaigns writing to one person are two conversations, and
+    each is entitled to its own thread. Read from the earliest round rather
+    than the most recent, so the whole sequence anchors to where it started
+    and one stray message cannot drag the rest onto a new domain.
+
+    Cancelled rounds do not count — a message that was pulled back was never
+    seen, so it did not establish anything. */
+export function startedOn(req: ScheduleRequest, sends: SendRecord[]): string | null {
+  if (req.round < 1 || !req.contact_id) return null;
+  const mine = sends
+    .filter((s) => s.contact_id === req.contact_id
+                   && s.campaign_id === req.campaign_id
+                   && s.round >= 1
+                   && s.status !== "canceled"
+                   && s.status !== "failed")
+    .sort((a, b) => (a.scheduled_at ?? a.created_at).localeCompare(b.scheduled_at ?? b.created_at));
+  return mine[0]?.from_domain ?? null;
+}
+
+/** Whether a domain may still carry automated mail. A domain that has been
+    switched off or dropped from the config is the one case where a sequence
+    has to move: the identity it began on no longer exists, and refusing
+    forever would be worse than finishing from somewhere else. */
+export function stillUsable(cfg: OutreachConfig, domain: string): boolean {
+  const d = domainOf(cfg, domain);
+  return Boolean(d?.enabled && !d.manual_only);
+}
+
 export type Scheduled = {
   id: string;
   /** Resend's email id, and the cancel token: this message can be pulled back
@@ -156,7 +187,23 @@ export async function schedule(
       "The message still contains a {{placeholder}}. Fix it before scheduling.");
   }
 
-  const domain = req.domain ?? (await pickDomain(cfg))?.domain;
+  /* A sequence keeps the domain it started on.
+
+     Round 2 is threaded onto round 1 with In-Reply-To, so sending it from a
+     different domain drops a reply into the conversation from an address the
+     recipient has never seen — which reads as a spoof to a person and scores
+     like one at the receiving end. It also works against what the cap is
+     for: a domain warms on the conversations it is actually carrying, not on
+     whichever half-thread had the most headroom that morning.
+
+     pickDomain is therefore consulted only for the first message of a
+     sequence. After that the answer was decided the day it began. */
+  const sticky = (() => {
+    const began = startedOn(req, queued);
+    return began && stillUsable(cfg, began) ? began : null;
+  })();
+
+  const domain = req.domain ?? sticky ?? (await pickDomain(cfg))?.domain;
   if (!domain) {
     throw new Refused("no-domain-with-room", "Every sending domain has hit its cap for today.", 429);
   }
@@ -209,6 +256,7 @@ export async function schedule(
     id: randomUUID(),
     account_id: contact?.account_id ?? null,
     contact_id: contact?.id ?? null,
+    campaign_id: req.campaign_id,
     company: contact?.company ?? account?.company ?? null,
     to,
     from_domain: domain,
@@ -247,6 +295,15 @@ export async function schedule(
   if (day) {
     const claimed = await reserve(domain, day, cap);
     if (claimed === null) {
+      /* Two different situations, and the caller treats them differently.
+         The pool being full ends the day's work; one sequence's own domain
+         being full stops that sequence only, and the rest of the run may
+         still have somewhere to go. */
+      if (domain === sticky) {
+        throw new Refused("sequence-domain-full",
+          `${domain} carries this sequence and has used its ${cap} sends for ${day}; ` +
+          `the follow-up waits rather than moving to another domain.`, 429);
+      }
       throw new Refused("cap-reached", `${domain} has already used its ${cap} sends for ${day}.`, 429);
     }
     used = claimed;

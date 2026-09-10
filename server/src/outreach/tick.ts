@@ -130,6 +130,14 @@ export async function tick(): Promise<Tick> {
         }, cfg, sends);
         scheduled++;
       } catch (e) {
+        /* One sequence's own domain being full stops that sequence, not the
+           run: the next contact due may have started on a domain that still
+           has room. Skipped rather than moved, and tomorrow's tick picks it
+           up from the same address it has always used. */
+        if (e instanceof Refused && e.code === "sequence-domain-full") {
+          notes.push(`${d.contact_id} r${d.next_round}: ${e.message}`);
+          continue;
+        }
         // A full domain is the normal end of a day's work, not an error.
         if (e instanceof Refused && (e.code === "cap-reached" || e.code === "no-domain-with-room")) {
           notes.push(`stopped: ${e.message}`);
