@@ -40,6 +40,12 @@ export type ThreadMessage = {
   /** Inbound only. */
   automated?: boolean;
   unsubscribe?: boolean;
+  /** Outbound only: who it went to. The extra fields are there only for a
+      group message, so a thread can show who else was on it. */
+  to?: string;
+  also_to?: string[];
+  cc?: string[];
+  bcc?: string[];
 };
 
 export type Thread = {
@@ -91,6 +97,10 @@ const outbound = (s: SendRecord): ThreadMessage => ({
   sort_at: GONE.has(s.status) ? (s.scheduled_at ?? s.created_at) : s.created_at,
   status: s.status, round: s.round, template_tier: s.template_tier, message_id: s.message_id,
   dry_run: s.dry_run, cancel_token: s.resend_id,
+  to: s.to,
+  ...(s.also_to?.length ? { also_to: s.also_to } : {}),
+  ...(s.cc?.length ? { cc: s.cc } : {}),
+  ...(s.bcc?.length ? { bcc: s.bcc } : {}),
 });
 
 const inbound = (r: ReplyRecord): ThreadMessage => ({

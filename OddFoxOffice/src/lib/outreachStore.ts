@@ -325,6 +325,8 @@ export type ThreadMessage = {
   message_id?: string | null; automated?: boolean; unsubscribe?: boolean;
   /** Incoming only: the signed-in person has not seen this one yet. */
   unread?: boolean;
+  /** Outgoing only: who it went to. The rest appear only on a group message. */
+  to?: string; also_to?: string[]; cc?: string[]; bcc?: string[];
 };
 export type Thread = {
   key: string; contact_id: string | null; full_name: string; title: string; company: string | null;
@@ -361,11 +363,13 @@ export const sendDirect = (
   domain: string | null = null, signature: string | null = null,
   thread: { in_reply_to: string | null; references: string[] } =
     { in_reply_to: null, references: [] },
+  /** Everyone else on the same message. `who` is the first person on To. */
+  group: { also_to: string[]; cc: string[]; bcc: string[] } = { also_to: [], cc: [], bcc: [] },
 ) =>
   post<{ id: string; cancel_token: string | null; scheduled_at: string; dry_run: boolean }>(
     "/schedule",
     { ...who, round: 0, subject, body, scheduled_at: null, domain,
-      written_by: "template", template_tier: null, signature, ...thread });
+      written_by: "template", template_tier: null, signature, ...thread, ...group });
 
 export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
 

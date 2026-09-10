@@ -505,6 +505,9 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-msg__acts { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
                 margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-soft); }
 .of-msg__subj { color: var(--paper); font-size: 13.5px; margin-bottom: 8px; }
+/* Who else a group message went to, under its subject as a mail client shows it. */
+.of-msg__rcpt { font-family: var(--mono); font-size: 11px; color: var(--fog);
+                margin: -4px 0 10px; overflow-wrap: anywhere; }
 .of-msg__body { white-space: pre-wrap; word-break: break-word; margin: 0 0 10px;
                 font-family: var(--mono); font-size: 12px; line-height: 1.65; color: var(--mist); }
 /* The HTML part, in its own document. Framed rather than blended: an email is
@@ -597,6 +600,11 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-cw__row { display: flex; align-items: center; gap: 10px; }
 .of-cw__row--top { align-items: flex-start; }
 .of-cw__row--top .of-cw__k { padding-top: 11px; }
+/* Gmail's Cc and Bcc links, at the end of the To line until they are wanted. */
+.of-cw__cc { display: flex; gap: 10px; flex-shrink: 0; padding-top: 9px; }
+.of-cw__cc button { font: inherit; font-size: 12px; color: var(--fog); cursor: pointer;
+                    background: transparent; border: 0; padding: 0; }
+.of-cw__cc button:hover { color: var(--paper); text-decoration: underline; }
 .of-cw__tools { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .of-cw__tools .of-cw__x { margin-left: 0; display: inline-flex; align-items: center; }
 .of-cw__x[disabled] { opacity: .4; cursor: default; }
