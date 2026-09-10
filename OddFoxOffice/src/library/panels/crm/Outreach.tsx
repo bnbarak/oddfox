@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
-  cancelSend, runTick, sendNow, setCampaignActive, useCampaigns, useEnrichment, useThreads, useHeatmap, useOutreachStatus, useQueue,
+  cancelSend, runTick, sendNow, useCampaigns, useThreads, useHeatmap, useOutreachStatus, useQueue,
   useReplies,
   type Cell, type HeatRow, type Thread,
 } from "../../../lib/outreachStore";
@@ -46,7 +46,6 @@ export function CrmOutreach() {
   const map = useHeatmap(weeks);
   const queue = useQueue();
   const campaigns = useCampaigns();
-  const enrichment = useEnrichment();
 
   const replies = useReplies();
   const [busy, setBusy] = useState<string | null>(null);
@@ -55,45 +54,8 @@ export function CrmOutreach() {
     useState<{ name: string; ids: string[] } | null>(null);
   const [seqPerson, setSeqPerson] = useState<Thread | null>(null);
 
-  // The heat rows already carry every account's logo, so the campaigns table
-  // borrows them rather than fetching the accounts a second time.
-  const byAccount = new Map((map.data?.rows ?? []).map((r) => [r.account_id, r]));
   const [said, setSaid] = useState<string | null>(null);
 
-  /* Activating is the one button that reaches strangers, so it says exactly
-     what it is about to do — how many people, how much it costs — rather than
-     "this may incur charges", which nobody reads. The reassurance that makes
-     it a reasonable button is real and is stated: nothing sends immediately,
-     and everything it queues can be cancelled from the table below. */
-  const toggle = async (id: string, name: string, on: boolean, toEnrich: number, people: number) => {
-    if (on && !window.confirm(
-      `Switching on “${name}” will:\n\n` +
-      (toEnrich > 0
-        ? `• look up ${toEnrich} ${toEnrich === 1 ? "address" : "addresses"} at Apollo ` +
-          `(${toEnrich} ${toEnrich === 1 ? "credit" : "credits"}, charged either way)\n`
-        : "") +
-      `• write round 1 to everyone it can reach — up to ${people} ` +
-      `${people === 1 ? "person" : "people"} — and put it in the queue\n\n` +
-      "Nothing sends straight away: it is paced inside the sending window and " +
-      "every message can be cancelled until it goes.\n\nContinue?")) return;
-    setBusy(id);
-    try {
-      const r = await setCampaignActive(id, on);
-      if (!on) setSaid(`“${name}” paused.`);
-      else {
-        const e = r?.enrichment;
-        setSaid(
-          `“${name}”: ${r?.queued ?? 0} queued`
-          + (e ? `, ${e.found} found, ${e.missing} with no address, ${e.credits} `
-                 + `${e.credits === 1 ? "credit" : "credits"} spent` : "")
-          + (r?.first_lands ? `. First lands ${new Date(r.first_lands).toLocaleString()}` : "")
-          + (r?.stopped ? `. ${r.stopped}` : "."));
-      }
-      await Promise.all([campaigns.reload(), enrichment.reload(), queue.reload(), map.reload()]);
-    } catch (err) {
-      setSaid(err instanceof Error ? err.message : String(err));
-    } finally { setBusy(null); }
-  };
 
   const s = status.data;
 
@@ -288,87 +250,6 @@ export function CrmOutreach() {
           The campaign square is green while a campaign is running, blue with mail in the
           queue, amber when paused, grey before it starts — hover it for the name.
         </Note>
-      </Section>
-
-      <Section kicker="Campaigns">
-        {campaigns.data?.records.length ? (
-          <>
-            <div className="of-matrix-wrap">
-              <table className="of-matrix of-crm">
-                <thead>
-                  <tr>
-                    <th className="co">Campaign</th><th>Companies</th><th>Tier</th>
-                    <th>People</th><th>Reachable</th><th>To look up</th><th>No address</th>
-                    <th>Sent</th><th></th><th></th><th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {campaigns.data.records.map((c) => (
-                    <tr key={c.id}>
-                      {/* The campaign name opens its account when it has
-                          exactly one, which is the common case and saves a
-                          hop through the companies column. */}
-                      <td className="co">
-                        {c.account_ids.length === 1 && c.account_ids[0] ? (
-                          <AccountLink id={c.account_ids[0]} title={`Open ${c.companies[0] ?? c.name}`}>
-                            <span className="co-name">{c.name}</span>
-                          </AccountLink>
-                        ) : <span className="co-name">{c.name}</span>}
-                      </td>
-                      <td className="cell">
-                        {c.account_ids.length ? (
-                          <span className="of-camp__cos">
-                            {c.account_ids.map((aid, i) => (
-                              <AccountLink key={aid} id={aid}>
-                                <Logo url={byAccount.get(aid)?.url ?? null}
-                                      name={c.companies[i] ?? aid} size={16} />
-                                <span className="co-name">{c.companies[i] ?? aid}</span>
-                              </AccountLink>
-                            ))}
-                          </span>
-                        ) : "—"}
-                      </td>
-                      <td className="val">{c.template_tier}</td>
-                      <td className="val">{c.people}</td>
-                      <td className="val">{c.with_email}</td>
-                      {/* Each of these costs one Apollo credit the first time
-                          a message to them is scheduled, and never again. */}
-                      <td className="val">
-                        {c.to_enrich ? <Chip tone="warm">{c.to_enrich}</Chip> : 0}
-                      </td>
-                      <td className="val">
-                        {c.unreachable ? <Chip tone="hot">{c.unreachable}</Chip> : 0}
-                      </td>
-                      <td className="val">{c.sent}</td>
-                      <td className="cell">
-                        <Chip tone={c.active ? "calm" : ""}>{c.active ? "active" : "paused"}</Chip>
-                      </td>
-                      <td className="cell">
-                        <button className="of-facet__b"
-                                onClick={() => setSeqCampaign({ name: c.name, ids: c.account_ids })}
-                                title="Where is everyone in this campaign">sequence</button>
-                      </td>
-                      <td className="cell">
-                        <button className="of-facet__b" disabled={busy === c.id}
-                                onClick={() => void toggle(c.id, c.name, !c.active, c.to_enrich, c.people)}>
-                          {busy === c.id ? "…" : c.active ? "pause" : "activate"}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <Note style={{ marginTop: 14 }}>
-              “To look up” is what this campaign would spend at Apollo if it ran now — one
-              credit each, charged when the message is scheduled, never charged twice for the
-              same person. “No address” is people already looked up who have none; they cost
-              nothing further. {campaigns.data.credits_today} credits spent today.
-            </Note>
-          </>
-        ) : (
-          <Note>No campaigns yet. Ask the agent to start one.</Note>
-        )}
       </Section>
 
       <Section kicker="Scheduled — still cancellable">

@@ -178,7 +178,8 @@ export const useHeatmap = (weeks: number) => useResource<Heatmap>(`/heatmap?week
 export type CampaignRow = {
   id: string; name: string; persona: string; template_tier: number;
   account_ids: string[]; active: boolean; companies: string[];
-  people: number; with_email: number; to_enrich: number; unreachable: number; sent: number;
+  people: number; with_email: number; to_enrich: number; unreachable: number;
+  sent: number; queued: number; replies: number; last_at: string | null;
 };
 
 export type CampaignState = "none" | "paused" | "not started" | "queued" | "running";

@@ -205,14 +205,17 @@ outreachRouter.get("/threads", h(async (_req, res) => {
   res.json({ threads: await threads() });
 }));
 
+/** Statuses that mean a message actually reached a mailbox. */
+const LANDED = new Set(["sent", "delivered", "opened", "clicked", "bounced", "complained"]);
+
 /** Campaigns, with the one number that decides whether one can start: how
     many of its people we can actually reach. Addresses we do not have are
     bought at send time for a campaign account, so "missing" is a forecast of
     spend rather than a blocker — and "no address, already looked up" is
     neither, because that lookup will not happen twice. */
 outreachRouter.get("/campaigns", h(async (_req, res) => {
-  const [records, accounts, contacts, sends, ledger] = await Promise.all([
-    allCampaigns(), crm.accounts(), crm.contacts(), allSends(), allEnrichment(),
+  const [records, accounts, contacts, sends, replies, ledger] = await Promise.all([
+    allCampaigns(), crm.accounts(), crm.contacts(), allSends(), allReplies(), allEnrichment(),
   ]);
   const looked = new Map(ledger.map((e) => [e.contact_id, e]));
 
@@ -223,6 +226,8 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
     states: statesFor(accounts.map((a) => a.id), records, sends),
     records: records.map((c) => {
       const people = contacts.filter((p) => p.account_id && c.account_ids.includes(p.account_id));
+      const mine = sends.filter((s) => s.account_id && c.account_ids.includes(s.account_id)
+                                       && s.status !== "canceled");
       const exhausted = people.filter((p) => !p.email && looked.get(p.id)?.matched === false);
       return {
         ...c,
@@ -233,8 +238,12 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
         to_enrich: people.filter((p) => !p.email && !looked.has(p.id)).length,
         // Looked up already and Apollo had nothing. Not reachable, not billable.
         unreachable: exhausted.length,
-        sent: sends.filter((s) => s.account_id && c.account_ids.includes(s.account_id)
-                                  && s.status !== "canceled").length,
+        sent: mine.filter((s) => LANDED.has(s.status)).length,
+        // Still cancellable — the number that says "this is in flight".
+        queued: mine.filter((s) => s.status === "scheduled" || s.status === "draft").length,
+        replies: replies.filter((r) => !r.automated && r.account_id
+                                       && c.account_ids.includes(r.account_id)).length,
+        last_at: mine.map((s) => s.scheduled_at ?? s.created_at).sort().at(-1) ?? null,
       };
     }),
   });

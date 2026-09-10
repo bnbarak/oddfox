@@ -9,6 +9,7 @@ import { Segments } from "./panels/Segments";
 import { GTM } from "./panels/GTM";
 import { CrmAccounts } from "./panels/crm/Accounts";
 import { CrmPeople } from "./panels/crm/People";
+import { CrmCampaigns } from "./panels/crm/Campaigns";
 import { CrmSequences } from "./panels/crm/Sequences";
 import { CrmOutreach } from "./panels/crm/Outreach";
 import { CrmInbox } from "./panels/crm/Inbox";
@@ -60,6 +61,7 @@ export const TABS = [
   // links to tabsIn(group)[0], so order here decides where "CRM" goes.
   { id: "crm-outreach",  label: "Outreach",  group: "crm" },
   { id: "crm-inbox",     label: "Inbox",     group: "crm" },
+  { id: "crm-campaigns", label: "Campaigns", group: "crm" },
   { id: "crm",           label: "Accounts",  group: "crm" },
   { id: "crm-people",    label: "People",    group: "crm" },
   { id: "crm-sequences", label: "Sequences", group: "crm" },
@@ -101,6 +103,7 @@ export function Library({ tab, v, set }: {
     "crm-sequences": <CrmSequences />,
     "crm-settings":  <CrmSettings />,
     "crm-outreach":  <CrmOutreach />,
+    "crm-campaigns": <CrmCampaigns />,
     "crm-inbox":     <CrmInbox />,
     exposed:    <Exposed />,
     segments:   <Segments />,

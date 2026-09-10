@@ -18,7 +18,7 @@ import type { Thread, ThreadMessage } from "../../../lib/outreachStore";
    the template that will be filled, greyed, so it reads as a plan rather
    than as something already done. */
 
-export const tierOf = (messages: ThreadMessage[], fallback = 1): number =>
+const tierOf = (messages: ThreadMessage[], fallback = 1): number =>
   messages.find((m) => m.template_tier != null)?.template_tier ?? fallback;
 
 const seqFor = (tier: number): Rec | undefined => {
