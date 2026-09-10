@@ -1,7 +1,7 @@
 {
   "dataset": "crm-sequences",
   "title": "Outreach sequences",
-  "updated": "2026-09-07",
+  "updated": "2026-09-10",
   "description": "Three-round email drafts per tier. Written against the do_not_claim list in gtm.json: no claim that escort prevents attack, no current pricing, no assertion that any recipient buys escort today. Variables in double braces are filled per account.",
   "variables": [
     {
@@ -144,7 +144,7 @@
         {
           "round": 2,
           "subject": "Re: War risk on tanker transits",
-          "body": "Hello {{first_name}},\n\nOne more, with the honest caveat attached.\n\nThe only published escort pricing we can find is from 2012: a convoy escort operation charged roughly $30,000 for one boat covering about four vessels for three to four days. That works out near $7,500 a vessel against $50,000 to $60,000 for an embarked armed team. Those are old numbers and the per-vessel split is our arithmetic, not a published finding.\n\nWhich is exactly why we want a current view from an owner rather than another report.\n\nWhich is exactly why I want a current read from an owner rather than another report. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nOne more, with the honest caveat attached.\n\nThe only published escort pricing we can find is from 2012: a convoy escort operation charged roughly $30,000 for one boat covering about four vessels for three to four days. That works out near $7,500 a vessel against $50,000 to $60,000 for an embarked armed team. Those are old numbers and the per-vessel split is our arithmetic, not a published finding.\n\nWhich is exactly why I want a current read from an owner rather than another report. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
@@ -166,7 +166,7 @@
         {
           "round": 2,
           "subject": "Re: Who pays for war risk on your fixtures",
-          "body": "Hello {{first_name}},\n\nFollowing up once.\n\nThe reason I am asking you rather than an owner: if the charterer carries the premium, the charterer has the incentive to reduce it, but almost nothing in this market is sold to charterers. That looks like a gap to us and we may be wrong about it.\n\nIf you can tell me we are wrong, that is worth the email.\n\nIf you can tell me we are wrong about that, it is worth the twenty minutes. Early next week?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nFollowing up once.\n\nThe reason I am asking you rather than an owner: if the charterer carries the premium, the charterer has the incentive to reduce it, but almost nothing in this market is sold to charterers. That looks like a gap to us and we may be wrong about it.\n\nIf you can tell me we are wrong about that, it is worth the twenty minutes. Early next week?\n\n{{sender}}"
         },
         {
           "round": 3,
@@ -179,21 +179,21 @@
       "tier": 6,
       "tier_name": "Insurers and underwriters",
       "channel": "Email to a corporate address.",
-      "premise": "Everyone else in this file is sold protection. An underwriter is not buying protection — they are buying the ability to write business they are currently declining or excluding. So the opening line is about their premium income, not their safety. In 2026 the market repriced and excluded whole geographies rather than withdrawing: Hormuz went from 0.1% of hull value to 7.5-10%, and the southern Red Sea and Saudi-linked tonnage were carved out entirely. Every one of those exclusions is premium an underwriter would rather have written.",
+      "premise": "Everyone else in this file is sold protection. An underwriter is not buying protection — they are buying the ability to write business they are currently declining or excluding. So the opening line is about their premium income, not their safety. In 2026 the market repriced and excluded whole geographies rather than withdrawing: Hormuz went from 0.10-0.15% of hull value to 7.5-10% by July, six clubs pulled fixed-premium war cover out of the southern Red Sea in August, and Lloyd's war underwriters restricted cargo cover for Saudi-linked ships. Every one of those exclusions is premium an underwriter would rather have written.",
       "length_rule": "Very short. Opening line, one qualifying line, one question, sign off. An underwriter reading a cold email at 8am will not reach paragraph four. Never longer than six lines.",
       "warning": "Do NOT state or imply that carrying an escort will reduce a premium, earn a rating credit, or is recognised by any underwriter. Nobody has told us that it does — it is the single largest open question in our own library, and asserting it would be an unverifiable claim made to the one audience qualified to catch it. The whole sequence asks the question rather than answering it. A human reads every tier 6 send before it goes.",
       "rounds": [
         {
           "round": 1,
           "variant": "underwriting — CUO, head of marine, war-risk underwriter",
-          "subject": "Autonomous escort — does it change what you can quote?",
-          "body": "Hello {{first_name}},\n\nI have an autonomous vessel that can help you write more premium. It reduces the risk from drones and small boats against a moving hull in a defined passage.\n\nThat is the whole pitch. The part I cannot answer is yours: does a verified escort change what you are willing to quote in a listed area, or is it worth nothing at the desk?\n\nFifteen minutes?\n\n{{sender}}"
+          "subject": "Autonomous escort — what would you need to see?",
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nUnderwriters price what they can verify, and an escort is present or absent per voyage. Nobody has put a number on one.\n\nSo I am not asking what you would discount. I am asking what you would need to see, and from whom, to treat an escort as a fact rather than a claim.\n\nFifteen minutes?\n\n{{sender}}"
         },
         {
           "round": 2,
           "variant": "the limitation, stated first",
           "subject": "Re: autonomous escort",
-          "body": "Hello {{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort, and roughly half the successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nSo the honest claim is narrow: drones and small boats, moving hull, defined passage. If that narrow claim is still worth something to you, there is a conversation.\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nOne more, and it is the part that argues against us.\n\nAn escort is not a guarantee. The Maersk Yorktown was fired on under a two-destroyer escort, and 15 of the 32 successful attacks in the first half of 2026 were on ships at anchor, where an escort does nothing.\n\nSo the honest claim is narrow: drones and small boats, moving hull, defined passage. If that narrow claim is still worth something to you, there is a conversation.\n\n{{sender}}"
         },
         {
           "round": 3,
@@ -221,7 +221,7 @@
           "why": "Loss prevention does not price anything, so asking them what they would quote is the wrong question. They are the seat that decides whether a measure demonstrably works, which is the gate before pricing. Fifteen of the tier 6 contacts sit in this role class.",
           "how_to_run": "Do NOT add this as a second round 1 — the engine resolves a round by number and would silently ignore it, and the cadence timeline would draw two nodes on day 0. Run it as a campaign instead: the Campaign schema in server/src/outreach/schemas.ts exists for exactly this, a persona and message aimed at a chosen set of accounts independent of their tier. Set template_tier 6 and select the loss-prevention contacts.",
           "subject": "What evidence would you need?",
-          "body": "Hello {{first_name}},\n\nI have an autonomous vessel that can help you write more premium. It reduces the risk from drones and small boats against a moving hull in a defined passage.\n\nYou are the person who would have to be satisfied it actually reduces risk before anyone prices it differently. So I would rather ask what evidence you would need than send you a deck.\n\nFifteen minutes?\n\n{{sender}}"
+          "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nYou are the person who would have to be satisfied it actually reduces risk before anyone prices it differently. So I would rather ask what evidence you would need than send you a deck.\n\nFifteen minutes?\n\n{{sender}}"
         }
       ]
     }
