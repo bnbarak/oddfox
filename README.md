@@ -97,3 +97,40 @@ written for a reader who does not want to hear about code.
 
 **Day-to-day instructions — changing the password, replacing the PDF, editing
 copy, deploying — are in [UPDATING.md](UPDATING.md).**
+
+## Working on this repo
+
+More than one agent works here at a time, so **the checkout you are reading is
+not a workspace**. `/Users/barak/oddfox` sits on `main` and only ever moves
+forward with `git pull --ff-only`. Nobody edits it, nobody commits to it, nobody
+checks a branch out in it.
+
+Every change gets its own worktree and its own branch:
+
+```bash
+git -C /Users/barak/oddfox fetch origin
+git -C /Users/barak/oddfox worktree add -b <branch> /Users/barak/oddfox-wt/<branch> origin/main
+cd /Users/barak/oddfox-wt/<branch>
+```
+
+and lands as a pull request the same author merges:
+
+```bash
+git push -u origin <branch>
+gh pr create --base main --fill
+gh pr merge --squash --delete-branch
+```
+
+Nobody is waiting to review it — the PR is there so the change has a diff, a
+title and a date. GitHub will not let an account approve its own pull request,
+so merging *is* the approval; don't try `gh pr review --approve` first. Merging
+also deploys: `.github/workflows/deploy.yml` runs on every push to `main`.
+
+Two things worth knowing before the first `worktree add`. Worktrees go in
+`/Users/barak/oddfox-wt/`, **outside** the repo — the marketing site publishes
+the repo root, so a worktree inside it ends up on the public internet. And
+`node_modules` doesn't come along; that's 189 MB for `OddFoxOffice` and 269 MB
+for `server`, so install only the one you need.
+
+Full mechanics, cleanup and the traps: `.claude/skills/worktree-workflow/` and
+the "Working alongside other agents" section of [context.md](context.md).

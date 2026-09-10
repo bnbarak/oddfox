@@ -4,7 +4,7 @@ Working knowledge that is not obvious from the code. Read this before touching
 the CRM, the data files, or a deploy. For routine site tasks (PDF password,
 replacing the deck) see [UPDATING.md](UPDATING.md).
 
-Last updated: 2026-09-06.
+Last updated: 2026-09-09.
 
 ---
 
@@ -417,14 +417,45 @@ ls OddFoxOffice/dist/assets/main-*.js
 
 ## Working alongside other agents
 
-Several agents may edit this repo at once. Things that actually bit:
+Several agents edit this repo at once. **Each one works in its own git worktree,
+on its own branch, and lands it through a PR it merges itself.** The mechanics —
+the exact commands, naming, cleanup — are the `worktree-workflow` skill in
+`.claude/skills/`. What follows is why, and what still bites.
 
-- Files change under you mid-task. Re-read before editing; do not revert someone
-  else's work because it looks unfamiliar.
-- Commit **only your own files**. Others have in-flight work in the tree.
-- Duplicate dev servers fight over ports. A `tsx` started without `watch` will
-  serve stale code forever — check `lsof -nP -iTCP:8787 -sTCP:LISTEN` and prefer
-  one `npm run dev` instance.
-- Renaming a file leaves Vite's module graph stale; the page goes blank and the
-  console says it failed to reload. A hard reload or a dev-server restart fixes
-  it — the build is fine.
+**Nobody claims `main`.** `/Users/barak/oddfox` stays on `main` and moves only
+by `git pull --ff-only`. It is the integration point, not a desk. Git enforces
+this on its own: a branch can be checked out in one worktree at a time, so
+`git worktree add … main` fails while the primary checkout holds it.
+
+**The PR is record keeping, not a gate.** There is no branch protection and
+nobody is queued to review. The agent that wrote the change merges it —
+`gh pr merge --squash --delete-branch`. Don't reach for `gh pr review --approve`
+on the way; GitHub refuses to let an account approve its own pull request. What
+the PR buys is a page with a diff, a title and a date, for a change that would
+otherwise be one more commit landing on `main` at 3am with no context.
+
+**Merging deploys.** `.github/workflows/deploy.yml` fires on every push to
+`main` and ships Cloud Run plus both hosting sites. Merge finished work.
+
+### Traps found the hard way
+
+- **A worktree inside the repo gets published.** The marketing site's `public`
+  is the repo root, so `lw/` — a worktree of `land-domain-note` sitting at the
+  root — puts a second copy of the entire site on the public internet:
+  `node tools/hosting-deploy.mjs seaworth --dry` lists 28 files, half of them
+  under `/lw/`, `https://oddfox.ai/lw/brief.html` among them. Worktrees belong
+  in `/Users/barak/oddfox-wt/`, outside the repo. Read the dry-run file list
+  before any deploy from the root.
+- **"Commit only your own files" is retired.** It was the rule when everyone
+  shared one checkout; in your own worktree every dirty file is yours and
+  `git add -A` is correct. If you find yourself picking paths out of a mixed
+  tree, you are working somewhere you shouldn't be.
+- **`node_modules` does not come with the worktree** — 189 MB for
+  `OddFoxOffice`, 269 MB for `server`. Install only what you need to build,
+  and neither one for a docs or data change.
+- **Duplicate dev servers fight over ports.** A `tsx` started without `watch`
+  will serve stale code forever — check
+  `lsof -nP -iTCP:8787 -sTCP:LISTEN` and take a different `PORT` if it answers.
+- **Renaming a file leaves Vite's module graph stale**; the page goes blank and
+  the console says it failed to reload. A hard reload or a dev-server restart
+  fixes it — the build is fine.
