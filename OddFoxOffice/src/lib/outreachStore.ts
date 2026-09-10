@@ -39,7 +39,11 @@ async function post<T>(path: string, body?: unknown): Promise<T> {
 // ---- Types ----------------------------------------------------------------
 
 export type Blocker = { code: string; detail: string };
-export type DomainRoom = { domain: string; day: string; used: number; cap: number; left: number };
+export type DomainRoom = {
+  domain: string; day: string; used: number; cap: number; left: number;
+  /** False for a domain we own that is not switched on; it has no quota. */
+  sends: boolean;
+};
 export type TickRow = {
   at: string; due: number; sent: number; replies: number; events: number; ms: number;
   note: string | null; error: string | null;

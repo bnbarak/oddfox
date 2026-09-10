@@ -65,6 +65,18 @@ const cfg = OutreachConfig.parse({
 const rooms = await headroom(cfg);
 ok("headroom reports a full cap on an untouched day",
    rooms[0]?.left === 15 && rooms[0]?.used === 0, JSON.stringify(rooms));
+ok("a configured domain is listed first, and sends", rooms[0]?.domain === DOMAIN && rooms[0]?.sends === true);
+
+/* Every domain in SENDERS is listed, switched on or not, so the Outreach
+   panel shows the same addresses Settings does. The ones not switched on
+   must have no room at all — a cap of 0 is what keeps pickDomain off them. */
+const { SENDERS } = await import("../src/outreach/config.js");
+const idle = rooms.filter((r) => !r.sends);
+ok("every SENDERS domain not configured here is listed",
+   SENDERS.every((x) => rooms.some((r) => r.domain === x.domain)),
+   rooms.map((r) => r.domain).join(","));
+ok("and none of them has any room", idle.length > 0 && idle.every((r) => r.cap === 0 && r.left === 0),
+   JSON.stringify(idle.map((r) => [r.domain, r.cap, r.left])));
 
 await doc().delete().catch(() => undefined);
 // eslint-disable-next-line no-console

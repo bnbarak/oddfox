@@ -1,6 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../firebaseApp.js";
 import { OutreachConfig, type Campaign, type SendRecord, type SendStatus } from "./schemas.js";
+import { SENDERS } from "./config.js";
 import { dayKey } from "./time.js";
 
 /* Everything the outreach engine persists, in the CRM's own Firestore.
@@ -74,18 +75,33 @@ export async function release(domain: string, day: string): Promise<void> {
   });
 }
 
-export type Headroom = { domain: string; day: string; used: number; cap: number; left: number };
+export type Headroom = {
+  domain: string; day: string; used: number; cap: number; left: number;
+  /** Whether the domain is configured and switched on. False rows carry a
+      cap of 0, so they have no room and can never be picked. */
+  sends: boolean;
+};
 
-/** What each enabled domain has left today. Reads only; claims nothing. */
+/** What every domain has left today. Reads only; claims nothing.
+
+    Every domain in SENDERS appears, switched on or not. This feeds the
+    Outreach panel, and a domain we own that is not sending should say so
+    there rather than be absent from the one list of what we send as — the
+    same list Settings shows. Configured domains come first; the rest carry
+    a cap of 0, so they have no room and pickDomain can never choose one. */
 export async function headroom(cfg: OutreachConfig, at = new Date()): Promise<Headroom[]> {
   const day = dayKey(at, cfg.timezone);
   const enabled = cfg.domains.filter((d) => d.enabled);
-  return Promise.all(enabled.map(async (d) => {
+  const live = await Promise.all(enabled.map(async (d) => {
     const snap = await db().collection(QUOTA).doc(`${d.domain}__${day}`).get();
     const used = snap.exists ? Number(snap.data()?.used ?? 0) : 0;
     const cap = d.daily_cap ?? cfg.default_daily_cap;
-    return { domain: d.domain, day, used, cap, left: Math.max(0, cap - used) };
+    return { domain: d.domain, day, used, cap, left: Math.max(0, cap - used), sends: true };
   }));
+  const idle = SENDERS
+    .filter((x) => !enabled.some((d) => d.domain === x.domain))
+    .map((x) => ({ domain: x.domain, day, used: 0, cap: 0, left: 0, sends: false }));
+  return [...live, ...idle];
 }
 
 /** The domain the automation should use next: the one with the most room
