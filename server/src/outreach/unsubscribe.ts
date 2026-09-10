@@ -115,12 +115,12 @@ async function handle(req: Request, res: Response): Promise<void> {
 
   if (req.method === "POST") { res.status(200).json({ ok: true }); return; }
 
+  /* Deliberately not a report. Anything already queued has just been pulled
+     back, but saying so invites the reader to audit a number they never asked
+     for — and "nothing was queued" reads as a shrug. The promise is the whole
+     message; the count is in crmOptOuts for us. */
   html(res, 200, page("You are unsubscribed", [
     `We will not email <strong>${esc(done.email)}</strong> again.`,
-    done.canceled
-      ? `${done.canceled} message${done.canceled === 1 ? "" : "s"} that had already been queued ${
-          done.canceled === 1 ? "has" : "have"} been cancelled, so nothing further will arrive.`
-      : "Nothing was queued, so nothing further will arrive.",
     "Sorry for the interruption.",
   ]));
 }

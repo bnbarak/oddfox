@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Section, Grid, Cell, Stat, H1, Chip, Gap, Bars, Site, Logo, Star } from "../../../ui";
+import { Section, Grid, Cell, Stat, H1, Chip, Bars, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { PIPE, TONE, today, link, accountsFile, contactsFile, useAccounts } from "./shared";
+import { PIPE, TONE, today, link, useAccounts } from "./shared";
 import { AccountDetail, AccountLink, useAccountParam } from "./Account";
 import { ServerState } from "./ServerState";
 
@@ -97,11 +97,6 @@ export function CrmAccounts() {
             </tbody>
           </table>
         </div>
-      </Section>
-
-      <Section kicker="What blocks this today">
-        {[...((accountsFile.gaps as string[]) ?? []),
-          ...((contactsFile.gaps as string[]) ?? [])].map((x) => <Gap key={x}>{x}</Gap>)}
       </Section>
     </>
   );
