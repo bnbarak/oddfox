@@ -3,6 +3,7 @@ import { db } from "../firebaseApp.js";
 import { OutreachConfig, type Campaign, type SendRecord, type SendStatus } from "./schemas.js";
 import { SENDERS } from "./config.js";
 import { dayKey } from "./time.js";
+import { applyMarks, type ReadMark, type Seen } from "./reads.js";
 
 /* Everything the outreach engine persists, in the CRM's own Firestore.
 
@@ -18,6 +19,7 @@ const TICKS = "crmTicks";
 const META = "crmOutreachMeta";
 const CAMPAIGNS = "crmCampaigns";
 const OPTOUTS = "crmOptOuts";
+const READS = "crmReads";
 
 // ---- Config ---------------------------------------------------------------
 
@@ -334,6 +336,28 @@ export async function appendTurns(turns: ChatTurn[]): Promise<ChatTurn[]> {
 
 export const clearThread = (): Promise<unknown> =>
   db().collection(META).doc("thread").set({ turns: [], updated: new Date().toISOString() });
+
+// ---- What each person has read --------------------------------------------
+
+/** One document per person, keyed by sign-in address, holding the whole map:
+    the inbox needs all of it every time, so it should be one read. What the
+    values mean is in reads.ts. */
+export async function getSeen(email: string): Promise<Seen> {
+  const snap = await db().collection(READS).doc(email).get();
+  return snap.exists ? ((snap.data()?.seen as Seen) ?? {}) : {};
+}
+
+/** In a transaction, so two tabs marking at once cannot drop each other's
+    marks. Written whole with set(), never update(): thread keys contain dots,
+    and update() would read "a@b.com|re x" as a path into nested fields. */
+export async function markSeen(email: string, marks: ReadMark[]): Promise<void> {
+  const ref = db().collection(READS).doc(email);
+  await db().runTransaction(async (t) => {
+    const snap = await t.get(ref);
+    const seen = (snap.exists ? (snap.data()?.seen as Seen) : {}) ?? {};
+    t.set(ref, { seen: applyMarks(seen, marks), updated: new Date().toISOString() });
+  });
+}
 
 // ---- Campaigns --------------------------------------------------------
 

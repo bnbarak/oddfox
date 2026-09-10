@@ -6,8 +6,10 @@ import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
   allCampaigns, allOptOuts, allReplies, allSends, campaignFor, clearThread, getConfig,
-  getThread, headroom, lastTick, deleteCampaign, putCampaign, putConfig, recentTicks,
+  getSeen, getThread, headroom, lastTick, deleteCampaign, markSeen, putCampaign, putConfig,
+  recentTicks,
 } from "./store.js";
+import { withReads } from "./reads.js";
 import { optBackIn, optOut } from "./optout.js";
 import { canLink, UNSUB_BASE } from "./unsubToken.js";
 import { allEnrichment, spentToday } from "./apollo.js";
@@ -245,10 +247,45 @@ outreachRouter.post("/chat", h(async (req, res) => {
   res.json(await chat(message));
 }));
 
+/** Who is asking. Always set behind the sign-in check; throwing rather than
+    falling back to a default keeps one person's read state from ever landing
+    in a bucket both of them share. */
+const me = (req: Request): string => {
+  if (!req.userEmail) throw new Error("no signed-in user on the request");
+  return req.userEmail;
+};
+
+const unreadIn = async (req: Request) => withReads(await threads(), await getSeen(me(req)));
+
 /** One conversation per person: everything sent, everything that came back,
-    in order. What the Inbox renders. */
-outreachRouter.get("/threads", h(async (_req, res) => {
-  res.json({ threads: await threads() });
+    in order. What the Inbox renders — with what the caller has not read yet,
+    since two people read this inbox and each has their own unread. */
+outreachRouter.get("/threads", h(async (req, res) => {
+  const list = await unreadIn(req);
+  res.json({ threads: list, unread: list.filter((t) => t.unread > 0).length });
+}));
+
+/** Just the number, for the badge beside the Inbox tab. Conversations, not
+    messages, as Gmail counts them: three replies in one thread is one thing
+    to go and read. */
+outreachRouter.get("/unread", h(async (req, res) => {
+  res.json({ unread: (await unreadIn(req)).filter((t) => t.unread > 0).length });
+}));
+
+const ReadRequest = z.object({
+  marks: z.array(z.object({
+    key: z.string().min(1).max(1000),
+    through: z.string().min(1).max(64).nullable(),
+  }).strict()).min(1).max(2000),
+}).strict();
+
+/** Marks threads read through a given message, or unread again. The client
+    says how far it read rather than the server stamping "now" — reads.ts has
+    why that difference loses mail. */
+outreachRouter.post("/threads/read", h(async (req, res) => {
+  const { marks } = ReadRequest.parse(req.body);
+  await markSeen(me(req), marks);
+  res.json({ ok: true });
 }));
 
 /** Statuses that mean a message actually reached a mailbox. */

@@ -9,6 +9,7 @@ import { DeckMenu } from "./DeckMenu";
 import { Library, TABS, GROUPS, groupOf, tabsIn, type TabId, type ViewState } from "./library/Library";
 import { AuthGate } from "./AuthGate";
 import { Operator } from "./library/panels/crm/Operator";
+import { InboxBadge } from "./library/panels/crm/InboxBadge";
 
 /* Browser routing gives clean paths (/library/overview). It needs the host to
    serve index.html for unknown paths — Vite's dev server does this by default.
@@ -69,7 +70,7 @@ function LibraryLayout() {
         <nav className="of-nav of-nav--sub" role="tablist" aria-label="Pages">
           {tabsIn(groupOf(tab ?? "")).map((t) => (
             <NavLink key={t.id} to={`/library/${t.id}`} role="tab" className="of-tab" end>
-              {t.label}
+              {t.label}{t.id === "crm-inbox" && <InboxBadge />}
             </NavLink>
           ))}
         </nav>
