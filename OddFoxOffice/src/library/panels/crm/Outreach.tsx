@@ -254,7 +254,9 @@ export function CrmOutreach() {
           </table>
         </div>
         <Note style={{ marginTop: 14 }}>
-          Blue is volume, green a reply, red a bounce. Newest week on the right.
+          {axis.length ? "" : `Nothing sent or queued in the last ${weeks} weeks. `}
+          Only weeks with mail sent or queued get a column, newest on the right.
+          Blue is volume, green a reply, red a bounce.
           The campaign square is green while a campaign is running, blue with mail in the
           queue, amber when paused, grey before it starts — hover it for the name.
         </Note>
