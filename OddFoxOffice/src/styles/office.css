@@ -9,6 +9,27 @@ html, body, #root { height: auto; overflow: auto; }
 .of-tab--deck { color: var(--cool); }
 .of-tab--deck:hover { color: var(--paper); }
 
+/* The deck picker. Sits in the header nav where the per-deck tabs used to be,
+   and borrows the avatar menu's shape so the app has one dropdown idiom. */
+.of-decks { position: relative; display: inline-flex; }
+.of-decks__caret { margin-left: 6px; opacity: .6; font-size: 9px; }
+.of-decks__menu {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 1000; min-width: 250px;
+  background: #0a1015; border: 1px solid var(--line); border-radius: 4px;
+  padding: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.of-decks__item {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  width: 100%; text-align: left; font: inherit; background: none; border: 0;
+  color: var(--paper); cursor: pointer; padding: 9px 10px; border-radius: 3px;
+}
+.of-decks__item:hover { background: rgba(255,255,255,.06); }
+.of-decks__title { font-size: 12.5px; }
+.of-decks__count {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+  color: var(--fog); white-space: nowrap;
+}
+
 /* A deck takes the whole viewport, like the standalone engine. */
 .office-deck { position: fixed; inset: 0; overflow: hidden; }
 .office-deck__back {
@@ -594,3 +615,8 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 /* A round that has not happened is a plan, and should not read as history. */
 .of-seqr__plan { opacity: .55; }
 .of-seq__link { font-family: var(--mono); font-size: 11px; }
+
+/* An opt-out somebody has since reversed. Kept in the table rather than
+   removed — the record that they once asked is the point of the table — but
+   quieted, because it no longer stops anything being sent. */
+.of-matrix tr.is-restored > td { opacity: .45; }

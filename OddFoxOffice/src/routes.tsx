@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import { SlideDeck } from "./presentation/SlideDeck";
 import { presentations } from "./presentations";
+import { DeckMenu } from "./DeckMenu";
 import { Library, TABS, GROUPS, groupOf, tabsIn, type TabId, type ViewState } from "./library/Library";
 import { AuthGate } from "./AuthGate";
 import { Operator } from "./library/panels/crm/Operator";
@@ -63,11 +64,7 @@ function LibraryLayout() {
             );
           })}
           <span className="of-nav__sep" />
-          {presentations.map((p) => (
-            <NavLink key={p.id} to={`/deck/${p.id}`} className="of-tab of-tab--deck">
-              ▶ {p.title}
-            </NavLink>
-          ))}
+          <DeckMenu />
         </nav>
         <nav className="of-nav of-nav--sub" role="tablist" aria-label="Pages">
           {tabsIn(groupOf(tab ?? "")).map((t) => (

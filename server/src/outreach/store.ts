@@ -186,6 +186,17 @@ export type OptOut = {
   note: string | null;
   /** How many queued messages were pulled back as a result. */
   canceled: number;
+  /** The contact's pipeline status before opting out set it to "dead", so
+      opting them back in can put it back instead of guessing. Absent on rows
+      written before this was recorded, and on addresses with no contact. */
+  prior_status?: string | null;
+  /** Set when somebody was deliberately opted back in. The row is kept
+      rather than deleted, for the same reason a deleted campaign is kept:
+      the evidence that they once asked to be left alone is the whole point
+      of this collection, and destroying it to undo it would leave nothing
+      to show. A restored row does not suppress sending. */
+  restored_at?: string | null;
+  restored_note?: string | null;
 };
 
 const addrKey = (email: string): string =>
@@ -193,22 +204,52 @@ const addrKey = (email: string): string =>
 
 export async function recordOptOut(o: OptOut): Promise<void> {
   const ref = db().collection(OPTOUTS).doc(addrKey(o.email));
-  // First writer wins on the how-and-when: the click that actually opted them
-  // out is the event, and a later duplicate must not rewrite its history.
   await db().runTransaction(async (t) => {
     const snap = await t.get(ref);
-    if (snap.exists) {
+    const existing = snap.exists ? (snap.data() as OptOut) : null;
+
+    /* Asking again after being opted back in is a NEW opt-out, and has to
+       clear the restoration. Merging "seen it before" over a restored row
+       would leave somebody who has just asked twice still sendable — the
+       worst failure this collection has. */
+    if (existing && !existing.restored_at) {
+      // First writer wins on the how-and-when: the click that actually opted
+      // them out is the event, and a later duplicate must not rewrite it.
       t.set(ref, { seen_again_at: o.at, canceled: o.canceled }, { merge: true });
       return;
     }
-    t.set(ref, { ...o, email: o.email.trim().toLowerCase() });
+    t.set(ref, {
+      ...o, email: o.email.trim().toLowerCase(),
+      restored_at: null, restored_note: null,
+      ...(existing ? { previously_restored_at: existing.restored_at } : {}),
+    });
   });
 }
 
-export async function isOptedOut(email: string): Promise<boolean> {
-  return (await db().collection(OPTOUTS).doc(addrKey(email)).get()).exists;
+/** Undoes an opt-out, deliberately. The row stays, marked — see restored_at.
+
+    Caller's job to lift the suppression at Resend too; this only moves our
+    own record, and a row restored here while Resend still suppresses the
+    address would be a panel that says one thing and a provider that does
+    another. See optOut.ts. */
+export async function restoreOptOut(email: string, note: string | null): Promise<OptOut | null> {
+  const ref = db().collection(OPTOUTS).doc(addrKey(email));
+  const snap = await ref.get();
+  if (!snap.exists) return null;
+  const at = new Date().toISOString();
+  await ref.set({ restored_at: at, restored_note: note }, { merge: true });
+  return { ...(snap.data() as OptOut), restored_at: at, restored_note: note };
 }
 
+export async function isOptedOut(email: string): Promise<boolean> {
+  const snap = await db().collection(OPTOUTS).doc(addrKey(email)).get();
+  // A restored row is history, not a live opt-out.
+  return snap.exists && !(snap.data() as OptOut).restored_at;
+}
+
+/** Everyone who has ever asked, restored rows included — the panel shows
+    those too, greyed, because "we opted this person back in on the tenth" is
+    exactly the fact somebody will need to explain later. */
 export async function allOptOuts(): Promise<OptOut[]> {
   const snap = await db().collection(OPTOUTS).get();
   return snap.docs.map((d) => d.data() as OptOut).sort((a, b) => b.at.localeCompare(a.at));

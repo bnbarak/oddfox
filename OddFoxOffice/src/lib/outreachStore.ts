@@ -283,9 +283,18 @@ export type OptOutRow = {
   email: string; contact_id: string | null; account_id: string | null;
   source: "link" | "one-click" | "reply" | "manual";
   at: string; note: string | null; canceled: number;
+  /** Set when somebody was put back on the list. The row is kept as evidence
+      that they once asked, so these still appear — greyed, not gone. */
+  restored_at?: string | null;
 };
 
 export const useOptOuts = () => useResource<{ records: OptOutRow[] }>("/optouts");
+
+/** Puts somebody back on the list. Deliberately its own call rather than a
+    flag on anything else — see the route. */
+export const restoreOptOut = (email: string) =>
+  post<{ email: string; found: boolean; restored_status: string | null; contact_id: string | null }>(
+    "/optouts/restore", { email });
 
 // ---- Actions --------------------------------------------------------------
 

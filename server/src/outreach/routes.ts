@@ -8,7 +8,7 @@ import {
   allCampaigns, allOptOuts, allReplies, allSends, campaignFor, clearThread, getConfig,
   getThread, headroom, lastTick, deleteCampaign, putCampaign, putConfig, recentTicks,
 } from "./store.js";
-import { optOut } from "./optout.js";
+import { optBackIn, optOut } from "./optout.js";
 import { canLink, UNSUB_BASE } from "./unsubToken.js";
 import { allEnrichment, spentToday } from "./apollo.js";
 import { endCampaign, startCampaign } from "./start.js";
@@ -188,6 +188,25 @@ outreachRouter.post("/suppressions", h(async (req, res) => {
     evidence, and only contains people who actually asked. */
 outreachRouter.get("/optouts", h(async (_req, res) => {
   res.json({ records: await allOptOuts() });
+}));
+
+/** Puts somebody back on the list, deliberately.
+
+    Separate route, separate verb, and it never happens as a side effect of
+    anything else: un-suppressing an address is not the mirror image of
+    suppressing one, and it should be hard to do by accident. The row is kept
+    and marked rather than deleted, so the fact that they once asked survives
+    the reversal. */
+outreachRouter.post("/optouts/restore", h(async (req, res) => {
+  const body = req.body as { email?: string; note?: string };
+  if (!body.email) { res.status(400).json({ error: "email is required" }); return; }
+  const out = await optBackIn(body.email, body.note?.trim() || null);
+  if (!out.found) {
+    res.status(404).json({ error: "not-opted-out",
+                           detail: `${out.email} is not on the opt-out list.` });
+    return;
+  }
+  res.json(out);
 }));
 
 // ---- The operator agent ---------------------------------------------------

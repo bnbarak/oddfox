@@ -3,7 +3,7 @@ import { FirestoreCrmRepository } from "../firestoreRepository.js";
 import * as crm from "./crm.js";
 import { secret } from "./config.js";
 import { cancelAllTo } from "./send.js";
-import { isOptedOut, recordOptOut, type OptOut } from "./store.js";
+import { isOptedOut, recordOptOut, restoreOptOut, type OptOut } from "./store.js";
 
 /* What "unsubscribe" actually has to do.
 
@@ -64,6 +64,9 @@ export async function optOut(
     at: new Date().toISOString(),
     note,
     canceled,
+    // Kept so opting them back in can restore what they were, rather than
+    // guessing a status or leaving them dead forever.
+    prior_status: contact?.status ?? null,
   });
 
   /* The pipeline record. "dead" is the existing end state and the right one:
@@ -84,4 +87,53 @@ export async function optOut(
   }
 
   return { email: addr, first_time: !already, canceled, contact_id: contact?.id ?? null };
+}
+
+/* Undoing an opt-out.
+
+   This exists because people do ask to be put back on — they changed roles,
+   they unsubscribed by accident, they said yes on a call. It is deliberately
+   a separate function with its own record rather than a flag on optOut():
+   suppressing somebody and un-suppressing them are not symmetrical acts, and
+   the second one should be hard to do by accident.
+
+   What it does NOT do is erase the fact that they asked. The row stays with
+   restored_at set, so the panel and any later argument can still see that an
+   opt-out happened and that somebody reversed it on purpose. */
+export type RestoreResult = {
+  email: string;
+  /** False when there was no opt-out to undo. */
+  found: boolean;
+  /** The pipeline status the contact was put back to, when we had recorded
+      one to put back. */
+  restored_status: string | null;
+  contact_id: string | null;
+};
+
+export async function optBackIn(
+  email: string, note: string | null = null,
+): Promise<RestoreResult> {
+  const addr = email.trim().toLowerCase();
+
+  // Resend first. Our own row is what the panel reads, so it must not say
+  // "sendable" while the provider is still refusing to send.
+  if (secret("RESEND_API_KEY")) {
+    await resend().suppressions.remove(addr).catch(() => undefined);
+  }
+
+  const row = await restoreOptOut(addr, note);
+  if (!row) return { email: addr, found: false, restored_status: null, contact_id: null };
+
+  /* Put the pipeline record back where it was. Only when we recorded it —
+     a row written before prior_status existed leaves the contact "dead", and
+     inventing a status for them would be worse than leaving it for a person
+     to set. */
+  let restored: string | null = null;
+  if (row.contact_id && row.prior_status) {
+    await repo.patchContact(row.contact_id, { status: row.prior_status as never })
+      .then(() => { restored = row.prior_status ?? null; })
+      .catch(() => undefined);
+  }
+
+  return { email: addr, found: true, restored_status: restored, contact_id: row.contact_id };
 }
