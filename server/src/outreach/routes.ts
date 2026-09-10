@@ -187,7 +187,7 @@ outreachRouter.get("/suppressions", h(async (_req, res) => {
 outreachRouter.post("/suppressions", h(async (req, res) => {
   const email = (req.body as { email?: string }).email;
   if (!email) { res.status(400).json({ error: "email is required" }); return; }
-  res.json({ ...(await optOut(email, "manual", "added from the panel")), suppressed: true });
+  res.json(await optOut(email, "manual", "added from the panel"));
 }));
 
 /** Our own record of who asked to be left alone, and how they told us.
