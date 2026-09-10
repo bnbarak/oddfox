@@ -202,9 +202,11 @@ memory, which is cheaper in every sense than running an instance to `GROUP BY`.
 
 **Resend owns everything Resend already does.** Scheduling is `scheduledAt` on
 the send, and the email id it returns *is* the cancel token — that is why
-nothing is ever sent immediately, even two minutes out. Delivery suppression
-is Resend's list, which it adds to automatically on every bounce and complaint
-and skips sending to across the whole team; there is no second copy of it.
+campaign mail is never sent immediately. Hand-written mail (New email, Reply)
+is the exception: it goes the moment it is sent, with no scheduledAt, and so
+cannot be cancelled. Delivery suppression is Resend's list, which it adds to
+automatically on every bounce and complaint and skips sending to across the
+whole team; there is no second copy of it.
 
 **Unsubscribing is ours, because it is more than a suppression.** Every
 commercial message carries a signed one-click link on
@@ -212,10 +214,13 @@ commercial message carries a signed one-click link on
 `List-Unsubscribe-Post` headers that make Gmail and Yahoo show their own
 button. Clicking it — or writing back "unsubscribe", or being added by hand —
 runs one path, `optOut()` in `server/src/outreach/optout.ts`: it records who
-asked and when in `crmOptOuts`, suppresses the address at Resend, **cancels
-every message already queued for them**, and marks the contact dead. `send.ts`
-then refuses that address by *address*, so a second contact record carrying it
-cannot be written to either. See `server/src/outreach/context.md`.
+asked and when in `crmOptOuts`, **cancels every message already queued for
+them**, and marks the contact dead. **The opt-out list is a marketing list.**
+`send.ts` refuses an opted-out address for campaign rounds only — by
+*address*, so a second contact record carrying it is caught too — and lets
+hand-written mail through. That is why an opt-out is deliberately *not* added
+to Resend's suppression list: that list is account-wide and would silently
+drop the hand-written mail too. See `server/src/outreach/context.md`.
 
 **The daily cap is the one real invariant.** Fifteen a day per sending domain,
 enforced in a Firestore transaction, because two requests that both read 14

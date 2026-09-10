@@ -172,14 +172,17 @@ export async function schedule(
   if (contact?.email_status === "bounced") {
     throw new Refused("bounced", `${to} has already bounced`);
   }
-  /* The opt-out check is on the address, not on the contact.
+  /* The opt-out list is a marketing list. Somebody who unsubscribes has
+     left the sequence; they have not asked never to hear from a person again.
+     So only campaign rounds (round >= 1) are checked against it — New email
+     and Reply, which are somebody writing by hand, are not.
 
-     Resend's suppression list would stop this too, and it is still written
-     to — but only for messages that reach Resend, and only once we have paid
-     for whatever enrichment produced the address. Checking here means an
-     opted-out person cannot be written to at all, including by hand, including
-     from a second contact record that happens to carry the same address. */
-  if (await isOptedOut(to)) {
+     The check is on the address, not on the contact, so it also catches a
+     second contact record that happens to carry the same address. It is the
+     only enforcement: an opt-out no longer goes onto Resend's suppression
+     list, because that list is account-wide and would silently drop the
+     hand-written mail this rule deliberately lets through. See optout.ts. */
+  if (req.round >= 1 && await isOptedOut(to)) {
     throw new Refused("opted-out", `${to} has asked not to be contacted again`);
   }
 
@@ -190,10 +193,8 @@ export async function schedule(
 
      Duplicates go the way a mail client drops them — somebody already on To
      is not also Cc'd, nor Bcc'd if already on either — so nobody gets it
-     twice. Everyone left goes through the same opt-out check as the first
-     person, and one of them failing refuses the whole message, naming them,
-     rather than quietly sending it to the rest: somebody chose that group,
-     and the message without one of them in it is a different message. */
+     twice. None of them are checked against the opt-out list: a group can
+     only ever be hand-written, and hand-written mail is not marketing. */
   const taken = new Set([to.toLowerCase()]);
   const take = (list: string[] | undefined) => (list ?? []).map((a) => a.trim()).filter((a) => {
     const k = a.toLowerCase();
@@ -208,13 +209,6 @@ export async function schedule(
   if (group.length && req.round !== 0) {
     throw new Refused("group-is-by-hand",
       "Cc, Bcc and extra To are for mail written by hand; a sequence round goes to one person.");
-  }
-  const gone: string[] = [];
-  for (const a of group) if (await isOptedOut(a)) gone.push(a);
-  if (gone.length) {
-    throw new Refused("opted-out",
-      `${gone.join(", ")} ${gone.length === 1 ? "has" : "have"} asked not to be contacted again. ` +
-      "Take them off and send it again.");
   }
   if (/\{\{|\}\}/.test(`${req.subject}${req.body}`)) {
     throw new Refused("unresolved-placeholder",

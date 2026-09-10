@@ -45,13 +45,17 @@ export async function optOut(
   const addr = email.trim().toLowerCase();
   const already = await isOptedOut(addr);
 
-  // Cancel first, and suppress second. The other order leaves a window where
-  // a queued message is released by Resend between the two calls.
+  // Pull back anything already queued to them. Only campaign mail is ever
+  // queued — hand-written mail goes out the moment it is sent.
   const { canceled } = await cancelAllTo(addr).catch(() => ({ canceled: 0, failed: 0 }));
 
-  if (secret("RESEND_API_KEY")) {
-    await resend().suppressions.add({ email: addr }).catch(() => undefined);
-  }
+  /* Deliberately NOT added to Resend's suppression list. That list is
+     account-wide: Resend skips every message to an address on it, so it
+     would also drop a note somebody typed by hand, and the opt-out list is a
+     marketing list only. Our own record — checked by send.ts for campaign
+     rounds — is the enforcement. Resend still suppresses bounces and spam
+     complaints on its own, which is right: those are about the address, not
+     about marketing. */
 
   const contact = (await crm.contacts().catch(() => []))
     .find((c) => c.email?.trim().toLowerCase() === addr) ?? null;

@@ -47,16 +47,23 @@ and there is no second copy of it. `crmOptOuts` is a different thing: the
 record of people who *asked*, with who, when, and how they told us. An
 exported suppression list is mostly bounces and cannot say "clicked the link
 in round 2 on the ninth", which is the only answer to somebody claiming they
-were emailed after opting out. It is also what `send.ts` checks by address
-before it uses one, without a round trip.
+were emailed after opting out. It is also the enforcement: `send.ts` checks
+it by address, and **only for campaign rounds** (round >= 1). The opt-out list
+is a marketing list — somebody who unsubscribed left the sequence, not every
+human conversation — so New email and Reply are never checked against it.
+For the same reason an opt-out is **not** written to Resend's suppression
+list: Resend would then drop the hand-written mail too, across the whole
+account.
 
 **4b. There is one opt-out path and everything goes through it.** `optOut()`
-in `optout.ts` does four things, and doing three of them is the same as doing
-none: record it, suppress at Resend, **cancel what is already queued**, mark
-the contact dead. A click, a mail client's one-click button, a typed reply and
+in `optout.ts` does three things, and doing two of them is the same as doing
+none: record it, **cancel what is already queued**, mark the contact dead.
+(It used to suppress at Resend as well; see rule 4 for why it no longer
+does. `optBackIn()` still removes an address from Resend's list, which
+clears opt-outs recorded under the old behaviour.) A click, a mail client's one-click button, a typed reply and
 somebody adding an address by hand in the panel all call it — the only
 difference is `source`. The cancel step is the one that gets forgotten:
-suppressing an address stops the *next* message, while a sequence already
+refusing an address stops the *next* message, while a sequence already
 scheduled keeps landing for another week, which is precisely what the person
 clicking unsubscribe was trying to end. Verified against a real Firestore:
 

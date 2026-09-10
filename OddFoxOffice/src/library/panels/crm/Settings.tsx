@@ -330,15 +330,15 @@ ${linkOn
 
         {page === "optouts" && (
           <Section kicker="People who asked to be left alone">
-            {/* The evidence, not the enforcement. Resend keeps its own
-                suppression list and that is what actually blocks a send; this
-                is the record of who asked, when, and how — which is the thing
-                you need if somebody ever says they were emailed after opting
-                out, and which an exported suppression list cannot tell you. */}
+            {/* The record of who asked, when, and how — and, for campaign
+                mail, the enforcement too: send.ts refuses these addresses for
+                sequence rounds. It is a marketing list, so a note written by
+                hand still goes; see server/src/outreach/context.md, rule 4. */}
             <Note style={{ marginBottom: 14 }}>
-              Nobody here can be written to again — not by a sequence, not by hand, not from a
-              second contact record carrying the same address. Anything already queued for them
-              was cancelled at the moment they asked.
+              Nobody here gets campaign mail again, including from a second contact record
+              carrying the same address. You can still write to them by hand — New email and
+              Reply are not marketing. Anything already queued for them was cancelled at the
+              moment they asked.
             </Note>
             {optouts.error && <Note style={{ marginBottom: 12 }}>{optouts.error}</Note>}
             {optouts.data?.records.length ? (
