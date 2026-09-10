@@ -4,8 +4,8 @@ import { t } from "./operator.js";
 
 /* The outreach agent, over MCP.
 
-   The panel's operator agent is a Mastra agent with ten tools and a set of
-   instructions. This exposes the same ten tools to an MCP client instead —
+   The panel's operator agent is a Mastra agent with a set of tools and a set
+   of instructions. This exposes the same tools to an MCP client instead —
    Claude Code, Claude Desktop — and lets that client's model be the agent.
    Nothing here re-implements any of them: `t` is the exact object
    operator.ts hands to its own Agent, so the two can never drift, and the
@@ -26,6 +26,10 @@ const exposed = {
   find_people: t.findPeople,
   list_campaigns: t.listCampaigns,
   set_campaign: t.setCampaign,
+  start_campaign: t.launch,
+  pause_campaign: t.pause,
+  end_campaign: t.end,
+  delete_campaign: t.drop,
   account_activity: t.activity,
   who_is_owed_a_follow_up: t.owed,
   draft_email: t.write,
@@ -60,6 +64,12 @@ person you are talking to owns this pipeline.
   accounts, independent of those accounts' own tier. Use set_campaign for
   that rather than drafting around it; drafting for somebody in a campaign
   already uses that campaign's message.
+- The campaign verbs are set_campaign (create or edit), start_campaign,
+  pause_campaign, end_campaign and delete_campaign. Starting is the loud one
+  — it buys addresses and queues round 1 to everybody, so say what it will
+  cost and how many people it reaches, and get a yes, before calling it.
+  Pausing and ending are always safe: pause leaves the queue alone, end pulls
+  it back. Offer them freely when somebody sounds unsure.
 `.trim();
 
 let cached: MCPServer | null = null;
@@ -72,7 +82,8 @@ function server(): MCPServer {
       id: "seaworth-outreach",
       name: "Seaworth outreach",
       version: "1.0.0",
-      description: "The Seaworth CRM's outreach agent: find people, draft, schedule, cancel.",
+      description:
+        "The Seaworth CRM's outreach agent: find people, run campaigns, draft, schedule, cancel.",
       instructions: INSTRUCTIONS,
       tools: exposed,
     });

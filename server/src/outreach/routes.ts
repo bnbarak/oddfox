@@ -5,8 +5,8 @@ import { blockers, fromAddress, MARKETING_DOMAINS, secret } from "./config.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
-  allCampaigns, allOptOuts, allReplies, allSends, clearThread, getConfig, getThread, headroom,
-  lastTick, deleteCampaign, putCampaign, putConfig, recentTicks,
+  allCampaigns, allOptOuts, allReplies, allSends, campaignFor, clearThread, getConfig,
+  getThread, headroom, lastTick, deleteCampaign, putCampaign, putConfig, recentTicks,
 } from "./store.js";
 import { optOut } from "./optout.js";
 import { canLink, UNSUB_BASE } from "./unsubToken.js";
@@ -97,8 +97,13 @@ outreachRouter.post("/draft", h(async (req, res) => {
   const body = DraftRequest.parse(req.body);
   const cfg = await getConfig();
   const useModel = body.use_agent && modelConfigured();
+  /* What this campaign has already said to this person — not what every
+     campaign has. A round 2 that quotes another campaign's round 1 back at
+     the reader is worse than one that quotes nothing. */
+  const campaign = await campaignFor(body.contact_id ? (await crm.contact(body.contact_id))?.account_id ?? null : null);
   const prior = (await allSends())
-    .filter((s) => s.contact_id === body.contact_id && s.status !== "canceled");
+    .filter((s) => s.contact_id === body.contact_id && s.status !== "canceled"
+                   && s.campaign_id === (campaign?.id ?? null));
   const out = await draft(body.contact_id, body.round, cfg,
                           { useModel, guidance: body.guidance, prior });
   res.json({
@@ -241,8 +246,12 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
     states: statesFor(accounts.map((a) => a.id), records, sends),
     records: records.map((c) => {
       const people = contacts.filter((p) => p.account_id && c.account_ids.includes(p.account_id));
-      const mine = sends.filter((s) => s.account_id && c.account_ids.includes(s.account_id)
-                                       && s.status !== "canceled");
+      /* This campaign's own messages. Keyed on campaign_id, never on account:
+         two campaigns aimed at one company each report their own work, and a
+         campaign created today starts at zero instead of inheriting whatever
+         was sent to those companies last week. */
+      const mine = sends.filter((s) => s.campaign_id === c.id && s.status !== "canceled");
+      const mineIds = new Set(mine.map((s) => s.id));
       const exhausted = people.filter((p) => !p.email && looked.get(p.id)?.matched === false);
       return {
         ...c,
@@ -256,8 +265,11 @@ outreachRouter.get("/campaigns", h(async (_req, res) => {
         sent: mine.filter((s) => LANDED.has(s.status)).length,
         // Still cancellable — the number that says "this is in flight".
         queued: mine.filter((s) => s.status === "scheduled" || s.status === "draft").length,
-        replies: replies.filter((r) => !r.automated && r.account_id
-                                       && c.account_ids.includes(r.account_id)).length,
+        // A reply belongs to the campaign whose message it answers, which is
+        // what send_id records. A reply we could not attribute to a send is
+        // nobody's to claim.
+        replies: replies.filter((r) => !r.automated && r.send_id
+                                       && mineIds.has(r.send_id)).length,
         last_at: mine.map((s) => s.scheduled_at ?? s.created_at).sort().at(-1) ?? null,
       };
     }),

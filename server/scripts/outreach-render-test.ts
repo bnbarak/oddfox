@@ -3,8 +3,10 @@
    misbehaves, so they must be checkable without a model, a key, or a
    network. Run: npx tsx scripts/outreach-render-test.ts */
 import {
-  fill, footer, listHeaders, readsAsAutomated, readsAsOptOut, varsFor, withFooter,
+  compose, fill, footer, htmlBody, listHeaders, readsAsAutomated, readsAsOptOut,
+  varsFor, withFooter,
 } from "../src/outreach/render.js";
+import { addressIn, canLink, linkFor, tokenFor } from "../src/outreach/unsubToken.js";
 import { configPatch, OutreachConfig } from "../src/outreach/schemas.js";
 import { matchBody, REFUSED } from "../src/outreach/apollo.js";
 import type { AccountRecord, ContactRecord } from "../src/schemas.js";
@@ -68,6 +70,71 @@ const h = listHeaders(cfg);
 ok("List-Unsubscribe points at the opt-out mailbox",
    h["List-Unsubscribe"] === "<mailto:optout@seaworth.ai?subject=unsubscribe>", JSON.stringify(h));
 ok("and is omitted when there is no mailbox", Object.keys(listHeaders(bare)).length === 0);
+
+// ---- the unsubscribe link ---------------------------------------------
+
+/* The whole point of the token is that the endpoint it opens is public. It
+   therefore has to be impossible to opt somebody else out by editing a link,
+   and impossible to lose an already-sent link by redeploying. */
+if (!canLink()) {
+  ok("UNSUBSCRIBE_SECRET is set for this run", false,
+     "re-run as UNSUBSCRIBE_SECRET=anything npx tsx scripts/outreach-render-test.ts");
+} else {
+  const t = tokenFor("Vikrant.Malhotra@AngloEastern.com")!;
+  ok("a token round-trips to the address, lowercased",
+     addressIn(t) === "vikrant.malhotra@angloeastern.com", String(addressIn(t)));
+  ok("the same address always gets the same link — one sent last month still works",
+     tokenFor("a@b.com") === tokenFor("a@b.com"));
+  ok("two addresses get different tokens", tokenFor("a@b.com") !== tokenFor("c@d.com"));
+
+  // The attack: swap the address, keep the signature.
+  const forged = `${Buffer.from("someone.else@example.com").toString("base64url")}.${t.split(".")[1]}`;
+  ok("a token with the address swapped is refused", addressIn(forged) === null);
+  ok("a token with the signature stripped is refused", addressIn(t.split(".")[0]!) === null);
+  ok("nonsense is refused, not thrown on", addressIn("!!!") === null);
+
+  const link = linkFor("ana@vgroup.com")!;
+  ok("the link is on the unsubscribe host", link.startsWith("https://unsubscribe.seaworth.ai/u/"), link);
+
+  const withLink = withFooter("Thursday?", cfg, null, true, "ana@vgroup.com");
+  ok("a commercial message carries the clickable opt-out", withLink.includes(link), withLink);
+  ok("and not the reply-only wording", !withLink.includes('Reply "unsubscribe"'), withLink);
+
+  // The distinction the whole footer turns on: a note somebody typed by hand
+  // is not a mailing list and must not look like one.
+  const personal = withFooter("Good to meet you.", cfg, null, false, "ana@vgroup.com");
+  ok("a personal note carries no opt-out at all", !/unsubscribe/i.test(personal), personal);
+  ok("and no postal address", !personal.includes("Example Street"));
+
+  const hl = listHeaders(cfg, true, "ana@vgroup.com");
+  ok("List-Unsubscribe leads with the URL", hl["List-Unsubscribe"]?.startsWith(`<${link}>`) === true,
+     JSON.stringify(hl));
+  ok("and keeps the mailto as the fallback", hl["List-Unsubscribe"]?.includes("mailto:") === true);
+  ok("one-click is declared, because the endpoint really does accept POST",
+     hl["List-Unsubscribe-Post"] === "List-Unsubscribe=One-Click");
+  ok("a personal note carries no list headers",
+     Object.keys(listHeaders(cfg, false, "ana@vgroup.com")).length === 0);
+}
+
+// ---- the HTML half ----------------------------------------------------
+
+const html = htmlBody("Vikrant,\n\nTwenty minutes?", cfg, null, true, "v@ae.com");
+ok("HTML keeps paragraphs as paragraphs", (html.match(/<p /g) ?? []).length >= 3, html);
+ok("HTML carries the postal address", html.includes("1 Example Street"));
+ok("HTML makes the opt-out a real link", /<a href="https:\/\/unsubscribe\./.test(html), html);
+
+// A body is model- or human-written text, and the moment it is put in HTML
+// anything angle-bracketed in it becomes markup. It must not.
+const nasty = htmlBody('5 < 6 & "quoted" <script>alert(1)</script>', cfg, null, false);
+ok("HTML escapes the body rather than emitting it as markup",
+   !nasty.includes("<script>") && nasty.includes("&lt;script&gt;"), nasty);
+ok("and escapes ampersands and quotes", nasty.includes("&amp;") && nasty.includes("&quot;"));
+
+const both = compose("Thursday?", cfg, null, true, "ana@vgroup.com");
+ok("compose returns the two parts saying the same thing",
+   both.text.includes("Thursday?") && both.html.includes("Thursday?"));
+ok("and both carry the postal address, so the parts do not disagree",
+   both.text.includes("1 Example Street") && both.html.includes("1 Example Street"));
 
 // ---- reading what comes back ------------------------------------------
 

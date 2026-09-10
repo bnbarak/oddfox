@@ -148,6 +148,19 @@ export const SendRecord = z.object({
   id: z.string().min(1),
   account_id: z.string().nullable(),
   contact_id: z.string().nullable(),
+  /** The campaign that produced this message, or null for one written by
+      hand and for anything sent before campaigns recorded themselves.
+
+      This is what makes campaigns independent. Attributing a send to a
+      campaign by account instead — "this campaign contains that account, so
+      this send is ours" — means every campaign inherits every message ever
+      sent to those companies: a campaign created this morning reports
+      yesterday's sends as its own, two campaigns on one account both claim
+      the same message, and activation skips people because *some other*
+      campaign already wrote to them. All four were live bugs. A send belongs
+      to exactly one campaign or to none, and null never means "match on
+      account after all". */
+  campaign_id: z.string().nullable().default(null),
   company: z.string().nullable(),
   to: z.string().email(),
   from_domain: z.string(),
@@ -241,6 +254,10 @@ export const ScheduleRequest = z.object({
   to: z.string().email().nullable().default(null),
   /** 0 for a one-off message written by hand; 1–3 for a sequence round. */
   round: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
+  /** Which campaign this message belongs to. Null for a one-off. Callers on
+      the campaign path must set it — see SendRecord.campaign_id for why the
+      alternative does not work. */
+  campaign_id: z.string().nullable().default(null),
   subject: z.string().min(1),
   body: z.string().min(1),
   /** ISO instant, or omitted for the next free slot inside the send window. */

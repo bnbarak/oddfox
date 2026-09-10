@@ -54,20 +54,27 @@ export async function startCampaign(c: Campaign, cfg: OutreachConfig): Promise<S
       out.skipped.push({ contact_id: p.id, name: p.full_name, why });
 
     if (!p.email) { skip("no address — Apollo could not find one"); continue; }
-    // Idempotent: activating twice must not write to anyone twice. The check
-    // is for a live round 1, so a cancelled one can be re-queued.
-    if (sends.some((s) => s.contact_id === p.id && s.round === 1 && s.status !== "canceled")) {
-      skip("already had round 1"); continue;
+    /* Idempotent: activating twice must not write to anyone twice. The check
+       is for a live round 1 *of this campaign*, so a cancelled one can be
+       re-queued — and, more importantly, so a second campaign aimed at the
+       same person still writes to them. Matching on the contact alone made
+       every campaign after the first a no-op for anybody already contacted,
+       which is not "already done", it is a different message that never
+       went. */
+    if (sends.some((s) => s.contact_id === p.id && s.campaign_id === c.id
+                          && s.round === 1 && s.status !== "canceled")) {
+      skip("already had round 1 from this campaign"); continue;
     }
 
     try {
       const written = await draft(p.id, 1, cfg,
-                                  { useModel: modelConfigured(), guidance: c.persona });
+                                  { useModel: modelConfigured(), guidance: c.persona,
+                                    campaign_id: c.id });
       if (written.unresolved.length) {
         skip(`the message still has ${written.unresolved.join(", ")} in it`); continue;
       }
       const r = await schedule({
-        contact_id: p.id, to: null, round: 1,
+        contact_id: p.id, to: null, round: 1, campaign_id: c.id,
         subject: written.subject, body: written.body,
         scheduled_at: null, domain: null,
         written_by: modelConfigured() ? "agent" : "template",
@@ -115,8 +122,11 @@ export type Ended = {
 };
 
 export async function endCampaign(c: Campaign): Promise<Ended> {
+  // This campaign's own queue, not "everything queued for these companies".
+  // Ending one campaign must not silently cancel a different campaign's mail
+  // to the same account.
   const queued = (await allSends()).filter(
-    (s) => s.account_id && c.account_ids.includes(s.account_id)
+    (s) => s.campaign_id === c.id
         && s.round !== 0
         && (s.status === "scheduled" || s.status === "draft"));
   let canceled = 0, failed = 0;

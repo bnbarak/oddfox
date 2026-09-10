@@ -20,6 +20,10 @@ import type { OutreachConfig, SendRecord } from "./schemas.js";
 
 export type Due = {
   contact_id: string; account_id: string | null; company: string | null;
+  /** Which campaign's sequence is owed the next round. Two campaigns writing
+      to the same person each run their own cadence, so this is part of the
+      identity of a follow-up, not a detail hanging off it. */
+  campaign_id: string | null;
   next_round: 1 | 2 | 3; last_at: string;
 };
 
@@ -33,13 +37,23 @@ export function due(
   const landed = new Set(["sent", "delivered", "opened", "clicked"]);
   const out: Due[] = [];
 
-  const byContact = new Map<string, SendRecord[]>();
+  /* Grouped by person *and* campaign. Grouping by person alone made every
+     campaign share one cadence: a round 1 from campaign A satisfied campaign
+     B's "has this person had a round 1", so B's sequence never advanced, and
+     a round 2 could be written against a thread the reader never saw. */
+  const byThread = new Map<string, SendRecord[]>();
   for (const s of sends) {
     if (!s.contact_id) continue;
-    byContact.set(s.contact_id, [...(byContact.get(s.contact_id) ?? []), s]);
+    const key = `${s.contact_id}\u0000${s.campaign_id ?? ""}`;
+    byThread.set(key, [...(byThread.get(key) ?? []), s]);
   }
 
-  for (const [contactId, group] of byContact) {
+  for (const [key, group] of byThread) {
+    const [contactId, campaignKey] = key.split("\u0000") as [string, string];
+    const campaignId = campaignKey || null;
+    /* A reply stops every campaign, not just the one that was answered.
+       Replying is a fact about the person — somebody who wrote back to one
+       message should not keep getting another campaign's follow-ups. */
     if (answered.has(contactId)) continue;
     const live = group.filter((s) => s.status !== "canceled");
     // round 0 is a one-off written by hand — it is not part of the sequence,
@@ -56,6 +70,7 @@ export function due(
     if (now - at < waited * 86_400_000) continue;
 
     out.push({ contact_id: contactId, account_id: last.account_id, company: last.company,
+               campaign_id: campaignId,
                next_round: next, last_at: new Date(at).toISOString() });
   }
   return out.sort((a, b) => a.last_at.localeCompare(b.last_at));
@@ -88,9 +103,12 @@ export async function tick(): Promise<Tick> {
   if (cfg.auto_followups && stops.length === 0) {
     for (const d of owed) {
       try {
-        const prior = sends.filter((s) => s.contact_id === d.contact_id && s.status !== "canceled");
+        const prior = sends.filter((s) => s.contact_id === d.contact_id
+                                          && s.campaign_id === d.campaign_id
+                                          && s.status !== "canceled");
         const written = await draft(d.contact_id, d.next_round, cfg,
-                                    { useModel: modelConfigured(), prior });
+                                    { useModel: modelConfigured(), prior,
+                                      campaign_id: d.campaign_id });
         if (written.unresolved.length) {
           notes.push(`${d.contact_id} r${d.next_round}: unresolved ${written.unresolved.join(",")}`);
           continue;
@@ -101,6 +119,7 @@ export async function tick(): Promise<Tick> {
         const chain = prior.map((p) => p.message_id).filter((x): x is string => Boolean(x));
         await schedule({
           contact_id: d.contact_id, to: null, round: d.next_round,
+          campaign_id: d.campaign_id,
           in_reply_to: chain[chain.length - 1] ?? null,
           references: chain,
           subject: written.subject, body: written.body,

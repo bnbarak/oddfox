@@ -3,14 +3,14 @@ import { TokenLimiter, ToolCallFilter } from "@mastra/core/processors";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
 import { draft, modelConfigured } from "./agent.js";
-import { startCampaign } from "./start.js";
+import { endCampaign, startCampaign } from "./start.js";
 import { blockers } from "./config.js";
 import * as crm from "./crm.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, Refused, schedule } from "./send.js";
 import {
-  allCampaigns, allReplies, allSends, appendTurns, getConfig, getThread, headroom,
-  lastTick, putCampaign, type ChatTurn,
+  allCampaigns, allReplies, allSends, appendTurns, campaignFor, getConfig, getThread,
+  headroom, lastTick, deleteCampaign, putCampaign, type ChatTurn,
 } from "./store.js";
 import { Campaign } from "./schemas.js";
 import { due } from "./tick.js";
@@ -155,6 +155,112 @@ export const t = {
     },
   }),
 
+  launch: createTool({
+    id: "start-campaign",
+    description:
+      "Switch a campaign on. This is the loud one: it buys a work address for anyone in the " +
+      "campaign we do not have one for, writes round 1 to every reachable person in it, and puts " +
+      "the lot in the queue. Say what that will cost and how many people it reaches before you " +
+      "call it. Nothing is sent immediately — every message is paced, capped and cancellable — " +
+      "and end-campaign pulls all of it back. Safe to call on a running campaign: it picks up " +
+      "accounts added since, and never writes to anyone who already has a live round 1.",
+    inputSchema: z.object({ id: z.string() }),
+    outputSchema: z.object({
+      id: z.string(), active: z.boolean(),
+      enrichment: z.object({
+        looked_up: z.number(), found: z.number(), missing: z.number(),
+        already_known: z.number(), credits: z.number(), stopped: z.string().nullable(),
+      }).nullable(),
+      queued: z.number(),
+      first_lands: z.string().nullable(),
+      skipped: z.array(z.string()),
+      stopped: z.string().nullable(),
+      refused: z.string().nullable(),
+    }),
+    execute: async ({ id }) => {
+      const no = (why: string) => ({
+        id, active: false, enrichment: null, queued: 0, first_lands: null,
+        skipped: [], stopped: null, refused: why,
+      });
+      const c = (await allCampaigns()).find((x) => x.id === id);
+      if (!c) return no(`no campaign with id ${id}`);
+      try {
+        await putCampaign({ ...c, active: true });
+        const r = await startCampaign(c, await getConfig());
+        return {
+          id, active: true, enrichment: r.enrichment, queued: r.queued,
+          first_lands: r.first_lands, stopped: r.stopped,
+          skipped: r.skipped.map((x) => `${x.name}: ${x.why}`), refused: null,
+        };
+      } catch (err) {
+        /* The campaign is left switched on when startCampaign refuses. The
+           refusal is nearly always a blocker or a full cap — a reason today
+           is wrong, not a reason the campaign is — and switching it back off
+           would hide that it is meant to be running. */
+        return { ...no(err instanceof Refused ? `${err.code}: ${err.message}`
+                                              : err instanceof Error ? err.message : String(err)),
+                 active: true };
+      }
+    },
+  }),
+
+  pause: createTool({
+    id: "pause-campaign",
+    description:
+      "Stop a campaign making any more messages. What is already in the queue still goes — use " +
+      "end-campaign instead if you want that pulled back too. Always safe; never needs asking.",
+    inputSchema: z.object({ id: z.string() }),
+    outputSchema: z.object({ id: z.string(), active: z.boolean(), still_queued: z.number(),
+                             refused: z.string().nullable() }),
+    execute: async ({ id }) => {
+      const c = (await allCampaigns()).find((x) => x.id === id);
+      if (!c) return { id, active: false, still_queued: 0, refused: `no campaign with id ${id}` };
+      await putCampaign({ ...c, active: false });
+      const still = (await allSends()).filter(
+        (s) => s.account_id && c.account_ids.includes(s.account_id)
+            && (s.status === "scheduled" || s.status === "draft")).length;
+      return { id, active: false, still_queued: still, refused: null };
+    },
+  }),
+
+  end: createTool({
+    id: "end-campaign",
+    description:
+      "Stop a campaign and pull back everything of its that has not gone yet. Use this when the " +
+      "campaign itself was wrong, rather than pause, which leaves the queue alone. One-offs " +
+      "written by hand to those accounts are left alone. Always safe; never needs asking.",
+    inputSchema: z.object({ id: z.string() }),
+    outputSchema: z.object({ id: z.string(), active: z.boolean(), canceled: z.number(),
+                             failed: z.number(), refused: z.string().nullable() }),
+    execute: async ({ id }) => {
+      const c = (await allCampaigns()).find((x) => x.id === id);
+      if (!c) return { id, active: false, canceled: 0, failed: 0, refused: `no campaign with id ${id}` };
+      await putCampaign({ ...c, active: false });
+      const r = await endCampaign(c);
+      return { id, active: false, ...r, refused: null };
+    },
+  }),
+
+  drop: createTool({
+    id: "delete-campaign",
+    description:
+      "Delete a campaign for good. Refuses while it is still running — end or pause it first, so " +
+      "deleting can never be the thing that leaves mail queued with nothing to explain it. What " +
+      "it already sent stays in the record; only the campaign goes.",
+    inputSchema: z.object({ id: z.string() }),
+    outputSchema: z.object({ id: z.string(), deleted: z.boolean(), refused: z.string().nullable() }),
+    execute: async ({ id }) => {
+      const c = (await allCampaigns()).find((x) => x.id === id);
+      if (!c) return { id, deleted: false, refused: `no campaign with id ${id}` };
+      if (c.active) {
+        return { id, deleted: false,
+                 refused: "this campaign is still running — end it or pause it first" };
+      }
+      await deleteCampaign(id);
+      return { id, deleted: true, refused: null };
+    },
+  }),
+
   activity: createTool({
     id: "account-activity",
     description:
@@ -219,9 +325,16 @@ export const t = {
     }),
     execute: async ({ contact_id, round, guidance }) => {
       const cfg = await getConfig();
+      // Only what this person's own campaign has already said to them —
+      // quoting a different campaign's round 1 back at the reader is worse
+      // than quoting nothing.
+      const who = await crm.contact(contact_id);
+      const campaign = await campaignFor(who?.account_id ?? null);
       return draft(contact_id, round as 1 | 2 | 3, cfg,
                    { useModel: modelConfigured(), guidance: guidance ?? null,
+                     campaign_id: campaign?.id ?? null,
                      prior: (await allSends()).filter((s) => s.contact_id === contact_id
+                                                          && s.campaign_id === (campaign?.id ?? null)
                                                           && s.status !== "canceled") });
     },
   }),
@@ -255,6 +368,11 @@ export const t = {
         const cfg = await getConfig();
         const r = await schedule({
           contact_id: input.contact_id, to: null, round: input.round as 0 | 1 | 2 | 3,
+          /* A message scheduled from here is the operator's, not a
+             campaign's, even when the recipient sits in one. It therefore
+             counts against no campaign's numbers and does not satisfy any
+             campaign's round 1 — see SendRecord.campaign_id. */
+          campaign_id: null,
           subject: input.subject, body: input.body,
           scheduled_at: input.scheduled_at ?? null, domain: null,
           written_by: modelConfigured() ? "agent" : "template", template_tier: null,

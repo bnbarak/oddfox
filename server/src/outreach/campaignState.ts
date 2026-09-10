@@ -34,7 +34,10 @@ export function stateFor(
   const named = { campaign_id: c.id, campaign_name: c.name };
   if (!c.active) return { state: "paused", ...named };
 
-  const live = sends.filter((s) => s.account_id === accountId && s.status !== "canceled");
+  // This campaign's own sends, not every message ever sent to the account.
+  // Keyed on the campaign so a fresh campaign reads "not started" even where
+  // an earlier one has already run against the same company.
+  const live = sends.filter((s) => s.campaign_id === c.id && s.status !== "canceled");
   // Queued outranks running on purpose: something is about to go out, and
   // that is the fact that changes what you do in the next ten minutes.
   if (live.some((s) => PENDING.has(s.status))) return { state: "queued", ...named };

@@ -3,7 +3,7 @@ import { z } from "zod";
 import * as crm from "./crm.js";
 import { secret } from "./config.js";
 import { fill, varsFor } from "./render.js";
-import { campaignFor } from "./store.js";
+import { allCampaigns, campaignFor } from "./store.js";
 import type { OutreachConfig, SendRecord } from "./schemas.js";
 
 /* The writing agent.
@@ -90,7 +90,14 @@ export async function draft(
   contactId: string,
   round: 1 | 2 | 3,
   cfg: OutreachConfig,
-  opts: { useModel: boolean; guidance?: string | null; prior?: SendRecord[] } = { useModel: true },
+  opts: {
+    useModel: boolean; guidance?: string | null; prior?: SendRecord[];
+    /** Which campaign's copy to write. Given explicitly by every caller on a
+        campaign path, because looking it up from the account picks *a*
+        campaign containing that account, and once two campaigns can share an
+        account that is a coin toss over whose message gets written. */
+    campaign_id?: string | null;
+  } = { useModel: true },
 ): Promise<DraftResult> {
   const contact = await crm.contact(contactId);
   if (!contact) throw new Error(`no contact with id ${contactId}`);
@@ -98,7 +105,9 @@ export async function draft(
   // A campaign borrows another tier's copy for this account on purpose —
   // companies and campaigns/personas are orthogonal, so this overrides the
   // account's own tier rather than being derived from it.
-  const campaign = await campaignFor(contact.account_id);
+  const campaign = opts.campaign_id
+    ? (await allCampaigns()).find((c) => c.id === opts.campaign_id) ?? null
+    : await campaignFor(contact.account_id);
   const tier = campaign?.template_tier ?? account?.tier ?? 1;
   if (!crm.isEmailTier(tier)) {
     throw new Error(`tier ${tier} is a LinkedIn sequence, not an email one — do not send it as email`);
