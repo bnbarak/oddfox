@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Chip, H1, Note, Section, Split, Sub, Toggle } from "../../../ui";
 import {
-  putOutreachConfig, useOptOuts, useOutreachConfig, useOutreachStatus, type Signature,
+  putOutreachConfig, restoreOptOut, useOptOuts, useOutreachConfig, useOutreachStatus,
+  type Signature,
 } from "../../../lib/outreachStore";
 import { createApiKey, revokeApiKey, useApiKeys, type MintedKey } from "../../../lib/keysStore";
 import { EmailBody } from "./EmailBody";
@@ -149,6 +150,23 @@ export function CrmSettings() {
       the two opt-out wordings a message actually carries. */
   const linkOn = status.data?.configured.unsubscribe_link ?? false;
   const optouts = useOptOuts();
+  /** Which address is mid-confirmation for being opted back in. */
+  const [restoring, setRestoring] = useState<string | null>(null);
+
+  const doRestore = async (email: string) => {
+    setSaving(true);
+    try {
+      const r = await restoreOptOut(email);
+      setSaid(r.restored_status
+        ? `${r.email} can be written to again, and is back to “${r.restored_status}”.`
+        : `${r.email} can be written to again. Their pipeline status was not recorded ` +
+          `at the time, so set it by hand if it still reads “dead”.`);
+      setRestoring(null);
+      await optouts.reload();
+    } catch (e) {
+      setSaid(e instanceof Error ? e.message : String(e));
+    } finally { setSaving(false); }
+  };
 
   useEffect(() => {
     if (cfg.data) {
@@ -328,15 +346,39 @@ ${linkOn
               <div className="of-matrix-wrap">
                 <table className="of-matrix of-crm">
                   <thead>
-                    <tr><th className="co">Address</th><th>How</th><th>When</th><th>Cancelled</th></tr>
+                    <tr><th className="co">Address</th><th>How</th><th>When</th><th>Cancelled</th><th /></tr>
                   </thead>
                   <tbody>
                     {optouts.data.records.map((o) => (
-                      <tr key={o.email}>
+                      /* A restored row stays, greyed. Deleting it would erase
+                         the only evidence that they ever asked, which is the
+                         thing this table exists to keep. */
+                      <tr key={o.email} className={o.restored_at ? "is-restored" : undefined}>
                         <td className="co"><span className="co-name">{o.email}</span></td>
                         <td className="cell">{SOURCE[o.source] ?? o.source}</td>
                         <td className="cell">{o.at.slice(0, 10)}</td>
                         <td className="val">{o.canceled || ""}</td>
+                        <td className="cell">
+                          {o.restored_at ? (
+                            <span className="of-note">opted back in {o.restored_at.slice(0, 10)}</span>
+                          ) : restoring === o.email ? (
+                            /* Two clicks, never one. Putting somebody back on
+                               a list they asked to leave is not an undo — it
+                               needs a person to mean it. */
+                            <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                              <button className="of-facet__b" disabled={saving}
+                                      onClick={() => void doRestore(o.email)}>
+                                {saving ? "…" : "Yes, opt back in"}
+                              </button>
+                              <button className="of-dock__x"
+                                      onClick={() => setRestoring(null)}>cancel</button>
+                            </span>
+                          ) : (
+                            <button className="of-dock__x" onClick={() => setRestoring(o.email)}>
+                              opt back in
+                            </button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
