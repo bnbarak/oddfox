@@ -183,7 +183,7 @@ export function SequenceModal({ thread, onClose }: { thread: Thread; onClose: ()
                 ) : (
                   <div className="of-seqr__plan">
                     <div className="of-msg__subj">{r.subject as string}</div>
-                    <pre className="of-msg__body">{r.body as string}</pre>
+                    <EmailBody text={r.body as string} />
                     <Note>Not written yet. The placeholders are filled when it is drafted.</Note>
                   </div>
                 )}

@@ -221,8 +221,10 @@ export const ReplyRecord = z.object({
   send_id: z.string().nullable(),
   account_id: z.string().nullable(),
   contact_id: z.string().nullable(),
-  /** First part of the body, for the panel. Full text stays in Resend. */
+  /** The body on one line, for previews and tooltips. */
   excerpt: z.string().nullable(),
+  /** The body as written, line breaks kept — what the Inbox shows. */
+  text: z.string().nullable().optional(),
   /** Set when the text reads as an opt-out. Such a reply also writes a
       suppression entry, so the address can never be picked again. */
   unsubscribe: z.boolean(),

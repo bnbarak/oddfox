@@ -161,7 +161,12 @@ export type ReplyRecord = {
       which is the only thing that makes mail clients thread it. */
   message_id?: string | null;
   send_id: string | null; account_id: string | null; contact_id: string | null;
+  /** One line, for previews and tooltips. */
   excerpt: string | null; unsubscribe: boolean; automated: boolean;
+  /** The message as written, line breaks kept — what the Inbox shows. Absent
+      on replies saved before it was kept, until the poller fills it in; ""
+      when Resend had no body at all. */
+  text?: string | null;
 };
 
 export const putReply = (r: ReplyRecord): Promise<unknown> =>
@@ -170,6 +175,15 @@ export const putReply = (r: ReplyRecord): Promise<unknown> =>
 export async function haveReply(id: string): Promise<boolean> {
   return (await db().collection(REPLIES).doc(id).get()).exists;
 }
+
+export async function getReply(id: string): Promise<ReplyRecord | null> {
+  const snap = await db().collection(REPLIES).doc(id).get();
+  return snap.exists ? (snap.data() as ReplyRecord) : null;
+}
+
+/** Merges fields into a saved reply without touching the rest of it. */
+export const patchReply = (id: string, patch: Partial<ReplyRecord>): Promise<unknown> =>
+  db().collection(REPLIES).doc(id).set(patch, { merge: true });
 
 export async function allReplies(): Promise<ReplyRecord[]> {
   const snap = await db().collection(REPLIES).get();
