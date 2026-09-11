@@ -5,6 +5,7 @@ import type { Rec } from "../../../data";
 import { SEND_TONE, sequencesFile } from "./shared";
 import { EmailBody } from "./EmailBody";
 import type { Thread, ThreadMessage } from "../../../lib/outreachStore";
+import { useFocus } from "../../../lib/pageFocus";
 
 /* A sequence end to end, for one person.
 
@@ -47,13 +48,16 @@ export function SequenceLink({ tier, round }: { tier: number; round?: number }) 
     A grid rather than a list of threads, because the useful shape is "round 2
     has gone to four of six" and that is a column, not a scroll. Clicking a
     person drops into their own sequence. */
-export function CampaignSequenceModal({ name, accountIds, threads, onClose, onPerson }: {
+export function CampaignSequenceModal({ name, campaignId, accountIds, threads, onClose, onPerson }: {
   name: string;
+  /** Which campaign, so the agent in the dock can look it up. */
+  campaignId?: string;
   accountIds: string[];
   threads: Thread[];
   onClose: () => void;
   onPerson: (t: Thread) => void;
 }) {
+  useFocus({ label: `${name} sequence`, campaign: campaignId });
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", k);
@@ -126,6 +130,8 @@ export function CampaignSequenceModal({ name, accountIds, threads, onClose, onPe
 }
 
 export function SequenceModal({ thread, onClose }: { thread: Thread; onClose: () => void }) {
+  // Over whatever page opened it, this person is who "this" now means.
+  useFocus({ label: `${thread.full_name}'s sequence`, thread: thread.key });
   // Escape closes it, like every other dialog on this machine.
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };

@@ -7,6 +7,7 @@ import { CampaignChip, CampaignTag } from "./CampaignChip";
 import { EmailBody } from "./EmailBody";
 import { EmailCell } from "./EmailCell";
 import { Toast } from "./Toast";
+import { useFocus } from "../../../lib/pageFocus";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { PIPE, SEND_TONE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
@@ -144,6 +145,8 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
   const threadsRes = useThreads();
   const campaigns = useCampaigns();
   const enrichment = useEnrichment();
+  // Tells the agent in the dock whose page this is.
+  useFocus({ account: id, label: accounts.find((r) => r.id === id)?.company ?? id });
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
   const [busy, setBusy] = useState(false);
   const [said, setSaid] = useState<string | null>(null);

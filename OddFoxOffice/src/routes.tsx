@@ -80,7 +80,9 @@ function LibraryLayout() {
       </main>
       {/* The agent is docked for the whole CRM section, not one panel: the
           questions worth asking it are the same on every tab. */}
-      {groupOf(tab ?? "") === "crm" && <Operator />}
+      {groupOf(tab ?? "") === "crm" && (
+        <Operator page={{ id: tab ?? "", label: TABS.find((t) => t.id === tab)?.label ?? "" }} />
+      )}
     </div>
   );
 }

@@ -387,6 +387,25 @@ body[data-crm-dock="open"] .of-whoami { right: calc(min(400px, 34vw) + 12px); }
 }
 .of-dock__x:hover { color: var(--paper); border-color: var(--paper); }
 .of-dock .of-chat__log { flex: 1; max-height: none; border: 0; }
+
+/* What the agent is told the page is showing. It sits on the box you type
+   into, so it reads as part of the question you are about to ask. */
+.of-dock__on {
+  padding: 7px 12px 0; border-top: 1px solid var(--line-soft);
+  font-family: var(--mono); font-size: 10.5px; color: var(--fog);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.of-dock__on-k { text-transform: uppercase; letter-spacing: .08em; margin-right: 6px; opacity: .7; }
+.of-dock__on + .of-chat__bar { border-top: 0; }
+/* A question and what it was asked about, as one item in the log. */
+.of-chat__q {
+  align-self: flex-end; max-width: 100%; min-width: 0;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 3px;
+}
+.of-chat__on {
+  max-width: 100%; font-family: var(--mono); font-size: 10.5px; color: var(--fog);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
 .of-dock .of-chat__bar { border-top: 1px solid var(--line-soft); }
 
 /* Collapsed: a slim tab on the same edge, so the agent is one click away

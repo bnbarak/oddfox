@@ -1,6 +1,7 @@
 import type { Tone } from "../ui/tokens";
 import { useCallback, useEffect, useState } from "react";
 import { getIdToken } from "./googleAuth";
+import type { PageContext } from "./pageFocus";
 
 /** Typed client over /api/crm/outreach/*, owned by ../../../server
     (server/src/outreach). Same shape as crmStore: every request carries the
@@ -374,7 +375,11 @@ export const sendDirect = (
     { ...who, round: 0, subject, body, scheduled_at: null, domain,
       written_by: "template", template_tier: null, signature, ...thread, ...group, html });
 
-export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
+export type ChatTurn = {
+  role: "user" | "assistant"; content: string; at: string;
+  /** A question only: what the page was showing when it was asked. */
+  context?: string;
+};
 
 /** The conversation lives on the server, as one thread shared by everyone on
     the allow-list — so a reload keeps it, and two people working the pipeline
@@ -383,8 +388,9 @@ export type ChatTurn = { role: "user" | "assistant"; content: string; at: string
 export const useThread = () =>
   useResource<{ turns: ChatTurn[]; model_configured: boolean }>("/chat");
 
-export const sendChat = (message: string) =>
-  post<{ text: string; thread: ChatTurn[] }>("/chat", { message });
+/** A question, with what the page under the dock is showing — see pageFocus. */
+export const sendChat = (message: string, context: PageContext) =>
+  post<{ text: string; thread: ChatTurn[] }>("/chat", { message, context });
 
 export async function clearThread(): Promise<void> {
   const res = await fetch(`${BASE}/chat`, { method: "DELETE", headers: authHeaders() });

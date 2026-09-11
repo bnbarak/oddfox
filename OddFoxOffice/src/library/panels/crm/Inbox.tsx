@@ -10,6 +10,7 @@ import { EmailBody } from "./EmailBody";
 import { CampaignTag } from "./CampaignChip";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";
+import { useFocus } from "../../../lib/pageFocus";
 import { RecipientField } from "./RecipientField";
 import { RichEditor } from "./RichEditor";
 import {
@@ -225,6 +226,22 @@ export function CrmInbox() {
      mark your newest mail read before you had looked at it. */
   const open: Thread | null = threads.find((t) => t.key === openId) ?? null;
   const last = open?.messages[open.messages.length - 1];
+
+  /* What the agent in the dock is told this page is showing: the open
+     thread, by key, and anything being written. A draft exists nowhere but
+     here, so it goes whole rather than as an id. */
+  useFocus({
+    label: [open && `${open.full_name}${last?.subject ? ` — ${last.subject}` : ""}`,
+            draft && (draft.kind === "reply" ? "your reply" : "new email")]
+      .filter(Boolean).join(" › ") || undefined,
+    thread: open?.key,
+    draft: draft ? {
+      reply: draft.kind === "reply",
+      to: toList.map((r) => r.email), cc: ccList.map((r) => r.email),
+      bcc: bccList.map((r) => r.email), subject, body: body.slice(0, 8000),
+    } : undefined,
+    view: onlyUnread ? "only unread conversations" : undefined,
+  });
 
   /* The mail client fills what is left of the window and scrolls inside
      itself. Letting the page scroll instead moves the list and the thread

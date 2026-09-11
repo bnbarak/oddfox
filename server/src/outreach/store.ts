@@ -302,7 +302,12 @@ export async function recentTicks(limit = 50): Promise<Tick[]> {
 
 // ---- The operator's thread ------------------------------------------------
 
-export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
+export type ChatTurn = {
+  role: "user" | "assistant"; content: string; at: string;
+  /** A question only: what the page was showing when it was asked, in the
+      dock's words. Absent rather than undefined — Firestore refuses those. */
+  context?: string;
+};
 
 /** One shared conversation for the whole CRM, not one per browser tab.
 

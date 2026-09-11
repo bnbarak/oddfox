@@ -4,6 +4,7 @@ import { Section, Note, H1, H2, Card, Chip, Gap } from "../../../ui";
 import type { Rec } from "../../../data";
 import { EmailBody } from "./EmailBody";
 import { sequencesFile } from "./shared";
+import { useFocus } from "../../../lib/pageFocus";
 
 /** The cadence as an actual timeline rather than three equal boxes.
 
@@ -52,6 +53,8 @@ export function CrmSequences() {
   const asked = Number(params.get("tier"));
   const [openSeq, setOpenSeq] = useState<number>(Number.isFinite(asked) && asked ? asked : 1);
   const [copied, setCopied] = useState<string | null>(null);
+  const tierName = (seq.sequences as Rec[]).find((s) => s.tier === openSeq)?.tier_name;
+  useFocus({ tier: openSeq, label: (tierName as string | undefined) ?? `tier ${openSeq}` });
 
   return (
     <>

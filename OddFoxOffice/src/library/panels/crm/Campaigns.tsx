@@ -10,6 +10,7 @@ import { NewCampaignModal } from "./NewCampaign";
 import { CampaignSequenceModal, SequenceModal } from "./SequenceModal";
 import { ServerState } from "./ServerState";
 import { Toast } from "./Toast";
+import { useFocus } from "../../../lib/pageFocus";
 
 /* Every campaign in one table.
 
@@ -36,7 +37,8 @@ export function CrmCampaigns() {
   const [filter, setFilter] = useState<string>("all");
   const [busy, setBusy] = useState<string | null>(null);
   const [said, setSaid] = useState<string | null>(null);
-  const [seqCampaign, setSeqCampaign] = useState<{ name: string; ids: string[] } | null>(null);
+  const [seqCampaign, setSeqCampaign] =
+    useState<{ id: string; name: string; ids: string[] } | null>(null);
   const [seqPerson, setSeqPerson] = useState<Thread | null>(null);
   const [making, setMaking] = useState(false);
 
@@ -63,6 +65,16 @@ export function CrmCampaigns() {
       || `${c.name} ${c.persona} ${c.companies.join(" ")}`.toLowerCase().includes(needle)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows, q, filter]);
+
+  /* The agent is told what this table is listing, so "pause the ones in
+     flight" means the rows in front of you, filter and search included. */
+  const narrowed = [filter !== "all" && FILTERS.find((f) => f.id === filter)?.label,
+                    q.trim() && `“${q.trim()}”`].filter(Boolean).join(", ");
+  useFocus({
+    campaigns: shown.length ? shown.map((c) => c.id) : undefined,
+    view: narrowed ? `campaigns narrowed to ${narrowed}, ${shown.length} of ${rows.length}` : undefined,
+    label: narrowed ? `${narrowed} · ${shown.length} shown` : undefined,
+  });
 
   const remove = async (c: CampaignRow) => {
     if (!window.confirm(
@@ -195,7 +207,8 @@ export function CrmCampaigns() {
                       </td>
                       <td className="cell">
                         <button className="of-facet__b"
-                                onClick={() => setSeqCampaign({ name: c.name, ids: c.account_ids })}
+                                onClick={() => setSeqCampaign({ id: c.id, name: c.name,
+                                                                ids: c.account_ids })}
                                 title="Where is everyone in this campaign">sequence</button>
                       </td>
                       <td className="cell">
@@ -234,7 +247,8 @@ export function CrmCampaigns() {
                                             void campaigns.reload(); }} />
       ) : null}
       {seqCampaign ? (
-        <CampaignSequenceModal name={seqCampaign.name} accountIds={seqCampaign.ids}
+        <CampaignSequenceModal name={seqCampaign.name} campaignId={seqCampaign.id}
+                               accountIds={seqCampaign.ids}
                                threads={threads.data?.threads ?? []}
                                onPerson={setSeqPerson}
                                onClose={() => setSeqCampaign(null)} />
