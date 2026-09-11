@@ -224,6 +224,34 @@
           "body": "Hello {{first_name}},\n\nWe build autonomous vessels that escort commercial ships through high-risk passages and protect them from piracy and drone attacks.\n\nYou are the person who would have to be satisfied it actually reduces risk before anyone prices it differently. So I would rather ask what evidence you would need than send you a deck.\n\nFifteen minutes?\n\n{{sender}}"
         }
       ]
+    },
+    {
+      "tier": 7,
+      "tier_name": "Insurers — casual (test)",
+      "channel": "Email to a corporate address.",
+      "premise": "An experiment against tier 6: the same audience, written like a quick note from a friend rather than a formal pitch. It deliberately breaks two house rules to test the tone — round 1 does not open with the standard introduction verbatim, and it says 'futuristic'. If it does not beat tier 6 on replies, retire it.",
+      "length_rule": "A few lines. If it reads like a pitch, it is too long.",
+      "warning": "Same rule as tier 6: do NOT state or imply that an escort reduces a premium, earns a rating credit, or lets them write more cover. Casual is not a licence to promise. Never use the word 'fix'. A human reads every tier 7 send before it goes.",
+      "rounds": [
+        {
+          "round": 1,
+          "variant": "the casual opener",
+          "subject": "quick one",
+          "body": "Hey {{first_name}},\n\nWe've built something futuristic for ship attacks at sea: autonomous boats that escort vessels through the risky stretches and protect them.\n\nCurious whether that would change how you look at those routes.\n\nWorth a quick chat?\n\n{{sender}}"
+        },
+        {
+          "round": 2,
+          "variant": "the honest bit",
+          "subject": "Re: quick one",
+          "body": "Hey {{first_name}},\n\nHonest bit: an escort isn't a guarantee. Almost half the successful attacks this year hit ships at anchor, where it does nothing.\n\nWhere it helps is drones and small boats against a moving ship in a set passage. If that's worth something to you, happy to talk.\n\n{{sender}}"
+        },
+        {
+          "round": 3,
+          "variant": "last one",
+          "subject": "last one",
+          "body": "Hey {{first_name}},\n\nLast one from me. If this will never matter to how you write the risk, just say so and I'll drop it. If it might, I'll send real operating data, not a deck.\n\n{{sender}}"
+        }
+      ]
     }
   ],
   "gaps": [
