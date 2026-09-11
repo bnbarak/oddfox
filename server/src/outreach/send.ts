@@ -210,6 +210,10 @@ export async function schedule(
     throw new Refused("group-is-by-hand",
       "Cc, Bcc and extra To are for mail written by hand; a sequence round goes to one person.");
   }
+  if (req.html && req.round !== 0) {
+    throw new Refused("html-is-by-hand",
+      "Formatting is for mail written by hand; a sequence round is sent as its template's plain text.");
+  }
   if (/\{\{|\}\}/.test(`${req.subject}${req.body}`)) {
     throw new Refused("unresolved-placeholder",
       "The message still contains a {{placeholder}}. Fix it before scheduling.");
@@ -279,7 +283,8 @@ export async function schedule(
     throw new Refused("unknown-sender",
       `${domain} has no sender defined in SENDERS — adding one is a code change.`);
   }
-  const { text, html } = compose(req.body, cfg, req.signature, commercial, to);
+  const { text, html } = compose(req.body, cfg, req.signature, commercial, to,
+                                 commercial ? null : req.html);
   const account = contact ? await crm.account(contact.account_id) : null;
   const now = new Date().toISOString();
 

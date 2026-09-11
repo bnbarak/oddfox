@@ -273,6 +273,11 @@ export const ScheduleRequest = z.object({
   campaign_id: z.string().nullable().default(null),
   subject: z.string().min(1),
   body: z.string().min(1),
+  /** The same message as formatted HTML, from the composer's editor. Hand-
+      written mail (round 0) only — a sequence round is plain text. The
+      server cleans it against a short allowlist and derives the plain-text
+      part from it, so the two halves of the message cannot disagree. */
+  html: z.string().max(200_000).nullable().optional(),
   /** ISO instant, or omitted for the next free slot inside the send window. */
   scheduled_at: z.string().nullable().default(null),
   /** Which sending domain to charge this to. Omitted picks the enabled

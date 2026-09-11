@@ -365,11 +365,14 @@ export const sendDirect = (
     { in_reply_to: null, references: [] },
   /** Everyone else on the same message. `who` is the first person on To. */
   group: { also_to: string[]; cc: string[]; bcc: string[] } = { also_to: [], cc: [], bcc: [] },
+  /** The body as formatted HTML, from the editor. The server cleans it and
+      derives the plain-text part from it; `body` is only the fallback. */
+  html: string | null = null,
 ) =>
   post<{ id: string; cancel_token: string | null; scheduled_at: string; dry_run: boolean }>(
     "/schedule",
     { ...who, round: 0, subject, body, scheduled_at: null, domain,
-      written_by: "template", template_tier: null, signature, ...thread, ...group });
+      written_by: "template", template_tier: null, signature, ...thread, ...group, html });
 
 export type ChatTurn = { role: "user" | "assistant"; content: string; at: string };
 

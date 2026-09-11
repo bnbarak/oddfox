@@ -10,6 +10,7 @@ import { CampaignTag } from "./CampaignChip";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";
 import { RecipientField } from "./RecipientField";
+import { RichEditor } from "./RichEditor";
 import {
   isEmail, mergeRecipients, recipientFor, splitAddresses, type Recipient,
 } from "./recipients";
@@ -140,6 +141,9 @@ export function CrmInbox() {
   const [draft, setDraft] = useState<Draft | null>(null);
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  /** The same body as formatted HTML, from the editor. `body` is its plain
+      text, which is what decides whether there is anything to send. */
+  const [html, setHtml] = useState("");
   const [working, setWorking] = useState(false);
   const [said, setSaid] = useState<string | null>(null);
   const [seqFor, setSeqFor] = useState<Thread | null>(null);
@@ -252,7 +256,7 @@ export function CrmInbox() {
 
   const startCompose = () => {
     setDraft({ kind: "new", full: false });
-    setTo([]); clearPeople(); setSubject(""); setBody("");
+    setTo([]); clearPeople(); setSubject(""); setBody(""); setHtml("");
   };
 
   /* The last message we sent this thread that had other people on it —
@@ -266,7 +270,7 @@ export function CrmInbox() {
   const startReply = (all: boolean) => {
     const s = last?.subject ?? "";
     setSubject(s.toLowerCase().startsWith("re:") ? s : s ? `Re: ${s}` : "");
-    setBody("");
+    setBody(""); setHtml("");
     setTo(open?.email
       ? [{ email: open.email, contact_id: open.contact_id, name: open.full_name }] : []);
     const others = all && lastGroup
@@ -324,9 +328,10 @@ export function CrmInbox() {
         subject.trim(), body.trim(), fromDomain || null, signature || null,
         { in_reply_to: chain[chain.length - 1] ?? null, references: chain },
         { also_to: toList.slice(1).map((r) => r.email),
-          cc: ccList.map((r) => r.email), bcc: bccList.map((r) => r.email) });
+          cc: ccList.map((r) => r.email), bcc: bccList.map((r) => r.email) },
+        html || null);
       setSaid(sentNote(res.scheduled_at, res.dry_run, everyone.length));
-      setDraft(null); setTo([]); clearPeople(); setSubject(""); setBody("");
+      setDraft(null); setTo([]); clearPeople(); setSubject(""); setBody(""); setHtml("");
       await reload();
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
     finally { setWorking(false); }
@@ -450,10 +455,10 @@ export function CrmInbox() {
 
       <input className="of-chat__in" placeholder="Subject" value={subject}
              disabled={working} onChange={(e) => setSubject(e.target.value)} />
-      <textarea className="of-chat__in of-cw__body"
-                rows={full ? 18 : draft?.kind === "new" ? 10 : 7}
-                placeholder="Write a message…" value={body} disabled={working}
-                onChange={(e) => setBody(e.target.value)} />
+      <RichEditor className="of-cw__body"
+                  style={full ? undefined : { minHeight: draft?.kind === "new" ? 240 : 190 }}
+                  html={html} disabled={working} placeholder="Write a message…"
+                  onChange={(h, t) => { setHtml(h); setBody(t); }} />
 
       {/* Below the body, where it reads in the order the message does: you
           write, then you choose how to sign off. */}
