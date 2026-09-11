@@ -138,7 +138,17 @@ type Draft = { kind: "new" | "reply"; full: boolean };
 export function CrmInbox() {
   const { data, error, busy, reload } = useThreads();
   const threads = useMemo(() => data?.threads ?? [], [data]);
-  const [openId, setOpenId] = useState<string | null>(null);
+  /* The open conversation lives in the URL, as ?thread=<key>, the way Gmail
+     keeps it in its address: a reload lands on the same email, back closes
+     it, and a link — the bell's, or one pasted to a colleague — opens it.
+     Pushed rather than replaced, so back steps through what you read. */
+  const [params, setParams] = useSearchParams();
+  const openId = params.get("thread");
+  const setOpenId = (key: string | null, replace = false) => setParams((p) => {
+    const next = new URLSearchParams(p);
+    if (key) next.set("thread", key); else next.delete("thread");
+    return next;
+  }, { replace });
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [draft, setDraft] = useState<Draft | null>(null);
   const [subject, setSubject] = useState("");
@@ -394,36 +404,46 @@ export function CrmInbox() {
     if (open && openUnread && document.visibilityState === "visible") void mark([open], true);
   });
 
-  const openThread = (t: Thread) => {
-    setOpenId(t.key);
-    // Show what is new, the way Gmail unfolds the unread messages and the
-    // last one and leaves the rest folded. Read threads open as before.
-    const unread = isUnread(t);
-    const fresh = unread ? t.messages.filter((m) => m.unread).map((m) => `${m.dir}-${m.id}`) : [];
+  /** The thread whose messages were last unfolded, so arriving by URL does
+      not unfold one a click already has. */
+  const unfolded = useRef<string | null>(null);
+
+  /** Show what is new, the way Gmail unfolds the unread messages and the
+      last one and leaves the rest folded. Read threads open as before. */
+  const unfold = (t: Thread) => {
+    const fresh = isUnread(t) ? t.messages.filter((m) => m.unread).map((m) => `${m.dir}-${m.id}`) : [];
     const end = t.messages[t.messages.length - 1];
     setExpanded(fresh.length && end ? new Set([...fresh, `${end.dir}-${end.id}`]) : new Set());
+    // A reply belongs under the thread it was started in.
     if (draft?.kind === "reply") setDraft(null);
-    // A click is proof somebody is looking, whatever the tab reports, so
-    // opening marks it here rather than waiting on the effect above.
-    if (unread) void mark([t], true);
+    unfolded.current = t.key;
   };
 
-  /* ?thread=<key> opens that conversation — how the bell in the header links
-     to one. Opened through openThread, so it is marked read the same as a
-     click, and then dropped from the URL so a reload or the back button does
-     not reopen it. Waits for the threads, which is when the key means
-     anything. */
-  const [params, setParams] = useSearchParams();
-  const asked = params.get("thread");
+  const openThread = (t: Thread) => {
+    // Already open: a second history entry for it would make back look broken.
+    if (t.key === openId) return;
+    setOpenId(t.key);
+    unfold(t);
+    // A click is proof somebody is looking, whatever the tab reports, so
+    // opening marks it here rather than waiting on the effect above.
+    if (isUnread(t)) void mark([t], true);
+  };
+
+  /* Arriving on a thread by its URL — a reload, the bell, back and forward —
+     unfolds it the way a click does, once the threads are in, which is when
+     the key means anything. Marking it read is left to the effect above, so
+     a tab restored in the background does not read your mail for you. A key
+     that matches nothing, from an old link, is dropped rather than left in
+     the address claiming something is open. */
   useEffect(() => {
-    if (!asked || !data) return;
-    const t = threads.find((x) => x.key === asked);
-    if (t) openThread(t);
-    setParams((p) => { p.delete("thread"); return p; }, { replace: true });
-    // openThread and setParams are stable in intent; re-running on their
-    // identity would reopen the thread on every render.
+    if (!openId || !data || unfolded.current === openId) return;
+    const t = threads.find((x) => x.key === openId);
+    if (t) unfold(t);
+    else setOpenId(null, true);
+    // unfold and setOpenId are new on every render; the key and the data are
+    // what decide whether there is anything to do.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [asked, data]);
+  }, [openId, data]);
 
   const markUnread = (t: Thread) => { setOpenId(null); void mark([t], false); };
 
