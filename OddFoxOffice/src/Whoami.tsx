@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Bell } from "./Bell";
 
 /* Who is signed in, as an avatar with a menu.
 
@@ -38,6 +39,7 @@ export function Whoami({ email, name, picture, onSignOut }: {
 
   return (
     <div className="of-whoami" ref={box}>
+      <Bell />
       <button className="of-avatar" onClick={() => setOpen((v) => !v)}
               aria-haspopup="menu" aria-expanded={open}
               title={email ?? "signed in"}>

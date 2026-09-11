@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Chip, H1, Note } from "../../../ui";
 import {
   cancelSend, markThreads, sendDirect, sendNow, useCampaigns, useOutreachConfig,
@@ -389,6 +390,23 @@ export function CrmInbox() {
     // opening marks it here rather than waiting on the effect above.
     if (unread) void mark([t], true);
   };
+
+  /* ?thread=<key> opens that conversation — how the bell in the header links
+     to one. Opened through openThread, so it is marked read the same as a
+     click, and then dropped from the URL so a reload or the back button does
+     not reopen it. Waits for the threads, which is when the key means
+     anything. */
+  const [params, setParams] = useSearchParams();
+  const asked = params.get("thread");
+  useEffect(() => {
+    if (!asked || !data) return;
+    const t = threads.find((x) => x.key === asked);
+    if (t) openThread(t);
+    setParams((p) => { p.delete("thread"); return p; }, { replace: true });
+    // openThread and setParams are stable in intent; re-running on their
+    // identity would reopen the thread on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asked, data]);
 
   const markUnread = (t: Thread) => { setOpenId(null); void mark([t], false); };
 

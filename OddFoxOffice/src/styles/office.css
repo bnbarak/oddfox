@@ -295,7 +295,51 @@ a.co-row:hover .co-name,
 /* ---------- who is signed in ---------- */
 /* Floats over the top right of every page. The agent dock is also pinned to
    that edge, so the chip steps aside for it rather than sitting on its head. */
-.of-whoami { position: fixed; top: 8px; right: 12px; z-index: 1000; }
+.of-whoami { position: fixed; top: 8px; right: 12px; z-index: 1000;
+             display: flex; align-items: center; gap: 8px; }
+
+/* The bell beside the avatar: new mail, from any page. Same size and frame
+   as the avatar so the two read as one control strip; the count is the one
+   bright thing in it, because it is the one thing that needs noticing. */
+.of-bell { position: relative; }
+.of-bell__b {
+  position: relative; width: 30px; height: 30px; border-radius: 50%; padding: 0;
+  cursor: pointer; border: 1px solid var(--line); background: #10171d; color: var(--fog);
+  display: grid; place-items: center;
+}
+.of-bell__b:hover { border-color: var(--fog); color: var(--paper); }
+.of-bell__b.has-new { color: var(--paper); }
+.of-bell__b svg { width: 15px; height: 15px; }
+.of-bell__n {
+  position: absolute; top: -5px; right: -7px; min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: 8px; background: #e5484d; color: #fff; text-align: center;
+  font: 600 10px/16px var(--mono); box-shadow: 0 0 0 2px #0a1015;
+}
+.of-bell__menu {
+  position: absolute; top: 36px; right: 0; width: 300px; max-height: 60vh; overflow-y: auto;
+  background: #0a1015; border: 1px solid var(--line); border-radius: 4px;
+  padding: 4px; box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.of-bell__head {
+  padding: 8px 10px; border-bottom: 1px solid var(--line-soft); color: var(--fog);
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+}
+.of-bell__item {
+  display: flex; flex-direction: column; gap: 3px; width: 100%; text-align: left;
+  background: none; border: 0; border-radius: 3px; color: var(--paper); cursor: pointer;
+  padding: 9px 10px; font: inherit;
+}
+.of-bell__l1 { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; }
+.of-bell__l1 span { color: var(--fog); font-family: var(--mono); font-size: 10.5px; white-space: nowrap; }
+.of-bell__l2 { color: var(--fog); font-size: 12px; white-space: nowrap; overflow: hidden;
+               text-overflow: ellipsis; }
+.of-bell__none { padding: 12px 10px; color: var(--fog); font-size: 12.5px; }
+.of-bell__all {
+  display: block; width: 100%; text-align: left; background: none; border: 0;
+  border-top: 1px solid var(--line-soft); margin-top: 4px; color: var(--paper); cursor: pointer;
+  padding: 9px 10px; font: inherit; font-size: 12.5px;
+}
+.of-bell__item:hover, .of-bell__all:hover { background: rgba(255,255,255,.06); }
 .of-avatar {
   width: 30px; height: 30px; border-radius: 50%; padding: 0; cursor: pointer;
   border: 1px solid var(--line); background: #10171d; color: var(--paper);
