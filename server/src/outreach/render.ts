@@ -1,6 +1,7 @@
 import type { AccountRecord, ContactRecord } from "../schemas.js";
 import type { OutreachConfig } from "./schemas.js";
 import { linkFor } from "./unsubToken.js";
+import sanitizeHtml from "sanitize-html";
 
 /* Turning a template in crmMeta/sequences into the exact text that will be
    sent. Two rules matter here:
@@ -147,11 +148,78 @@ const paragraphs = (text: string, style: string): string =>
   text.trimEnd().split(/\n{2,}/).map((block) =>
     `<p style="${style}">${esc(block.trimEnd()).replace(/\n/g, "<br>")}</p>`).join("\n");
 
+/* Formatted mail from the composer's editor.
+
+   The HTML arrives from a browser, so it is cleaned before it goes anywhere:
+   a short allowlist of what the editor can actually produce — paragraphs,
+   line breaks, bold, italic, underline, lists and links — and nothing else.
+   No attributes except a link's href, and only http, https and mailto for
+   that. A <script>, an inline style or an onclick in the payload is simply
+   dropped, whoever sent it.
+
+   Every paragraph gets Gmail's own inline style, the same as the plain-text
+   path, and no margin: in Gmail each line is its own block and a blank line
+   is an empty one, which is what the editor does too. An empty paragraph
+   gets a <br>, because mail clients collapse an empty <p> to nothing and
+   the blank line the writer typed would vanish. */
+const RICH_P = `margin:0;font-family:${FONT};font-size:${SIZE}`;
+
+export function cleanHtml(html: string): string {
+  return sanitizeHtml(html, {
+    allowedTags: ["p", "br", "strong", "b", "em", "i", "u", "a", "ul", "ol", "li"],
+    allowedAttributes: { a: ["href"], p: ["style"] },
+    allowedSchemes: ["http", "https", "mailto"],
+    allowProtocolRelative: false,
+    transformTags: { p: sanitizeHtml.simpleTransform("p", { style: RICH_P }, false) },
+  }).replace(/<p([^>]*)>\s*<\/p>/g, "<p$1><br></p>").trim();
+}
+
+const ENTITIES: Record<string, string> = {
+  amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'", apos: "'", nbsp: " ",
+};
+const decode = (s: string): string =>
+  s.replace(/&(#x[0-9a-f]+|#\d+|[a-z0-9]+);/gi, (whole, e: string) => {
+    const k = e.toLowerCase();
+    if (k.startsWith("#x")) return String.fromCodePoint(parseInt(k.slice(2), 16));
+    if (k.startsWith("#") && k !== "#39") return String.fromCodePoint(parseInt(k.slice(1), 10));
+    return ENTITIES[k] ?? whole;
+  });
+
+/** The plain-text part, derived from the cleaned HTML rather than trusted
+    from the browser — one source, so the text and HTML halves agree. A link
+    keeps its address in brackets, since the text part has no other way to
+    carry it; a bare address that is its own text is not repeated. */
+export function htmlToText(clean: string): string {
+  const withLinks = clean.replace(/<a\s[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi,
+    (_m, href: string, inner: string) => {
+      const text = decode(inner.replace(/<[^>]+>/g, "")).trim();
+      const url = decode(href).replace(/^mailto:/i, "");
+      return text && text !== url ? `${text} (${url})` : url;
+    });
+  // The editor wraps each list item in a paragraph; unwrap it first, or every
+  // item would be followed by a blank line. Numbered lists are numbered.
+  const text = withLinks
+    .replace(/<p[^>]*>\s*<br\s*\/?>\s*<\/p>/gi, "\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>\s*<\/li>/gi, "</li>")
+    .replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, (_m, inner: string) => {
+      let n = 0;
+      return inner.replace(/<li[^>]*>\s*(<p[^>]*>)?/gi, () => `${++n}. `);
+    })
+    .replace(/<li[^>]*>\s*(<p[^>]*>)?/gi, "- ")
+    .replace(/<\/(p|li)>/gi, "\n")
+    .replace(/<[^>]+>/g, "");
+  return decode(text).replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
 /** The message as HTML: the written body, then the footer, with the opt-out
     rendered as a real link when we have one. */
 export function htmlBody(
   body: string, cfg: OutreachConfig, signatureId?: string | null, commercial = true,
   to?: string | null,
+  /** Already-cleaned HTML for the written part, from cleanHtml(). When given
+      it replaces the paragraphs built from `body`. */
+  cleanBody: string | null = null,
 ): string {
   const url = commercial && cfg.unsubscribe_mailbox && to ? linkFor(to) : null;
   const p = `margin:0 0 1em;font-family:${FONT};font-size:${SIZE}`;
@@ -160,7 +228,12 @@ export function htmlBody(
   const id = signatureId ?? cfg.default_signature;
   const sig = cfg.signatures.find((x) => x.id === id);
 
-  const parts = [paragraphs(body, p), paragraphs(sig ? sig.body : cfg.sender_name, p)];
+  // A formatted body has no margins of its own, so the wrapper supplies the
+  // gap before the sign-off that the plain paragraphs carry themselves.
+  const parts = [
+    cleanBody ? `<div style="margin:0 0 1em">${cleanBody}</div>` : paragraphs(body, p),
+    paragraphs(sig ? sig.body : cfg.sender_name, p),
+  ];
   if (commercial) {
     // The compliance block, visually quieter than the message but present in
     // the same place every time. Small and grey is convention, not evasion —
@@ -185,7 +258,18 @@ export function htmlBody(
 export function compose(
   body: string, cfg: OutreachConfig, signatureId?: string | null, commercial = true,
   to?: string | null,
+  /** Formatted HTML from the editor. When given, both halves come from it:
+      the HTML cleaned, and the text derived from that — `body` is ignored. */
+  bodyHtml: string | null = null,
 ): { text: string; html: string } {
+  if (bodyHtml) {
+    const clean = cleanHtml(bodyHtml);
+    const text = htmlToText(clean);
+    return {
+      text: withFooter(text, cfg, signatureId, commercial, to),
+      html: htmlBody(text, cfg, signatureId, commercial, to, clean),
+    };
+  }
   return {
     text: withFooter(body, cfg, signatureId, commercial, to),
     html: htmlBody(body, cfg, signatureId, commercial, to),
