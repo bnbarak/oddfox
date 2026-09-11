@@ -237,7 +237,7 @@
           "round": 1,
           "variant": "the casual opener",
           "subject": "quick one",
-          "body": "Hey {{first_name}},\n\nWe've built something futuristic for ship attacks at sea: autonomous boats that escort vessels through the risky stretches and protect them.\n\nCurious whether that would change how you look at those routes.\n\nWorth a quick chat?\n\n{{sender}}"
+          "body": "Hey {{first_name}},\n\nWe are building something futuristic for ship attacks at sea: autonomous boats that escort vessels through the risky stretches and protect them.\n\nCurious whether that would change how you look at those routes.\n\nWorth a quick chat?\n\n{{sender}}"
         },
         {
           "round": 2,
