@@ -29,6 +29,11 @@ ok("a javascript: link loses its href", !/javascript/.test(c));
 ok("images are dropped", !/<img/.test(c));
 ok("formatting survives", /<strong>Ana<\/strong>/.test(c));
 ok("an empty paragraph keeps its blank line", /<p[^>]*><br><\/p>/.test(cleanHtml("<p>a</p><p></p><p>b</p>")));
+// What the live editor actually sent: it keeps an empty paragraph after a
+// list that ends the message, which would be a stray line before the sign-off.
+const edges = cleanHtml("<p></p><ol><li><p>a</p></li></ol><p></p><p></p>");
+ok("blank lines at the very start and end are dropped",
+   edges.startsWith("<ol>") && edges.endsWith("</ol>"), edges);
 ok("a real link keeps its href, and nothing else",
    /<a href="https:\/\/seaworth\.ai">site<\/a>/.test(
      cleanHtml('<p><a href="https://seaworth.ai" target="_blank" rel="noopener">site</a></p>')));

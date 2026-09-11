@@ -161,8 +161,14 @@ const paragraphs = (text: string, style: string): string =>
    path, and no margin: in Gmail each line is its own block and a blank line
    is an empty one, which is what the editor does too. An empty paragraph
    gets a <br>, because mail clients collapse an empty <p> to nothing and
-   the blank line the writer typed would vanish. */
+   the blank line the writer typed would vanish.
+
+   Except at the very start and end. The editor always keeps an empty
+   paragraph after a list that ends the message, so there is somewhere to
+   type — and sent, that is a stray blank line before the sign-off that
+   nobody typed. Blank lines in the middle are the writer's and stay. */
 const RICH_P = `margin:0;font-family:${FONT};font-size:${SIZE}`;
+const EDGE_BLANKS = /^(\s*<p[^>]*><br><\/p>)+|(<p[^>]*><br><\/p>\s*)+$/g;
 
 export function cleanHtml(html: string): string {
   return sanitizeHtml(html, {
@@ -171,7 +177,7 @@ export function cleanHtml(html: string): string {
     allowedSchemes: ["http", "https", "mailto"],
     allowProtocolRelative: false,
     transformTags: { p: sanitizeHtml.simpleTransform("p", { style: RICH_P }, false) },
-  }).replace(/<p([^>]*)>\s*<\/p>/g, "<p$1><br></p>").trim();
+  }).replace(/<p([^>]*)>\s*<\/p>/g, "<p$1><br></p>").trim().replace(EDGE_BLANKS, "").trim();
 }
 
 const ENTITIES: Record<string, string> = {
