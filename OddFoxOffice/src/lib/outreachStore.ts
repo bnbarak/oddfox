@@ -330,7 +330,12 @@ export type ThreadMessage = {
   to?: string; also_to?: string[]; cc?: string[]; bcc?: string[];
 };
 export type Thread = {
-  key: string; contact_id: string | null; full_name: string; title: string; company: string | null;
+  /** The counterparty's address and the subject: what read state is kept
+      under. It is data, so it never goes in a URL — `id` does. */
+  key: string;
+  /** Opaque and stable, for the address bar and links. */
+  id: string;
+  contact_id: string | null; full_name: string; title: string; company: string | null;
   account_id: string | null; email: string | null; last_at: string;
   sent: number; replies: number; replied: boolean; messages: ThreadMessage[];
   /** Incoming messages the signed-in person has not seen. Per person. */

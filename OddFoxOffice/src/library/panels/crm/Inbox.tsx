@@ -138,15 +138,18 @@ type Draft = { kind: "new" | "reply"; full: boolean };
 export function CrmInbox() {
   const { data, error, busy, reload } = useThreads();
   const threads = useMemo(() => data?.threads ?? [], [data]);
-  /* The open conversation lives in the URL, as ?thread=<key>, the way Gmail
+  /* The open conversation lives in the URL, as ?thread=<id>, the way Gmail
      keeps it in its address: a reload lands on the same email, back closes
      it, and a link — the bell's, or one pasted to a colleague — opens it.
-     Pushed rather than replaced, so back steps through what you read. */
+     Pushed rather than replaced, so back steps through what you read.
+
+     The thread's opaque id, never its key: the key is somebody's address and
+     a subject line, and a URL ends up in chats and screenshots. */
   const [params, setParams] = useSearchParams();
   const openId = params.get("thread");
-  const setOpenId = (key: string | null, replace = false) => setParams((p) => {
+  const setOpenId = (id: string | null, replace = false) => setParams((p) => {
     const next = new URLSearchParams(p);
-    if (key) next.set("thread", key); else next.delete("thread");
+    if (id) next.set("thread", id); else next.delete("thread");
     return next;
   }, { replace });
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -228,13 +231,13 @@ export function CrmInbox() {
   const unreadCount = threads.filter(isUnread).length;
   // The thread you are reading stays in the Unread view after it is read, as
   // it does in Gmail — vanishing from under the cursor is disorienting.
-  const shown = onlyUnread ? threads.filter((t) => isUnread(t) || t.key === openId) : threads;
+  const shown = onlyUnread ? threads.filter((t) => isUnread(t) || t.id === openId) : threads;
 
   /* Nothing is open until you open it. Showing the newest thread by default
      is what Gmail's reading pane declines to do, and for the same reason:
      opening is reading, so an inbox that opened its top thread on load would
      mark your newest mail read before you had looked at it. */
-  const open: Thread | null = threads.find((t) => t.key === openId) ?? null;
+  const open: Thread | null = threads.find((t) => t.id === openId) ?? null;
   const last = open?.messages[open.messages.length - 1];
 
   /* What the agent in the dock is told this page is showing: the open
@@ -416,13 +419,13 @@ export function CrmInbox() {
     setExpanded(fresh.length && end ? new Set([...fresh, `${end.dir}-${end.id}`]) : new Set());
     // A reply belongs under the thread it was started in.
     if (draft?.kind === "reply") setDraft(null);
-    unfolded.current = t.key;
+    unfolded.current = t.id;
   };
 
   const openThread = (t: Thread) => {
     // Already open: a second history entry for it would make back look broken.
-    if (t.key === openId) return;
-    setOpenId(t.key);
+    if (t.id === openId) return;
+    setOpenId(t.id);
     unfold(t);
     // A click is proof somebody is looking, whatever the tab reports, so
     // opening marks it here rather than waiting on the effect above.
@@ -431,16 +434,16 @@ export function CrmInbox() {
 
   /* Arriving on a thread by its URL — a reload, the bell, back and forward —
      unfolds it the way a click does, once the threads are in, which is when
-     the key means anything. Marking it read is left to the effect above, so
-     a tab restored in the background does not read your mail for you. A key
+     the id means anything. Marking it read is left to the effect above, so
+     a tab restored in the background does not read your mail for you. An id
      that matches nothing, from an old link, is dropped rather than left in
      the address claiming something is open. */
   useEffect(() => {
     if (!openId || !data || unfolded.current === openId) return;
-    const t = threads.find((x) => x.key === openId);
+    const t = threads.find((x) => x.id === openId);
     if (t) unfold(t);
     else setOpenId(null, true);
-    // unfold and setOpenId are new on every render; the key and the data are
+    // unfold and setOpenId are new on every render; the id and the data are
     // what decide whether there is anything to do.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openId, data]);
