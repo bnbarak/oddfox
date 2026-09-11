@@ -71,9 +71,10 @@ export function Bell() {
       </button>
 
       {open && (
-        <BellMenu onPick={(key) => {
+        <BellMenu onPick={(id) => {
           setOpen(false);
-          go(key ? `${INBOX}?thread=${encodeURIComponent(key)}` : INBOX);
+          // The thread's opaque id: its key is an address and a subject.
+          go(id ? `${INBOX}?thread=${encodeURIComponent(id)}` : INBOX);
         }} />
       )}
     </div>
@@ -82,7 +83,7 @@ export function Bell() {
 
 /** Mounted only while open, so the conversations themselves are fetched when
     somebody looks, rather than polled on every page just to show a number. */
-function BellMenu({ onPick }: { onPick: (key: string | null) => void }) {
+function BellMenu({ onPick }: { onPick: (id: string | null) => void }) {
   const { data, error } = useThreads();
   const fresh = (data?.threads ?? [])
     .filter((t) => t.unread > 0)
@@ -100,7 +101,7 @@ function BellMenu({ onPick }: { onPick: (key: string | null) => void }) {
             const m = newest(t);
             return (
               <button key={t.key} className="of-bell__item" role="menuitem"
-                      onClick={() => onPick(t.key)}>
+                      onClick={() => onPick(t.id)}>
                 <span className="of-bell__l1">
                   <strong>{t.full_name}</strong>
                   <span>{when(m?.at ?? t.last_at)}</span>

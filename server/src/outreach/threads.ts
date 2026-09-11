@@ -49,8 +49,14 @@ export type ThreadMessage = {
 };
 
 export type Thread = {
-  /** The contact id, or the bare address for someone outside the CRM. */
+  /** The counterparty's address and the normalised subject — see threadKey.
+      What read state is stored under. Never put it in a URL: it is data. */
   key: string;
+  /** The same thread for URLs: the id of its first email. That is a UUID
+      either way — ours for a message we sent (randomUUID in send.ts), or
+      Resend's for one that came in (poll.ts keys replies by it) — so it
+      carries nothing readable, and it never changes once the thread exists. */
+  id: string;
   contact_id: string | null;
   full_name: string;
   title: string;
@@ -144,6 +150,8 @@ export async function threads(): Promise<Thread[]> {
     const live = messages.filter((m) => m.status !== "canceled");
     out.push({
       key,
+      // Sorted just above, and a thread only exists once it has a message.
+      id: messages[0]!.id,
       contact_id: t.contact_id,
       full_name: c?.full_name ?? t.to ?? key,
       title: c?.title ?? "",
