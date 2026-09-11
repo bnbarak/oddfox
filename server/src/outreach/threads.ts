@@ -21,7 +21,8 @@ export type ThreadMessage = {
   id: string;
   subject: string | null;
   /** The plain-text body. Always present for an outbound message; for an
-      inbound one it is the excerpt Resend gave us. */
+      inbound one it is the text as written, line breaks kept, falling back
+      to the one-line excerpt until the poller has fetched the full text. */
   body: string | null;
   /** The HTML part of an outbound message, when it has one. What the panels
       render, so the surface shows the message as its recipient saw it. */
@@ -104,7 +105,9 @@ const outbound = (s: SendRecord): ThreadMessage => ({
 });
 
 const inbound = (r: ReplyRecord): ThreadMessage => ({
-  dir: "in", id: r.id, subject: r.subject, body: r.excerpt,
+  // The message as written, line breaks and all. The excerpt is a one-line
+  // preview, and only stands in for replies whose full text is not back yet.
+  dir: "in", id: r.id, subject: r.subject, body: r.text || r.excerpt,
   at: r.received_at, sort_at: r.received_at, message_id: r.message_id ?? null,
   automated: r.automated, unsubscribe: r.unsubscribe,
 });

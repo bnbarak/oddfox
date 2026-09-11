@@ -4,9 +4,9 @@ import * as crm from "./crm.js";
 import { secret } from "./config.js";
 import { getConfig } from "./store.js";
 import { optOut } from "./optout.js";
-import { readsAsAutomated, readsAsOptOut } from "./render.js";
+import { cleanHtml, htmlToText, readsAsAutomated, readsAsOptOut } from "./render.js";
 import {
-  allSends, haveReply, openSends, putReply, setCursor, setStatus,
+  allSends, getReply, openSends, patchReply, putReply, setCursor, setStatus,
 } from "./store.js";
 import type { SendStatus } from "./schemas.js";
 
@@ -99,11 +99,31 @@ export async function pollReplies(): Promise<number> {
      page a minute costs nothing. */
   for (const ref of data.data) {
     if (!heard(ref.to)) continue;
-    if (await haveReply(ref.id)) continue;
+    const existing = await getReply(ref.id);
+    // Already saved, with its full text: nothing to do.
+    if (existing && existing.text != null) continue;
 
     const at = new Date(ref.created_at).toISOString();
     const full = await resend().emails.receiving.get(ref.id).catch(() => null);
-    const text = full?.data?.text ?? null;
+    /* The message as written, line breaks and all — what the Inbox shows.
+       It used to be squashed onto one line and cut at 800 characters, which
+       ran a reply into the quoted history under it and dropped the end of
+       any long one. An HTML-only message is turned into text the same way
+       formatted mail is. Capped far below Firestore's 1 MB document limit. */
+    const raw = full?.data?.text
+      ?? (full?.data?.html ? htmlToText(cleanHtml(full.data.html)) : null);
+    const text = raw ? raw.slice(0, 50_000) : null;
+
+    /* Saved before the full text was kept. Fill it in and stop: the opt-out
+       check and the "they replied" marking below already ran when it first
+       arrived, and must not run twice. "" when Resend has no body either, so
+       it is not asked for again every minute. A failed fetch leaves it for
+       the next poll. Not counted in `stored` — it is not new mail. */
+    if (existing) {
+      if (full?.data) await patchReply(ref.id, { text: text ?? "" });
+      continue;
+    }
+
     const automated = readsAsAutomated(ref.from, ref.subject ?? null);
     const isOptOut = readsAsOptOut(text) || readsAsOptOut(ref.subject ?? null);
     const { addr, send_id, contact_id, account_id } = await attribute(ref.from);
@@ -113,6 +133,7 @@ export async function pollReplies(): Promise<number> {
       message_id: ref.message_id ?? full?.data?.message_id ?? null,
       send_id, account_id, contact_id,
       excerpt: text ? text.replace(/\s+/g, " ").slice(0, 800) : null,
+      text: text ?? "",
       unsubscribe: isOptOut, automated,
     });
     stored++;

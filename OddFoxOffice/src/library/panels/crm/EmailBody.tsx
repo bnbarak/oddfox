@@ -83,11 +83,67 @@ function HtmlBody({ html }: { html: string }) {
   );
 }
 
+/* Where a reply's quoted history starts, in the forms mail clients actually
+   write it: Gmail's and Apple Mail's "On <date>, <name> wrote:" — which Gmail
+   wraps onto a second line when the name is long — and Outlook's
+   "-----Original Message-----" or its "From: … / Sent: …" header block.
+   Failing all of those, a run of ">" lines at the very end. */
+const QUOTE_HEADS = [
+  /^On [^\n]*(?:\n[^\n]*)?wrote:[ \t]*$/m,
+  /^-{2,}[ \t]*Original Message[ \t]*-{2,}/im,
+  /^From: [^\n]+\n(?:Sent|Date): /m,
+];
+
+/** Splits a plain-text message into what was written and the history it
+    quotes. `quoted` is null when there is none — or when nothing sits above
+    it, since then there is nothing to fold it under. */
+export function splitQuoted(text: string): { reply: string; quoted: string | null } {
+  let at = -1;
+  for (const re of QUOTE_HEADS) {
+    const m = re.exec(text);
+    if (m && (at < 0 || m.index < at)) at = m.index;
+  }
+  if (at < 0) {
+    const lines = text.split("\n");
+    let i = lines.length;
+    while (i > 0 && (/^\s*$/.test(lines[i - 1]!) || lines[i - 1]!.startsWith(">"))) i--;
+    if (lines.slice(i).some((l) => l.startsWith(">"))) at = lines.slice(0, i).join("\n").length;
+  }
+  const reply = at < 0 ? text : text.slice(0, at).trimEnd();
+  if (at < 0 || !reply.trim()) return { reply: text, quoted: null };
+  return { reply, quoted: text.slice(at).trim() };
+}
+
+/** Plain text, on the same white page as an HTML message — an email is an
+    email, whichever part we happen to hold — with its line breaks kept and
+    the quoted history folded behind "···" the way Gmail does it. The reply
+    is what somebody opened the thread to read, and the quote under it is
+    usually our own last message, already in the thread one card up. */
+function TextBody({ text }: { text: string }) {
+  const [showQuoted, setShowQuoted] = useState(false);
+  const { reply, quoted } = splitQuoted(text);
+  return (
+    <div className="of-msg__text">
+      <div className="of-msg__plain">{reply}</div>
+      {quoted && (
+        <>
+          <button className="of-msg__more" aria-expanded={showQuoted}
+                  title={showQuoted ? "Hide the quoted text" : "Show the quoted text"}
+                  onClick={() => setShowQuoted((v) => !v)}>
+            ···
+          </button>
+          {showQuoted && <div className="of-msg__plain of-msg__quoted">{quoted}</div>}
+        </>
+      )}
+    </div>
+  );
+}
+
 /** The body of one message. Prefers the HTML part, which is what the
     recipient opened; falls back to the plain text for messages sent before
-    there was an HTML part, and for inbound mail, of which we only keep text. */
+    there was an HTML part, and for inbound mail, of which we keep the text. */
 export function EmailBody({ html, text }: { html?: string | null; text?: string | null }) {
   if (html) return <HtmlBody html={html} />;
-  if (text) return <pre className="of-msg__body">{text}</pre>;
+  if (text) return <TextBody text={text} />;
   return null;
 }
