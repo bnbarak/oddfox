@@ -14,6 +14,7 @@ import {
 } from "./store.js";
 import { Campaign } from "./schemas.js";
 import { due } from "./tick.js";
+import { describe, type PageContext } from "./where.js";
 
 /* The operator: the agent you talk to instead of clicking.
 
@@ -468,6 +469,9 @@ How to behave:
   refused, say that, and say which.
 - Cancelling is cheap and safe while a message is scheduled. Offer it when
   someone sounds unsure.
+- A question may come with a note of where the operator is: the email,
+  campaign or account they have open, or a draft they are writing. Use it —
+  "this" means that — and do not recite it back to them.
 - Be brief. Short sentences, no bullet-point essays, no restating the request
   back before answering. You are a colleague at a terminal, not a report.
 - You will not see the results of tools you called in earlier turns, only what
@@ -508,6 +512,24 @@ function operator(model: string): Agent {
   return cached.agent;
 }
 
+/** The brief for this turn. A lookup that fails costs the answer its "this",
+    not the answer. */
+async function onScreen(where: PageContext): Promise<string> {
+  try {
+    return await describe(where);
+  } catch (err) {
+    console.warn("[operator] could not describe the page:", err);
+    return `The operator is on the ${where.page_label} page (${where.label}). ` +
+           "What it shows could not be looked up; ask them, or use the tools.";
+  }
+}
+
+/* An earlier question keeps a note of where it was asked, so "and this one?"
+   three turns back still reads as something when the thread is replayed.
+   Only the note: that turn's brief described that moment, and is stale now. */
+const asked = (m: ChatTurn): string =>
+  m.context ? `[asked on ${m.context}]\n${m.content}` : m.content;
+
 /** One turn of conversation against the shared thread.
 
     Mastra has its own memory and threads, but they need a storage adapter
@@ -520,9 +542,11 @@ function operator(model: string): Agent {
     of which this needs. What it does not cost us is the context management:
     ToolCallFilter and TokenLimiter are plain processors and work on any
     message list, storage adapter or not. */
-export async function chat(message: string): Promise<{ text: string; thread: ChatTurn[] }> {
+export async function chat(
+  message: string, where: PageContext | null = null,
+): Promise<{ text: string; thread: ChatTurn[] }> {
   const cfg = await getConfig();
-  const history = await getThread();
+  const [history, brief] = await Promise.all([getThread(), where ? onScreen(where) : null]);
   const now = new Date().toISOString();
 
   // The whole thread goes in; TokenLimiter decides what actually fits. That
@@ -538,7 +562,7 @@ export async function chat(message: string): Promise<{ text: string; thread: Cha
   // does not satisfy the SDK's message union.
   const input = context.map((m) =>
     m.role === "user"
-      ? { role: "user" as const, content: m.content }
+      ? { role: "user" as const, content: asked(m) }
       : { role: "assistant" as const, content: m.content });
 
   /* maxSteps, because the default is five and a real request spends them
@@ -546,7 +570,10 @@ export async function chat(message: string): Promise<{ text: string; thread: Cha
      list-campaigns, then set-campaign, and the answer about it is a sixth.
      Run out of steps and the turn ends on a tool call with nothing said,
      which is what an empty bubble in the panel was. */
-  const res = await operator(cfg.model).generate(input, { maxSteps: 12 });
+  /* Where they are goes in as a system message for this turn alone. It is
+     not stored: the email open now says nothing about the next question. */
+  const res = await operator(cfg.model).generate(
+    input, { maxSteps: 12, ...(brief ? { system: brief } : {}) });
 
   /* Never store an empty assistant turn. An empty one is not just a blank
      bubble now — it goes into the thread, gets replayed as the model's own
@@ -561,7 +588,7 @@ export async function chat(message: string): Promise<{ text: string; thread: Cha
   // therefore leaves no half-turn in the thread for the next person to
   // puzzle over.
   const thread = await appendTurns([
-    { role: "user", content: message, at: now },
+    { role: "user", content: message, at: now, ...(where ? { context: where.label } : {}) },
     { role: "assistant", content: text, at: new Date().toISOString() },
   ]);
   return { text, thread };

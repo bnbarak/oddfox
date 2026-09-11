@@ -17,6 +17,7 @@ import { endCampaign, startCampaign } from "./start.js";
 import { statesFor } from "./campaignState.js";
 import * as crm from "./crm.js";
 import { chat } from "./operator.js";
+import { PageContext } from "./where.js";
 import { threads } from "./threads.js";
 import { due, tick } from "./tick.js";
 import { z } from "zod";
@@ -220,7 +221,12 @@ outreachRouter.post("/optouts/restore", h(async (req, res) => {
 
 // ---- The operator agent ---------------------------------------------------
 
-const ChatRequest = z.object({ message: z.string().min(1).max(8000) }).strict();
+const ChatRequest = z.object({
+  message: z.string().min(1).max(8000),
+  /** What the page under the dock is showing. Optional: a caller that is not
+      the dock still gets an answer, just not one about "this". */
+  context: PageContext.nullish(),
+}).strict();
 
 /** The shared thread, so a reload does not lose the conversation and both
     people on the allow-list see the same one. */
@@ -243,8 +249,8 @@ outreachRouter.post("/chat", h(async (req, res) => {
     });
     return;
   }
-  const { message } = ChatRequest.parse(req.body);
-  res.json(await chat(message));
+  const { message, context } = ChatRequest.parse(req.body);
+  res.json(await chat(message, context ?? null));
 }));
 
 /** Who is asking. Always set behind the sign-in check; throwing rather than

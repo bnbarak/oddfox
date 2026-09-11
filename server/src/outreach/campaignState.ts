@@ -20,7 +20,7 @@ export type AccountCampaign = {
 };
 
 const PENDING = new Set(["scheduled", "draft"]);
-const LANDED = new Set(["sent", "delivered", "opened", "clicked", "bounced", "complained"]);
+export const LANDED = new Set(["sent", "delivered", "opened", "clicked", "bounced", "complained"]);
 
 export function stateFor(
   accountId: string, campaigns: Campaign[], sends: SendRecord[],
