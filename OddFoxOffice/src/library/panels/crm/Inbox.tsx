@@ -2,9 +2,9 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Chip, H1, Note } from "../../../ui";
 import {
-  cancelSend, markThreads, sendDirect, sendNow, useCampaigns, useOutreachConfig,
-  useOutreachStatus, useThreads,
-  type Thread, type ThreadMessage,
+  cancelSend, deleteDraft, markThreads, putDraft, sendDirect, sendNow, useCampaigns,
+  useDrafts, useOutreachConfig, useOutreachStatus, useThreads,
+  type MailDraft, type Thread, type ThreadMessage,
 } from "../../../lib/outreachStore";
 import { EmailBody } from "./EmailBody";
 import { CampaignTag } from "./CampaignChip";
@@ -132,8 +132,21 @@ function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
 
 /** What is being written, and in which frame. A new message starts docked in
     the corner and a reply starts inline under its thread; either can be
-    blown up to a full window and shrunk back without losing a word. */
-type Draft = { kind: "new" | "reply"; full: boolean };
+    blown up to a full window and shrunk back without losing a word.
+
+    `id` is the saved draft this composer is editing — there is always one,
+    from the moment the composer opens — and `reply_to` is the conversation it
+    answers, or null for a new message. */
+type Draft = { id: string; reply_to: string | null; full: boolean };
+
+/** How long typing has to stop before the draft is written. Long enough that
+    a sentence is one save rather than forty, short enough that nothing
+    plausible — a closed tab, a reload — lands inside it. */
+const SAVE_MS = 900;
+
+/** First line of a draft, for its row in the list. */
+const draftPeek = (d: MailDraft): string =>
+  d.body.replace(/\s+/g, " ").trim().slice(0, 120);
 
 export function CrmInbox() {
   const { data, error, busy, reload } = useThreads();
@@ -147,11 +160,24 @@ export function CrmInbox() {
      a subject line, and a URL ends up in chats and screenshots. */
   const [params, setParams] = useSearchParams();
   const openId = params.get("thread");
-  const setOpenId = (id: string | null, replace = false) => setParams((p) => {
-    const next = new URLSearchParams(p);
-    if (id) next.set("thread", id); else next.delete("thread");
-    return next;
-  }, { replace });
+  /* Which folder the list is showing. In the URL for the same reason the
+     open conversation is: Drafts is a place you go back to. */
+  const onDrafts = params.get("view") === "drafts";
+  /* Both in one update. Two setParams calls in a row would each start from
+     the same current address and the second would undo the first. */
+  const go = (next: { thread?: string | null; drafts?: boolean }, replace = false) =>
+    setParams((p) => {
+      const q = new URLSearchParams(p);
+      if (next.thread !== undefined) {
+        if (next.thread) q.set("thread", next.thread); else q.delete("thread");
+      }
+      if (next.drafts !== undefined) {
+        if (next.drafts) q.set("view", "drafts"); else q.delete("view");
+      }
+      return q;
+    }, { replace });
+  const setOpenId = (id: string | null, replace = false) => go({ thread: id }, replace);
+  const showDrafts = (yes: boolean) => go({ drafts: yes });
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [draft, setDraft] = useState<Draft | null>(null);
   const [subject, setSubject] = useState("");
@@ -184,6 +210,16 @@ export function CrmInbox() {
      the next poll. An entry goes once the server has caught up. */
   const [marked, setMarked] = useState<Map<string, boolean>>(new Map());
   const [onlyUnread, setOnlyUnread] = useState(false);
+  /* Everything this person has part way through writing. On the server, so a
+     draft survives a reload and follows them to another machine. */
+  const drafts = useDrafts();
+  const saved = useMemo(() => drafts.data?.records ?? [], [drafts.data]);
+  const replyDraftFor = (threadId: string | null): MailDraft | null =>
+    (threadId ? saved.find((d) => d.reply_to === threadId) : null) ?? null;
+  /** Drafts this tab has thrown away or sent. The list they were in takes a
+      moment to catch up, and without this the effect that reopens a saved
+      reply would put a discarded one straight back on the screen. */
+  const gone = useRef<Set<string>>(new Set());
 
   /* Who it goes to, field by field: the chips, plus any finished address
      still sitting in the box — somebody who types an address and goes
@@ -201,6 +237,30 @@ export function CrmInbox() {
   const ccOpen = showCc || cc.length > 0 || findCc !== "";
   const bccOpen = showBcc || bcc.length > 0 || findBcc !== "";
 
+  /** The message as it now stands, in the shape the server keeps it in. */
+  const composed = {
+    to: toList.map((r) => r.email), cc: ccList.map((r) => r.email),
+    bcc: bccList.map((r) => r.email), subject, body, html: html || null,
+    from_domain: fromDomain || null, signature: signature || null,
+  };
+  type Composed = typeof composed;
+  /** The same, as one string: what the autosave watches, and what tells a
+      draft nobody has typed into from one somebody has. */
+  const shapeOf = (c: Composed) => JSON.stringify([
+    c.to, c.cc, c.bcc, c.subject, c.body, c.html, c.from_domain, c.signature]);
+  const shape = shapeOf(composed);
+  /** A draft created by the click that opened the composer, and its text at
+      that moment. Reopening a saved draft clears it — only a brand new one
+      can be thrown away for being blank. */
+  const opened = useRef<{ id: string; shape: string } | null>(null);
+  const disposable = Boolean(draft && opened.current?.id === draft.id
+                             && opened.current.shape === shape);
+  /** What the server was last told, so opening a draft and reading it does
+      not write it straight back — which would reorder the list and move its
+      saved time for a message nobody has touched. */
+  const written = useRef<string>("");
+  const stamp = (id: string, c: Composed) => `${id}:${shapeOf(c)}`;
+
   // Default to an outreach domain, never the personal one — picking that has
   // to be a deliberate choice, not what happens if you do not look.
   useEffect(() => {
@@ -214,6 +274,11 @@ export function CrmInbox() {
     window.addEventListener(CRM_CHANGED, r);
     return () => window.removeEventListener(CRM_CHANGED, r);
   }, [reload]);
+
+  /** A reply, written under the conversation it answers. */
+  const replying = Boolean(draft?.reply_to);
+  /** A new message, in the docked window. */
+  const composing = Boolean(draft && !draft.reply_to);
 
   // Escape shrinks the full window back to where it came from. It never
   // discards: a draft is too easy to lose to a reflex.
@@ -241,19 +306,21 @@ export function CrmInbox() {
   const last = open?.messages[open.messages.length - 1];
 
   /* What the agent in the dock is told this page is showing: the open
-     thread, by key, and anything being written. A draft exists nowhere but
-     here, so it goes whole rather than as an id. */
+     thread, by key, and anything being written. The draft goes whole rather
+     than as an id — it is saved, but the agent has no way to read it back,
+     and what matters is the words on the screen this second. */
   useFocus({
     label: [open && `${open.full_name}${last?.subject ? ` — ${last.subject}` : ""}`,
-            draft && (draft.kind === "reply" ? "your reply" : "new email")]
+            draft && (replying ? "your reply" : "new email")]
       .filter(Boolean).join(" › ") || undefined,
     thread: open?.key,
     draft: draft ? {
-      reply: draft.kind === "reply",
+      reply: replying,
       to: toList.map((r) => r.email), cc: ccList.map((r) => r.email),
       bcc: bccList.map((r) => r.email), subject, body: body.slice(0, 8000),
     } : undefined,
-    view: onlyUnread ? "only unread conversations" : undefined,
+    view: onDrafts ? "the drafts folder"
+      : onlyUnread ? "only unread conversations" : undefined,
   });
 
   /* The mail client fills what is left of the window and scrolls inside
@@ -285,9 +352,52 @@ export function CrmInbox() {
     setShowCc(ccPeople.length > 0); setShowBcc(false);
   };
 
+  /* Saving what is being written. Every composer here edits a draft that
+     already exists on the server — one is created the moment you click New
+     email or Reply — so there is no "unsaved" state to lose, and Drafts can
+     list a message you have not typed a word into yet.
+
+     Writes are serialised through `writing` so that discarding cannot race a
+     save that is already in flight and resurrect the draft it just deleted. */
+  const writing = useRef<Promise<unknown>>(Promise.resolve());
+  const write = (d: MailDraft) => {
+    written.current = stamp(d.id, d);
+    writing.current = writing.current
+      .then(() => putDraft(d))
+      .then(() => drafts.reload())
+      // A failed save is not worth a toast over a half-written sentence: the
+      // next keystroke tries again, and the words are still on the screen.
+      .catch(() => {});
+    return writing.current;
+  };
+
+  const blank = (id: string, replyTo: string | null): MailDraft => ({
+    id, reply_to: replyTo, to: [], cc: [], bcc: [], subject: "", body: "", html: null,
+    from_domain: fromDomain || null, signature: signature || null,
+    created_at: "", updated_at: "",
+  });
+
+  /** Puts a saved draft back on the screen, chips and all. */
+  const loadDraft = (d: MailDraft) => {
+    setTo(d.to.map((e) => recipientFor(e, contacts)));
+    setCc(d.cc.map((e) => recipientFor(e, contacts)));
+    setBcc(d.bcc.map((e) => recipientFor(e, contacts)));
+    setFind(""); setFindCc(""); setFindBcc("");
+    setShowCc(d.cc.length > 0); setShowBcc(d.bcc.length > 0);
+    setSubject(d.subject); setBody(d.body); setHtml(d.html ?? "");
+    if (d.from_domain) setFromDomain(d.from_domain);
+    if (d.signature) setSignature(d.signature);
+    opened.current = null;
+    written.current = stamp(d.id, d);
+    setDraft({ id: d.id, reply_to: d.reply_to, full: false });
+  };
+
   const startCompose = () => {
-    setDraft({ kind: "new", full: false });
+    const d = blank(crypto.randomUUID(), null);
     setTo([]); clearPeople(); setSubject(""); setBody(""); setHtml("");
+    opened.current = { id: d.id, shape: shapeOf(d) };
+    setDraft({ id: d.id, reply_to: null, full: false });
+    void write(d);
   };
 
   /* The last message we sent this thread that had other people on it —
@@ -297,21 +407,51 @@ export function CrmInbox() {
 
   /* Reply goes to the person whose thread it is. Reply all puts everyone
      else from our last group message back on Cc, the way Gmail's reply all
-     does. Bcc never carries over: that is what Bcc means. */
+     does. Bcc never carries over: that is what Bcc means.
+
+     A reply you had already started comes back instead: one draft per
+     conversation, so Reply never quietly abandons what you wrote. */
   const startReply = (all: boolean) => {
+    if (!open) return;
+    const already = replyDraftFor(open.id);
+    if (already) { loadDraft(already); return; }
     const s = last?.subject ?? "";
-    setSubject(s.toLowerCase().startsWith("re:") ? s : s ? `Re: ${s}` : "");
-    setBody(""); setHtml("");
-    setTo(open?.email
-      ? [{ email: open.email, contact_id: open.contact_id, name: open.full_name }] : []);
+    const subj = s.toLowerCase().startsWith("re:") ? s : s ? `Re: ${s}` : "";
+    const lead = open.email
+      ? [{ email: open.email, contact_id: open.contact_id, name: open.full_name }] : [];
     const others = all && lastGroup
       ? [...(lastGroup.also_to ?? []), ...(lastGroup.cc ?? [])]
-          .filter((e) => e.toLowerCase() !== open?.email?.toLowerCase())
+          .filter((e) => e.toLowerCase() !== open.email?.toLowerCase())
           .map((e) => recipientFor(e, contacts))
       : [];
-    clearPeople(others);
-    setDraft({ kind: "reply", full: false });
+    setSubject(subj); setBody(""); setHtml(""); setTo(lead); clearPeople(others);
+    const d = { ...blank(crypto.randomUUID(), open.id), subject: subj,
+                to: lead.map((r) => r.email), cc: others.map((r) => r.email) };
+    opened.current = { id: d.id, shape: shapeOf(d) };
+    setDraft({ id: d.id, reply_to: open.id, full: false });
+    void write(d);
   };
+
+  /** Throws the draft away and clears the composer. On a reply this is the
+      reset button: the conversation keeps no half-written answer. */
+  const discard = () => {
+    const d = draft;
+    if (!d) return;
+    gone.current.add(d.id);
+    setDraft(null);
+    setTo([]); clearPeople(); setSubject(""); setBody(""); setHtml("");
+    // After whatever save is in flight, or the delete races it and loses.
+    writing.current = writing.current
+      .then(() => deleteDraft(d.id))
+      .then(() => drafts.reload())
+      .catch((e) => setSaid(e instanceof Error ? e.message : String(e)));
+  };
+
+  /** Puts the composer away and leaves the draft where it is — except one
+      created by the click that opened it and never typed into, which goes
+      with it. Gmail does the same, and a Drafts list filling up with blank
+      rows from stray clicks helps nobody. */
+  const leave = () => { if (disposable) discard(); else setDraft(null); };
 
   const resize = () => setDraft((d) => d && { ...d, full: !d.full });
 
@@ -343,7 +483,7 @@ export function CrmInbox() {
        new message. In-Reply-To points at the last message that has an id;
        References carries the whole chain, which is what keeps long threads
        from splitting. */
-    const chain = (draft.kind === "reply" ? open?.messages ?? [] : [])
+    const chain = (draft.reply_to ? open?.messages ?? [] : [])
       .map((m) => m.message_id)
       .filter((x): x is string => Boolean(x));
 
@@ -362,6 +502,12 @@ export function CrmInbox() {
           cc: ccList.map((r) => r.email), bcc: bccList.map((r) => r.email) },
         html || null);
       setSaid(sentNote(res.scheduled_at, res.dry_run, everyone.length));
+      /* The message exists now, so the draft it was written in should not.
+         Behind whatever save is in flight, so a keystroke from a second ago
+         cannot put it back. */
+      gone.current.add(draft.id);
+      writing.current = writing.current
+        .then(() => deleteDraft(draft.id)).then(() => drafts.reload()).catch(() => {});
       setDraft(null); setTo([]); clearPeople(); setSubject(""); setBody(""); setHtml("");
       await reload();
     } catch (e) { setSaid(e instanceof Error ? e.message : String(e)); }
@@ -411,14 +557,44 @@ export function CrmInbox() {
       not unfold one a click already has. */
   const unfolded = useRef<string | null>(null);
 
+  /* The composer, written a moment after typing stops. A draft exists from
+     the first click, so this only ever updates one, and the cleanup clears
+     the timer when the composer closes — a discard can never be followed by
+     a save of what was discarded. */
+  useEffect(() => {
+    if (!draft || written.current === `${draft.id}:${shape}`) return;
+    const { id, reply_to } = draft;
+    const now = { ...composed };
+    const t = window.setTimeout(() => {
+      void write({ id, reply_to, ...now, created_at: "", updated_at: "" });
+    }, SAVE_MS);
+    return () => window.clearTimeout(t);
+    // The draft and its text are what decide whether there is anything to
+    // save; `composed` and `write` are new objects on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [draft?.id, draft?.reply_to, shape]);
+
+  /* Opening a conversation you had started answering puts the reply back
+     under it, the way Gmail reopens a draft in its thread — but not over
+     something else being written, and not one this tab has just thrown
+     away or sent. */
+  useEffect(() => {
+    if (!openId || draft) return;
+    const d = replyDraftFor(openId);
+    if (!d || gone.current.has(d.id)) return;
+    loadDraft(d);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openId, saved, draft]);
+
   /** Show what is new, the way Gmail unfolds the unread messages and the
       last one and leaves the rest folded. Read threads open as before. */
   const unfold = (t: Thread) => {
     const fresh = isUnread(t) ? t.messages.filter((m) => m.unread).map((m) => `${m.dir}-${m.id}`) : [];
     const end = t.messages[t.messages.length - 1];
     setExpanded(fresh.length && end ? new Set([...fresh, `${end.dir}-${end.id}`]) : new Set());
-    // A reply belongs under the thread it was started in.
-    if (draft?.kind === "reply") setDraft(null);
+    // A reply belongs under the thread it was started in. Closing it here
+    // loses nothing — it is saved, and opening that thread brings it back.
+    if (draft?.reply_to && draft.reply_to !== t.id) leave();
     unfolded.current = t.id;
   };
 
@@ -430,6 +606,22 @@ export function CrmInbox() {
     // A click is proof somebody is looking, whatever the tab reports, so
     // opening marks it here rather than waiting on the effect above.
     if (isUnread(t)) void mark([t], true);
+  };
+
+  /** Picking one out of the Drafts list. A reply goes back under the
+      conversation it answers, which means leaving the folder to show it; a
+      new message opens in the docked window, over whichever list you were
+      looking at. */
+  const openSaved = (d: MailDraft) => {
+    const t = d.reply_to ? threads.find((x) => x.id === d.reply_to) ?? null : null;
+    if (d.reply_to && !t) {
+      // The conversation it answered is not in the list — nothing to put it
+      // under. Rare enough to explain rather than silently do nothing.
+      setSaid("The conversation this reply belongs to is no longer here.");
+      return;
+    }
+    if (t) { go({ thread: t.id, drafts: false }); unfold(t); }
+    loadDraft(d);
   };
 
   /* Arriving on a thread by its URL — a reload, the bell, back and forward —
@@ -513,8 +705,10 @@ export function CrmInbox() {
 
       <input className="of-chat__in" placeholder="Subject" value={subject}
              disabled={working} onChange={(e) => setSubject(e.target.value)} />
-      <RichEditor className="of-cw__body"
-                  style={full ? undefined : { minHeight: draft?.kind === "new" ? 240 : 190 }}
+      {/* Keyed by the draft, so opening a saved one loads its text: the
+          editor keeps its own document and is built from `html` at mount. */}
+      <RichEditor key={draft?.id ?? "none"} className="of-cw__body"
+                  style={full ? undefined : { minHeight: composing ? 240 : 190 }}
                   html={html} disabled={working} placeholder="Write a message…"
                   onChange={(h, t) => { setHtml(h); setBody(t); }} />
 
@@ -537,6 +731,12 @@ export function CrmInbox() {
     </>
   );
 
+  /* What the composer says about itself. Gmail's "Saved" line, and it is
+     worth saying: a composer that saves silently looks exactly like one that
+     does not save at all. */
+  const savedAt = draft ? saved.find((d) => d.id === draft.id)?.updated_at ?? null : null;
+  const savedNote = savedAt ? `Draft saved ${fmt(savedAt)}` : "Saving draft…";
+
   const actions = (() => {
     // Say why the button is dead rather than leaving it greyed and
     // unexplained — "no recipient picked" is not obvious when the search box
@@ -557,18 +757,26 @@ export function CrmInbox() {
                 disabled={working || Boolean(missing)}>
           {working ? "…" : "Send"}
         </button>
-        <button className="of-dock__x" disabled={working}
-                onClick={() => setDraft(null)}>discard</button>
+        {/* The composer has nothing to save — the draft is saved as you type
+            — so the only other button is the one that throws it away. On a
+            reply that is the reset: the conversation stops holding an
+            unfinished answer. */}
+        <button className="of-dock__x" disabled={working} onClick={discard}
+                title={replying ? "Delete this reply draft and start over"
+                  : "Delete this draft"}>
+          {replying ? "reset reply" : "discard draft"}
+        </button>
         <span className="of-note">
           {missing ?? (n > 1
             ? `One message to ${n} people${bccList.length ? `, ${bccList.length} of them on Bcc` : ""}. Signature added for you.`
             : "Signature added for you.")}
         </span>
+        <span className="of-note of-cw__saved">{savedNote}</span>
       </>
     );
   })();
 
-  const title = draft?.kind === "reply" ? `Reply to ${open?.full_name ?? "them"}` : "New message";
+  const title = replying ? `Reply to ${open?.full_name ?? "them"}` : "New message";
   const tools = (
     <span className="of-cw__tools">
       <button className="of-cw__x" onClick={resize}
@@ -576,8 +784,10 @@ export function CrmInbox() {
               aria-label={full ? "Shrink back" : "Open full size"}>
         <SizeIcon full={full} />
       </button>
-      <button className="of-cw__x" onClick={() => setDraft(null)} disabled={working}
-              title="Discard" aria-label="Discard">×</button>
+      {/* Closes the window and leaves the draft where it is. Throwing it
+          away is the button in the footer, which says so. */}
+      <button className="of-cw__x" onClick={leave} disabled={working}
+              title="Close — the draft is saved" aria-label="Close">×</button>
     </span>
   );
 
@@ -594,7 +804,7 @@ export function CrmInbox() {
         <footer className="of-cw__f">{actions}</footer>
       </div>
     </div>
-  ) : draft.kind === "new" ? (
+  ) : composing ? (
     <div className="of-cw" role="dialog" aria-label="Compose">
       <header className="of-cw__h"><span>New message</span>{tools}</header>
       <div className="of-cw__b">{fields}</div>
@@ -616,14 +826,24 @@ export function CrmInbox() {
     </span>
   );
 
+  /* Inbox and Drafts are two folders over one list, Gmail's arrangement, and
+     Unread is a filter inside the first. Drafts is a place rather than a
+     filter — what is in it is not mail — so it takes the whole list and the
+     unread controls go with it. */
   const filters = (
     <>
-      <button className="of-facet__b" aria-pressed={onlyUnread}
-              onClick={() => setOnlyUnread((x) => !x)}
+      <button className="of-facet__b" aria-pressed={!onDrafts && onlyUnread}
+              onClick={() => { showDrafts(false); setOnlyUnread((x) => !x); }}
               title={onlyUnread ? "Show every conversation" : "Show only conversations with mail you have not opened"}>
         Unread
       </button>
-      {unreadCount > 0 && (
+      <button className="of-facet__b" aria-pressed={onDrafts}
+              onClick={() => showDrafts(!onDrafts)}
+              title={onDrafts ? "Back to the conversations"
+                : "What you have started writing and not sent"}>
+        Drafts{saved.length ? ` (${saved.length})` : ""}
+      </button>
+      {!onDrafts && unreadCount > 0 && (
         <button className="of-dock__x" onClick={() => void mark(threads.filter(isUnread), true)}>
           mark all read
         </button>
@@ -631,8 +851,39 @@ export function CrmInbox() {
     </>
   );
 
+  /* A draft's row. The person it is to, when it was last saved, and the
+     first line — the same three things a conversation's row shows, because
+     you are picking between them the same way. */
+  const draftRows = (
+    <>
+      {saved.map((d) => (
+        <button key={d.id}
+                className={`of-inbox__row${draft?.id === d.id ? " is-on" : ""}`}
+                onClick={() => openSaved(d)}>
+          <span className="of-inbox__l1">
+            <span className="of-inbox__who">
+              {d.to[0] ?? "No recipient yet"}
+              {d.to.length > 1 ? ` +${d.to.length - 1}` : ""}
+            </span>
+            <span className="of-inbox__at">{fmt(d.updated_at)}</span>
+          </span>
+          <span className="of-inbox__l2">
+            <span className="of-inbox__subj">{d.subject || "(no subject)"}</span>
+            <span className="of-inbox__peek"> — {draftPeek(d) || "nothing written yet"}</span>
+          </span>
+          <span className="of-inbox__l3">{d.reply_to ? "reply" : "new message"}</span>
+        </button>
+      ))}
+      {saved.length === 0 && (
+        <div className="of-inbox__none">
+          {drafts.busy ? "Loading…" : "No drafts. Anything you start writing is kept here."}
+        </div>
+      )}
+    </>
+  );
+
   const newButton = (
-    <button className="of-facet__b" onClick={startCompose} disabled={draft?.kind === "new"}>
+    <button className="of-facet__b" onClick={startCompose} disabled={composing}>
       New email
     </button>
   );
@@ -641,7 +892,7 @@ export function CrmInbox() {
   const toast = <Toast message={said} onDone={() => setSaid(null)}
                        ms={Math.max(6000, (said?.length ?? 0) * 60)} />;
 
-  if (threads.length === 0) {
+  if (threads.length === 0 && !onDrafts) {
     return (
       <>
         <div className="of-inbox__bar">{newButton}{filters}{counts}</div>
@@ -657,8 +908,8 @@ export function CrmInbox() {
       <div className="of-inbox__bar">{newButton}{filters}{counts}</div>
 
       <div className="of-inbox" ref={box}>
-        <nav className="of-inbox__list" aria-label="Conversations">
-          {shown.map((t) => {
+        <nav className="of-inbox__list" aria-label={onDrafts ? "Drafts" : "Conversations"}>
+          {onDrafts ? draftRows : shown.map((t) => {
             const preview = t.messages[t.messages.length - 1];
             return (
               <button key={t.key}
@@ -685,7 +936,7 @@ export function CrmInbox() {
               </button>
             );
           })}
-          {onlyUnread && shown.length === 0 && (
+          {!onDrafts && onlyUnread && shown.length === 0 && (
             <div className="of-inbox__none">Nothing unread.</div>
           )}
         </nav>
@@ -699,8 +950,8 @@ export function CrmInbox() {
                           title="Close this conversation">close</button>
                   {open.messages.some((m) => m.dir === "in") && (
                     <button className="of-dock__x" onClick={() => markUnread(open)}
-                            disabled={draft?.kind === "reply"}
-                            title={draft?.kind === "reply" ? "Send or discard the reply first"
+                            disabled={replying}
+                            title={replying ? "Send or reset the reply first"
                               : "Mark as unread and close it"}>
                       mark as unread
                     </button>
@@ -733,7 +984,7 @@ export function CrmInbox() {
                 );
               })}
 
-              {draft?.kind === "reply" ? (
+              {replying ? (
                 // Popped out, the reply lives in the window; nothing here
                 // should look like a second, empty copy of it.
                 !full && (
@@ -755,7 +1006,7 @@ export function CrmInbox() {
               ) : (
                 <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
                   <button className="of-facet__b"
-                          disabled={!open.email || draft?.kind === "new"} onClick={() => startReply(false)}
+                          disabled={!open.email || composing} onClick={() => startReply(false)}
                           title={!open.email ? "No address on record"
                             : draft ? "Send or discard the new message first"
                             : "Write to this person"}>
@@ -763,7 +1014,7 @@ export function CrmInbox() {
                   </button>
                   {lastGroup && (
                     <button className="of-facet__b"
-                            disabled={!open.email || draft?.kind === "new"} onClick={() => startReply(true)}
+                            disabled={!open.email || composing} onClick={() => startReply(true)}
                             title={draft ? "Send or discard the new message first"
                               : "Reply to everyone who was on our last group message"}>
                       Reply all

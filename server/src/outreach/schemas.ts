@@ -303,6 +303,44 @@ export const ScheduleRequest = z.object({
 });
 export type ScheduleRequest = z.infer<typeof ScheduleRequest>;
 
+// ---- Saved drafts ---------------------------------------------------------
+
+/** A message somebody is part way through writing, saved as they type.
+
+    Not the same thing as a SendRecord whose status is "draft": that one is a
+    finished message the system has composed and is about to schedule, it
+    counts against the queue and it shows in the thread. This is Gmail's kind
+    of draft — unfinished words in a composer, which nothing will ever send on
+    its own. Addresses are plain strings rather than `.email()` because a
+    half-typed one has to survive being saved; validation happens at /schedule,
+    where it matters.
+
+    Personal, not shared. Two people work this pipeline and half a sentence is
+    neither the other's business nor theirs to send. */
+export const MailDraft = z.object({
+  id: z.string().uuid(),
+  /** Whose it is: the signed-in address. Set by the server from the request,
+      never taken from the body. */
+  author: z.string().default(""),
+  /** The conversation this answers, by Thread.id, or null for a new message.
+      One reply draft per conversation, as in Gmail: opening the thread again
+      brings back what you had written rather than an empty box. */
+  reply_to: z.string().max(200).nullable().default(null),
+  to: z.array(z.string().max(320)).max(50).default([]),
+  cc: z.array(z.string().max(320)).max(50).default([]),
+  bcc: z.array(z.string().max(320)).max(50).default([]),
+  subject: z.string().max(500).default(""),
+  body: z.string().max(100_000).default(""),
+  html: z.string().max(200_000).nullable().default(null),
+  /** The composer's other two choices, so reopening a draft is the same
+      message and not just the same words. */
+  from_domain: z.string().max(200).nullable().default(null),
+  signature: z.string().max(200).nullable().default(null),
+  created_at: z.string().default(""),
+  updated_at: z.string().default(""),
+}).strict();
+export type MailDraft = z.infer<typeof MailDraft>;
+
 // ---- Campaigns --------------------------------------------------------
 
 /** A persona and a message aimed at a chosen set of accounts, independent

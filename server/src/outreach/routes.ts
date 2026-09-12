@@ -6,8 +6,8 @@ import { heatmap } from "./heatmap.js";
 import { cancel, nextSlot, Refused, schedule, sendNow } from "./send.js";
 import {
   allCampaigns, allOptOuts, allReplies, allSends, campaignFor, clearThread, getConfig,
-  getSeen, getThread, headroom, lastTick, deleteCampaign, markSeen, putCampaign, putConfig,
-  recentTicks,
+  getDraft, getSeen, getThread, headroom, lastTick, deleteCampaign, deleteDraft, markSeen,
+  myDrafts, putCampaign, putConfig, putDraft, recentTicks,
 } from "./store.js";
 import { withReads } from "./reads.js";
 import { optBackIn, optOut } from "./optout.js";
@@ -21,7 +21,7 @@ import { PageContext } from "./where.js";
 import { threads } from "./threads.js";
 import { due, tick } from "./tick.js";
 import { z } from "zod";
-import { Campaign, configPatch, DraftRequest, ScheduleRequest } from "./schemas.js";
+import { Campaign, configPatch, DraftRequest, MailDraft, ScheduleRequest } from "./schemas.js";
 
 /** What the panel may send. Narrower than Campaign on purpose: `active`,
     `created_at` and `deleted_at` are the server's to decide. */
@@ -292,6 +292,48 @@ outreachRouter.post("/threads/read", h(async (req, res) => {
   const { marks } = ReadRequest.parse(req.body);
   await markSeen(me(req), marks);
   res.json({ ok: true });
+}));
+
+// ---- Drafts being written -------------------------------------------------
+
+/* Yours only, on every one of these. A draft is half a sentence somebody has
+   not decided to send yet; the other person on the allow-list should neither
+   read it nor be able to send it. Answering 404 rather than 403 for somebody
+   else's keeps the ids from being a way to find out what exists. */
+
+/** What the signed-in person has on the go, most recently touched first. */
+outreachRouter.get("/drafts", h(async (req, res) => {
+  res.json({ records: await myDrafts(me(req)) });
+}));
+
+/** Save, from the composer's autosave. The whole draft every time — see
+    putDraft — and the id comes from the path, so a body claiming a different
+    one cannot write over another draft. */
+outreachRouter.put("/drafts/:id", h(async (req, res) => {
+  const who = me(req);
+  const id = req.params.id as string;
+  const existing = await getDraft(id);
+  if (existing && existing.author !== who) {
+    res.status(404).json({ error: "no-such-draft" });
+    return;
+  }
+  const now = new Date().toISOString();
+  const d = MailDraft.parse({
+    ...(req.body as Record<string, unknown>),
+    id, author: who,
+    created_at: existing?.created_at || now,
+    updated_at: now,
+  });
+  res.json(await putDraft(d));
+}));
+
+/** Discarding one, and what a send does with the draft it came from. */
+outreachRouter.delete("/drafts/:id", h(async (req, res) => {
+  const id = req.params.id as string;
+  const d = await getDraft(id);
+  if (!d || d.author !== me(req)) { res.status(404).json({ error: "no-such-draft" }); return; }
+  await deleteDraft(id);
+  res.json({ id, deleted: true });
 }));
 
 /** Statuses that mean a message actually reached a mailbox. */

@@ -380,6 +380,47 @@ export const sendDirect = (
     { ...who, round: 0, subject, body, scheduled_at: null, domain,
       written_by: "template", template_tier: null, signature, ...thread, ...group, html });
 
+// ---- Drafts being written -------------------------------------------------
+
+/** A message part way through being written. Saved on the server rather than
+    in this browser so it survives a reload, a crashed tab and a different
+    machine — and private to whoever wrote it, which is why there is no author
+    on this type: you only ever see your own. */
+export type MailDraft = {
+  id: string;
+  /** The conversation this answers, by Thread.id, or null for a new message.
+      One reply draft per conversation, as in Gmail. */
+  reply_to: string | null;
+  to: string[]; cc: string[]; bcc: string[];
+  subject: string; body: string; html: string | null;
+  from_domain: string | null; signature: string | null;
+  created_at: string; updated_at: string;
+};
+
+export const useDrafts = () => useResource<{ records: MailDraft[] }>("/drafts");
+
+/** Saves the whole draft. Called by the composer's autosave, so it is the
+    one write path and a field the caller leaves out is a field cleared. */
+export async function putDraft(d: MailDraft): Promise<MailDraft> {
+  const res = await fetch(`${BASE}/drafts/${encodeURIComponent(d.id)}`, {
+    method: "PUT",
+    headers: { "content-type": "application/json", ...authHeaders() },
+    body: JSON.stringify(d),
+  });
+  const body = (await res.json().catch(() => null)) as (MailDraft & { error?: string }) | null;
+  if (!res.ok) throw new Error(body?.error ?? `PUT /drafts → ${res.status}`);
+  return body as MailDraft;
+}
+
+/** Discarding one by hand, and what a successful send does with the draft it
+    was written in. */
+export async function deleteDraft(id: string): Promise<void> {
+  const res = await fetch(`${BASE}/drafts/${encodeURIComponent(id)}`,
+                          { method: "DELETE", headers: authHeaders() });
+  // A draft that is already gone is the state the caller wanted.
+  if (!res.ok && res.status !== 404) throw new Error(`DELETE /drafts → ${res.status}`);
+}
+
 export type ChatTurn = {
   role: "user" | "assistant"; content: string; at: string;
   /** A question only: what the page was showing when it was asked. */
