@@ -75,6 +75,7 @@ body::after{
 .of-grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
 .of-grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
 .of-grid.cols-4{grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.of-grid.cols-5{grid-template-columns:repeat(auto-fit,minmax(168px,1fr))}
 .of-cell{background:var(--void);padding:15px;outline:1px solid var(--line-soft)}
 .of-cell.pad-lg{padding:18px}
 

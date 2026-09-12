@@ -311,6 +311,9 @@ export async function schedule(
     message_id: null,
     status: "draft",
     last_event: null,
+    // Nobody has read a message that has not gone yet.
+    opened_at: null,
+    clicked_at: null,
     scheduled_at: at.toISOString(),
     quota_day: day,          // null for a one-off: it was never charged
     created_at: now,

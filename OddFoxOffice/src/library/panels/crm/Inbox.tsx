@@ -17,7 +17,8 @@ import {
   isEmail, mergeRecipients, recipientFor, splitAddresses, type Recipient,
 } from "./recipients";
 import { Toast } from "./Toast";
-import { SEND_TONE, useContacts } from "./shared";
+import { SendState } from "./SendState";
+import { useContacts } from "./shared";
 
 /* The inbox. One conversation per person: what we sent, what came back.
 
@@ -99,8 +100,7 @@ function Message({ m, open, onToggle, onCancel, onNow, onSequence, busy }: {
                   title="See this person's whole sequence">sequence</button>
         ) : null}
         {m.dry_run ? <Chip tone="warm">dry run</Chip> : null}
-        {m.status && !m.dry_run
-          ? <Chip tone={SEND_TONE[m.status] ?? ""}>{m.status}</Chip> : null}
+        <SendState m={m} />
         {m.unsubscribe ? <Chip tone="hot">opted out</Chip> : null}
         {m.automated ? <Chip tone="warm">auto</Chip> : null}
         <span className="of-msg__at">{fmt(m.at)}</span>

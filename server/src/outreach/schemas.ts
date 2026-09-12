@@ -192,10 +192,25 @@ export const SendRecord = z.object({
   resend_id: z.string().nullable(),
   /** RFC message id, used to tie an inbound reply back to this send. */
   message_id: z.string().nullable(),
+  /** How far the message got towards a mailbox: scheduled, sent, delivered,
+      or one of the ways it failed. Not whether anybody read it — see
+      opened_at. Rows written before those existed can still hold "opened" or
+      "clicked" here; sends.ts reads both shapes. */
   status: SendStatus,
   /** Resend's own last_event, kept verbatim so we never lose detail by
       squashing it into our narrower status enum. */
   last_event: z.string().nullable(),
+  /** When the recipient first opened it, and first clicked a link in it.
+      Facts about the reader rather than stages of delivery — a message that
+      is opened is still delivered, and collapsing the two lost that.
+
+      Stamped when a poll first sees the event, not by Resend: Resend reports
+      only the latest event for a message and gives no timestamp with it, so
+      this is "when we learnt", accurate to the poll. Null means not that we
+      know of — including when the sending domain has open tracking switched
+      off at Resend, which is why the panel says so. */
+  opened_at: z.string().nullable().default(null),
+  clicked_at: z.string().nullable().default(null),
   /** ISO instant the message is due to land. */
   scheduled_at: z.string().nullable(),
   /** The day this send is charged to, in config.timezone. This is what the

@@ -2,8 +2,9 @@ import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Chip, Note } from "../../../ui";
 import type { Rec } from "../../../data";
-import { SEND_TONE, sequencesFile } from "./shared";
+import { sequencesFile } from "./shared";
 import { EmailBody } from "./EmailBody";
+import { SendState } from "./SendState";
 import type { Thread, ThreadMessage } from "../../../lib/outreachStore";
 import { useFocus } from "../../../lib/pageFocus";
 
@@ -76,7 +77,7 @@ export function CampaignSequenceModal({ name, campaignId, accountIds, threads, o
        failed, and scheduled is exactly what you want to see here. */
     return (
       <span title={`round ${n} — ${m.status ?? "sent"} · ${new Date(m.at).toLocaleString()}`}>
-        <Chip tone={SEND_TONE[m.status ?? "sent"] ?? ""}>{m.status ?? "sent"}</Chip>
+        <SendState m={m} />
       </span>
     );
   };
@@ -168,9 +169,7 @@ export function SequenceModal({ thread, onClose }: { thread: Thread; onClose: ()
                 <header className="of-seqr__h">
                   <strong>Round {n}</strong>
                   <span className="of-note">{cadence(n)}</span>
-                  {sent
-                    ? <Chip tone={SEND_TONE[sent.status ?? "sent"] ?? ""}>{sent.status ?? "sent"}</Chip>
-                    : <Chip>not yet</Chip>}
+                  {sent ? <SendState m={sent} /> : <Chip>not yet</Chip>}
                   {sent ? <span className="of-note">
                     {new Date(sent.at).toLocaleString()}</span> : null}
                 </header>

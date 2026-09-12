@@ -1,4 +1,5 @@
-import * as crm from "./crm.js";
+import { openedAt } from "./sends.js";
+import type { AccountRecord } from "../schemas.js";
 import type { ReplyRecord } from "./store.js";
 import type { SendRecord } from "./schemas.js";
 
@@ -10,9 +11,20 @@ import type { SendRecord } from "./schemas.js";
    of account against week shows both at a glance.
 
    Grouping happens in memory. A few hundred documents a year is nowhere near
-   enough work to justify a database that can GROUP BY. */
+   enough work to justify a database that can GROUP BY.
 
-export type Cell = { sent: number; planned: number; replies: number; bounces: number };
+   Counts whatever it is handed, and loads nothing itself — which is what
+   makes it checkable against fixtures. The route hands it marketing mail
+   only: see isMarketing, and the route's own note on why a hand-written
+   one-off is not a thing this grid is asking about. */
+
+export type Cell = {
+  sent: number; planned: number; replies: number; bounces: number;
+  /** How many of that week's messages were opened. Counted against the week
+      the message landed, not the week it was read: the question this grid
+      answers is what each week's mail achieved. */
+  opens: number;
+};
 export type HeatRow = {
   account_id: string; company: string; tier: number; url: string | null;
   linkedin_url: string | null; status: string; contacts: number;
@@ -39,14 +51,17 @@ export function weekAxis(weeks: number, now = new Date()): string[] {
   });
 }
 
-const empty = (): Cell => ({ sent: 0, planned: 0, replies: 0, bounces: 0 });
+const empty = (): Cell => ({ sent: 0, planned: 0, replies: 0, bounces: 0, opens: 0 });
 const busy = (c: Cell) => c.sent + c.planned + c.replies + c.bounces > 0;
 
 /** How far past this week the axis may run for mail already queued. A guard
     against one bad date stretching the grid by years, not a real limit. */
 const AHEAD = 26;
 
-export async function heatmap(sends: SendRecord[], replies: ReplyRecord[], weeks = 12, now = new Date()) {
+export function heatmap(
+  accounts: AccountRecord[], sends: SendRecord[], replies: ReplyRecord[],
+  weeks = 12, now = new Date(),
+) {
   // Back `weeks` from this week, and forward to the last week anything queued
   // is due to land — a follow-up booked for next Tuesday belongs on the grid.
   let ahead = 0;
@@ -59,7 +74,7 @@ export async function heatmap(sends: SendRecord[], replies: ReplyRecord[], weeks
   const axis = weekAxis(weeks + ahead, new Date(thisWeek + ahead * 7 * 86_400_000));
   const col = new Map(axis.map((w, i) => [w, i]));
 
-  const rows: HeatRow[] = (await crm.accounts()).map((a) => ({
+  const rows: HeatRow[] = accounts.map((a) => ({
     account_id: a.id, company: a.company, tier: a.tier, url: a.url,
     linkedin_url: a.linkedin_url, status: a.status, contacts: a.contacts.length,
     cells: axis.map(empty), total: empty(), last_sent: null,
@@ -82,6 +97,7 @@ export async function heatmap(sends: SendRecord[], replies: ReplyRecord[], weeks
     if (s.dry_run || s.status === "scheduled" || s.status === "draft") bump(s.account_id, when, "planned");
     if (!s.dry_run && SENT.has(s.status)) {
       bump(s.account_id, when, "sent");
+      if (openedAt(s)) bump(s.account_id, when, "opens");
       const row = s.account_id ? byId.get(s.account_id) : undefined;
       const day = when.slice(0, 10);
       if (row && (!row.last_sent || day > row.last_sent)) row.last_sent = day;
@@ -93,6 +109,7 @@ export async function heatmap(sends: SendRecord[], replies: ReplyRecord[], weeks
   const totals = rows.reduce((a, r) => ({
     sent: a.sent + r.total.sent, planned: a.planned + r.total.planned,
     replies: a.replies + r.total.replies, bounces: a.bounces + r.total.bounces,
+    opens: a.opens + r.total.opens,
     accounts_touched: a.accounts_touched + (r.total.sent + r.total.planned > 0 ? 1 : 0),
     accounts: rows.length,
   }), { ...empty(), accounts_touched: 0, accounts: rows.length });

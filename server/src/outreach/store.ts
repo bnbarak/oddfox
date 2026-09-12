@@ -130,6 +130,13 @@ export async function getSend(id: string): Promise<SendRecord | null> {
   return snap.exists ? (snap.data() as SendRecord) : null;
 }
 
+/** Merges fields into a send. `update` rather than `set`, so two pollers
+    writing different facts about one message cannot erase each other's. */
+export async function patchSend(id: string, patch: Partial<SendRecord>): Promise<void> {
+  await db().collection(SENDS).doc(id)
+    .update({ ...patch, updated_at: new Date().toISOString() });
+}
+
 export async function setStatus(
   id: string, status: SendStatus,
   extra: Partial<Pick<SendRecord, "last_event" | "error" | "message_id">> = {},
@@ -149,12 +156,27 @@ export async function allSends(): Promise<SendRecord[]> {
     .sort((a, b) => (b.scheduled_at ?? b.created_at).localeCompare(a.scheduled_at ?? a.created_at));
 }
 
-const TERMINAL = new Set(["canceled", "bounced", "complained", "failed", "clicked"]);
+/** Statuses nothing can follow. "clicked" used to be here and is not a
+    status this system writes any more — a click is a timestamp beside the
+    delivery, not a stage past it — so an old row carrying one is asked about
+    again, once, and normalised. */
+const TERMINAL = new Set(["canceled", "bounced", "complained", "failed"]);
+
+/** How long after a message is due to land we keep asking Resend about it.
+
+    Delivery is settled within minutes; what the poll is still waiting for is
+    an open or a click, and almost all of those happen in the first day or
+    two. Without a window every message ever sent is asked about every
+    minute, for ever — fine at thirty-seven messages, a few thousand API
+    calls a minute by next year, to learn nothing. */
+const WATCH_DAYS = 14;
 
 /** Messages Resend has that have not finished, so the poll knows what to ask
     about. */
-export const openSends = (sends: SendRecord[]): SendRecord[] =>
-  sends.filter((s) => s.resend_id && !TERMINAL.has(s.status));
+export const openSends = (sends: SendRecord[], now = Date.now()): SendRecord[] =>
+  sends.filter((s) => s.resend_id && !TERMINAL.has(s.status)
+    // Negative for mail that has not landed yet, which is still watched.
+    && now - new Date(s.scheduled_at ?? s.created_at).getTime() < WATCH_DAYS * 86_400_000);
 
 // ---- Replies --------------------------------------------------------------
 

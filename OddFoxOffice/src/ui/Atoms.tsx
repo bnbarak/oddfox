@@ -9,7 +9,7 @@ export const Section = ({ kicker, children }: { kicker: string; children: ReactN
   </section>
 );
 
-export const Grid = ({ cols = 3, children, style }: { cols?: 2 | 3 | 4; children: ReactNode; style?: CSSProperties }) => (
+export const Grid = ({ cols = 3, children, style }: { cols?: 2 | 3 | 4 | 5; children: ReactNode; style?: CSSProperties }) => (
   <div className={`of-grid cols-${cols}`} style={style}>{children}</div>
 );
 

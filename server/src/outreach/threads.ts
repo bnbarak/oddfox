@@ -1,5 +1,6 @@
 import * as crm from "./crm.js";
 import { allReplies, allSends, type ReplyRecord } from "./store.js";
+import { clickedAt, delivery, openedAt } from "./sends.js";
 import type { SendRecord } from "./schemas.js";
 
 /* One conversation per person: what we sent and what came back, in order.
@@ -28,8 +29,14 @@ export type ThreadMessage = {
       render, so the surface shows the message as its recipient saw it. */
   html?: string | null;
   at: string;
-  /** Outbound only: where the message got to, and whether it is still pullable. */
+  /** Outbound only: where the message got to, and whether it is still
+      pullable. Delivery only — whether anybody read it is below. */
   status?: string;
+  /** Outbound only: when the recipient first opened it, and first clicked a
+      link in it. Null is "not that we know of" — open tracking can be off
+      at Resend, and then nothing is ever reported. */
+  opened_at?: string | null;
+  clicked_at?: string | null;
   round?: number;
   /** Which tier's sequence this round's copy came from, so a message can
       link back to the script it is following. */
@@ -102,7 +109,8 @@ const outbound = (s: SendRecord): ThreadMessage => ({
   dir: "out", id: s.id, subject: s.subject, body: s.body, html: s.html ?? null,
   at: s.scheduled_at ?? s.created_at,
   sort_at: GONE.has(s.status) ? (s.scheduled_at ?? s.created_at) : s.created_at,
-  status: s.status, round: s.round, template_tier: s.template_tier, message_id: s.message_id,
+  status: delivery(s), opened_at: openedAt(s), clicked_at: clickedAt(s),
+  round: s.round, template_tier: s.template_tier, message_id: s.message_id,
   dry_run: s.dry_run, cancel_token: s.resend_id,
   to: s.to,
   ...(s.also_to?.length ? { also_to: s.also_to } : {}),

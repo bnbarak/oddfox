@@ -9,7 +9,8 @@ import { EmailCell } from "./EmailCell";
 import { Toast } from "./Toast";
 import { useFocus } from "../../../lib/pageFocus";
 import { SequenceLink, SequenceModal } from "./SequenceModal";
-import { PIPE, SEND_TONE, TONE, today, link, useAccounts, useContacts } from "./shared";
+import { SendState } from "./SendState";
+import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
 /* One account, end to end: where the company is, who we know there, and every
    message that has gone out to them. It exists because the tables answer "how
@@ -87,8 +88,7 @@ function Message({ m, who, campaign, onSequence, onCancel, onNow, busy }: {
                     title="See this person's whole sequence">sequence</button>
           ) : null}
           {m.dry_run ? <span className="of-msg__tag">dry run</span> : null}
-          {m.status && !m.dry_run
-            ? <Chip tone={SEND_TONE[m.status] ?? ""}>{m.status}</Chip> : null}
+          <SendState m={m} />
           <span className="of-msg__at">{fmt(m.at)}</span>
         </div>
 
