@@ -1,6 +1,8 @@
 import { FieldValue } from "firebase-admin/firestore";
 import { db } from "../firebaseApp.js";
-import { OutreachConfig, type Campaign, type SendRecord, type SendStatus } from "./schemas.js";
+import {
+  OutreachConfig, type Campaign, type MailDraft, type SendRecord, type SendStatus,
+} from "./schemas.js";
 import { SENDERS } from "./config.js";
 import { dayKey } from "./time.js";
 import { applyMarks, type ReadMark, type Seen } from "./reads.js";
@@ -20,6 +22,7 @@ const META = "crmOutreachMeta";
 const CAMPAIGNS = "crmCampaigns";
 const OPTOUTS = "crmOptOuts";
 const READS = "crmReads";
+const DRAFTS = "crmMailDrafts";
 
 // ---- Config ---------------------------------------------------------------
 
@@ -377,6 +380,36 @@ export async function markSeen(email: string, marks: ReadMark[]): Promise<void> 
     t.set(ref, { seen: applyMarks(seen, marks), updated: new Date().toISOString() });
   });
 }
+
+// ---- Drafts being written -------------------------------------------------
+
+/* What somebody is part way through writing. One document per draft, filtered
+   by author: a draft is personal, and the whole collection is a handful of
+   documents, so the filter is a where() and the ordering is done here. */
+
+export async function myDrafts(author: string): Promise<MailDraft[]> {
+  const snap = await db().collection(DRAFTS).where("author", "==", author).get();
+  return snap.docs
+    .map((d) => d.data() as MailDraft)
+    .sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+}
+
+export async function getDraft(id: string): Promise<MailDraft | null> {
+  const snap = await db().collection(DRAFTS).doc(id).get();
+  return snap.exists ? (snap.data() as MailDraft) : null;
+}
+
+/** Written whole rather than merged: the composer always sends the entire
+    draft, and a merge would leave a recipient you deleted still in the list. */
+export async function putDraft(d: MailDraft): Promise<MailDraft> {
+  await db().collection(DRAFTS).doc(d.id).set(d);
+  return d;
+}
+
+/** Gone for good. Nothing points at a draft and it was never sent, so unlike
+    a campaign or an opt-out there is no record worth keeping. */
+export const deleteDraft = (id: string): Promise<unknown> =>
+  db().collection(DRAFTS).doc(id).delete();
 
 // ---- Campaigns --------------------------------------------------------
 

@@ -716,6 +716,10 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
 .of-cw__f { display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
             padding: 11px 14px; border-top: 1px solid var(--line-soft);
             flex: 0 0 auto; background: rgba(255,255,255,.03); }
+/* "Draft saved 09:14", at the far end of the composer's footer: a composer
+   that saves silently looks exactly like one that does not save at all. */
+.of-cw__saved { margin-left: auto; font-family: var(--mono); font-size: 10.5px;
+                white-space: nowrap; }
 
 @media (max-width: 900px) {
   .of-cw, body[data-crm-dock="open"] .of-cw { right: 0; left: 0; width: 100%; }
