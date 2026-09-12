@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Note } from "../../../ui";
+import { Markdown, Note } from "../../../ui";
 import { clearThread, sendChat, useThread } from "../../../lib/outreachStore";
 import { focusNow, useFocusLabel } from "../../../lib/pageFocus";
 
@@ -155,7 +155,7 @@ export function Operator({ page }: { page: { id: string; label: string } }) {
           const key = `${m.at}-${m.role}`;
           return m.role === "user"
             ? question(m.content, m.context, key)
-            : <div key={key} className="of-chat__m is-assistant">{m.content}</div>;
+            : <Markdown key={key} className="of-chat__m is-assistant" text={m.content} />;
         })}
         {pending && question(pending.text, pending.on, "pending")}
         {busy && <div className="of-chat__m is-assistant of-note">thinking…</div>}

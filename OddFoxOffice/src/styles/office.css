@@ -280,6 +280,25 @@ a.co-row:hover .co-name,
   align-self: flex-start; color: var(--paper);
   border-left: 2px solid var(--line); padding: 2px 0 2px 12px;
 }
+
+/* The agent answers in Markdown; see ui/Markdown.tsx for the slice of it
+   that is rendered. Blocks carry their own spacing, so the pre-wrap on the
+   bubble only has to hold line breaks inside a paragraph. */
+.of-md > * { margin: 0; }
+.of-md > * + * { margin-top: .7em; }
+.of-md__h { font-weight: 600; }
+.of-md ul, .of-md ol { padding-left: 1.2em; }  /* the global reset drops both */
+.of-md ul { list-style: disc; }
+.of-md ol { list-style: decimal; }
+.of-md li::marker { color: var(--line); }
+.of-md li { margin: .2em 0; white-space: normal; }
+.of-md li[data-depth="1"] { margin-left: 1.1em; }
+.of-md li[data-depth="2"] { margin-left: 2.2em; }
+.of-md code {
+  font-size: .92em; padding: 0 .3em; border-radius: 2px;
+  background: rgba(255,255,255,.07);
+}
+.of-md a { color: inherit; text-decoration: underline; }
 .of-chat__bar {
   display: flex; gap: 8px; align-items: flex-end; padding: 10px;
   border-top: 1px solid var(--line-soft); background: rgba(255,255,255,.02);
