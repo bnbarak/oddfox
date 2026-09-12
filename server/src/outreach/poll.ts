@@ -6,9 +6,9 @@ import { getConfig } from "./store.js";
 import { optOut } from "./optout.js";
 import { cleanHtml, htmlToText, readsAsAutomated, readsAsOptOut } from "./render.js";
 import {
-  allSends, getReply, openSends, patchReply, putReply, setCursor, setStatus,
+  allSends, getReply, openSends, patchReply, patchSend, putReply, setCursor,
 } from "./store.js";
-import type { SendStatus } from "./schemas.js";
+import { learn } from "./sends.js";
 
 /* Polling, in both directions.
 
@@ -23,35 +23,24 @@ const repo = new FirestoreCrmRepository();
 let client: Resend | null = null;
 const resend = (): Resend => (client ??= new Resend(secret("RESEND_API_KEY") ?? undefined));
 
-/** Ranked so a later poll cannot move a message backwards — an 'opened' that
-    arrives after a 'clicked' must not undo the click. */
-const RANK: Record<string, number> = {
-  draft: 0, scheduled: 1, sent: 2, delivered: 3, opened: 4, clicked: 5,
-  bounced: 6, complained: 6, failed: 6, canceled: 6,
-};
-
-const EVENTS: Record<string, SendStatus> = {
-  sent: "sent", delivered: "delivered", opened: "opened", clicked: "clicked",
-  bounced: "bounced", complained: "complained", failed: "failed",
-  canceled: "canceled", scheduled: "scheduled", delivery_delayed: "delivered",
-};
-
 export async function pollEvents(): Promise<number> {
   let changed = 0;
   for (const row of openSends(await allSends())) {
     const { data, error } = await resend().emails.get(row.resend_id!);
     if (error || !data) continue;
-    const next = EVENTS[data.last_event ?? ""];
-    if (!next || (RANK[next] ?? 0) < (RANK[row.status] ?? 0)) continue;
-    if (next === row.status && data.last_event === row.last_event) continue;
 
-    await setStatus(row.id, next, { last_event: data.last_event ?? null });
+    // What the event means is sends.ts's to decide — see learn(), which is
+    // the same rule everything else reads these rows with.
+    const patch = learn(row, data.last_event ?? "", new Date().toISOString());
+    if (!Object.keys(patch).length) continue;
+
+    await patchSend(row.id, patch);
     changed++;
 
     // Resend adds the address to its own suppression list on a bounce or a
     // complaint and will not send to it again; all we owe the CRM is the
     // reason the address stopped working.
-    if ((next === "bounced" || next === "complained") && row.contact_id) {
+    if ((patch.status === "bounced" || patch.status === "complained") && row.contact_id) {
       await repo.patchContact(row.contact_id, { email_status: "bounced" }).catch(() => undefined);
     }
   }

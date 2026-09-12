@@ -15,6 +15,7 @@ import { canLink, UNSUB_BASE } from "./unsubToken.js";
 import { allEnrichment, spentToday } from "./apollo.js";
 import { endCampaign, startCampaign } from "./start.js";
 import { statesFor } from "./campaignState.js";
+import { isMarketing } from "./sends.js";
 import * as crm from "./crm.js";
 import { chat } from "./operator.js";
 import { PageContext } from "./where.js";
@@ -166,8 +167,37 @@ outreachRouter.get("/next-slot", h(async (req, res) => {
 
 // ---- Incoming -------------------------------------------------------------
 
+/** Everything that came back. Each row says whether it answers marketing
+    mail, so the Outreach panel can show only those without this route
+    hiding a reply from anything else that asks for the list. */
 outreachRouter.get("/replies", h(async (_req, res) => {
-  res.json({ records: await allReplies() });
+  const [replies, sends] = await Promise.all([allReplies(), allSends()]);
+  const campaignMail = new Set(sends.filter(isMarketing).map((s) => s.id));
+  res.json({
+    records: replies.map((r) => ({
+      ...r, marketing: Boolean(r.send_id && campaignMail.has(r.send_id)),
+    })),
+  });
+}));
+
+/** Whether Resend is counting opens and clicks for each domain we own.
+
+    Its own setting, per domain, and off by default — so "nothing opened" has
+    two very different meanings and no way to tell them apart from in here.
+    Asked on demand rather than folded into /status, which the panels poll
+    every twenty seconds. */
+outreachRouter.get("/tracking", h(async (_req, res) => {
+  const key = secret("RESEND_API_KEY");
+  if (!key) { res.json({ records: [], note: "no RESEND_API_KEY" }); return; }
+  const { data, error } = await new Resend(key).domains.list();
+  if (error) { res.status(502).json({ error: error.message }); return; }
+  res.json({
+    records: (data?.data ?? []).map((d) => ({
+      domain: d.name,
+      open_tracking: Boolean(d.open_tracking),
+      click_tracking: Boolean(d.click_tracking),
+    })),
+  });
 }));
 
 /** Proxied straight from Resend, which owns the list: it adds to it on every
@@ -475,10 +505,25 @@ outreachRouter.get("/enrichment", h(async (_req, res) => {
 
 // ---- Reporting ------------------------------------------------------------
 
+/** The grid, and the numbers above it. Marketing only.
+
+    A one-off written by hand in the Inbox is correspondence, not outreach,
+    and counting it here answered a question nobody asked: "37 sent" that
+    mixes a campaign with three replies to a customer tells you nothing about
+    either. Those messages are still in the thread, in the queue, and on the
+    account page — this is the one surface that is only about campaigns.
+
+    Replies are filtered the same way: one that answers a hand-written note
+    is not a campaign's result. A reply we could never attribute to a send
+    stays out for the same reason — it is nobody's result. */
 outreachRouter.get("/heatmap", h(async (req, res) => {
   const weeks = Math.min(52, Math.max(4, Number(req.query.weeks ?? 12)));
-  const [sends, replies] = await Promise.all([allSends(), allReplies()]);
-  res.json(await heatmap(sends, replies, weeks));
+  const [accounts, everything, replies] =
+    await Promise.all([crm.accounts(), allSends(), allReplies()]);
+  const sends = everything.filter(isMarketing);
+  const mineIds = new Set(sends.map((s) => s.id));
+  const answered = replies.filter((r) => r.send_id && mineIds.has(r.send_id));
+  res.json(heatmap(accounts, sends, answered, weeks));
 }));
 
 outreachRouter.get("/due", h(async (_req, res) => {

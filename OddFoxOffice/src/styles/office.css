@@ -541,8 +541,14 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-msg { border: 1px solid var(--line-soft); border-radius: 3px; margin-bottom: 8px; }
 .of-msg.is-in  { border-left: 2px solid var(--calm); }
 .of-msg.is-out { border-left: 2px solid var(--cool); }
-.of-msg__h { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
+/* The tags keep their width and the preview text gives way; when even the
+   tags will not fit — a narrow pane, DELIVERED beside OPENED — the row wraps
+   rather than squeezing each chip into a column of single letters. */
+.of-msg__h { display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
              padding: 9px 12px; cursor: pointer; min-width: 0; }
+.of-msg__h > * { flex-shrink: 0; }
+.of-msg__h > .of-msg__peek { flex: 1 1 auto; min-width: 0; }
+.of-msg__h .of-chip { white-space: nowrap; }
 .of-msg__h:hover { background: rgba(255,255,255,.03); }
 .of-msg.is-open > .of-msg__h { border-bottom: 1px solid var(--line-soft); }
 .of-msg.is-unread > .of-msg__h .of-msg__who,

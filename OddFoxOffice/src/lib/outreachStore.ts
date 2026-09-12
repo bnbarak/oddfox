@@ -102,7 +102,11 @@ export type Status = {
   last_tick: TickRow | null;
 };
 
-export type Cell = { sent: number; planned: number; replies: number; bounces: number };
+export type Cell = {
+  sent: number; planned: number; replies: number; bounces: number;
+  /** How many of that week's messages were opened. */
+  opens: number;
+};
 export type HeatRow = {
   account_id: string; company: string; tier: number; url: string | null;
   linkedin_url: string | null; status: string; contacts: number;
@@ -123,7 +127,15 @@ export type ReplyRow = {
   id: string; from_email: string; subject: string | null; received_at: string;
   send_id: string | null; account_id: string | null; contact_id: string | null;
   excerpt: string | null; unsubscribe: boolean; automated: boolean;
+  /** Whether it answers campaign or sequence mail. Outreach shows only
+      those; the Inbox shows every conversation either way. */
+  marketing: boolean;
 };
+
+/** Whether Resend is counting opens and clicks for a domain. Its own
+    setting, per domain, and off until somebody switches it on — which is the
+    difference between "nobody opened it" and "we are not being told". */
+export type TrackingRow = { domain: string; open_tracking: boolean; click_tracking: boolean };
 
 // ---- Hooks ----------------------------------------------------------------
 
@@ -280,6 +292,11 @@ export async function deleteCampaign(id: string) {
 }
 
 export const useQueue = () => useResource<{ records: QueueRow[] }>("/queue");
+
+/** Asked once by the Outreach panel rather than folded into /status, which
+    every open page polls. */
+export const useTracking = () =>
+  useResource<{ records: TrackingRow[]; note?: string }>("/tracking");
 export const useReplies = () => useResource<{ records: ReplyRow[] }>("/replies?limit=100");
 
 /** Everyone who asked to be left alone, and how they told us. Our own record,
@@ -321,7 +338,13 @@ export type ThreadMessage = {
   /** When it counts as having happened; for incoming mail, when it arrived.
       What "read through" is measured against. */
   sort_at: string;
+  /** Outgoing only: how far it got towards the mailbox. Delivery alone —
+      whether anybody read it is the two fields below. */
   status?: string; round?: number; template_tier?: number | null;
+  /** Outgoing only: when the recipient first opened it, and first clicked a
+      link in it. Null is "not that we know of": Resend only reports opens
+      for a domain with open tracking switched on. */
+  opened_at?: string | null; clicked_at?: string | null;
   dry_run?: boolean; cancel_token?: string | null;
   message_id?: string | null; automated?: boolean; unsubscribe?: boolean;
   /** Incoming only: the signed-in person has not seen this one yet. */

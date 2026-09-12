@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Section, Grid, Cell as GridCell, Stat, Note, H1, Chip, Logo } from "../../../ui";
 import {
   cancelSend, runTick, sendNow, useCampaigns, useThreads, useHeatmap, useOutreachStatus, useQueue,
-  useReplies,
+  useReplies, useTracking,
   type Cell, type HeatRow, type Thread,
 } from "../../../lib/outreachStore";
 import { AccountLink } from "./Account";
@@ -25,6 +25,7 @@ function HeatCell({ c, week, company }: { c: Cell; week: string; company: string
   const parts = [
     n ? `${c.sent} sent` : "nothing sent",
     c.planned ? `${c.planned} queued` : "",
+    c.opens ? `${c.opens} opened` : "",
     c.replies ? `${c.replies} replied` : "",
     c.bounces ? `${c.bounces} bounced` : "",
   ].filter(Boolean);
@@ -48,6 +49,7 @@ export function CrmOutreach() {
   const campaigns = useCampaigns();
 
   const replies = useReplies();
+  const tracking = useTracking();
   const [busy, setBusy] = useState<string | null>(null);
   const threads = useThreads();
   const [seqCampaign, setSeqCampaign] =
@@ -58,6 +60,14 @@ export function CrmOutreach() {
 
 
   const s = status.data;
+
+  /* Domains we send from that Resend is not counting opens for. Without
+     this, "0 opened" reads as a verdict on the copy when it is really a
+     switch nobody has turned on. */
+  const untracked = (s?.domains ?? [])
+    .filter((d) => d.sends)
+    .filter((d) => tracking.data?.records.some((t) => t.domain === d.domain && !t.open_tracking))
+    .map((d) => d.domain);
 
   // The agent is docked in the layout, so it cannot call these reloaders
   // directly. It announces instead, and every panel that cares listens.
@@ -132,6 +142,10 @@ export function CrmOutreach() {
   const rows = map.data?.rows ?? [];
   const axis = map.data?.weeks ?? [];
   const totals = map.data?.totals;
+  /* Replies to campaign mail. A reply to a note somebody typed by hand is a
+     conversation, not a campaign's result, and it belongs in the Inbox with
+     the rest of that conversation. */
+  const inbound = (replies.data?.records ?? []).filter((r) => r.marketing);
 
   return (
     <>
@@ -153,15 +167,36 @@ export function CrmOutreach() {
       })()}
 
       <Section kicker="Today">
-        <Grid cols={4}>
+        <Grid cols={5}>
           <GridCell><Stat value={totals?.sent ?? 0} label="messages sent" sub={`last ${weeks} weeks`} /></GridCell>
           <GridCell><Stat value={totals?.planned ?? 0} label="queued or drafted" /></GridCell>
+          {/* Opens are a rate, not a count: twelve opens means nothing until
+              you know whether it was out of twenty or two hundred. */}
+          <GridCell>
+            <Stat value={totals?.opens ?? 0} label="opened"
+                  sub={totals?.sent ? `${Math.round((totals.opens / totals.sent) * 100)}% of sent` : undefined} />
+          </GridCell>
           <GridCell><Stat value={totals?.replies ?? 0} label="human replies" /></GridCell>
           <GridCell>
             <Stat value={`${totals?.accounts_touched ?? 0}`} label="accounts touched"
                   sub={`of ${totals?.accounts ?? 0}`} />
           </GridCell>
         </Grid>
+
+        {/* Both halves of what these numbers are. Marketing only, and only
+            as far as Resend is telling us — a domain with open tracking off
+            reports no opens at all, which would otherwise read as nobody
+            reading the mail. */}
+        <Note style={{ marginTop: 14 }}>
+          Campaign and sequence mail only. One-off notes written by hand are
+          correspondence, not outreach: they are in the Inbox and on the account page.
+          {untracked.length ? (
+            <> <strong>Opens are not being counted for {untracked.join(", ")}.</strong>{" "}
+              Resend has open tracking switched off for{" "}
+              {untracked.length === 1 ? "that domain" : "those domains"}, so mail sent from{" "}
+              {untracked.length === 1 ? "it" : "them"} can never show as opened.</>
+          ) : null}
+        </Note>
 
         {s && s.domains.length > 0 ? (
           <div className="of-quota">
@@ -207,7 +242,7 @@ export function CrmOutreach() {
                 {axis.map((w) => (
                   <th key={w} className="of-heat__h" title={`week of ${w}`}>{w.slice(5)}</th>
                 ))}
-                <th>Sent</th><th>In</th><th>Last</th>
+                <th>Sent</th><th>Open</th><th>In</th><th>Last</th>
               </tr>
             </thead>
             <tbody>
@@ -225,6 +260,12 @@ export function CrmOutreach() {
                     <HeatCell key={axis[i] ?? i} c={c} week={axis[i] ?? ""} company={r.company} />
                   ))}
                   <td className="val">{r.total.sent || ""}</td>
+                  <td className="val"
+                      title={r.total.sent
+                        ? `${r.total.opens} of ${r.total.sent} opened`
+                        : "nothing sent"}>
+                    {r.total.opens || ""}
+                  </td>
                   <td className="val">
                     {r.total.replies ? <Chip tone="calm">{r.total.replies}</Chip> : ""}
                     {r.total.bounces ? <Chip tone="hot">{r.total.bounces}</Chip> : ""}
@@ -238,7 +279,8 @@ export function CrmOutreach() {
         <Note style={{ marginTop: 14 }}>
           {axis.length ? "" : `Nothing sent or queued in the last ${weeks} weeks. `}
           Only weeks with mail sent or queued get a column, newest on the right.
-          Blue is volume, green a reply, red a bounce.
+          Blue is volume, green a reply, red a bounce. Hover a square for that week's
+          numbers, opens included.
           The campaign square is green while a campaign is running, blue with mail in the
           queue, amber when paused, grey before it starts — hover it for the name.
         </Note>
@@ -304,14 +346,14 @@ export function CrmOutreach() {
       </Section>
 
       <Section kicker="Incoming">
-        {replies.data?.records.length ? (
+        {inbound.length ? (
           <div className="of-matrix-wrap">
             <table className="of-matrix of-crm">
               <thead>
                 <tr><th className="co">From</th><th>Subject</th><th>When</th><th>What</th></tr>
               </thead>
               <tbody>
-                {replies.data.records.map((r) => (
+                {inbound.map((r) => (
                   <tr key={r.id}>
                     <td className="co"><span className="co-name">{r.from_email}</span></td>
                     <td className="cell" title={r.excerpt ?? ""}>{(r.subject ?? "—").slice(0, 70)}</td>
@@ -328,7 +370,11 @@ export function CrmOutreach() {
             </table>
           </div>
         ) : (
-          <Note>Nothing has come back yet.</Note>
+          <Note>
+            {replies.data?.records.length
+              ? "Nothing has come back from a campaign. Replies to mail written by hand are in the Inbox."
+              : "Nothing has come back yet."}
+          </Note>
         )}
       </Section>
 

@@ -269,15 +269,22 @@ export const t = {
     inputSchema: z.object({ weeks: z.number().nullish(), company: z.string().nullish() }),
     outputSchema: z.object({
       totals: z.object({ sent: z.number(), planned: z.number(), replies: z.number(),
-                         bounces: z.number(), accounts_touched: z.number(), accounts: z.number() }),
+                         bounces: z.number(), opens: z.number(),
+                         accounts_touched: z.number(), accounts: z.number() }),
       accounts: z.array(z.object({
         company: z.string(), tier: z.number(), sent: z.number(), planned: z.number(),
-        replies: z.number(), bounces: z.number(), last_sent: z.string().nullable(),
+        replies: z.number(), bounces: z.number(), opens: z.number(),
+        last_sent: z.string().nullable(),
       })),
     }),
     execute: async ({ weeks, company }) => {
-      const [sends, replies] = await Promise.all([allSends(), allReplies()]);
-      const map = await heatmap(sends, replies, weeks ?? 12);
+      /* Everything, not marketing only — unlike the Outreach panel. The
+         question this answers is how much each account has had from us in
+         total, and a hand-written note lands in the same inbox as a
+         campaign round does. */
+      const [accounts, sends, replies] =
+        await Promise.all([crm.accounts(), allSends(), allReplies()]);
+      const map = heatmap(accounts, sends, replies, weeks ?? 12);
       const rows = company
         ? map.rows.filter((r) => r.company.toLowerCase().includes(company.toLowerCase()))
         : map.rows;
@@ -285,7 +292,8 @@ export const t = {
         totals: map.totals,
         accounts: rows.slice(0, 40).map((r) => ({
           company: r.company, tier: r.tier, sent: r.total.sent, planned: r.total.planned,
-          replies: r.total.replies, bounces: r.total.bounces, last_sent: r.last_sent,
+          replies: r.total.replies, bounces: r.total.bounces, opens: r.total.opens,
+          last_sent: r.last_sent,
         })),
       };
     },
