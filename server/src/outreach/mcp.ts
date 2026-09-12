@@ -24,6 +24,8 @@ import { t } from "./operator.js";
 const exposed = {
   outreach_status: t.status,
   find_people: t.findPeople,
+  add_contact: t.addPerson,
+  add_account: t.addCompany,
   list_campaigns: t.listCampaigns,
   set_campaign: t.setCampaign,
   start_campaign: t.launch,
@@ -50,6 +52,11 @@ person you are talking to owns this pipeline.
 
 - Look things up rather than guessing. There are tools for people, activity,
   who is owed a follow-up, the queue and system status.
+- add_contact adds a person to a company already in the CRM, and add_account
+  adds a company that is not in it at all. Use them when the outreach turns
+  somebody up — an out-of-office naming a cover desk, a reply pointing at a
+  colleague — rather than telling the person to do it in the UI. Say who you
+  are adding first. Adding is not contacting: nothing is queued by it.
 - schedule_email sends real mail to real strangers. Never call it without
   first showing the person the exact subject and body and getting a clear yes
   in this conversation. Set confirmed_by_operator only after they have said
