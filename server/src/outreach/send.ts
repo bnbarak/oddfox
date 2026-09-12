@@ -5,7 +5,7 @@ import * as crm from "./crm.js";
 import { capOf, domainOf, fromAddress, secret } from "./config.js";
 import { compose, listHeaders } from "./render.js";
 import {
-  allCampaigns, allSends, getSend, isOptedOut, pickDomain, putSend, release, reserve, setStatus,
+  allCampaigns, allSends, getSend, isOptedOut, putSend, release, reserve, setStatus, usedOn,
 } from "./store.js";
 import type { OutreachConfig, ScheduleRequest, SendRecord } from "./schemas.js";
 import { dayKey, nextInWindow } from "./time.js";
@@ -75,6 +75,60 @@ export function nextSlot(cfg: OutreachConfig, domain: string, queued: SendRecord
   const after = latest ? latest + gapMinutes(cfg, domain) * 60 * 1000 : earliest;
   return nextInWindow(new Date(Math.max(earliest, after)), cfg.timezone,
                       cfg.send_window.start_hour, cfg.send_window.end_hour);
+}
+
+/** Which domain the next cold message should go out on, and when.
+
+    Every enabled domain is asked for its next free slot, and the earliest
+    one wins. That is the whole round robin: a domain that has just taken a
+    message has its next slot pushed a gap into the future, so the one after
+    goes somewhere else, and a domain with a small cap has a bigger gap and
+    is asked to carry proportionally less.
+
+    The room check is the part that was wrong before. It asked what each
+    domain had left *today*, while the message it was placing lands tomorrow
+    — so at nine in the evening every domain looked empty, the first one in
+    the list won all forty times, and the run stopped at that domain's
+    fifteen with four untouched domains and forty spare slots beside it. Room
+    is now read for the day the message would actually land.
+
+    Pure, so the arithmetic can be tested without Firestore: `roomLeft` is
+    handed in. */
+export function bestDomain(
+  cfg: OutreachConfig,
+  queued: SendRecord[],
+  roomLeft: (domain: string, day: string) => number,
+): { domain: string; at: Date } | null {
+  const open = cfg.domains
+    .filter((d) => d.enabled && !d.manual_only)
+    .map((d) => {
+      const at = nextSlot(cfg, d.domain, queued);
+      return { domain: d.domain, at, day: dayKey(at, cfg.timezone) };
+    })
+    .filter((r) => roomLeft(r.domain, r.day) > 0);
+  /* Ties are ordinary: at the start of a run every domain's next slot is the
+     same "two minutes from now". The one with the most room left goes first,
+     which is what makes a 15-a-day domain take three messages for every one
+     a 5-a-day domain takes. */
+  open.sort((a, b) => a.at.getTime() - b.at.getTime()
+                   || roomLeft(b.domain, b.day) - roomLeft(a.domain, a.day));
+  const first = open[0];
+  return first ? { domain: first.domain, at: first.at } : null;
+}
+
+/** bestDomain with the day's usage actually read. One quota document per
+    candidate domain, for the day that domain's own next slot falls in. */
+async function openDomain(
+  cfg: OutreachConfig, queued: SendRecord[],
+): Promise<{ domain: string; at: Date } | null> {
+  const rooms = await Promise.all(
+    cfg.domains.filter((d) => d.enabled && !d.manual_only).map(async (d) => {
+      const day = dayKey(nextSlot(cfg, d.domain, queued), cfg.timezone);
+      const left = Math.max(0, capOf(cfg, d.domain) - await usedOn(d.domain, day));
+      return [`${d.domain}__${day}`, left] as const;
+    }));
+  const room = new Map(rooms);
+  return bestDomain(cfg, queued, (domain, day) => room.get(`${domain}__${day}`) ?? 0);
 }
 
 /** The domain a sequence began on, if it has one.
@@ -228,16 +282,17 @@ export async function schedule(
      for: a domain warms on the conversations it is actually carrying, not on
      whichever half-thread had the most headroom that morning.
 
-     pickDomain is therefore consulted only for the first message of a
+     The spread is therefore consulted only for the first message of a
      sequence. After that the answer was decided the day it began. */
   const sticky = (() => {
     const began = startedOn(req, queued);
     return began && stillUsable(cfg, began) ? began : null;
   })();
 
-  const domain = req.domain ?? sticky ?? (await pickDomain(cfg))?.domain;
+  const domain = req.domain ?? sticky ?? (await openDomain(cfg, queued))?.domain;
   if (!domain) {
-    throw new Refused("no-domain-with-room", "Every sending domain has hit its cap for today.", 429);
+    throw new Refused("no-domain-with-room",
+      "Every sending domain is full for the day its next message would land.", 429);
   }
   const d = domainOf(cfg, domain);
   if (!d) throw new Refused("unknown-domain", `${domain} is not a configured sending domain`);

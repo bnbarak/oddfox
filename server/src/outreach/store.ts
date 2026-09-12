@@ -98,8 +98,7 @@ export async function headroom(cfg: OutreachConfig, at = new Date()): Promise<He
   const day = dayKey(at, cfg.timezone);
   const enabled = cfg.domains.filter((d) => d.enabled);
   const live = await Promise.all(enabled.map(async (d) => {
-    const snap = await db().collection(QUOTA).doc(`${d.domain}__${day}`).get();
-    const used = snap.exists ? Number(snap.data()?.used ?? 0) : 0;
+    const used = await usedOn(d.domain, day);
     const cap = d.daily_cap ?? cfg.default_daily_cap;
     return { domain: d.domain, day, used, cap, left: Math.max(0, cap - used), sends: true };
   }));
@@ -109,15 +108,13 @@ export async function headroom(cfg: OutreachConfig, at = new Date()): Promise<He
   return [...live, ...idle];
 }
 
-/** The domain the automation should use next: the one with the most room
-    left today, ignoring anything reserved for hand-written mail. Spreading
-    across domains rather than draining one keeps each domain's daily volume
-    flat, which is what warming wants. */
-export async function pickDomain(cfg: OutreachConfig, at = new Date()): Promise<Headroom | null> {
-  const manual = new Set(cfg.domains.filter((d) => d.manual_only).map((d) => d.domain));
-  const open = (await headroom(cfg, at)).filter((r) => r.left > 0 && !manual.has(r.domain));
-  open.sort((a, b) => b.left - a.left);
-  return open[0] ?? null;
+/** How many sends `domain` has already claimed on `day` — any day, not just
+    today. Which domain the next message goes out on is decided from the day
+    it will land on (see bestDomain in send.ts), and that is usually not the
+    day the decision is being made. */
+export async function usedOn(domain: string, day: string): Promise<number> {
+  const snap = await db().collection(QUOTA).doc(`${domain}__${day}`).get();
+  return snap.exists ? Number(snap.data()?.used ?? 0) : 0;
 }
 
 // ---- Sends ----------------------------------------------------------------

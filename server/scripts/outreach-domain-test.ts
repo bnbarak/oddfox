@@ -4,7 +4,7 @@
    which address a stranger sees a follow-up arrive from, and it has to hold
    without Firestore, Resend or a model in the room.
    Run: npx tsx scripts/outreach-domain-test.ts */
-import { startedOn, stillUsable, type ScheduleRequest } from "../src/outreach/send.js";
+import { bestDomain, startedOn, stillUsable, type ScheduleRequest } from "../src/outreach/send.js";
 import { OutreachConfig } from "../src/outreach/schemas.js";
 import type { SendRecord } from "../src/outreach/schemas.js";
 
@@ -87,6 +87,100 @@ ok("an ordinary domain keeps its sequences", stillUsable(cfg, "seaworth.io"));
 ok("a disabled domain releases them", !stillUsable(cfg, "off.example"));
 ok("a manual-only domain never carries a sequence", !stillUsable(cfg, "seaworth.ai"));
 ok("a domain dropped from the config releases them", !stillUsable(cfg, "gone.example"));
+
+// ---- which domain a new sequence starts on ------------------------------
+
+/* The pool is five domains the way the live config is, with the two small
+   ones the live config has. `full` says which (domain, day) pairs have no
+   room, so the day a message lands on is the thing under test. */
+const pool = OutreachConfig.parse({
+  sender_name: "Barak",
+  postal_address: "Seaworth, 1 Example Street, London",
+  unsubscribe_mailbox: "optout@seaworth.ai",
+  timezone: "America/New_York",
+  domains: [
+    { domain: "seaworth.io", from_local: "b", from_name: "B", daily_cap: 15 },
+    { domain: "theseaworth.com", from_local: "b", from_name: "B", daily_cap: 15 },
+    { domain: "seaworth.ai", from_local: "b", from_name: "B", daily_cap: 15 },
+    { domain: "seaworthhq.com", from_local: "b", from_name: "B", daily_cap: 5 },
+    { domain: "tryseaworth.com", from_local: "b", from_name: "B", daily_cap: 5 },
+    { domain: "byhand.example", from_local: "b", from_name: "B", manual_only: true },
+    { domain: "off.example", from_local: "b", from_name: "B", enabled: false },
+  ],
+});
+const capOfPool: Record<string, number> = {
+  "seaworth.io": 15, "theseaworth.com": 15, "seaworth.ai": 15,
+  "seaworthhq.com": 5, "tryseaworth.com": 5, "byhand.example": 15, "off.example": 15,
+};
+const room = (full: Record<string, number> = {}) =>
+  (domain: string, day: string) => full[`${domain}__${day}`] ?? capOfPool[domain] ?? 0;
+
+const empty = bestDomain(pool, [], room());
+ok("an empty pool has somewhere to go", empty !== null);
+ok("the biggest domain goes first when nothing is queued",
+   empty?.domain === "seaworth.io", empty?.domain);
+ok("a manual-only domain is never the pool's answer",
+   bestDomain(pool, [], room())?.domain !== "byhand.example");
+
+/* One message already inside the window on seaworth.io pushes its next slot
+   a gap past that one, while every other domain can still take the first
+   slot of the window. So the next message belongs to somebody else — that
+   is the round robin, and it is the whole of it.
+
+   Inside the window matters: a slot before the window opens is moved to the
+   window's first minute, where every domain ties. */
+const midWindow = new Date();
+midWindow.setUTCDate(midWindow.getUTCDate() + 1);
+midWindow.setUTCHours(17, 0, 0, 0); // 13:00 in New York, mid-window
+const after1 = bestDomain(pool, [send({
+  from_domain: "seaworth.io", status: "scheduled",
+  scheduled_at: midWindow.toISOString(),
+})], room());
+ok("the next message goes to a different domain", after1?.domain !== "seaworth.io",
+   after1?.domain);
+
+/* Fifteen messages placed one after another, each one told about the ones
+   before it: the count per domain is what stops tomorrow being overspent on
+   one identity. */
+const placed: SendRecord[] = [];
+const left: Record<string, number> = { ...capOfPool };
+for (let i = 0; i < 15; i++) {
+  const pick = bestDomain(pool, placed, (d) => left[d] ?? 0);
+  if (!pick) break;
+  left[pick.domain] = (left[pick.domain] ?? 0) - 1;
+  placed.push(send({ from_domain: pick.domain, status: "scheduled",
+                     scheduled_at: pick.at.toISOString() }));
+}
+const spreadOver = new Set(placed.map((s) => s.from_domain));
+ok("fifteen messages are spread over the pool, not stacked on one",
+   placed.length === 15 && spreadOver.size >= 4, `${spreadOver.size} domains`);
+ok("and no domain took more than its own cap",
+   [...spreadOver].every((d) => placed.filter((s) => s.from_domain === d).length <= capOfPool[d]!));
+
+/* The bug this whole change is about. Every domain is empty today; the one
+   the old code always picked is full on the day the message would land. */
+const landing = (d: number) => {
+  const at = new Date(Date.now() + d * 60 * 60 * 1000);
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
+  }).format(at);
+};
+const tomorrowFull = bestDomain(pool, [], room({
+  [`seaworth.io__${landing(0)}`]: 0,
+  [`seaworth.io__${landing(24)}`]: 0,
+}));
+ok("a domain full on the day it would land is passed over",
+   tomorrowFull?.domain !== "seaworth.io", tomorrowFull?.domain);
+ok("and the pool still has four others", tomorrowFull !== null);
+
+const allFull: Record<string, number> = {};
+for (const d of ["seaworth.io", "theseaworth.com", "seaworth.ai", "seaworthhq.com", "tryseaworth.com"]) {
+  allFull[`${d}__${landing(0)}`] = 0;
+  allFull[`${d}__${landing(24)}`] = 0;
+}
+ok("with every domain full there is no answer", bestDomain(pool, [], room(allFull)) === null);
+ok("a disabled domain is not an answer either",
+   bestDomain(pool, [], room(allFull))?.domain !== "off.example");
 
 // eslint-disable-next-line no-console
 console.log(failed ? `\n${failed} failed` : "\nall passed");
