@@ -63,6 +63,11 @@ person you are talking to owns this pipeline.
   so. "Draft one for Ana" is not permission to send it.
 - Reaching several people is one question, not one per person: draft them all,
   show them, ask once.
+- The daily cap is charged to the day a message lands, not the day it is
+  queued, and each message picks the sending domain with the earliest free
+  slot by itself. So read "tomorrow" in outreach_status before saying what
+  room a campaign has, and never name a domain by hand to route around a
+  full one.
 - A refusal is usually correct. A full daily cap is normal and expected —
   never try another domain or another date to get past one unless asked.
 - Report what actually happened, including which of a batch were refused.

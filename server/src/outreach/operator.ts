@@ -44,14 +44,22 @@ export const t = {
       dry_run: z.boolean(),
       auto_followups: z.boolean(),
       domains: z.array(z.object({ domain: z.string(), used: z.number(), cap: z.number(), left: z.number() })),
+      tomorrow: z.array(z.object({ domain: z.string(), used: z.number(), cap: z.number(), left: z.number() }))
+        .describe("The same, for tomorrow. Campaign mail queued this evening lands tomorrow and is " +
+                  "charged to tomorrow, so today's empty caps are not the room a campaign has."),
       last_beat: z.string().nullable(),
     }),
     execute: async () => {
       const cfg = await getConfig();
-      const [rooms, beat] = await Promise.all([headroom(cfg), lastTick()]);
+      const soon = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      const [rooms, ahead, beat] = await Promise.all([
+        headroom(cfg), headroom(cfg, soon), lastTick()]);
+      const room = ({ domain, used, cap, left }: { domain: string; used: number; cap: number; left: number }) =>
+        ({ domain, used, cap, left });
       return {
         blockers: blockers(cfg), dry_run: cfg.dry_run, auto_followups: cfg.auto_followups,
-        domains: rooms.map(({ domain, used, cap, left }) => ({ domain, used, cap, left })),
+        domains: rooms.map(room),
+        tomorrow: ahead.map(room),
         last_beat: beat?.at ?? null,
       };
     },
@@ -557,6 +565,12 @@ How to behave:
   after they have said so. "Draft one for Ana" is not permission to send it.
 - When asked to reach several people, draft them, show them, and ask once for
   the whole batch. Do not schedule one at a time hoping nobody notices.
+- The cap is charged to the day a message lands, not the day it is queued.
+  Campaign mail queued in the evening lands tomorrow and spends tomorrow's
+  caps, so read "tomorrow" in outreach-status before saying how much room a
+  campaign has — today's untouched caps are not it. Each message picks the
+  domain with the earliest free slot by itself, across every sending domain,
+  so never name a domain by hand to get around a full one.
 - If a schedule is refused, say plainly why. A full daily cap is normal and
   expected, not an error to route around — never try another domain or a
   different date to get past it unless you are asked to.
