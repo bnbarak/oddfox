@@ -95,6 +95,103 @@ export const t = {
     },
   }),
 
+  addPerson: createTool({
+    id: "add-contact",
+    description:
+      "Add a person to the CRM, at a company that is already in it. Use it when the outreach " +
+      "itself turns somebody up — an out-of-office naming the desk that covers, a reply saying " +
+      "'talk to my colleague'. Pass the company name; the account is matched for you. It does " +
+      "not write to them: the new row starts at 'not started' with no message queued, and a " +
+      "campaign or draft-email is still what reaches them. An address already on file returns " +
+      "that person instead of making a second one. Adding somebody is cheap and undoable, but it " +
+      "is still a row somebody will read — say who you are adding before you call it.",
+    inputSchema: z.object({
+      full_name: z.string().describe("As they would write it themselves. A shared desk is a name too: 'Hull team'."),
+      company: z.string().describe("The company they are at, as a substring. It must already be an account."),
+      title: z.string().nullish(),
+      email: z.string().nullish().describe("Their work address, if the message you read gave one"),
+      buying_role: z.enum(["technical-manager", "commercial-manager", "beneficial-owner",
+                           "charterer", "registered-owner", "other"]).nullish(),
+      priority: z.number().int().min(1).max(3).nullish().describe("1 is chase first, 3 is last. Default 2."),
+      linkedin_url: z.string().nullish(),
+      notes: z.string().nullish().describe("Where they came from, in a sentence"),
+    }),
+    outputSchema: z.object({
+      contact_id: z.string().nullable(), full_name: z.string().nullable(),
+      company: z.string().nullable(), account_id: z.string().nullable(),
+      email: z.string().nullable(),
+      created: z.boolean().describe("False when the answer is an existing row, not a new one"),
+      refused: z.string().nullable(),
+    }),
+    execute: async (input) => {
+      const no = (why: string) => ({
+        contact_id: null, full_name: null, company: null, account_id: null,
+        email: null, created: false, refused: why,
+      });
+      /* Matched rather than taken as an id, because the operator is reading
+         a company name off an email, not an id off a table. Ambiguity is
+         refused with the candidates: picking one of two Beazleys silently is
+         how a person ends up on the wrong account. */
+      const want = input.company.trim().toLowerCase();
+      const all = await crm.accounts();
+      const hits = all.filter((a) => a.company.toLowerCase().includes(want) || a.id === want);
+      const exact = hits.find((a) => a.company.toLowerCase() === want);
+      const acc = exact ?? (hits.length === 1 ? hits[0] : undefined);
+      if (!acc) {
+        return no(hits.length
+          ? `${input.company} matches ${hits.length} accounts: ${hits.map((a) => a.company).join(", ")}. Say which.`
+          : `no account matches ${input.company} — add the company first, or check the name`);
+      }
+      const r = await crm.addContact({
+        full_name: input.full_name, account_id: acc.id, title: input.title,
+        email: input.email, buying_role: input.buying_role ?? undefined,
+        priority: (input.priority as 1 | 2 | 3 | null | undefined) ?? undefined,
+        linkedin_url: input.linkedin_url, notes: input.notes,
+      });
+      if (!r) return no(`could not write ${input.full_name} — the account went away underneath`);
+      const c = "made" in r ? r.made : r.already;
+      return {
+        contact_id: c.id, full_name: c.full_name, company: c.company,
+        account_id: c.account_id, email: c.email, created: "made" in r,
+        refused: "made" in r ? null
+               : `${c.email} is already ${c.full_name} in the CRM — nothing was added`,
+      };
+    },
+  }),
+
+  addCompany: createTool({
+    id: "add-account",
+    description:
+      "Add a company to the CRM so people can be added under it. Only when it is genuinely not " +
+      "there — check with find-people or account-activity first, because a second row for a " +
+      "company we already have splits its history in two. Tier is which group it belongs to (1 " +
+      "is third-party ship managers); the tier's name is taken from the companies already in it.",
+    inputSchema: z.object({
+      company: z.string(),
+      tier: z.number().int().min(1).max(6),
+      country: z.string().nullish(),
+      url: z.string().nullish(),
+      notes: z.string().nullish(),
+    }),
+    outputSchema: z.object({
+      account_id: z.string().nullable(), company: z.string().nullable(),
+      tier: z.number().nullable(), tier_name: z.string().nullable(),
+      refused: z.string().nullable(),
+    }),
+    execute: async (input) => {
+      const a = await crm.addAccount({
+        company: input.company, tier: input.tier as 1 | 2 | 3 | 4 | 5 | 6,
+        country: input.country, url: input.url, notes: input.notes,
+      });
+      if (!a) {
+        return { account_id: null, company: null, tier: null, tier_name: null,
+                 refused: `${input.company} is already in the CRM` };
+      }
+      return { account_id: a.id, company: a.company, tier: a.tier, tier_name: a.tier_name,
+               refused: null };
+    },
+  }),
+
   listCampaigns: createTool({
     id: "list-campaigns",
     description:
@@ -436,6 +533,12 @@ How to behave:
 
 - Look things up rather than guessing. You have tools for people, activity,
   who is owed a follow-up, the queue, and system status.
+- The CRM can be added to, so never answer "add them through the UI". When
+  the outreach itself turns somebody up — an out-of-office naming the desk
+  that covers, a reply saying "talk to my colleague" — add-contact puts them
+  on a company that is already an account, and add-account adds a company
+  that is not there at all. Say who you are about to add first. Adding is not
+  contacting: the new row starts at "not started" with nothing queued.
 - A campaign assigns a persona and one tier's message to a chosen list of
   accounts, independent of those accounts' real tier — use set-campaign when
   asked to target a persona or a different message across specific companies,
