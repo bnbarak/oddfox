@@ -1,6 +1,6 @@
 import type { Tone } from "../ui/tokens";
 import { useCallback, useEffect, useState } from "react";
-import { getIdToken } from "./googleAuth";
+import { freshToken } from "./googleAuth";
 import type { PageContext } from "./pageFocus";
 
 /** Typed client over /api/crm/outreach/*, owned by ../../../server
@@ -10,13 +10,13 @@ import type { PageContext } from "./pageFocus";
 
 const BASE = "/api/crm/outreach";
 
-function authHeaders(): HeadersInit {
-  const token = getIdToken();
+async function authHeaders(): Promise<HeadersInit> {
+  const token = await freshToken();
   return token ? { authorization: `Bearer ${token}` } : {};
 }
 
 async function get<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, { headers: authHeaders() });
+  const res = await fetch(`${BASE}${path}`, { headers: await authHeaders() });
   if (!res.ok) {
     const body = (await res.json().catch(() => null)) as { error?: string; detail?: string } | null;
     throw new Error(body?.detail ?? body?.error ?? `GET ${path} → ${res.status}`);
@@ -27,7 +27,7 @@ async function get<T>(path: string): Promise<T> {
 async function post<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     method: "POST",
-    headers: { "content-type": "application/json", ...authHeaders() },
+    headers: { "content-type": "application/json", ...await authHeaders() },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   const parsed = (await res.json().catch(() => null)) as
@@ -75,7 +75,7 @@ export const useOutreachConfig = () => useResource<OutreachConfig>("/config");
 export async function putOutreachConfig(patch: Partial<OutreachConfig>): Promise<OutreachConfig> {
   const res = await fetch(`${BASE}/config`, {
     method: "PUT",
-    headers: { "content-type": "application/json", ...authHeaders() },
+    headers: { "content-type": "application/json", ...await authHeaders() },
     body: JSON.stringify(patch),
   });
   const body = (await res.json().catch(() => null)) as (OutreachConfig & { error?: string }) | null;
@@ -240,7 +240,7 @@ export const useEnrichment = () =>
 export async function setCampaignActive(id: string, active: boolean) {
   const res = await fetch(
     `${BASE}/campaigns/${encodeURIComponent(id)}/${active ? "activate" : "pause"}`,
-    { method: "POST", headers: authHeaders() });
+    { method: "POST", headers: await authHeaders() });
   const body = (await res.json().catch(() => null)) as {
     error?: string;
     enrichment?: { looked_up: number; found: number; missing: number;
@@ -256,7 +256,7 @@ export async function setCampaignActive(id: string, active: boolean) {
 
 export async function sendNow(id: string) {
   const res = await fetch(`${BASE}/sends/${encodeURIComponent(id)}/send-now`,
-                          { method: "POST", headers: authHeaders() });
+                          { method: "POST", headers: await authHeaders() });
   const body = (await res.json().catch(() => null)) as
     { error?: string; detail?: string; note?: string; scheduled_at?: string } | null;
   if (!res.ok) throw new Error(body?.detail ?? body?.error ?? `send now → ${res.status}`);
@@ -270,7 +270,7 @@ export type NewCampaign = {
 export async function saveCampaign(c: NewCampaign) {
   const res = await fetch(`${BASE}/campaigns`, {
     method: "POST",
-    headers: { "content-type": "application/json", ...authHeaders() },
+    headers: { "content-type": "application/json", ...await authHeaders() },
     body: JSON.stringify(c),
   });
   const body = (await res.json().catch(() => null)) as
@@ -284,7 +284,7 @@ export async function saveCampaign(c: NewCampaign) {
 
 export async function deleteCampaign(id: string) {
   const res = await fetch(`${BASE}/campaigns/${encodeURIComponent(id)}`,
-                          { method: "DELETE", headers: authHeaders() });
+                          { method: "DELETE", headers: await authHeaders() });
   const body = (await res.json().catch(() => null)) as
     { error?: string; detail?: string } | null;
   if (!res.ok) throw new Error(body?.detail ?? body?.error ?? `delete → ${res.status}`);
@@ -427,7 +427,7 @@ export const useDrafts = () => useResource<{ records: MailDraft[] }>("/drafts");
 export async function putDraft(d: MailDraft): Promise<MailDraft> {
   const res = await fetch(`${BASE}/drafts/${encodeURIComponent(d.id)}`, {
     method: "PUT",
-    headers: { "content-type": "application/json", ...authHeaders() },
+    headers: { "content-type": "application/json", ...await authHeaders() },
     body: JSON.stringify(d),
   });
   const body = (await res.json().catch(() => null)) as (MailDraft & { error?: string }) | null;
@@ -439,7 +439,7 @@ export async function putDraft(d: MailDraft): Promise<MailDraft> {
     was written in. */
 export async function deleteDraft(id: string): Promise<void> {
   const res = await fetch(`${BASE}/drafts/${encodeURIComponent(id)}`,
-                          { method: "DELETE", headers: authHeaders() });
+                          { method: "DELETE", headers: await authHeaders() });
   // A draft that is already gone is the state the caller wanted.
   if (!res.ok && res.status !== 404) throw new Error(`DELETE /drafts → ${res.status}`);
 }
@@ -462,7 +462,7 @@ export const sendChat = (message: string, context: PageContext) =>
   post<{ text: string; thread: ChatTurn[] }>("/chat", { message, context });
 
 export async function clearThread(): Promise<void> {
-  const res = await fetch(`${BASE}/chat`, { method: "DELETE", headers: authHeaders() });
+  const res = await fetch(`${BASE}/chat`, { method: "DELETE", headers: await authHeaders() });
   if (!res.ok) throw new Error(`DELETE /chat → ${res.status}`);
 }
 
