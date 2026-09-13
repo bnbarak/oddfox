@@ -33,6 +33,10 @@ export const PageContext = z.object({
   tier: z.number().int().min(0).max(99).nullish(),
   view: z.string().max(400).nullish(),
   draft: z.object({
+    /** The saved draft this composer is editing — what save-draft changes to
+        put words on their screen. Optional only for a caller that is not the
+        dock; the dock always has one. */
+    id: id.nullish(),
     reply: z.boolean(), to: addresses, cc: addresses, bcc: addresses,
     subject: z.string().max(2000), body: z.string().max(20_000),
   }).nullish(),
@@ -143,8 +147,12 @@ function aboutDraft(d: NonNullable<PageContext["draft"]>): string[] {
     rcpt,
     `Subject: ${d.subject.trim() || "(none yet)"}`,
     clip(d.body, DRAFT_CHARS) || "(nothing written yet)",
-    "You cannot type into their draft. If they want it changed, write the new text in your " +
-    "answer for them to paste.",
+    ...(d.id
+      ? [`It is saved as draft ${d.id}. To change it, call save-draft with that id: the words ` +
+         "on their screen change as you write them, so there is no need to paste a new version " +
+         "into the chat. Saving it sends nothing."]
+      : ["You cannot change this one from here — write the new text in your answer for them " +
+         "to paste."]),
   ];
 }
 

@@ -280,7 +280,8 @@ outreachRouter.post("/chat", h(async (req, res) => {
     return;
   }
   const { message, context } = ChatRequest.parse(req.body);
-  res.json(await chat(message, context ?? null));
+  // Who is asking, so the draft tools act as them — see asker() in operator.ts.
+  res.json(await chat(message, context ?? null, me(req)));
 }));
 
 /** Who is asking. Always set behind the sign-in check; throwing rather than
