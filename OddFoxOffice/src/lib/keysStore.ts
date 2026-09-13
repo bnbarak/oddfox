@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getIdToken } from "./googleAuth";
+import { freshToken } from "./googleAuth";
 
 /** Typed client over /api/crm/keys, owned by ../../../server
     (server/src/apiKeys.ts). These are the keys an MCP client carries instead
@@ -10,15 +10,15 @@ import { getIdToken } from "./googleAuth";
 
 const BASE = "/api/crm/keys";
 
-function authHeaders(): HeadersInit {
-  const token = getIdToken();
+async function authHeaders(): Promise<HeadersInit> {
+  const token = await freshToken();
   return token ? { authorization: `Bearer ${token}` } : {};
 }
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     ...init,
-    headers: { "content-type": "application/json", ...authHeaders(), ...init?.headers },
+    headers: { "content-type": "application/json", ...await authHeaders(), ...init?.headers },
   });
   const body = (await res.json().catch(() => null)) as (T & { error?: string }) | null;
   // BASE, not `path` — the list is `call("")`, and "GET  → 502" says nothing.

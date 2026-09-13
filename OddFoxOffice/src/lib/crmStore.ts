@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getIdToken } from "./googleAuth";
+import { freshToken } from "./googleAuth";
 
 /** CRM pipeline state now lives in Firestore, owned by ../../../server
     (server/src/index.ts). This module is a thin typed client over its
@@ -85,13 +85,13 @@ export type ContactPatch = Partial<
   Pick<ContactRecord, "linkedin_url" | "email" | "email_status" | "status" | "sequence" | "replied" | "starred" | "notes">
 >;
 
-function authHeaders(): HeadersInit {
-  const token = getIdToken();
+async function authHeaders(): Promise<HeadersInit> {
+  const token = await freshToken();
   return token ? { authorization: `Bearer ${token}` } : {};
 }
 
 async function getJson<T>(url: string): Promise<T> {
-  const res = await fetch(url, { headers: authHeaders() });
+  const res = await fetch(url, { headers: await authHeaders() });
   if (!res.ok) throw new Error(`GET ${url} → ${res.status}`);
   return res.json() as Promise<T>;
 }
@@ -99,7 +99,7 @@ async function getJson<T>(url: string): Promise<T> {
 async function patchJson<T>(url: string, body: unknown): Promise<T> {
   const res = await fetch(url, {
     method: "PATCH",
-    headers: { "content-type": "application/json", ...authHeaders() },
+    headers: { "content-type": "application/json", ...await authHeaders() },
     body: JSON.stringify(body),
   });
   if (!res.ok) {
