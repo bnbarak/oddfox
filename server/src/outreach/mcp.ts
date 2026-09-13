@@ -38,6 +38,11 @@ const exposed = {
   schedule_email: t.book,
   list_queue: t.queue,
   cancel_email: t.pull,
+  /* list-drafts and save-draft are deliberately absent. A draft belongs to
+     one signed-in person, and this door is opened with a shared API key
+     rather than by somebody in particular — there is nobody here to own or
+     to read them. They refuse on their own if they are ever added, but the
+     honest place to say so is here. */
 };
 
 /* Deliberately not operator.ts's INSTRUCTIONS verbatim. Two of those rules

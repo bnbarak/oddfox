@@ -10,9 +10,14 @@ import { useEffect, useId, useSyncExternalStore } from "react";
 
    Ids rather than content: the server looks the thread or campaign up itself,
    so the agent reads the record as it stands, not whatever this tab last
-   polled. The exception is a draft, which exists nowhere but here. */
+   polled. A draft goes both ways — its id, so the agent can change the saved
+   copy, and the words, because what is on the screen this second is what
+   "make it shorter" means and the save is a moment behind. */
 
 export type FocusDraft = {
+  /** The saved draft being edited. The agent changes that one; the composer
+      picks the change up. */
+  id: string;
   reply: boolean; to: string[]; cc: string[]; bcc: string[]; subject: string; body: string;
 };
 

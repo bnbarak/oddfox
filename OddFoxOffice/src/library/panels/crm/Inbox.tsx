@@ -269,11 +269,16 @@ export function CrmInbox() {
     }
   }, [senders, fromDomain]);
 
+  /* The agent in the dock announces when it has changed something. It can
+     write drafts as well as schedule mail, so the folder is re-read with the
+     conversations — and the effect below puts a change to the open one on
+     the screen. */
+  const reloadDrafts = drafts.reload;
   useEffect(() => {
-    const r = () => void reload();
+    const r = () => { void reload(); void reloadDrafts(); };
     window.addEventListener(CRM_CHANGED, r);
     return () => window.removeEventListener(CRM_CHANGED, r);
-  }, [reload]);
+  }, [reload, reloadDrafts]);
 
   /** A reply, written under the conversation it answers. */
   const replying = Boolean(draft?.reply_to);
@@ -315,6 +320,7 @@ export function CrmInbox() {
       .filter(Boolean).join(" › ") || undefined,
     thread: open?.key,
     draft: draft ? {
+      id: draft.id,
       reply: replying,
       to: toList.map((r) => r.email), cc: ccList.map((r) => r.email),
       bcc: bccList.map((r) => r.email), subject, body: body.slice(0, 8000),
@@ -377,7 +383,14 @@ export function CrmInbox() {
     created_at: "", updated_at: "",
   });
 
-  /** Puts a saved draft back on the screen, chips and all. */
+  /** Counts loads, so the editor is rebuilt from the HTML each time one
+      happens. It keeps its own document and would otherwise ignore new words
+      for a draft it is already showing. */
+  const [loads, setLoads] = useState(0);
+
+  /** Puts a saved draft on the screen, chips and all. Keeps the frame it is
+      already in: adopting a change the agent made should not shrink a window
+      somebody had opened full size. */
   const loadDraft = (d: MailDraft) => {
     setTo(d.to.map((e) => recipientFor(e, contacts)));
     setCc(d.cc.map((e) => recipientFor(e, contacts)));
@@ -389,7 +402,9 @@ export function CrmInbox() {
     if (d.signature) setSignature(d.signature);
     opened.current = null;
     written.current = stamp(d.id, d);
-    setDraft({ id: d.id, reply_to: d.reply_to, full: false });
+    setLoads((n) => n + 1);
+    setDraft((was) => ({ id: d.id, reply_to: d.reply_to,
+                         full: was?.id === d.id ? was.full : false }));
   };
 
   const startCompose = () => {
@@ -574,6 +589,20 @@ export function CrmInbox() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draft?.id, draft?.reply_to, shape]);
 
+  /* A draft can change under the composer: the agent in the dock writes
+     them too, and the same person may have this inbox open twice. Take the
+     saved copy when it says something this tab did not write — but only when
+     nothing has been typed since the last save landed, so a rewrite can
+     never eat a sentence somebody is in the middle of. Their own words win;
+     they are the ones who would notice them missing. */
+  useEffect(() => {
+    if (!draft || written.current !== `${draft.id}:${shape}`) return;
+    const server = saved.find((d) => d.id === draft.id);
+    if (!server || shapeOf(server) === shape) return;
+    loadDraft(server);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved, draft?.id, shape]);
+
   /* Opening a conversation you had started answering puts the reply back
      under it, the way Gmail reopens a draft in its thread — but not over
      something else being written, and not one this tab has just thrown
@@ -705,9 +734,10 @@ export function CrmInbox() {
 
       <input className="of-chat__in" placeholder="Subject" value={subject}
              disabled={working} onChange={(e) => setSubject(e.target.value)} />
-      {/* Keyed by the draft, so opening a saved one loads its text: the
-          editor keeps its own document and is built from `html` at mount. */}
-      <RichEditor key={draft?.id ?? "none"} className="of-cw__body"
+      {/* Keyed by the load, so opening a saved draft — or taking a change
+          the agent made to the open one — rebuilds the editor from its HTML.
+          It keeps its own document and is built from `html` at mount. */}
+      <RichEditor key={`${draft?.id ?? "none"}:${loads}`} className="of-cw__body"
                   style={full ? undefined : { minHeight: composing ? 240 : 190 }}
                   html={html} disabled={working} placeholder="Write a message…"
                   onChange={(h, t) => { setHtml(h); setBody(t); }} />

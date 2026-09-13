@@ -1,4 +1,5 @@
 import { Agent } from "@mastra/core/agent";
+import { RequestContext } from "@mastra/core/request-context";
 import { TokenLimiter, ToolCallFilter } from "@mastra/core/processors";
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
@@ -9,9 +10,10 @@ import * as crm from "./crm.js";
 import { heatmap } from "./heatmap.js";
 import { cancel, Refused, schedule } from "./send.js";
 import {
-  allCampaigns, allReplies, allSends, appendTurns, campaignFor, getConfig, getThread,
-  headroom, lastTick, deleteCampaign, putCampaign, type ChatTurn,
+  allCampaigns, allReplies, allSends, appendTurns, campaignFor, getConfig, getDraft, getThread,
+  headroom, lastTick, deleteCampaign, myDrafts, putCampaign, putDraft, type ChatTurn,
 } from "./store.js";
+import { mergedDraft } from "./drafts.js";
 import { Campaign } from "./schemas.js";
 import { due } from "./tick.js";
 import { describe, type PageContext } from "./where.js";
@@ -28,6 +30,28 @@ import { describe, type PageContext } from "./where.js";
    routes use. The daily cap, the dry-run switch, the placeholder check and
    the blocker list are enforced in send.ts, not here, so no amount of
    confused instruction-following can talk its way past them. */
+
+/** Who is asking, for the tools that touch one person's own things.
+
+    Drafts are personal — half a written sentence is not the other person on
+    the allow-list's business, nor theirs to send — so the panel puts the
+    signed-in address on the request for the turn and the draft tools read it
+    from there. The MCP door has no signed-in person, which is why those
+    tools are not exposed through it and refuse plainly if they ever are. */
+const asker = (ctx: { requestContext: RequestContext }): string | null => {
+  const who = ctx.requestContext.get("author");
+  return typeof who === "string" && who ? who : null;
+};
+
+const NO_ASKER =
+  "drafts belong to a signed-in person and this connection has none — " +
+  "they are only available in the CRM panel";
+
+/** Long enough for any message somebody would actually type, short enough
+    that forty of them cannot fill the prompt. */
+const DRAFT_CHARS = 8000;
+const cut = (s: string): string =>
+  s.length > DRAFT_CHARS ? `${s.slice(0, DRAFT_CHARS)}… [cut — do not save this back]` : s;
 
 /** The operator's tools, exported so the MCP endpoint can hand the same ones
     to Claude on a laptop. One definition, two front doors: anything added
@@ -523,6 +547,82 @@ export const t = {
     }),
   }),
 
+  drafts: createTool({
+    id: "list-drafts",
+    description:
+      "What the operator has started writing and not sent — the Drafts folder in their inbox. " +
+      "Their own only. A draft goes nowhere on its own: it sits there until they press Send.",
+    inputSchema: z.object({}),
+    outputSchema: z.object({
+      records: z.array(z.object({
+        draft_id: z.string(), to: z.array(z.string()), cc: z.array(z.string()),
+        bcc: z.array(z.string()), subject: z.string(), body: z.string(),
+        answers_conversation: z.string().nullable(), updated_at: z.string(),
+      })),
+      refused: z.string().nullable(),
+    }),
+    execute: async (_input, ctx) => {
+      const who = asker(ctx);
+      if (!who) return { records: [], refused: NO_ASKER };
+      return {
+        refused: null,
+        records: (await myDrafts(who)).slice(0, 40).map((d) => ({
+          draft_id: d.id, to: d.to, cc: d.cc, bcc: d.bcc, subject: d.subject,
+          body: cut(d.body), answers_conversation: d.reply_to, updated_at: d.updated_at,
+        })),
+      };
+    },
+  }),
+
+  saveDraft: createTool({
+    id: "save-draft",
+    description:
+      "Put a message in the operator's Drafts folder, or change one that is already there. " +
+      "It is never sent: a draft waits for them to read it and press Send, which is what " +
+      "makes this the safe way to write something for somebody. Pass draft_id to change one " +
+      "— only the fields you pass are touched, so the subject can be rewritten without " +
+      "disturbing the body — or leave it out to start a new one. When they have a draft open, " +
+      "its id is in the note about where they are, and saving it changes what is on their " +
+      "screen in front of them. Say what you changed.",
+    inputSchema: z.object({
+      draft_id: z.string().nullish().describe("The draft to change. Omit to make a new one."),
+      to: z.array(z.string()).max(50).nullish().describe("Email addresses. Replaces the list."),
+      cc: z.array(z.string()).max(50).nullish(),
+      bcc: z.array(z.string()).max(50).nullish(),
+      subject: z.string().max(500).nullish(),
+      body: z.string().max(20_000).nullish().describe(
+        "The message as plain text, no signature — one is added when it is sent."),
+      answers_conversation: z.string().nullish().describe(
+        "The id of the conversation this replies to, from the note about where they are. " +
+        "New drafts only; a draft that answers a conversation opens under it in the inbox."),
+    }),
+    outputSchema: z.object({
+      saved: z.boolean(), draft_id: z.string().nullable(),
+      to: z.array(z.string()), subject: z.string(), body: z.string(),
+      refused: z.string().nullable(),
+    }),
+    execute: async (input, ctx) => {
+      const who = asker(ctx);
+      const no = (why: string) => ({
+        saved: false, draft_id: input.draft_id ?? null, to: [], subject: "", body: "",
+        refused: why,
+      });
+      if (!who) return no(NO_ASKER);
+
+      /* Their own drafts only, and a missing one is refused rather than
+         created under the id somebody guessed. */
+      const existing = input.draft_id ? await getDraft(input.draft_id) : null;
+      if (input.draft_id && (!existing || existing.author !== who)) {
+        return no(`there is no draft ${input.draft_id} in their folder`);
+      }
+
+      const d = mergedDraft(existing, input, who, new Date().toISOString());
+      await putDraft(d);
+      return { saved: true, draft_id: d.id, to: d.to, subject: d.subject,
+               body: cut(d.body), refused: null };
+    },
+  }),
+
   pull: createTool({
     id: "cancel-email",
     description:
@@ -565,6 +665,13 @@ How to behave:
   after they have said so. "Draft one for Ana" is not permission to send it.
 - When asked to reach several people, draft them, show them, and ask once for
   the whole batch. Do not schedule one at a time hoping nobody notices.
+- You can read, change and write their drafts — list-drafts and save-draft —
+  and a draft is never sent by anything you do, which makes it the safe place
+  to put something you have written for them. When they have one open, its id
+  comes with the note about where they are, and saving it changes the words
+  in front of them: say what you changed rather than repeating the whole
+  message back. Prefer changing a draft to pasting a new version into the
+  chat for them to copy. Saving a draft is not permission to schedule it.
 - The cap is charged to the day a message lands, not the day it is queued.
   Campaign mail queued in the evening lands tomorrow and spends tomorrow's
   caps, so read "tomorrow" in outreach-status before saying how much room a
@@ -668,7 +775,7 @@ const asked = (m: ChatTurn): string =>
     ToolCallFilter and TokenLimiter are plain processors and work on any
     message list, storage adapter or not. */
 export async function chat(
-  message: string, where: PageContext | null = null,
+  message: string, where: PageContext | null = null, author: string | null = null,
 ): Promise<{ text: string; thread: ChatTurn[] }> {
   const cfg = await getConfig();
   const [history, brief] = await Promise.all([getThread(), where ? onScreen(where) : null]);
@@ -697,8 +804,13 @@ export async function chat(
      which is what an empty bubble in the panel was. */
   /* Where they are goes in as a system message for this turn alone. It is
      not stored: the email open now says nothing about the next question. */
+  /* Who is asking, for the turn only. The agent itself is cached and shared
+     — two people use this panel — so the signed-in address travels with the
+     request rather than being baked into a tool. See asker(). */
+  const requestContext = new RequestContext(author ? [["author", author]] : []);
+
   const res = await operator(cfg.model).generate(
-    input, { maxSteps: 12, ...(brief ? { system: brief } : {}) });
+    input, { maxSteps: 12, requestContext, ...(brief ? { system: brief } : {}) });
 
   /* Never store an empty assistant turn. An empty one is not just a blank
      bubble now — it goes into the thread, gets replayed as the model's own

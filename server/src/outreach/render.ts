@@ -148,6 +148,19 @@ const paragraphs = (text: string, style: string): string =>
   text.trimEnd().split(/\n{2,}/).map((block) =>
     `<p style="${style}">${esc(block.trimEnd()).replace(/\n/g, "<br>")}</p>`).join("\n");
 
+/** Plain text in the shape the composer's editor holds it: one paragraph per
+    line, a blank line kept as an empty one.
+
+    What the agent writes into somebody's draft goes through this. The editor
+    renders the HTML half and the plain text is only what decides whether
+    there is anything to send, so a draft saved with text and no HTML opens
+    as an empty box with the Send button lit — which is worse than either
+    half being missing on its own. */
+export const editorHtml = (text: string): string =>
+  text.replace(/\r\n/g, "\n").split("\n")
+    .map((line) => (line.trim() ? `<p>${esc(line)}</p>` : "<p></p>"))
+    .join("");
+
 /* Formatted mail from the composer's editor.
 
    The HTML arrives from a browser, so it is cleaned before it goes anywhere:
