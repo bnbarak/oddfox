@@ -341,6 +341,9 @@ export type ThreadMessage = {
   /** Outgoing only: how far it got towards the mailbox. Delivery alone —
       whether anybody read it is the two fields below. */
   status?: string; round?: number; template_tier?: number | null;
+  /** Outgoing only: campaign mail — a sequence round, or anything a campaign
+      produced — rather than a note typed to one person. */
+  marketing?: boolean;
   /** Outgoing only: when the recipient first opened it, and first clicked a
       link in it. Null is "not that we know of": Resend only reports opens
       for a domain with open tracking switched on. */
