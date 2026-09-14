@@ -531,18 +531,22 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-inbox__list { display: flex; flex-direction: column; min-width: 0; min-height: 0;
                   overflow-y: auto; overflow-x: hidden;
                   border-right: 1px solid var(--line-soft); }
-/* A row is a button, and WebKit does not let a button be a flex container:
-   on iOS the three lines stay inline, which means `overflow: hidden` does
-   not apply to them and a long subject runs off the side of the pane. So the
-   row clips its own content, and each line is a block in its own right,
-   rather than trusting flex to blockify them. */
+/* A row is a button, and WebKit gives a button a layout of its own: it will
+   not be a flex container, and `overflow` on it stops its box growing to its
+   content — which collapsed every row to one clipped line. So the button is
+   a plain block that only paints, and a span inside it does the layout and
+   the clipping, which any engine handles the same way. */
 .of-inbox__row {
-  max-width: 100%; text-align: left; cursor: pointer; font: inherit; background: transparent;
+  display: block; width: 100%; max-width: 100%; text-align: left; cursor: pointer;
+  font: inherit; background: transparent;
   border: 0; border-bottom: 1px solid var(--line-soft); border-left: 3px solid transparent;
-  padding: 11px 14px; display: flex; flex-direction: column; gap: 3px;
-  min-width: 0; overflow: hidden;
+  padding: 11px 14px;
 }
-.of-inbox__row > * { display: block; max-width: 100%; }
+.of-inbox__rowin {
+  display: flex; flex-direction: column; gap: 3px;
+  min-width: 0; max-width: 100%; overflow: hidden;
+}
+.of-inbox__rowin > * { display: block; max-width: 100%; }
 .of-inbox__row:hover { background: rgba(255,255,255,.03); }
 .of-inbox__row.is-on { background: rgba(255,255,255,.07); border-left-color: var(--hot); }
 /* Unread is Gmail's: mail in the thread this person has not opened. Bold
@@ -569,7 +573,7 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 
 /* min-width: 0, because a flex item with visible overflow will not shrink
    below its own content, and this row holds a name beside a date. */
-.of-inbox__row > .of-inbox__l1 { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.of-inbox__rowin > .of-inbox__l1 { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
 .of-inbox__who { color: var(--mist); font-size: 13px; flex: 1; overflow: hidden;
                  text-overflow: ellipsis; white-space: nowrap; }
 .of-inbox__at  { font-family: var(--mono); font-size: 10.5px; color: var(--fog); flex-shrink: 0; }
@@ -665,7 +669,8 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
   /* Room at the foot for the agent's pill, which floats over this. */
   .of-inbox__thread { padding: 10px 16px 72px; }
   /* Thumb-sized rows, and room for the third line that carries the company. */
-  .of-inbox__row { padding: 13px 16px; gap: 4px; }
+  .of-inbox__row { padding: 13px 16px; }
+  .of-inbox__rowin { gap: 4px; }
   .of-inbox__who { font-size: 14px; }
   .of-inbox__l2 { font-size: 13px; }
   /* The bar is three things of very different lengths. The filters scroll
