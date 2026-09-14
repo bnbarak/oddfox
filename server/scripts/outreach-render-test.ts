@@ -223,6 +223,68 @@ ok("the naive spread is what broke it",
   ok("empty stays empty", normaliseSubject(null) === "");
 }
 
+/* ---- threading a reply from another address -----------------------------
+
+   The address we wrote to is not the address that answers. Somebody mailed
+   at a company domain replies from their real one, or from an alias, or a
+   colleague answers for them — and keying on the address alone filed the
+   answer as a second conversation sitting next to the one it belongs to,
+   which is what this caught. Both routes back are checked: the reference
+   chain, which is what mail itself threads on, and the subject fallback for
+   mail whose headers we never had. */
+{
+  const { group } = await import("../src/outreach/threads.js");
+  const send = (over: Record<string, unknown>) => ({
+    id: "s1", account_id: null, contact_id: null, campaign_id: null, company: null,
+    to: "Ami@wnwd.com", from_domain: "seaworth.ai", from_address: "barak@seaworth.ai",
+    reply_to: null, round: 0, subject: "Ami / Barak", body: "Hi Ami", html: null,
+    template_tier: null, written_by: "agent", resend_id: "re_1", message_id: null,
+    status: "delivered", last_event: "delivered", opened_at: null, clicked_at: null,
+    scheduled_at: "2026-09-13T14:30:00.000Z", quota_day: null,
+    created_at: "2026-09-13T14:30:00.000Z", updated_at: "2026-09-13T14:30:00.000Z",
+    dry_run: false, error: null, ...over,
+  }) as unknown as Parameters<typeof group>[0][number];
+  const reply = (over: Record<string, unknown>) => ({
+    id: "r1", from: "ami@windward.ai", subject: "Re: Ami / Barak",
+    received_at: "2026-09-13T15:09:00.000Z", message_id: "<reply@windward.ai>",
+    send_id: null, account_id: null, contact_id: null, excerpt: "Rotem pls set up",
+    text: "Rotem pls set up", unsubscribe: false, automated: false, ...over,
+  }) as unknown as Parameters<typeof group>[1][number];
+
+  const chained = group(
+    [send({ message_id: "<ours@seaworth.ai>" })],
+    [reply({ in_reply_to: "<ours@seaworth.ai>", references: ["<ours@seaworth.ai>"] })],
+    []);
+  ok("a reply quoting our Message-ID lands in the thread",
+     chained.length === 1 && chained[0]!.messages.length === 2,
+     `${chained.length} threads`);
+  ok("and the thread keeps the key it already had",
+     chained[0]!.key === "ami@wnwd.com|ami / barak", chained[0]!.key);
+  ok("and shows the address we write to, not the one that answered",
+     chained[0]!.email === "Ami@wnwd.com", String(chained[0]!.email));
+  ok("and counts as replied to", chained[0]!.replies === 1 && chained[0]!.replied);
+
+  const bySubject = group([send({})], [reply({ references: [] })], []);
+  ok("a reply quoting nothing still threads on a subject only we used",
+     bySubject.length === 1 && bySubject[0]!.messages.length === 2,
+     `${bySubject.length} threads`);
+
+  const many = group(
+    [send({ id: "s1", to: "a@one.test" }), send({ id: "s2", to: "b@two.test" })],
+    [reply({ references: [] })], []);
+  ok("but a subject several people were sent is not evidence of anything",
+     many.length === 3, `${many.length} threads`);
+
+  const unrelated = group([send({})],
+    [reply({ subject: "Re: Something else", references: [] })], []);
+  ok("and a different subject stays its own conversation", unrelated.length === 2,
+     `${unrelated.length} threads`);
+
+  const fresh = group([send({})], [reply({ subject: "Ami / Barak", references: [] })], []);
+  ok("a first message that is not a reply is not merged on its subject",
+     fresh.length === 2, `${fresh.length} threads`);
+}
+
 // eslint-disable-next-line no-console
 
 /* ---- enrichment cost ----------------------------------------------------

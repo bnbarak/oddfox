@@ -32,6 +32,13 @@ export async function pollEvents(): Promise<number> {
     // What the event means is sends.ts's to decide — see learn(), which is
     // the same rule everything else reads these rows with.
     const patch = learn(row, data.last_event ?? "", new Date().toISOString());
+
+    /* The Message-ID, which we cannot know at send time: Resend generates it
+       and the send response does not carry it, so this poll is the only
+       place it can be learnt. Without it a reply cannot be tied to the
+       message it answers and our own follow-ups quote nothing, which is why
+       both used to arrive as fresh conversations. */
+    if (!row.message_id && data.message_id) patch.message_id = data.message_id;
     if (!Object.keys(patch).length) continue;
 
     await patchSend(row.id, patch);
@@ -47,15 +54,56 @@ export async function pollEvents(): Promise<number> {
   return changed;
 }
 
-/** Ties an inbound message to the send it answers. Matching on the sender's
-    address is enough here — one contact, one address, at most three messages
-    — and it is the only signal every mail client preserves. */
-async function attribute(from: string) {
+/** In-Reply-To and References as this message actually sent them.
+
+    Header names arrive in whatever case the sending client used, and both
+    headers hold angle-bracketed ids — References the whole chain, oldest
+    first. Everything outside the brackets is folding whitespace and is
+    dropped, so the ids compare equal to the ones Resend reports for our own
+    mail. Returns nothing rather than empty fields when the headers were not
+    fetched, so a failed fetch is not saved as "this answers nothing". */
+export function threadChain(headers: Record<string, string> | null | undefined):
+  { in_reply_to: string | null; references: string[] } | null {
+  if (!headers) return null;
+  const header = (name: string): string | null => {
+    for (const [k, v] of Object.entries(headers)) if (k.toLowerCase() === name) return v;
+    return null;
+  };
+  const ids = (v: string | null): string[] => v?.match(/<[^>\s]+>/g) ?? [];
+  const inReplyTo = ids(header("in-reply-to"))[0] ?? null;
+  const refs = ids(header("references"));
+  return {
+    in_reply_to: inReplyTo,
+    references: [...new Set([...refs, ...(inReplyTo ? [inReplyTo] : [])])],
+  };
+}
+
+/** Ties an inbound message to the send it answers, and through it to the
+    person and the account.
+
+    The reference chain first: it names the exact message being answered, and
+    it is the only signal that survives a reply coming from somewhere other
+    than the address we wrote to — an alias, a second company domain, a
+    colleague answering on somebody's behalf. Matching the sender's address
+    against the CRM is the fallback, for mail that quotes nothing. Getting
+    this wrong is not cosmetic: an unattributed human reply leaves the
+    contact unmarked, and the rest of their sequence keeps landing. */
+async function attribute(from: string, chain: string[]) {
   const addr = (from.match(/<([^>]+)>/)?.[1] ?? from).trim().toLowerCase();
-  const contact = (await crm.contacts()).find((c) => c.email?.toLowerCase() === addr);
-  if (!contact) return { addr, send_id: null, contact_id: null, account_id: null };
-  const last = (await allSends()).find((s) => s.contact_id === contact.id);
-  return { addr, send_id: last?.id ?? null, contact_id: contact.id, account_id: contact.account_id };
+  const contacts = await crm.contacts();
+  const contact = contacts.find((c) => c.email?.toLowerCase() === addr);
+  const sends = await allSends();
+  if (contact) {
+    const last = sends.find((s) => s.contact_id === contact.id);
+    return { addr, send_id: last?.id ?? null, contact_id: contact.id,
+             account_id: contact.account_id };
+  }
+  const quoted = new Set(chain);
+  const answered = sends.find((s) => s.message_id && quoted.has(s.message_id));
+  if (!answered) return { addr, send_id: null, contact_id: null, account_id: null };
+  const c = answered.contact_id ? contacts.find((x) => x.id === answered.contact_id) : undefined;
+  return { addr, send_id: answered.id, contact_id: answered.contact_id ?? null,
+           account_id: c?.account_id ?? answered.account_id ?? null };
 }
 
 export async function pollReplies(): Promise<number> {
@@ -89,8 +137,10 @@ export async function pollReplies(): Promise<number> {
   for (const ref of data.data) {
     if (!heard(ref.to)) continue;
     const existing = await getReply(ref.id);
-    // Already saved, with its full text: nothing to do.
-    if (existing && existing.text != null) continue;
+    // Already saved, with its full text and its reference chain: nothing to
+    // do. A reply stored before the chain was kept comes back through here
+    // once to collect it, which is what threads mail we already hold.
+    if (existing && existing.text != null && existing.references != null) continue;
 
     const at = new Date(ref.created_at).toISOString();
     const full = await resend().emails.receiving.get(ref.id).catch(() => null);
@@ -109,17 +159,25 @@ export async function pollReplies(): Promise<number> {
        it is not asked for again every minute. A failed fetch leaves it for
        the next poll. Not counted in `stored` — it is not new mail. */
     if (existing) {
-      if (full?.data) await patchReply(ref.id, { text: text ?? "" });
+      if (full?.data) {
+        await patchReply(ref.id, {
+          text: text ?? "",
+          ...(threadChain(full.data.headers) ?? { in_reply_to: null, references: [] }),
+        });
+      }
       continue;
     }
 
     const automated = readsAsAutomated(ref.from, ref.subject ?? null);
     const isOptOut = readsAsOptOut(text) || readsAsOptOut(ref.subject ?? null);
-    const { addr, send_id, contact_id, account_id } = await attribute(ref.from);
+    const chain = threadChain(full?.data?.headers) ?? { in_reply_to: null, references: [] };
+    const { addr, send_id, contact_id, account_id } =
+      await attribute(ref.from, chain.references);
 
     await putReply({
       id: ref.id, from: ref.from, subject: ref.subject ?? null, received_at: at,
       message_id: ref.message_id ?? full?.data?.message_id ?? null,
+      ...chain,
       send_id, account_id, contact_id,
       excerpt: text ? text.replace(/\s+/g, " ").slice(0, 800) : null,
       text: text ?? "",

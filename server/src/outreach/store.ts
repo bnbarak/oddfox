@@ -182,6 +182,15 @@ export type ReplyRecord = {
   /** RFC 5322 Message-ID. A reply quotes this in In-Reply-To/References,
       which is the only thing that makes mail clients thread it. */
   message_id?: string | null;
+  /** The ids this message answers, as its own headers gave them: the one
+      In-Reply-To names, and the whole chain from References. This is how a
+      reply is tied to what it replies to when the address it came from is
+      not the address we wrote to — an alias, a second domain, a colleague
+      answering on somebody's behalf. Absent on replies saved before these
+      were kept, until the poller backfills them; [] when the message
+      carried neither header. */
+  in_reply_to?: string | null;
+  references?: string[];
   send_id: string | null; account_id: string | null; contact_id: string | null;
   /** One line, for previews and tooltips. */
   excerpt: string | null; unsubscribe: boolean; automated: boolean;
