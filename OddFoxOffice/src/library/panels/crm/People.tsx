@@ -2,8 +2,10 @@ import { useMemo, useState } from "react";
 import { Section, Grid, Cell, Stat, Note, H1, Card, Chip, Site, Logo, Star } from "../../../ui";
 import type { Rec } from "../../../data";
 import type { ContactRecord } from "../../../lib/crmStore";
-import { contactsFile, useAccounts, useContacts } from "./shared";
+import { contactsFile, useAccounts, useContacts, usePersonParam } from "./shared";
 import { EmailCell } from "./EmailCell";
+import { PersonDetail } from "./Person";
+import { PersonLink } from "./links";
 import { useEnrichment } from "../../../lib/outreachStore";
 import { ServerState } from "./ServerState";
 
@@ -34,11 +36,17 @@ export function CrmPeople() {
     { id: "both", label: "Both", fn: (x: ContactRecord) => Boolean(x.email && x.linkedin_url) },
   ] as const;
   const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("all");
+  const [openId, setOpen] = usePersonParam();
   const rows = useMemo(
     () => people.filter(FILTERS.find((f) => f.id === filter)!.fn),
     // FILTERS is rebuilt each render but its predicates are pure and stable.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [people, filter]);
+
+  // One person asked for by the URL takes the whole page, the way an account
+  // does: everything said to them is a different question from who is on the
+  // list, not a wider column of the same table.
+  if (openId) return <PersonDetail id={openId} onBack={() => setOpen(null)} />;
 
   return (
     <>
@@ -78,14 +86,13 @@ export function CrmPeople() {
                   return (
                     <tr key={x.id}>
                       <td className="co">
-                        {x.linkedin_url
-                          ? <a className="co-row" href={x.linkedin_url} target="_blank"
-                               rel="noopener noreferrer" title={x.linkedin_url}>
-                              <span className="co-name">{x.full_name}</span>
-                              <Star on={x.starred} title="Starred contact" />
-                            </a>
-                          : <span className="co-row"><span className="co-name">{x.full_name}</span>
-                              <Star on={x.starred} title="Starred contact" /></span>}
+                        {/* The name opens their page — everything we have said
+                            to them — rather than their LinkedIn profile, which
+                            has a column of its own two cells along. */}
+                        <PersonLink id={x.id}>
+                          <span className="co-name">{x.full_name}</span>
+                          <Star on={x.starred} title="Starred contact" />
+                        </PersonLink>
                       </td>
                       <td className="cell"><span className="of-note">{x.title}</span></td>
                       <td className="cell">

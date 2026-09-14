@@ -1,4 +1,6 @@
+import { useSearchParams } from "react-router-dom";
 import { DB, type Rec } from "../../../data";
+import type { Thread } from "../../../lib/outreachStore";
 import { type Tone } from "../../../ui";
 import {
   useCrmAccounts, useCrmContacts,
@@ -53,3 +55,31 @@ export const SEND_TONE: Record<string, Tone> = {
   delivered: "calm", opened: "calm", clicked: "calm",
   scheduled: "cool", draft: "cool", sent: "",
 };
+
+
+/* Which account or person is open, kept in the URL so the back button works
+   and a link can be shared. The detail pages live on a tab each — the
+   account's on Accounts, the person's on People — and a row on any table
+   points at them rather than growing its own copy of the page. */
+const param = (key: string) => (): [string | null, (id: string | null) => void] => {
+  const [params, setParams] = useSearchParams();
+  const set = (id: string | null) => {
+    const next = new URLSearchParams(params);
+    if (id) next.set(key, id); else next.delete(key);
+    setParams(next);
+  };
+  return [params.get(key), set];
+};
+
+export const useAccountParam = param("account");
+export const usePersonParam = param("person");
+
+/** A contact with no name on record has their address as their name, and
+    printing both reads as a bug. */
+export const who = (t: Thread) =>
+  t.email && t.full_name !== t.email ? `${t.full_name} · ${t.email}` : (t.full_name || t.email || "—");
+
+/** When a message happened, as a history reads it. */
+export const at = (iso: string) => new Date(iso).toLocaleString([], {
+  month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
+});

@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { Section, Grid, Cell, Stat, Note, Chip, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { cancelSend, sendNow, useCampaigns, useEnrichment, useThreads, type AccountCampaign, type Thread, type ThreadMessage } from "../../../lib/outreachStore";
-import { CampaignChip, CampaignTag } from "./CampaignChip";
-import { EmailBody } from "./EmailBody";
+import { cancelSend, sendNow, useCampaigns, useEnrichment, useThreads, type Thread } from "../../../lib/outreachStore";
+import { CampaignChip } from "./CampaignChip";
 import { EmailCell } from "./EmailCell";
+import { Message } from "./Message";
+import { PersonLink } from "./links";
 import { Toast } from "./Toast";
 import { useFocus } from "../../../lib/pageFocus";
-import { SequenceLink, SequenceModal } from "./SequenceModal";
-import { SendState } from "./SendState";
-import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
+import { SequenceModal } from "./SequenceModal";
+import { PIPE, TONE, today, link, useAccounts, useContacts, who } from "./shared";
 
 /* One account, end to end: where the company is, who we know there, and every
    message that has gone out to them. It exists because the tables answer "how
@@ -19,98 +18,6 @@ import { PIPE, TONE, today, link, useAccounts, useContacts } from "./shared";
 
    The open account lives in the URL, so the back button works and a row on
    any table can point at it. */
-
-export const useAccountParam = (): [string | null, (id: string | null) => void] => {
-  const [params, setParams] = useSearchParams();
-  const set = (id: string | null) => {
-    const next = new URLSearchParams(params);
-    if (id) next.set("account", id); else next.delete("account");
-    setParams(next);
-  };
-  return [params.get("account"), set];
-};
-
-/** Opens an account's page from a row on any CRM table. The page lives on the
-    Accounts tab, so a row on Outreach travels there rather than growing its
-    own copy of it. */
-export function AccountLink({ id, children, title }: {
-  id: string; children: React.ReactNode; title?: string;
-}) {
-  const nav = useNavigate();
-  return (
-    <button className="co-row co-row--btn" title={title ?? "Open this account"}
-            onClick={() => nav(`/library/crm?account=${encodeURIComponent(id)}`)}>
-      {children}
-    </button>
-  );
-}
-
-/** A contact with no name on record has their address as their name, and
-    printing both reads as a bug. */
-const who = (t: Thread) =>
-  t.email && t.full_name !== t.email ? `${t.full_name} · ${t.email}` : (t.full_name || t.email || "—");
-
-const fmt = (iso: string) => new Date(iso).toLocaleString([], {
-  month: "short", day: "numeric", hour: "2-digit", minute: "2-digit",
-});
-
-/* One message, read like an email rather than like a log line.
-
-   It used to put the recipient above the card, the sender and status inside
-   it, and the subject floating over the body — three separate places for the
-   header of one email. Now the subject leads, because that is what you are
-   looking for, and everything else is one meta line under it. */
-function Message({ m, who, campaign, onSequence, onCancel, onNow, busy }: {
-  m: ThreadMessage;
-  /** Who this was to, or from — the counterparty either way. */
-  who: string;
-  /** The campaign this account is in, if any. */
-  campaign?: AccountCampaign;
-  onSequence?: () => void;
-  onCancel?: (id: string) => void;
-  onNow?: (id: string) => void;
-  busy?: boolean;
-}) {
-  const pullable = m.dir === "out" && (m.status === "scheduled" || m.status === "draft");
-  return (
-    <article className={`of-msg is-${m.dir} is-open`}>
-      <div className="of-msg__open">
-        {m.subject ? <div className="of-msg__subj">{m.subject}</div> : null}
-
-        <div className="of-msg__meta">
-          <span>{m.dir === "out" ? "to" : "from"} {who}</span>
-          {m.round ? <CampaignTag of={campaign} /> : null}
-          {m.round ? (
-            <SequenceLink tier={m.template_tier ?? 1} round={m.round} />
-          ) : null}
-          {m.round && onSequence ? (
-            <button className="of-msg__tag of-msg__tag--btn" onClick={onSequence}
-                    title="See this person's whole sequence">sequence</button>
-          ) : null}
-          {m.dry_run ? <span className="of-msg__tag">dry run</span> : null}
-          <SendState m={m} />
-          <span className="of-msg__at">{fmt(m.at)}</span>
-        </div>
-
-        <EmailBody html={m.html} text={m.body} />
-
-        {pullable && (onNow || onCancel) ? (
-          <div className="of-msg__acts">
-            {onNow ? (
-              <button className="of-facet__b" disabled={busy}
-                      title="skip the wait — goes in about a minute, still cancellable"
-                      onClick={() => onNow(m.id)}>send now</button>
-            ) : null}
-            {onCancel ? (
-              <button className="of-dock__x" disabled={busy}
-                      onClick={() => onCancel(m.id)}>cancel this message</button>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
-    </article>
-  );
-}
 
 /** What the campaign is and what it would cost to run — the two things you
     want before deciding to write to this company. Enrichment is charged when
@@ -263,10 +170,10 @@ export function AccountDetail({ id, onBack }: { id: string; onBack: () => void }
                   return (
                     <tr key={c.id}>
                       <td className="co">
-                        <span className="co-row">
+                        <PersonLink id={c.id}>
                           <span className="co-name">{c.full_name}</span>
                           <Star on={c.starred} title="Starred contact" />
-                        </span>
+                        </PersonLink>
                       </td>
                       <td className="cell"><span className="of-note">{c.title}</span></td>
                       <td className="cell"><Chip>{c.buying_role}</Chip></td>
