@@ -563,6 +563,9 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
                  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .of-inbox__thread { min-width: 0; min-height: 0; padding: 20px 22px; overflow-y: auto; }
+.of-inbox__back { display: none; margin-right: auto; font: inherit; font-family: var(--mono); font-size: 11px;
+                  letter-spacing: .06em; cursor: pointer; color: var(--mist);
+                  background: transparent; border: 0; padding: 4px 0 10px; }
 .of-inbox__head { padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid var(--line-soft); }
 .of-inbox__title { font-size: 18px; color: var(--paper); margin-bottom: 5px; }
 
@@ -632,8 +635,33 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-compose__bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
 @media (max-width: 900px) {
-  .of-inbox { grid-template-columns: 1fr; grid-template-rows: 220px 1fr; }
-  .of-inbox__list { border-right: 0; border-bottom: 1px solid var(--line-soft); }
+  /* One pane at a time. A 220px list stacked on a 300px thread was two
+     things too small to use; on a phone the list is the page until you pick
+     a conversation, and then the conversation is. */
+  .of-inbox { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .of-inbox__list { border-right: 0; }
+  .of-inbox[data-view="thread"] .of-inbox__list { display: none; }
+  .of-inbox[data-view="list"] .of-inbox__thread { display: none; }
+  .of-inbox__back { display: block; }
+  .of-inbox__close { display: none; }
+  /* Room at the foot for the agent's pill, which floats over this. */
+  .of-inbox__thread { padding: 10px 16px 72px; }
+  /* Thumb-sized rows, and room for the third line that carries the company. */
+  .of-inbox__row { padding: 13px 16px; gap: 4px; }
+  .of-inbox__who { font-size: 14px; }
+  .of-inbox__l2 { font-size: 13px; }
+  /* The bar is three things of very different lengths. The filters scroll
+     sideways as one strip rather than wrapping into three rows of buttons,
+     which cost a third of the screen before a single conversation showed. */
+  .of-inbox__bar { flex-wrap: wrap; align-items: center; gap: 6px 10px;
+                   padding-top: 10px; padding-bottom: 8px; }
+  .of-inbox__counts { order: 3; width: 100%; font-size: 10.5px; }
+  /* Room under the last row for the agent's pill, which floats over it. */
+  .of-inbox__list { padding-bottom: 64px; }
+  /* The gutter that keeps the collapsed rail off the tables is the rail's;
+     down here the rail is a pill at the bottom, and the list wants the edge. */
+  body[data-crm-dock="closed"] .of-main { padding-right: 0; }
+  .of-inbox__title { font-size: 16px; }
 }
 
 /* ---------- inbox: compose ---------- */
@@ -857,3 +885,108 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
    removed — the record that they once asked is the point of the table — but
    quieted, because it no longer stops anything being sent. */
 .of-matrix tr.is-restored > td { opacity: .45; }
+
+/* ---------- the phone: one header row, and a drawer behind it ---------- */
+/* Two rows of tabs are the right shape for a laptop and hopeless on a phone:
+   five groups and seven CRM pages wrapped into four lines of header before
+   the page itself began. Below 900px they fold into a drawer, and the header
+   keeps one line saying where you are. */
+.of-burger { display: none; }
+.of-head-here { display: none; }
+
+@media (max-width: 900px) {
+  .of-head-in {
+    align-items: center; flex-wrap: nowrap; gap: 10px;
+    /* The avatar and the bell are fixed at the top right corner. */
+    padding: 10px calc(var(--pad) + 76px) 10px var(--pad);
+  }
+  .of-mark { font-size: 15px; white-space: nowrap; }
+  .of-mark span { display: none; }
+  .of-nav--groups, .of-nav--sub { display: none; }
+
+  .of-burger {
+    display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
+    width: 34px; height: 34px; padding: 0 7px; flex-shrink: 0; cursor: pointer;
+    background: transparent; border: 1px solid var(--line); border-radius: 3px;
+  }
+  .of-burger span { display: block; height: 1.5px; background: var(--paper); border-radius: 1px; }
+
+  .of-head-here {
+    display: flex; align-items: center; gap: 2px; margin-left: auto; min-width: 0;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--fog);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .of-head-here strong { color: var(--paper); font-weight: 500; }
+  .of-head-here__s { opacity: .5; }
+}
+
+.of-drawer {
+  /* Over the avatar and bell, which are fixed to the same corner as the
+     drawer's own close button. */
+  position: fixed; inset: 0; z-index: 1100; display: flex;
+  background: rgba(0, 0, 0, .62);
+}
+.of-drawer__panel {
+  display: flex; flex-direction: column; min-height: 0;
+  width: min(320px, 86vw); height: 100%; overflow-y: auto;
+  background: #0a1015; border-right: 1px solid var(--line);
+}
+.of-drawer__h {
+  display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
+  padding: 12px 14px; border-bottom: 1px solid var(--line-soft);
+}
+.of-drawer__t { font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+                text-transform: uppercase; color: var(--fog); margin-right: auto; }
+.of-drawer__body { padding: 4px 0 40px; }
+.of-drawer__g + .of-drawer__g { border-top: 1px solid var(--line-soft); margin-top: 6px; padding-top: 6px; }
+.of-drawer__gn {
+  display: flex; align-items: center; gap: 8px; width: 100%; cursor: pointer;
+  font: inherit; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--fog); text-align: left;
+  background: none; border: 0; padding: 14px 16px;
+}
+.of-drawer__gn.is-on { color: var(--paper); }
+.of-drawer__caret { margin-left: auto; font-size: 13px; opacity: .6; }
+.of-drawer__l {
+  display: flex; align-items: center; gap: 8px; padding: 12px 16px; font-size: 14px;
+  color: var(--mist); border-left: 3px solid transparent;
+}
+.of-drawer__l.is-on { color: var(--paper); background: rgba(255, 255, 255, .06); border-left-color: var(--hot); }
+.of-drawer__g--decks { padding: 12px 16px 16px; }
+.of-drawer__g--decks .of-tab { padding-left: 0; }
+/* The drawer is only reachable from the burger, but a window resized wide
+   with it open should not keep a phone's menu over a laptop's nav. */
+@media (min-width: 901px) { .of-drawer { display: none; } }
+
+/* ---------- the phone: touch ---------- */
+@media (max-width: 900px) {
+  /* iOS zooms the page when you focus anything under 16px, and then leaves
+     it zoomed. Every field in the app was 13px. */
+  input, textarea, select { font-size: 16px; }
+  /* Sized for a fingertip rather than a cursor, but not so large that four
+     filters no longer fit across a phone. */
+  .of-facet__b, .of-dock__x { padding: 6px 10px; }
+  .of-inbox__new-b { padding: 7px 12px; }
+
+  /* Collapsed, the agent is a pill by the thumb rather than a vertical rail
+     down the middle of the right edge, where it sat over the mail. */
+  .of-dock__tab {
+    top: auto; bottom: 16px; right: 12px; transform: none;
+    writing-mode: horizontal-tb; border-radius: 999px; padding: 11px 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+  }
+  .of-dock__n { margin-top: 0; margin-left: 8px; }
+}
+
+/* The inbox's filters, as one sideways strip. Declared here rather than in
+   the inbox's own media block because the rule it overrides is written after
+   that block, and would otherwise win. */
+@media (max-width: 900px) {
+  /* basis 0, so the strip shares the first line with New email instead of
+     being pushed onto one of its own by its own content width. */
+  .of-inbox__facets { flex: 1 1 0; flex-wrap: nowrap; min-width: 0;
+                      overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .of-inbox__facets::-webkit-scrollbar { display: none; }
+  .of-inbox__facets > * { flex-shrink: 0; }
+}

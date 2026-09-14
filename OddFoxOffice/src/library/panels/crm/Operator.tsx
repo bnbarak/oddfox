@@ -24,15 +24,17 @@ export const CRM_CHANGED = "crm:changed";
 
 const OPEN_KEY = "crm.operator.open";
 
-/** Open unless this browser has been told otherwise. The agent is the main
-    way to work the CRM, so it should be there on arrival; only an explicit
-    collapse is remembered. A private window or blocked site data makes this
-    throw rather than return null, so it is guarded, not just null-checked. */
+/** Closed until this browser asks for it. The agent is a thing you reach
+    for, not the page itself — and it is a rail over the tables on a laptop
+    and the whole screen on a phone, so arriving with it open costs more than
+    it gives. Opening it is remembered; the tab to do so is always there. A
+    private window or blocked site data makes this throw rather than return
+    null, so it is guarded, not just null-checked. */
 function readOpen(): boolean {
   try {
-    return localStorage.getItem(OPEN_KEY) !== "0";
+    return localStorage.getItem(OPEN_KEY) === "1";
   } catch {
-    return true;
+    return false;
   }
 }
 

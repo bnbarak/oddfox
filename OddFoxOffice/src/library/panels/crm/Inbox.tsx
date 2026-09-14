@@ -989,7 +989,10 @@ export function CrmInbox() {
     <>
       <div className="of-inbox__bar">{newButton}{filters}{counts}</div>
 
-      <div className="of-inbox" ref={box}>
+      {/* Narrow screens show one pane at a time — the list, or the
+          conversation you picked out of it. Which one is CSS's business;
+          this only says what is open. */}
+      <div className="of-inbox" ref={box} data-view={open ? "thread" : "list"}>
         <nav className="of-inbox__list" aria-label={onDrafts ? "Drafts" : "Conversations"}>
           {onDrafts ? draftRows : shown.map((t) => {
             const preview = t.messages[t.messages.length - 1];
@@ -1028,7 +1031,13 @@ export function CrmInbox() {
             <>
               <header className="of-inbox__head">
                 <div className="of-inbox__tools">
-                  <button className="of-dock__x" onClick={() => setOpenId(null)}
+                  {/* The way back to the list on a phone, where the list is
+                      not on the screen beside this. It says what "close"
+                      does there, so "close" itself stands down. */}
+                  <button className="of-inbox__back" onClick={() => setOpenId(null)}>
+                    ← All conversations
+                  </button>
+                  <button className="of-dock__x of-inbox__close" onClick={() => setOpenId(null)}
                           title="Close this conversation">close</button>
                   {open.messages.some((m) => m.dir === "in") && (
                     <button className="of-dock__x" onClick={() => markUnread(open)}
