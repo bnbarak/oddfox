@@ -6,7 +6,7 @@ import {
 import { SlideDeck } from "./presentation/SlideDeck";
 import { presentations } from "./presentations";
 import { DeckMenu } from "./DeckMenu";
-import { Library, TABS, GROUPS, groupOf, tabsIn, type TabId, type ViewState } from "./library/Library";
+import { Library, TABS, GROUPS, groupOf, tabsIn, type GroupId, type TabId, type ViewState } from "./library/Library";
 import { AuthGate } from "./AuthGate";
 import { Operator } from "./library/panels/crm/Operator";
 import { InboxBadge } from "./library/panels/crm/InboxBadge";
@@ -26,6 +26,12 @@ export const useView = () => useOutletContext<Ctx>();
 
 function LibraryLayout() {
   const [v, setV] = useState<ViewState>(INITIAL);
+  // The phone gets one header row and a drawer; there is no room for two rows
+  // of tabs, and a wrapped nav ate half the screen before the page began.
+  const [menu, setMenu] = useState(false);
+  // Which group the drawer has unfolded. Twenty-seven pages in one list is a
+  // scroll; five headings with the section you are in already open is not.
+  const [openGroup, setOpenGroup] = useState<GroupId | null>(null);
   const set = <K extends keyof ViewState>(k: K) => (val: ViewState[K]) =>
     setV((s) => ({ ...s, [k]: val }));
   const nav = useNavigate();
@@ -47,11 +53,35 @@ function LibraryLayout() {
     return () => window.removeEventListener("keydown", onKey);
   }, [tab, nav]);
 
+  const here = TABS.find((t) => t.id === tab);
+  const hereGroup = GROUPS.find((g) => g.id === groupOf(tab ?? ""));
+
+  // Escape closes the drawer, and so does going somewhere.
+  useEffect(() => { setMenu(false); }, [tab]);
+  useEffect(() => {
+    if (!menu) return;
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") setMenu(false); };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, [menu]);
+
   return (
     <div className="office">
       <header className="of-head">
         <div className="of-head-in">
+          <button className="of-burger"
+                  onClick={() => { setOpenGroup(groupOf(tab ?? "")); setMenu(true); }}
+                  aria-label="Open the menu" aria-expanded={menu} aria-controls="of-drawer">
+            <span /><span /><span />
+          </button>
           <div className="of-mark">Seaworth <span>/ office</span></div>
+          {/* Where you are, since the tabs that used to say so are in the
+              drawer now. */}
+          <span className="of-head-here">
+            {hereGroup?.label}<span className="of-head-here__s"> / </span>
+            <strong>{here?.label}</strong>
+            {tab === "crm-inbox" && <InboxBadge />}
+          </span>
         </div>
         <nav className="of-nav of-nav--groups" aria-label="Sections">
           {GROUPS.map((g) => {
@@ -75,6 +105,40 @@ function LibraryLayout() {
           ))}
         </nav>
       </header>
+      {menu && (
+        <div className="of-drawer" role="dialog" aria-modal="true" aria-label="Sections"
+             onMouseDown={(e) => { if (e.target === e.currentTarget) setMenu(false); }}>
+          <nav className="of-drawer__panel" id="of-drawer">
+            <div className="of-drawer__h">
+              <span className="of-drawer__t">Sections</span>
+              <button className="of-dock__x" onClick={() => setMenu(false)}>close</button>
+            </div>
+            <div className="of-drawer__body">
+              {GROUPS.map((g) => {
+                const on = openGroup === g.id;
+                return (
+                  <div className="of-drawer__g" key={g.id}>
+                    <button className={`of-drawer__gn${on ? " is-on" : ""}`}
+                            aria-expanded={on}
+                            onClick={() => setOpenGroup(on ? null : g.id)}>
+                      {g.label}
+                      {g.id === "crm" && !on && <InboxBadge />}
+                      <span className="of-drawer__caret">{on ? "–" : "+"}</span>
+                    </button>
+                    {on && tabsIn(g.id).map((t) => (
+                      <NavLink key={t.id} to={`/library/${t.id}`} end
+                               className={({ isActive }) => `of-drawer__l${isActive ? " is-on" : ""}`}>
+                        {t.label}{t.id === "crm-inbox" && <InboxBadge />}
+                      </NavLink>
+                    ))}
+                  </div>
+                );
+              })}
+              <div className="of-drawer__g of-drawer__g--decks"><DeckMenu /></div>
+            </div>
+          </nav>
+        </div>
+      )}
       <main className="of-main">
         <Outlet context={{ v, set } satisfies Ctx} />
       </main>
