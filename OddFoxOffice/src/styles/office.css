@@ -518,16 +518,31 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 
 /* Height is set from JS to whatever the window has left; the panes scroll
    inside it so the page itself does not move. */
-.of-inbox { display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: 0;
+/* minmax(0, 1fr) rather than 1fr: a grid track's automatic minimum is its
+   min-content width, so a track of plain 1fr is as wide as the longest
+   unbreakable thing in it — a name beside a date, a campaign chip — and the
+   pane grows past the window instead of ellipsing inside it. */
+.of-inbox { display: grid; grid-template-columns: minmax(260px, 360px) minmax(0, 1fr); gap: 0;
             align-items: stretch; min-height: 0;
             border-top: 1px solid var(--line-soft); overflow: hidden; }
-.of-inbox__list { display: flex; flex-direction: column; min-height: 0; overflow-y: auto;
+/* overflow-x is not left to its default: `overflow-y: auto` on its own makes
+   the other axis compute to auto too, which is how the list came to scroll
+   sideways on a phone. Rows ellipse; they never pan. */
+.of-inbox__list { display: flex; flex-direction: column; min-width: 0; min-height: 0;
+                  overflow-y: auto; overflow-x: hidden;
                   border-right: 1px solid var(--line-soft); }
+/* A row is a button, and WebKit does not let a button be a flex container:
+   on iOS the three lines stay inline, which means `overflow: hidden` does
+   not apply to them and a long subject runs off the side of the pane. So the
+   row clips its own content, and each line is a block in its own right,
+   rather than trusting flex to blockify them. */
 .of-inbox__row {
-  text-align: left; cursor: pointer; font: inherit; background: transparent;
+  max-width: 100%; text-align: left; cursor: pointer; font: inherit; background: transparent;
   border: 0; border-bottom: 1px solid var(--line-soft); border-left: 3px solid transparent;
-  padding: 11px 14px; display: flex; flex-direction: column; gap: 3px; min-width: 0;
+  padding: 11px 14px; display: flex; flex-direction: column; gap: 3px;
+  min-width: 0; overflow: hidden;
 }
+.of-inbox__row > * { display: block; max-width: 100%; }
 .of-inbox__row:hover { background: rgba(255,255,255,.03); }
 .of-inbox__row.is-on { background: rgba(255,255,255,.07); border-left-color: var(--hot); }
 /* Unread is Gmail's: mail in the thread this person has not opened. Bold
@@ -552,7 +567,9 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
   color: var(--void); background: var(--cool);
 }
 
-.of-inbox__l1 { display: flex; align-items: baseline; gap: 8px; }
+/* min-width: 0, because a flex item with visible overflow will not shrink
+   below its own content, and this row holds a name beside a date. */
+.of-inbox__row > .of-inbox__l1 { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
 .of-inbox__who { color: var(--mist); font-size: 13px; flex: 1; overflow: hidden;
                  text-overflow: ellipsis; white-space: nowrap; }
 .of-inbox__at  { font-family: var(--mono); font-size: 10.5px; color: var(--fog); flex-shrink: 0; }
@@ -562,7 +579,8 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 .of-inbox__l3  { font-family: var(--mono); font-size: 10.5px; color: var(--fog);
                  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.of-inbox__thread { min-width: 0; min-height: 0; padding: 20px 22px; overflow-y: auto; }
+.of-inbox__thread { min-width: 0; min-height: 0; padding: 20px 22px;
+                    overflow-y: auto; overflow-x: hidden; }
 .of-inbox__back { display: none; margin-right: auto; font: inherit; font-family: var(--mono); font-size: 11px;
                   letter-spacing: .06em; cursor: pointer; color: var(--mist);
                   background: transparent; border: 0; padding: 4px 0 10px; }
@@ -638,7 +656,7 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
   /* One pane at a time. A 220px list stacked on a 300px thread was two
      things too small to use; on a phone the list is the page until you pick
      a conversation, and then the conversation is. */
-  .of-inbox { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .of-inbox { grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr; }
   .of-inbox__list { border-right: 0; }
   .of-inbox[data-view="thread"] .of-inbox__list { display: none; }
   .of-inbox[data-view="list"] .of-inbox__thread { display: none; }
@@ -905,11 +923,11 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
   .of-nav--groups, .of-nav--sub { display: none; }
 
   .of-burger {
-    display: inline-flex; flex-direction: column; justify-content: center; gap: 4px;
-    width: 34px; height: 34px; padding: 0 7px; flex-shrink: 0; cursor: pointer;
+    display: inline-block; width: 34px; height: 34px; padding: 0; flex-shrink: 0;
+    line-height: 0; cursor: pointer; color: var(--paper);
     background: transparent; border: 1px solid var(--line); border-radius: 3px;
   }
-  .of-burger span { display: block; height: 1.5px; background: var(--paper); border-radius: 1px; }
+  .of-burger svg { vertical-align: middle; }
 
   .of-head-here {
     display: flex; align-items: center; gap: 2px; margin-left: auto; min-width: 0;
@@ -940,14 +958,20 @@ body[data-crm-dock="open"] .of-cw { right: calc(min(400px, 34vw) + 22px); }
                 text-transform: uppercase; color: var(--fog); margin-right: auto; }
 .of-drawer__body { padding: 4px 0 40px; }
 .of-drawer__g + .of-drawer__g { border-top: 1px solid var(--line-soft); margin-top: 6px; padding-top: 6px; }
+/* Not a flex row, for the same reason the inbox rows are not: WebKit will
+   not make a button a flex container, so the caret is placed rather than
+   pushed. */
 .of-drawer__gn {
-  display: flex; align-items: center; gap: 8px; width: 100%; cursor: pointer;
+  display: block; position: relative; width: 100%; cursor: pointer;
   font: inherit; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em;
   text-transform: uppercase; color: var(--fog); text-align: left;
-  background: none; border: 0; padding: 14px 16px;
+  background: none; border: 0; padding: 14px 34px 14px 16px;
 }
 .of-drawer__gn.is-on { color: var(--paper); }
-.of-drawer__caret { margin-left: auto; font-size: 13px; opacity: .6; }
+.of-drawer__caret {
+  position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  font-size: 13px; opacity: .6;
+}
 .of-drawer__l {
   display: flex; align-items: center; gap: 8px; padding: 12px 16px; font-size: 14px;
   color: var(--mist); border-left: 3px solid transparent;

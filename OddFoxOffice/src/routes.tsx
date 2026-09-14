@@ -72,7 +72,12 @@ function LibraryLayout() {
           <button className="of-burger"
                   onClick={() => { setOpenGroup(groupOf(tab ?? "")); setMenu(true); }}
                   aria-label="Open the menu" aria-expanded={menu} aria-controls="of-drawer">
-            <span /><span /><span />
+            {/* Drawn rather than built from three divs: WebKit will not make
+                a button a flex container, so on iOS the bars came out inline,
+                ignored their height, and the button rendered empty. */}
+            <svg viewBox="0 0 20 14" width="20" height="14" aria-hidden="true">
+              <path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
           </button>
           <div className="of-mark">Seaworth <span>/ office</span></div>
           {/* Where you are, since the tabs that used to say so are in the
