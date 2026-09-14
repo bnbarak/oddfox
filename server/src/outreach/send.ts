@@ -64,16 +64,32 @@ function gapMinutes(cfg: OutreachConfig, domain: string): number {
 }
 
 /** The next free slot for `domain`: inside the window, at least two minutes
-    out, and a decent gap after whatever that domain already has queued. */
+    out, a decent gap after whatever that domain already has queued, and
+    `min_gap_minutes` after the last message queued on *any* domain.
+
+    That last clause is the one it is easy to leave out, and leaving it out
+    is not a small miss. The per-domain gap above asks each identity to look
+    like a person typing. But five domains each independently offering "two
+    minutes from now" put five messages on the same minute, so the pool as a
+    whole looked nothing like a person: four people at one company got four
+    near-identical notes at 11:36 on the same morning, one from each domain.
+    Paced per sender, unpaced as a mailstream.
+
+    The floor is global on purpose. Making it per-campaign would let two
+    campaigns collide on the same minute again, which is the same failure
+    with an extra step. */
 export function nextSlot(cfg: OutreachConfig, domain: string, queued: SendRecord[]): Date {
-  const latest = queued
-    .filter((s) => s.from_domain === domain && s.status === "scheduled" && s.scheduled_at)
+  const soonest = (pick: (s: SendRecord) => boolean) => queued
+    .filter((s) => pick(s) && s.status === "scheduled" && s.scheduled_at)
     .map((s) => new Date(s.scheduled_at!).getTime())
     .filter((t) => t > Date.now())
     .sort((a, b) => b - a)[0];
+  const latest = soonest((s) => s.from_domain === domain);
+  const anywhere = soonest(() => true);
   const earliest = Date.now() + 2 * 60 * 1000;
   const after = latest ? latest + gapMinutes(cfg, domain) * 60 * 1000 : earliest;
-  return nextInWindow(new Date(Math.max(earliest, after)), cfg.timezone,
+  const spaced = anywhere ? anywhere + cfg.min_gap_minutes * 60 * 1000 : earliest;
+  return nextInWindow(new Date(Math.max(earliest, after, spaced)), cfg.timezone,
                       cfg.send_window.start_hour, cfg.send_window.end_hour);
 }
 
@@ -106,11 +122,20 @@ export function bestDomain(
       return { domain: d.domain, at, day: dayKey(at, cfg.timezone) };
     })
     .filter((r) => roomLeft(r.domain, r.day) > 0);
-  /* Ties are ordinary: at the start of a run every domain's next slot is the
-     same "two minutes from now". The one with the most room left goes first,
-     which is what makes a 15-a-day domain take three messages for every one
-     a 5-a-day domain takes. */
+  /* Ties are ordinary, and since min_gap_minutes they are the normal case:
+     the global floor hands every free domain the same minute, so the
+     tiebreak is doing most of the routing rather than a little of it.
+
+     It compares the *fraction* of each domain's cap still unspent, not the
+     absolute count. Absolute room reads "15 left" as beating "5 left" even
+     when the second domain has not sent anything all day, so the two 5-a-day
+     domains went from carrying three of fifteen messages to carrying none —
+     which is the opposite of what a warm-up cap is for. Proportion is also
+     what the ratio in the comment above always meant: a 15-a-day domain
+     takes three for every one a 5-a-day domain takes. */
   open.sort((a, b) => a.at.getTime() - b.at.getTime()
+                   || roomLeft(b.domain, b.day) / Math.max(1, capOf(cfg, b.domain))
+                    - roomLeft(a.domain, a.day) / Math.max(1, capOf(cfg, a.domain))
                    || roomLeft(b.domain, b.day) - roomLeft(a.domain, a.day));
   const first = open[0];
   return first ? { domain: first.domain, at: first.at } : null;

@@ -84,6 +84,17 @@ export const OutreachConfig = z.object({
   /** Earliest and latest local hour a message may be scheduled to land. */
   send_window: z.object({ start_hour: z.number().int().min(0).max(23).default(8),
                           end_hour: z.number().int().min(1).max(23).default(17) }).default({ start_hour: 8, end_hour: 17 }),
+  /** Minutes between any two paced messages, counted across every domain
+      rather than per domain. The per-domain gap in send.ts protects one
+      identity's reputation; this protects the recipient's impression. Four
+      near-identical notes to one company at 11:36, one from each of four
+      domains, is what "paced" looked like without it.
+
+      It is a floor on the whole mailstream, so it also caps the day: at 15
+      minutes an 8am-5pm window holds 37 messages however much the daily caps
+      add up to. Raise it to spread a day's mail wider, lower it to use more
+      of the caps. */
+  min_gap_minutes: z.number().int().min(0).max(240).default(15),
   /** When on, the heartbeat writes and schedules the next round by itself for
       anyone who is due one and has not replied. Off means it only reports
       what is due and waits for a person. */

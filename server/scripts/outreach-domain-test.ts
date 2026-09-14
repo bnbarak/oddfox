@@ -173,6 +173,72 @@ ok("a domain full on the day it would land is passed over",
    tomorrowFull?.domain !== "seaworth.io", tomorrowFull?.domain);
 ok("and the pool still has four others", tomorrowFull !== null);
 
+/* Spacing across the pool, not just within a domain.
+
+   The live failure this is about: four messages to four people at one
+   company, each placed on a different domain, every one landing at 11:36.
+   Each domain was empty, so each offered "two minutes from now", and nothing
+   compared them to each other.
+
+   Seeded from a slot in tomorrow's window rather than from `Date.now()`, so
+   the run does not change meaning depending on the hour it is run at. An
+   earlier version of these two checks was written against "now" and failed
+   at 16:57, three minutes before the window shut, when the second message
+   rolled to the next morning and the gap read 902 minutes. */
+const seedAt = new Date();
+seedAt.setUTCDate(seedAt.getUTCDate() + 1);
+seedAt.setUTCHours(17, 0, 0, 0); // 13:00 in New York, with hours of window left
+
+const fill = (cfg: OutreachConfig, count: number) => {
+  const placed = [send({ from_domain: "seaworth.io", status: "scheduled",
+                         scheduled_at: seedAt.toISOString() })];
+  const left: Record<string, number> = { ...capOfPool };
+  left["seaworth.io"] = (left["seaworth.io"] ?? 0) - 1;
+  for (let i = 0; i < count; i++) {
+    const pick = bestDomain(cfg, placed, (d) => left[d] ?? 0);
+    if (!pick) break;
+    left[pick.domain] = (left[pick.domain] ?? 0) - 1;
+    placed.push(send({ from_domain: pick.domain, status: "scheduled",
+                       scheduled_at: pick.at.toISOString() }));
+  }
+  const times = placed.map((s) => new Date(s.scheduled_at!).getTime()).sort((a, b) => a - b);
+  return {
+    placed,
+    domains: new Set(placed.map((s) => s.from_domain)).size,
+    distinct: new Set(times).size,
+    gaps: times.slice(1).map((t, i) => Math.round((t - times[i]!) / 60_000)),
+  };
+};
+
+const spaced = fill(pool, 14);
+ok("fifteen messages land at fifteen different times",
+   spaced.distinct === 15, `${spaced.distinct} distinct`);
+ok("and no two are closer than the configured floor",
+   spaced.gaps.every((g) => g >= pool.min_gap_minutes),
+   `gaps ${[...new Set(spaced.gaps)].join(", ")} min`);
+
+/* The floor hands every free domain the same minute, so the tiebreak decides
+   nearly every placement. Spreading has to survive that, or pacing the pool
+   would quietly mean abandoning the two small domains. */
+ok("and the pool is still spread over, small domains included",
+   spaced.domains === 5, `${spaced.domains} domains`);
+
+/* A floor of zero is the old behaviour, stated out loud: this setting is the
+   only thing keeping two domains off the same minute. */
+const unspaced = OutreachConfig.parse({
+  sender_name: "Barak",
+  postal_address: "Seaworth, 1 Example Street, London",
+  unsubscribe_mailbox: "optout@seaworth.ai",
+  timezone: "America/New_York",
+  min_gap_minutes: 0,
+  domains: pool.domains,
+});
+const collided = fill(unspaced, 4);
+ok("with the floor at zero domains share a minute again",
+   collided.distinct < 5, `${collided.distinct} distinct times for 5 messages`);
+ok("and the same pool is used either way, so spacing costs no reach",
+   collided.domains === spaced.domains, `${collided.domains} vs ${spaced.domains}`);
+
 const allFull: Record<string, number> = {};
 for (const d of ["seaworth.io", "theseaworth.com", "seaworth.ai", "seaworthhq.com", "tryseaworth.com"]) {
   allFull[`${d}__${landing(0)}`] = 0;
