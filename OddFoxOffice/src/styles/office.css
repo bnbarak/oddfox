@@ -639,6 +639,22 @@ body[data-crm-dock="closed"] .of-main { padding-right: 34px; }
 /* ---------- inbox: compose ---------- */
 .of-inbox__bar { display: flex; align-items: baseline; gap: 16px;
                  padding-top: 14px; padding-bottom: 14px; margin-bottom: 0; }
+/* The filters read as one group, tight enough that the compose button beside
+   them is plainly not another one. */
+.of-inbox__facets { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.of-inbox__facets > * { white-space: nowrap; }
+/* Compose. The only control on this bar that does something rather than
+   changing what you are looking at, so it is filled rather than outlined. */
+.of-inbox__new-b {
+  font: inherit; font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--void); background: var(--cool);
+  border: 1px solid var(--cool); border-radius: 2px; padding: 5px 12px; cursor: pointer;
+  white-space: nowrap;
+}
+.of-inbox__new-b:hover { background: var(--paper); border-color: var(--paper); }
+.of-inbox__new-b[disabled] {
+  color: var(--fog); background: transparent; border-color: var(--line-soft); cursor: default;
+}
 .of-to { border: 1px solid var(--line-soft); border-radius: 3px; max-height: 240px; overflow-y: auto; }
 .of-to__b {
   display: block; width: 100%; text-align: left; font: inherit; font-size: 13px; cursor: pointer;

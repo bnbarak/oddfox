@@ -1,6 +1,6 @@
 import * as crm from "./crm.js";
 import { allReplies, allSends, type ReplyRecord } from "./store.js";
-import { clickedAt, delivery, openedAt } from "./sends.js";
+import { clickedAt, delivery, isMarketing, openedAt } from "./sends.js";
 import type { SendRecord } from "./schemas.js";
 import type { ContactRecord } from "../schemas.js";
 
@@ -39,6 +39,10 @@ export type ThreadMessage = {
   opened_at?: string | null;
   clicked_at?: string | null;
   round?: number;
+  /** Outbound only: campaign mail rather than something typed to one person.
+      The Inbox filters on it — the sequence is most of the list, and the
+      question "what has anybody actually said to us" is a different one. */
+  marketing?: boolean;
   /** Which tier's sequence this round's copy came from, so a message can
       link back to the script it is following. */
   template_tier?: number | null;
@@ -137,7 +141,8 @@ const outbound = (s: SendRecord): ThreadMessage => ({
   at: s.scheduled_at ?? s.created_at,
   sort_at: GONE.has(s.status) ? (s.scheduled_at ?? s.created_at) : s.created_at,
   status: delivery(s), opened_at: openedAt(s), clicked_at: clickedAt(s),
-  round: s.round, template_tier: s.template_tier, message_id: s.message_id,
+  round: s.round, marketing: isMarketing(s),
+  template_tier: s.template_tier, message_id: s.message_id,
   dry_run: s.dry_run, cancel_token: s.resend_id,
   to: s.to,
   ...(s.also_to?.length ? { also_to: s.also_to } : {}),

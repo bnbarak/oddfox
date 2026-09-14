@@ -29,6 +29,12 @@ import { useContacts } from "./shared";
    Older messages collapse to a single line; the newest is open, since that is
    the one you are replying to. */
 
+/** Delivery states that mean the message left: anything else is still on its
+    way to a slot, or never made it out. Mirrors threads.ts on the server. */
+const GONE = new Set([
+  "sent", "delivered", "opened", "clicked", "bounced", "complained", "failed",
+]);
+
 const fmt = (iso: string) => {
   const d = new Date(iso);
   const sameYear = d.getFullYear() === new Date().getFullYear();
@@ -211,6 +217,16 @@ export function CrmInbox() {
      the next poll. An entry goes once the server has caught up. */
   const [marked, setMarked] = useState<Map<string, boolean>>(new Map());
   const [onlyUnread, setOnlyUnread] = useState(false);
+  /* Two more filters over the same list, each defaulted to what you want to
+     see when you open the Inbox to find out what has happened.
+
+     Marketing is on: the campaign is most of what is here, and hiding it by
+     default would make an inbox that looks empty. Scheduled is off: mail the
+     campaign has queued for next week has not happened yet, and a list where
+     three quarters of the rows are things nobody has received is a list you
+     cannot read for what people have said. */
+  const [withMarketing, setWithMarketing] = useState(true);
+  const [withScheduled, setWithScheduled] = useState(false);
   /* Everything this person has part way through writing. On the server, so a
      draft survives a reload and follows them to another machine. */
   const drafts = useDrafts();
@@ -299,10 +315,23 @@ export function CrmInbox() {
   }, [full]);
 
   const isUnread = (t: Thread) => (marked.has(t.key) ? !marked.get(t.key) : t.unread > 0);
-  const unreadCount = threads.filter(isUnread).length;
-  // The thread you are reading stays in the Unread view after it is read, as
-  // it does in Gmail — vanishing from under the cursor is disorienting.
-  const shown = onlyUnread ? threads.filter((t) => isUnread(t) || t.id === openId) : threads;
+  /** Campaign mail: a sequence round, or anything a campaign produced. A
+      reply to one is part of the same conversation, so the whole thread
+      counts — you are filtering conversations, not messages. */
+  const isCampaign = (t: Thread) => t.messages.some((m) => m.dir === "out" && m.marketing);
+  /** Nothing in it has gone yet: every message is outbound and still waiting
+      for its slot. The campaign queues weeks ahead, so there are a lot. */
+  const isPending = (t: Thread) =>
+    !t.messages.some((m) => m.dir === "in" || (m.status ? GONE.has(m.status) : false));
+  const keep = (t: Thread) => (!onlyUnread || isUnread(t))
+    && (withMarketing || !isCampaign(t))
+    && (withScheduled || !isPending(t));
+  const list = threads.filter(keep);
+  const unreadCount = list.filter(isUnread).length;
+  // The thread you are reading stays in the list after it is read, as it does
+  // in Gmail — vanishing from under the cursor is disorienting. Same for one
+  // a filter would otherwise drop the moment you opened it.
+  const shown = threads.filter((t) => keep(t) || t.id === openId);
 
   /* Nothing is open until you open it. Showing the newest thread by default
      is what Gmail's reading pane declines to do, and for the same reason:
@@ -849,24 +878,38 @@ export function CrmInbox() {
         <><strong className="of-inbox__new">{unreadCount}</strong> unread
           <span className="of-inbox__sep">·</span></>
       )}
-      <strong>{threads.length}</strong> conversation{threads.length === 1 ? "" : "s"}
+      <strong>{list.length}</strong> conversation{list.length === 1 ? "" : "s"}
       <span className="of-inbox__sep">·</span>
-      <strong>{threads.reduce((n, t) => n + t.replies, 0)}</strong> replied
+      <strong>{list.reduce((n, t) => n + t.replies, 0)}</strong> replied
       <span className="of-inbox__sep">·</span>
-      <strong>{threads.reduce((n, t) => n + t.sent, 0)}</strong> sent
+      <strong>{list.reduce((n, t) => n + t.sent, 0)}</strong> sent
     </span>
   );
 
   /* Inbox and Drafts are two folders over one list, Gmail's arrangement, and
-     Unread is a filter inside the first. Drafts is a place rather than a
-     filter — what is in it is not mail — so it takes the whole list and the
-     unread controls go with it. */
+     Unread, Marketing and Scheduled are filters inside the first. Drafts is a
+     place rather than a filter — what is in it is not mail — so it takes the
+     whole list and the filters go with it. */
   const filters = (
-    <>
+    <span className="of-inbox__facets">
       <button className="of-facet__b" aria-pressed={!onDrafts && onlyUnread}
               onClick={() => { showDrafts(false); setOnlyUnread((x) => !x); }}
               title={onlyUnread ? "Show every conversation" : "Show only conversations with mail you have not opened"}>
         Unread
+      </button>
+      <button className="of-facet__b" aria-pressed={!onDrafts && withMarketing}
+              onClick={() => { showDrafts(false); setWithMarketing((x) => !x); }}
+              title={withMarketing
+                ? "Hide the campaign — leave only mail written to one person"
+                : "Show campaign mail as well"}>
+        Marketing
+      </button>
+      <button className="of-facet__b" aria-pressed={!onDrafts && withScheduled}
+              onClick={() => { showDrafts(false); setWithScheduled((x) => !x); }}
+              title={withScheduled
+                ? "Show only conversations where something has actually gone"
+                : "Show conversations whose mail is still queued to send"}>
+        Scheduled
       </button>
       <button className="of-facet__b" aria-pressed={onDrafts}
               onClick={() => showDrafts(!onDrafts)}
@@ -875,11 +918,13 @@ export function CrmInbox() {
         Drafts{saved.length ? ` (${saved.length})` : ""}
       </button>
       {!onDrafts && unreadCount > 0 && (
-        <button className="of-dock__x" onClick={() => void mark(threads.filter(isUnread), true)}>
+        // What is on the screen, not what is behind the filters: marking
+        // mail you cannot see read is not something a button should do.
+        <button className="of-dock__x" onClick={() => void mark(list.filter(isUnread), true)}>
           mark all read
         </button>
       )}
-    </>
+    </span>
   );
 
   /* A draft's row. The person it is to, when it was last saved, and the
@@ -913,8 +958,11 @@ export function CrmInbox() {
     </>
   );
 
+  /* Not a filter, so it does not look like one: writing to somebody is the
+     one thing on this bar that changes something rather than changing what
+     you are looking at. */
   const newButton = (
-    <button className="of-facet__b" onClick={startCompose} disabled={composing}>
+    <button className="of-inbox__new-b" onClick={startCompose} disabled={composing}>
       New email
     </button>
   );
@@ -923,11 +971,14 @@ export function CrmInbox() {
   const toast = <Toast message={said} onDone={() => setSaid(null)}
                        ms={Math.max(6000, (said?.length ?? 0) * 60)} />;
 
-  if (threads.length === 0 && !onDrafts) {
+  if (list.length === 0 && !openId && !onDrafts) {
     return (
       <>
         <div className="of-inbox__bar">{newButton}{filters}{counts}</div>
-        <Note>{busy ? "Loading…" : "Nothing here yet. Write to someone and the conversation appears here."}</Note>
+        <Note>{busy ? "Loading…"
+          : threads.length === 0
+            ? "Nothing here yet. Write to someone and the conversation appears here."
+            : "Nothing matches these filters."}</Note>
         {composer}
         {toast}
       </>
