@@ -2,6 +2,7 @@ import * as crm from "./crm.js";
 import { allReplies, allSends, type ReplyRecord } from "./store.js";
 import { clickedAt, delivery, openedAt } from "./sends.js";
 import type { SendRecord } from "./schemas.js";
+import type { ContactRecord } from "../schemas.js";
 
 /* One conversation per person: what we sent and what came back, in order.
 
@@ -91,17 +92,43 @@ export function normaliseSubject(subject: string | null | undefined): string {
   return t.replace(/\s+/g, " ").trim().toLowerCase();
 }
 
-/** What makes two messages the same conversation.
+/** What makes two messages the same conversation, as a first guess.
 
     Keyed by counterparty *and* subject, not by person: two unrelated notes
     from the same address are two conversations, and stacking them into one
     thread makes the second look like a reply to the first. A message with no
     subject stands alone under its own id rather than collapsing every
-    subjectless message from that address together. */
+    subjectless message from that address together.
+
+    Only a first guess, because the counterparty is not one address. Somebody
+    written to at a company domain answers from their real one, from an alias,
+    or a colleague answers for them, and on the address alone each of those
+    arrives as a conversation of its own next to the one it belongs to. What
+    joins them back up is join(), below. */
 const threadKey = (who: string, subject: string | null, id: string): string => {
   const norm = normaliseSubject(subject);
   return norm ? `${who.toLowerCase()}|${norm}` : `${who.toLowerCase()}|#${id}`;
 };
+
+/** Whether a subject line says it is answering something. Mail clients all
+    stamp one of these on a reply, and normaliseSubject knows the same list. */
+const answers = (subject: string | null | undefined): boolean =>
+  normaliseSubject(subject) !== (subject ?? "").replace(/\s+/g, " ").trim().toLowerCase();
+
+/** Merges keys that turn out to name one conversation. Plain union-find:
+    keys point at a representative, and reading one follows the chain. */
+class Joined {
+  private up = new Map<string, string>();
+  root(k: string): string {
+    let r = k;
+    while (this.up.get(r) && this.up.get(r) !== r) r = this.up.get(r)!;
+    return r;
+  }
+  join(a: string, b: string): void {
+    const [ra, rb] = [this.root(a), this.root(b)];
+    if (ra !== rb) this.up.set(rb, ra);
+  }
+}
 
 const GONE = new Set(["sent", "delivered", "opened", "clicked", "bounced", "complained"]);
 
@@ -126,49 +153,108 @@ const inbound = (r: ReplyRecord): ThreadMessage => ({
   automated: r.automated, unsubscribe: r.unsubscribe,
 });
 
-export async function threads(): Promise<Thread[]> {
-  const [sends, replies, contacts] = await Promise.all([allSends(), allReplies(), crm.contacts()]);
+/** Everything we hold, as conversations. Pure, so the grouping can be tested
+    without a database; threads() is the same thing over Firestore. */
+export function group(
+  sends: SendRecord[], replies: ReplyRecord[], contacts: ContactRecord[],
+): Thread[] {
+  const bare = (a: string) => (a.match(/<([^>]+)>/)?.[1] ?? a).trim();
 
-  /* Keyed by contact where there is one, and by address otherwise — a note
+  /* One entry per message, with the key it would have on the address alone.
+     Keyed by contact where there is one, and by address otherwise — a note
      to somebody outside the CRM is still a conversation, and dropping it
      would make the Inbox quietly incomplete. */
-  const byKey = new Map<string, { key: string; contact_id: string | null; to: string | null;
-                                  messages: ThreadMessage[] }>();
-  const push = (key: string | null, contactId: string | null, addr: string | null, m: ThreadMessage) => {
-    if (!key) return;
-    const cur = byKey.get(key) ?? { key, contact_id: contactId, to: addr, messages: [] };
-    cur.messages.push(m);
-    cur.contact_id ??= contactId;
-    cur.to ??= addr;
-    byKey.set(key, cur);
-  };
-  const bare = (a: string) => (a.match(/<([^>]+)>/)?.[1] ?? a).trim();
-  for (const s of sends) {
-    push(threadKey(bare(s.to), s.subject, s.id), s.contact_id, s.to, outbound(s));
+  type Entry = { key: string; addr: string; contact_id: string | null; m: ThreadMessage };
+  const entries: Entry[] = [
+    ...sends.map((s): Entry => ({
+      key: threadKey(bare(s.to), s.subject, s.id), addr: s.to,
+      contact_id: s.contact_id, m: outbound(s),
+    })),
+    ...replies.map((r): Entry => ({
+      key: threadKey(bare(r.from), r.subject, r.id), addr: r.from,
+      contact_id: r.contact_id, m: inbound(r),
+    })),
+  ];
+
+  const joined = new Joined();
+
+  /* What the message says it is answering, which beats any guess from the
+     address or the subject: In-Reply-To and References name the exact
+     message, and they are what every mail client threads on. This is why a
+     send's Message-ID is worth learning from Resend (see pollEvents) — it is
+     the id a reply quotes back. */
+  const byMessageId = new Map<string, string>();
+  for (const e of entries) if (e.m.message_id) byMessageId.set(e.m.message_id, e.key);
+  const quoting = new Map<string, string[]>(
+    replies.map((r) => [r.id,
+      [...new Set([...(r.references ?? []), ...(r.in_reply_to ? [r.in_reply_to] : [])])]]));
+  const threadedByChain = new Set<string>();
+  for (const e of entries) {
+    for (const ref of quoting.get(e.m.id) ?? []) {
+      const target = byMessageId.get(ref);
+      if (!target) continue;
+      joined.join(target, e.key);
+      threadedByChain.add(e.m.id);
+    }
   }
-  for (const r of replies) {
-    push(threadKey(bare(r.from), r.subject, r.id), r.contact_id, r.from, inbound(r));
+
+  /* A reply that quotes nothing we can recognise, which is every reply to a
+     message sent before its Message-ID was recorded, and any whose headers
+     were stripped on the way. All that is left is the subject, so it is used
+     only where it cannot be wrong: the message says it is a reply, and
+     exactly one conversation we have written into carries that subject. A
+     campaign's copy goes to dozens of people under one subject, so a reply
+     from an address we do not know matches all of them, and matching many is
+     not a match. */
+  const written = new Map<string, Set<string>>();
+  for (const e of entries) {
+    if (e.m.dir !== "out") continue;
+    const subj = normaliseSubject(e.m.subject);
+    if (!subj) continue;
+    (written.get(subj) ?? written.set(subj, new Set()).get(subj)!).add(joined.root(e.key));
+  }
+  for (const e of entries) {
+    if (e.m.dir !== "in" || threadedByChain.has(e.m.id) || !answers(e.m.subject)) continue;
+    const candidates = written.get(normaliseSubject(e.m.subject));
+    if (candidates?.size !== 1) continue;
+    joined.join([...candidates][0]!, e.key);
+  }
+
+  const byRoot = new Map<string, Entry[]>();
+  for (const e of entries) {
+    const root = joined.root(e.key);
+    (byRoot.get(root) ?? byRoot.set(root, []).get(root)!).push(e);
   }
 
   const out: Thread[] = [];
-  for (const [key, t] of byKey) {
-    const c = t.contact_id ? contacts.find((x) => x.id === t.contact_id) : undefined;
-    const messages = t.messages;
-    messages.sort((a, b) => a.sort_at.localeCompare(b.sort_at));
+  for (const es of byRoot.values()) {
+    es.sort((a, b) => a.m.sort_at.localeCompare(b.m.sort_at));
+    const messages = es.map((e) => e.m);
+    /* The key the read state is stored under, and it has to be one of the
+       merged keys rather than a new name: the oldest message's, which in the
+       ordinary case is the one we wrote and the key the thread already had,
+       so merging a reply in does not make the conversation look unread. */
+    const key = es[0]!.key;
+    const contactId = es.find((e) => e.contact_id)?.contact_id ?? null;
+    const c = contactId ? contacts.find((x) => x.id === contactId) : undefined;
+    /* The address to show, which is the one we write to when we have written
+       — not the alias a reply happened to come from. */
+    const addr = (es.find((e) => e.m.dir === "out") ?? es[0]!).addr;
     const human = messages.filter((m) => m.dir === "in" && !m.automated);
     /* A cancelled message never happened, so it cannot be what makes a
        thread recent — that is what pushed a dead draft above real mail. */
     const live = messages.filter((m) => m.status !== "canceled");
     out.push({
       key,
-      // Sorted just above, and a thread only exists once it has a message.
+      /* The same thread for URLs: the id of its first email. Sorted just
+         above, and a thread only exists once it has a message. */
       id: messages[0]!.id,
-      contact_id: t.contact_id,
-      full_name: c?.full_name ?? t.to ?? key,
+      contact_id: contactId,
+      full_name: c?.full_name ?? addr ?? key,
       title: c?.title ?? "",
       company: c?.company ?? null,
       account_id: c?.account_id ?? null,
-      email: c?.email ?? t.to ?? null,
+      email: c?.email ?? addr ?? null,
       last_at: (live[live.length - 1] ?? messages[messages.length - 1]!).sort_at,
       sent: messages.filter((m) => m.dir === "out" && m.status !== "canceled").length,
       replies: human.length,
@@ -181,4 +267,9 @@ export async function threads(): Promise<Thread[]> {
   // you want at the top.
   out.sort((a, b) => b.last_at.localeCompare(a.last_at));
   return out;
+}
+
+export async function threads(): Promise<Thread[]> {
+  const [sends, replies, contacts] = await Promise.all([allSends(), allReplies(), crm.contacts()]);
+  return group(sends, replies, contacts);
 }
