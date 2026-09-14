@@ -128,8 +128,17 @@ html, body, #root { height: auto; overflow: auto; }
 }
 a.co-row:hover .co-name,
 .co-row--btn:hover .co-name { color: var(--hot); text-decoration: underline; }
-/* The company cell opens the account's page; it is a button, not a link out. */
-.co-row--btn { font: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: left; }
+/* The company cell opens the account's page; it is a button, not a link out.
+   `color` as well as `font`, because a button's own black is invisible on the
+   dark page — outside a table there is no `.of-matrix .co-row` to inherit
+   from, and the person page links to their company from its head. */
+.co-row--btn {
+  font: inherit; color: inherit; background: none; border: 0; padding: 0;
+  cursor: pointer; text-align: left; display: inline-flex; align-items: center; gap: 7px;
+}
+/* In a run of links under a name, the company reads as one of them, not as a
+   heading — the 16px body default next to 13px notes looks like a mistake. */
+.of-acct__links .co-name { font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
 
 /* ---------- one account ---------- */
 .of-acct__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 8px; }

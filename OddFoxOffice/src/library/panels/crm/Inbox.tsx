@@ -18,6 +18,7 @@ import {
 } from "./recipients";
 import { Toast } from "./Toast";
 import { SendState } from "./SendState";
+import { PersonLink } from "./links";
 import { useContacts } from "./shared";
 
 /* The inbox. One conversation per person: what we sent, what came back.
@@ -989,7 +990,12 @@ export function CrmInbox() {
                 </div>
                 <div className="of-inbox__title">{last?.subject ?? open.full_name}</div>
                 <div className="of-note">
-                  {open.full_name} · {open.title || "role unknown"} · {open.company ?? "—"}
+                  {/* The name opens their page: this thread is one subject,
+                      and "what have we said to them" is all of them. */}
+                  {open.contact_id
+                    ? <PersonLink id={open.contact_id}>{open.full_name}</PersonLink>
+                    : open.full_name}
+                  {" · "}{open.title || "role unknown"} · {open.company ?? "—"}
                   {" · "}{open.email ?? "no address on record"}
                 </div>
               </header>

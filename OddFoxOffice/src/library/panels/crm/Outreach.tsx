@@ -5,7 +5,7 @@ import {
   useReplies, useTracking,
   type Cell, type HeatRow, type Thread,
 } from "../../../lib/outreachStore";
-import { AccountLink } from "./Account";
+import { AccountLink } from "./links";
 import { CampaignChip } from "./CampaignChip";
 import { CampaignSequenceModal, SequenceModal } from "./SequenceModal";
 import { CRM_CHANGED } from "./Operator";

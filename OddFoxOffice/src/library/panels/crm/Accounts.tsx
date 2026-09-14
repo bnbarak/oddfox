@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Section, Grid, Cell, Stat, H1, Chip, Bars, Site, Logo, Star } from "../../../ui";
 import type { AccountRecord } from "../../../lib/crmStore";
-import { PIPE, TONE, today, link, useAccounts } from "./shared";
-import { AccountDetail, AccountLink, useAccountParam } from "./Account";
+import { PIPE, TONE, today, link, useAccountParam, useAccounts } from "./shared";
+import { AccountDetail } from "./Account";
+import { AccountLink } from "./links";
 import { ServerState } from "./ServerState";
 
 export function CrmAccounts() {

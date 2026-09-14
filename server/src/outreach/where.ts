@@ -30,6 +30,7 @@ export const PageContext = z.object({
   campaign: id.nullish(),
   campaigns: z.array(id).max(200).nullish(),
   account: id.nullish(),
+  contact: id.nullish(),
   tier: z.number().int().min(0).max(99).nullish(),
   view: z.string().max(400).nullish(),
   draft: z.object({
@@ -73,10 +74,10 @@ const HEAD =
 export async function describe(ctx: PageContext): Promise<string> {
   const wantCampaigns = Boolean(ctx.campaign || ctx.campaigns?.length || ctx.account);
   const [ts, campaigns, accounts, contacts, sends, tmpl] = await Promise.all([
-    ctx.thread ? threads() : [],
-    wantCampaigns ? allCampaigns() : [],
-    wantCampaigns ? crm.accounts() : [],
-    wantCampaigns ? crm.contacts() : [],
+    ctx.thread || ctx.contact ? threads() : [],
+    wantCampaigns || ctx.contact ? allCampaigns() : [],
+    wantCampaigns || ctx.contact ? crm.accounts() : [],
+    wantCampaigns || ctx.contact ? crm.contacts() : [],
     ctx.campaign || ctx.campaigns?.length ? allSends() : [],
     ctx.tier != null ? crm.template(ctx.tier, 1) : null,
   ]);
@@ -93,7 +94,8 @@ export function brief(ctx: PageContext, f: Facts): string {
   if (ctx.draft) out.push("", ...aboutDraft(ctx.draft));
   if (ctx.campaign) out.push("", ...aboutCampaign(ctx.campaign, f));
   else if (ctx.campaigns?.length) out.push("", ...listCampaigns(ctx.campaigns, f));
-  if (ctx.account) out.push("", ...aboutAccount(ctx.account, f));
+  if (ctx.contact) out.push("", ...aboutContact(ctx.contact, f));
+  else if (ctx.account) out.push("", ...aboutAccount(ctx.account, f));
   if (ctx.tier != null) out.push("", aboutTier(ctx.tier, f.sequence));
   return clip(out.join("\n"), BRIEF_CHARS);
 }
@@ -208,6 +210,43 @@ function aboutAccount(aid: string, f: Facts): string[] {
       `- ${p.full_name}, ${p.title} (contact_id ${p.id}${p.email ? "" : ", no address"})`),
     ...(people.length > LIST_LIMIT ? [`…and ${people.length - LIST_LIMIT} more.`] : []),
   ];
+}
+
+/* A person's page is every message either way, so the brief is the thread
+   brief pointed at a contact rather than at one conversation — somebody with
+   two conversations under two subjects is one person here. The account, if
+   there is one, is named but not unpacked: they asked about them, not their
+   colleagues. */
+function aboutContact(cid: string, f: Facts): string[] {
+  const c = f.contacts.find((p) => p.id === cid);
+  if (!c) return [`They had a person's page open (${cid}) that no longer exists.`];
+  const a = f.accounts.find((r) => r.id === c.account_id)
+    ?? f.accounts.find((r) => r.company === c.company);
+  const mine = f.threads.filter(
+    (t) => t.contact_id === c.id || (c.email ? t.email === c.email : false));
+  const msgs = mine.flatMap((t) => t.messages).sort((x, y) => x.at.localeCompare(y.at));
+  const sent = msgs.filter((m) => m.dir === "out").length;
+  const back = msgs.filter((m) => m.dir === "in").length;
+  const campaign = a ? f.campaigns.find((x) => x.account_ids.includes(a.id)) : undefined;
+
+  const out = [
+    `They have the page for ${c.full_name} open (contact_id ${c.id}): ${c.title || "role unknown"}` +
+    `${a ? ` at ${a.company} (account_id ${a.id})` : c.company ? ` at ${c.company}` : ""}, ` +
+    `<${c.email ?? "no address on record"}>, pipeline status ${c.status}.`,
+    campaign
+      ? `Their company is in the campaign "${campaign.name}" (id ${campaign.id}, ` +
+        `${campaign.active ? "on" : "off"}).`
+      : "No campaign is aimed at their company.",
+    `${plural(sent, "message")} sent to them, ${plural(back, "reply", "replies")} back.`,
+  ];
+  if (!msgs.length) return out;
+  const shown = msgs.slice(-LAST_MESSAGES);
+  if (msgs.length > shown.length) {
+    out.push(`${plural(msgs.length - shown.length, "earlier message")} not shown here.`);
+  }
+  out.push("Messages, oldest first:");
+  for (const m of shown) out.push("", ...message(m, c.full_name));
+  return out;
 }
 
 function aboutTier(tier: number, seq: Sequence | null): string {

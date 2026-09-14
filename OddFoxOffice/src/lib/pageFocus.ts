@@ -30,6 +30,8 @@ export type Focus = {
   /** The campaigns a table is listing, in the order it lists them. */
   campaigns?: string[];
   account?: string;
+  /** A contact's id — whose page is open. */
+  contact?: string;
   tier?: number;
   /** A filter or search in force, in words. */
   view?: string;

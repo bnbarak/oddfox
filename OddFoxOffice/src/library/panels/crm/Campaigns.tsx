@@ -4,7 +4,7 @@ import {
   deleteCampaign, setCampaignActive, useCampaigns, useEnrichment, useHeatmap, useThreads,
   type CampaignRow, type Thread,
 } from "../../../lib/outreachStore";
-import { AccountLink } from "./Account";
+import { AccountLink } from "./links";
 import { campaignColors } from "./campaignColors";
 import { NewCampaignModal } from "./NewCampaign";
 import { CampaignSequenceModal, SequenceModal } from "./SequenceModal";
