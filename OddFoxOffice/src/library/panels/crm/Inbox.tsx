@@ -936,18 +936,23 @@ export function CrmInbox() {
         <button key={d.id}
                 className={`of-inbox__row${draft?.id === d.id ? " is-on" : ""}`}
                 onClick={() => openSaved(d)}>
-          <span className="of-inbox__l1">
-            <span className="of-inbox__who">
-              {d.to[0] ?? "No recipient yet"}
-              {d.to.length > 1 ? ` +${d.to.length - 1}` : ""}
+          {/* The lines live in a span rather than straight in the button: a
+              button lays its own contents out in WebKit, and neither the
+              column nor the clipping survives that. */}
+          <span className="of-inbox__rowin">
+            <span className="of-inbox__l1">
+              <span className="of-inbox__who">
+                {d.to[0] ?? "No recipient yet"}
+                {d.to.length > 1 ? ` +${d.to.length - 1}` : ""}
+              </span>
+              <span className="of-inbox__at">{fmt(d.updated_at)}</span>
             </span>
-            <span className="of-inbox__at">{fmt(d.updated_at)}</span>
+            <span className="of-inbox__l2">
+              <span className="of-inbox__subj">{d.subject || "(no subject)"}</span>
+              <span className="of-inbox__peek"> — {draftPeek(d) || "nothing written yet"}</span>
+            </span>
+            <span className="of-inbox__l3">{d.reply_to ? "reply" : "new message"}</span>
           </span>
-          <span className="of-inbox__l2">
-            <span className="of-inbox__subj">{d.subject || "(no subject)"}</span>
-            <span className="of-inbox__peek"> — {draftPeek(d) || "nothing written yet"}</span>
-          </span>
-          <span className="of-inbox__l3">{d.reply_to ? "reply" : "new message"}</span>
         </button>
       ))}
       {saved.length === 0 && (
@@ -1000,6 +1005,9 @@ export function CrmInbox() {
               <button key={t.key}
                       className={`of-inbox__row${open?.key === t.key ? " is-on" : ""}${isUnread(t) ? " is-unread" : ""}`}
                       onClick={() => openThread(t)}>
+                {/* See the draft rows: the layout belongs to a span inside
+                    the button, not to the button. */}
+                <span className="of-inbox__rowin">
                 <span className="of-inbox__l1">
                   <span className="of-inbox__who">{t.full_name}</span>
                   <span className="of-inbox__at">{fmt(t.last_at)}</span>
@@ -1017,6 +1025,7 @@ export function CrmInbox() {
                     <> · <CampaignTag of={campaigns.data.states[t.account_id]} /></>
                   ) : null}
                   {t.replies ? ` · ${t.replies} in` : ""}
+                </span>
                 </span>
               </button>
             );
